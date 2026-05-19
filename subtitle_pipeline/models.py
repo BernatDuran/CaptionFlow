@@ -25,8 +25,3 @@ class SubtitleConfig:
     dub: bool = False
     tts_voice: str = "es-ES-AlvaroNeural"
     tts_rate: int = 0
-    rvc_model_path: str | None = None
-    rvc_index_path: str | None = None
-    applio_dir: str | None = None
-    rvc_pitch: int = 0
-    rvc_f0_method: str = "rmvpe"

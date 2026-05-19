@@ -34,14 +34,9 @@ def main():
     )
     parser.add_argument("--api-key", default=None, help="Anthropic API key (or set ANTHROPIC_API_KEY env var)")
     # Dubbing options
-    parser.add_argument("--dub", action="store_true", help="Generate dubbed video with TTS + RVC")
+    parser.add_argument("--dub", action="store_true", help="Generate dubbed video with TTS")
     parser.add_argument("--tts-voice", default="es-ES-AlvaroNeural", help="Edge-TTS voice (default: es-ES-AlvaroNeural)")
     parser.add_argument("--tts-rate", type=int, default=0, help="TTS speed adjustment -100 to 100 (default: 0)")
-    parser.add_argument("--rvc-model", default=None, help="Path to RVC model (.pth) for voice conversion")
-    parser.add_argument("--rvc-index", default=None, help="Path to RVC index (.index) file")
-    parser.add_argument("--applio-dir", default=None, help="Path to Applio installation directory")
-    parser.add_argument("--rvc-pitch", type=int, default=0, help="RVC pitch shift in semitones (default: 0)")
-    parser.add_argument("--rvc-f0-method", default="rmvpe", help="RVC F0 method (default: rmvpe)")
     args = parser.parse_args()
 
     config = SubtitleConfig(
@@ -58,11 +53,6 @@ def main():
         dub=args.dub,
         tts_voice=args.tts_voice,
         tts_rate=args.tts_rate,
-        rvc_model_path=args.rvc_model,
-        rvc_index_path=args.rvc_index,
-        applio_dir=args.applio_dir,
-        rvc_pitch=args.rvc_pitch,
-        rvc_f0_method=args.rvc_f0_method,
     )
 
     run_subtitle_pipeline(config)
