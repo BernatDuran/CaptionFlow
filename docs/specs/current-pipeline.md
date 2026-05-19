@@ -63,9 +63,10 @@ The pipeline should fail before starting long-running work when:
 - `output_dir` points to an existing file.
 - Any requested subtitle format is unsupported.
 - The translator is unsupported.
+- Translation languages are unsupported by the selected translation provider.
 - The device value is unsupported.
 - `tts_rate` is outside the supported range.
-- Claude translation is requested between different languages and no API key is available.
+- A remote translation provider requires an API key and none is available.
 
 ### 3.3 Extract Audio
 

@@ -65,7 +65,7 @@ def test_validate_config_requires_claude_key_when_translation_needed(tmp_path, m
         api_key=None,
     )
 
-    with pytest.raises(ConfigError, match="Claude API key required"):
+    with pytest.raises(ConfigError, match="API key required for translator 'claude'"):
         validate_config(config)
 
 
@@ -117,3 +117,51 @@ def test_validate_config_uses_explicit_api_key_without_environment(tmp_path, mon
     )
 
     validate_config(config)
+
+
+def test_validate_config_rejects_unsupported_translator_from_registry(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="en",
+        target_lang="es",
+        translator="unknown",
+    )
+
+    with pytest.raises(ConfigError, match="Unsupported translator 'unknown'"):
+        validate_config(config)
+
+
+def test_validate_config_rejects_source_language_unsupported_by_provider(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="ca",
+        target_lang="es",
+        translator="nllb",
+    )
+
+    with pytest.raises(ConfigError, match="Source language 'ca' is not supported"):
+        validate_config(config)
+
+
+def test_validate_config_rejects_target_language_unsupported_by_provider(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="en",
+        target_lang="ca",
+        translator="nllb",
+    )
+
+    with pytest.raises(ConfigError, match="Target language 'ca' is not supported"):
+        validate_config(config)

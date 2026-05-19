@@ -455,7 +455,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 |  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
 | X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
 | X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
-| X | Configuracion avanzada de modelos y proveedores | 9 | Primer modelo de capacidades, disponibilidad y requisitos por proveedor. | `ProviderCapabilities`, `ProviderAvailabilityCheck` |
+| X | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos y validacion config/provider-aware. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `validation.py` |
 |  | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
 
 ## 7. Orden Recomendado

@@ -7,6 +7,7 @@ from subtitle_pipeline.providers import (
     check_provider_availability,
     get_provider_capabilities,
     list_provider_capabilities,
+    list_provider_names,
 )
 
 
@@ -56,6 +57,10 @@ def test_list_provider_capabilities_can_filter_by_task():
     assert {provider.name for provider in translation_providers} == {"claude", "nllb"}
 
 
+def test_list_provider_names_can_filter_by_task():
+    assert list_provider_names(task="translation") == ["claude", "nllb"]
+
+
 def test_get_provider_capabilities_returns_known_provider():
     capabilities = get_provider_capabilities("faster-whisper")
 
@@ -85,6 +90,7 @@ def test_check_provider_availability_reports_missing_api_key():
     )
 
     assert availability.status == "missing_api_key"
+    assert "ANTHROPIC_API_KEY" in availability.message
 
 
 def test_check_provider_availability_reports_available_provider():

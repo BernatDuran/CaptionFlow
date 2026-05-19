@@ -1,10 +1,13 @@
 import os
 
 from .models import SubtitleConfig
+from .providers import (
+    get_provider_capabilities,
+    list_provider_names,
+)
 
 SUPPORTED_DEVICES = {"auto", "cuda", "cpu"}
 SUPPORTED_FORMATS = {"srt", "vtt", "txt"}
-SUPPORTED_TRANSLATORS = {"claude", "nllb"}
 MIN_TTS_RATE = -100
 MAX_TTS_RATE = 100
 
@@ -25,10 +28,11 @@ def validate_config(config: SubtitleConfig) -> None:
             f"Unsupported device '{config.device}'. Supported: {sorted(SUPPORTED_DEVICES)}"
         )
 
-    if config.translator not in SUPPORTED_TRANSLATORS:
+    supported_translators = list_provider_names(task="translation")
+    if config.translator not in supported_translators:
         raise ConfigError(
             f"Unsupported translator '{config.translator}'. "
-            f"Supported: {sorted(SUPPORTED_TRANSLATORS)}"
+            f"Supported: {supported_translators}"
         )
 
     unsupported_formats = sorted(set(config.formats) - SUPPORTED_FORMATS)
@@ -47,15 +51,36 @@ def validate_config(config: SubtitleConfig) -> None:
             f"got {config.tts_rate}"
         )
 
-    if _requires_claude_key(config) and not _has_claude_key(config):
+    _validate_translation_provider(config)
+
+def _validate_translation_provider(config: SubtitleConfig) -> None:
+    if config.source_lang == config.target_lang:
+        return
+
+    capabilities = get_provider_capabilities(config.translator)
+    if config.source_lang not in capabilities.supported_languages:
         raise ConfigError(
-            "Claude API key required. Set ANTHROPIC_API_KEY env var or pass --api-key"
+            f"Source language '{config.source_lang}' is not supported by "
+            f"translator '{config.translator}'. "
+            f"Supported: {sorted(capabilities.supported_languages)}"
         )
+    if config.target_lang not in capabilities.supported_languages:
+        raise ConfigError(
+            f"Target language '{config.target_lang}' is not supported by "
+            f"translator '{config.translator}'. "
+            f"Supported: {sorted(capabilities.supported_languages)}"
+        )
+    if capabilities.requires_api_key and not _has_provider_key(
+        config,
+        capabilities.api_key_env_var,
+    ):
+        key_hint = (
+            f"Set {capabilities.api_key_env_var} env var or pass --api-key"
+            if capabilities.api_key_env_var
+            else "Configure the provider API key"
+        )
+        raise ConfigError(f"API key required for translator '{config.translator}'. {key_hint}")
 
 
-def _requires_claude_key(config: SubtitleConfig) -> bool:
-    return config.source_lang != config.target_lang and config.translator == "claude"
-
-
-def _has_claude_key(config: SubtitleConfig) -> bool:
-    return bool(config.api_key or os.environ.get("ANTHROPIC_API_KEY"))
+def _has_provider_key(config: SubtitleConfig, env_var: str | None) -> bool:
+    return bool(config.api_key or (env_var and os.environ.get(env_var)))

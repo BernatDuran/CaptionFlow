@@ -132,9 +132,13 @@ def _has_package(
 
 
 def _has_required_key(provider_name: str, environ: dict[str, str]) -> bool:
-    if provider_name == "claude":
-        return bool(environ.get("ANTHROPIC_API_KEY"))
-    return True
+    for capabilities in list_provider_capabilities():
+        if capabilities.name == provider_name:
+            return not capabilities.requires_api_key or bool(
+                capabilities.api_key_env_var
+                and environ.get(capabilities.api_key_env_var)
+            )
+    return False
 
 
 def _provider_status_to_doctor_status(status: str) -> CheckStatus:

@@ -19,6 +19,7 @@ from .providers import (
     create_tts_provider,
     get_provider_capabilities,
     list_provider_capabilities,
+    list_provider_names,
 )
 
 
@@ -52,4 +53,5 @@ __all__ = [
     "create_tts_provider",
     "get_provider_capabilities",
     "list_provider_capabilities",
+    "list_provider_names",
 ]

@@ -71,3 +71,16 @@ def test_format_doctor_report_is_human_readable():
     assert report.startswith("CaptionFlow environment check")
     assert "[PASS] ffmpeg executable:" in report
     assert "[WARN] ANTHROPIC_API_KEY:" in report
+
+
+def test_run_doctor_provider_key_check_uses_provider_capabilities():
+    checks = run_doctor(
+        which=lambda command: "ffmpeg",
+        find_spec=lambda name: object(),
+        environ={},
+    )
+
+    by_name = {check.name: check for check in checks}
+
+    assert by_name["provider:translation:claude"].status == "warn"
+    assert "ANTHROPIC_API_KEY" in by_name["provider:translation:claude"].message

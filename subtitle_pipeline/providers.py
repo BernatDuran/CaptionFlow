@@ -23,6 +23,7 @@ class ProviderCapabilities:
     supports_local_execution: bool
     requires_network: bool
     requires_api_key: bool
+    api_key_env_var: str | None = None
     supported_languages: set[str] = field(default_factory=set)
     supported_output_formats: set[str] = field(default_factory=set)
     notes: str = ""
@@ -124,6 +125,7 @@ INITIAL_PROVIDER_CAPABILITIES = {
         supports_local_execution=False,
         requires_network=True,
         requires_api_key=True,
+        api_key_env_var="ANTHROPIC_API_KEY",
         supported_languages={"ar", "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh"},
         supported_output_formats={"segments"},
         notes="Remote translation through the Anthropic API.",
@@ -160,6 +162,10 @@ def list_provider_capabilities(task: ProviderTask | None = None) -> list[Provide
     return [provider for provider in providers if provider.task == task]
 
 
+def list_provider_names(task: ProviderTask | None = None) -> list[str]:
+    return sorted(provider.name for provider in list_provider_capabilities(task))
+
+
 def get_provider_capabilities(name: str) -> ProviderCapabilities:
     try:
         return INITIAL_PROVIDER_CAPABILITIES[name]
@@ -181,11 +187,16 @@ def check_provider_availability(
             message=f"Python package '{capabilities.package}' is not importable",
         )
     if capabilities.requires_api_key and not has_api_key:
+        key_hint = (
+            f" Set {capabilities.api_key_env_var}."
+            if capabilities.api_key_env_var
+            else ""
+        )
         return ProviderAvailabilityCheck(
             name=capabilities.name,
             task=capabilities.task,
             status="missing_api_key",
-            message="required API key is not configured",
+            message=f"required API key is not configured.{key_hint}",
         )
     return ProviderAvailabilityCheck(
         name=capabilities.name,
