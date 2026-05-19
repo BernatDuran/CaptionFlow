@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 
-from .models import SubtitleConfig
+from .models import PipelineResult, SubtitleConfig
 from .audio_extractor import extract_audio
 from .formatter import write_subtitles
 from .providers import (
@@ -35,8 +35,22 @@ def run_subtitle_pipeline(
     transcription_provider: TranscriptionProvider | None = None,
     translation_provider: TranslationProvider | None = None,
 ) -> list[str]:
+    result = run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider,
+        translation_provider,
+    )
+    return result.output_files
+
+
+def run_subtitle_pipeline_detailed(
+    config: SubtitleConfig,
+    transcription_provider: TranscriptionProvider | None = None,
+    translation_provider: TranslationProvider | None = None,
+) -> PipelineResult:
     validate_config(config)
     transcription_provider = transcription_provider or create_transcription_provider(config)
+    provider_metadata = []
 
     base_name = os.path.splitext(os.path.basename(config.input_path))[0]
     tmp_dir = tempfile.mkdtemp(prefix="subtitle_")
@@ -53,6 +67,7 @@ def run_subtitle_pipeline(
         provider_config = transcription_provider.config
         print(f"Transcribing with {provider_config.name} ({provider_config.model})...")
         transcription = transcription_provider.transcribe(audio_path, config.source_lang)
+        provider_metadata.append(transcription.metadata)
         segments = transcription.segments
         print(f"  {len(segments)} segments found.")
 
@@ -70,6 +85,7 @@ def run_subtitle_pipeline(
                 config.source_lang,
                 config.target_lang,
             )
+            provider_metadata.append(translation.metadata)
             segments = translation.segments
             use_translated = True
             print("  Translation complete.")
@@ -83,13 +99,15 @@ def run_subtitle_pipeline(
 
         # 5. Dubbing
         if config.dub:
-            from .dubbing import run_dubbing_pipeline
+            from .dubbing import run_dubbing_pipeline_detailed
 
-            dubbed_video = run_dubbing_pipeline(
+            dubbing_result = run_dubbing_pipeline_detailed(
                 segments,
                 config,
                 tts_provider=create_tts_provider(config),
             )
+            dubbed_video = dubbing_result.output_video
+            provider_metadata.append(dubbing_result.provider_metadata)
             output_files.append(dubbed_video)
 
         # 6. Burn subtitles into video
@@ -107,7 +125,11 @@ def run_subtitle_pipeline(
             output_files.append(output_video)
             print(f"  Created: {output_video}")
 
-        return output_files
+        return PipelineResult(
+            output_files=output_files,
+            segments=segments,
+            provider_metadata=provider_metadata,
+        )
 
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)

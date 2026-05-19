@@ -143,6 +143,14 @@ Expected output:
 
 At minimum, when no optional video outputs are requested, it returns subtitle file paths matching `formats`.
 
+`run_subtitle_pipeline_detailed(config)` returns a structured `PipelineResult` with:
+
+- `output_files`: created output file paths.
+- `segments`: final transcript or translated segments.
+- `provider_metadata`: metadata for providers used during the run.
+
+The detailed function exists for traceability while the original function preserves backward compatibility.
+
 ## 5. Non-Goals For Current Version
 
 The current version does not provide:

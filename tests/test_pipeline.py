@@ -1,5 +1,5 @@
 from subtitle_pipeline.models import Segment, SubtitleConfig
-from subtitle_pipeline.pipeline import run_subtitle_pipeline
+from subtitle_pipeline.pipeline import run_subtitle_pipeline, run_subtitle_pipeline_detailed
 from subtitle_pipeline.providers import (
     ProviderConfig,
     ProviderResultMetadata,
@@ -74,6 +74,38 @@ def test_run_subtitle_pipeline_uses_injected_providers(tmp_path, monkeypatch):
     assert (output_dir / "video.srt").read_text(encoding="utf-8") == (
         "1\n00:00:00,000 --> 00:00:01,000\nhola-es\n"
     )
+
+
+def test_run_subtitle_pipeline_detailed_returns_provider_metadata(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    output_dir = tmp_path / "out"
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.extract_audio",
+        lambda input_file, output_path: output_path,
+    )
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(output_dir),
+        source_lang="en",
+        target_lang="es",
+        translator="nllb",
+    )
+
+    result = run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider=FakeTranscriptionProvider(),
+        translation_provider=FakeTranslationProvider(),
+    )
+
+    assert result.output_files == [str(output_dir / "video.srt")]
+    assert [metadata.provider for metadata in result.provider_metadata] == [
+        "fake-transcriber",
+        "fake-translator",
+    ]
+    assert result.segments[0].translated == "hola-es"
 
 
 def test_run_subtitle_pipeline_skips_translation_for_same_language(tmp_path, monkeypatch):

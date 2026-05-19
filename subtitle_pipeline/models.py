@@ -1,4 +1,10 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .providers import ProviderResultMetadata
 
 
 @dataclass
@@ -25,3 +31,10 @@ class SubtitleConfig:
     dub: bool = False
     tts_voice: str = "es-ES-AlvaroNeural"
     tts_rate: int = 0
+
+
+@dataclass
+class PipelineResult:
+    output_files: list[str]
+    segments: list[Segment]
+    provider_metadata: list[ProviderResultMetadata] = field(default_factory=list)

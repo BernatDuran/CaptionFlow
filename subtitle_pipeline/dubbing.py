@@ -1,10 +1,11 @@
 import os
 import shutil
 import tempfile
+from dataclasses import dataclass
 
 from .models import Segment, SubtitleConfig
 from .audio_mixer import merge_segments_to_track, replace_video_audio
-from .providers import TTSProvider, create_tts_provider
+from .providers import ProviderResultMetadata, TTSProvider, create_tts_provider
 
 
 def run_dubbing_pipeline(
@@ -12,6 +13,21 @@ def run_dubbing_pipeline(
     config: SubtitleConfig,
     tts_provider: TTSProvider | None = None,
 ) -> str:
+    result = run_dubbing_pipeline_detailed(segments, config, tts_provider)
+    return result.output_video
+
+
+@dataclass
+class DubbingResult:
+    output_video: str
+    provider_metadata: ProviderResultMetadata
+
+
+def run_dubbing_pipeline_detailed(
+    segments: list[Segment],
+    config: SubtitleConfig,
+    tts_provider: TTSProvider | None = None,
+) -> DubbingResult:
     """Generate dubbed video from translated segments."""
     base_name = os.path.splitext(os.path.basename(config.input_path))[0]
     tmp_dir = tempfile.mkdtemp(prefix="dubbing_")
@@ -43,7 +59,7 @@ def run_dubbing_pipeline(
         replace_video_audio(config.input_path, merged_audio, output_video)
         print(f"  Created: {output_video}")
 
-        return output_video
+        return DubbingResult(output_video, tts_result.metadata)
 
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)

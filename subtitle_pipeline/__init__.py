@@ -1,4 +1,4 @@
-from .models import Segment, SubtitleConfig
+from .models import PipelineResult, Segment, SubtitleConfig
 from .errors import (
     CaptionFlowError,
     ConfigError,
@@ -40,12 +40,18 @@ def __getattr__(name: str):
         from .pipeline import run_subtitle_pipeline
 
         return run_subtitle_pipeline
+    if name == "run_subtitle_pipeline_detailed":
+        from .pipeline import run_subtitle_pipeline_detailed
+
+        return run_subtitle_pipeline_detailed
     raise AttributeError(f"module 'subtitle_pipeline' has no attribute {name!r}")
 
 __all__ = [
     "run_subtitle_pipeline",
+    "run_subtitle_pipeline_detailed",
     "Segment",
     "SubtitleConfig",
+    "PipelineResult",
     "CaptionFlowError",
     "ConfigError",
     "ExportError",
