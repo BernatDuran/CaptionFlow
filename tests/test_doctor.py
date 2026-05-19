@@ -11,7 +11,7 @@ def test_run_doctor_reports_successful_environment_when_everything_is_available(
     statuses = {check.name: check.status for check in checks}
 
     assert statuses["ffmpeg executable"] == "pass"
-    assert statuses["faster-whisper"] == "pass"
+    assert statuses["package:transcription:faster-whisper"] == "pass"
     assert statuses["provider:transcription:faster-whisper"] == "pass"
     assert statuses["provider:translation:claude"] == "pass"
     assert statuses["ANTHROPIC_API_KEY"] == "pass"
@@ -84,3 +84,16 @@ def test_run_doctor_provider_key_check_uses_provider_capabilities():
 
     assert by_name["provider:translation:claude"].status == "warn"
     assert "ANTHROPIC_API_KEY" in by_name["provider:translation:claude"].message
+
+
+def test_run_doctor_warns_for_missing_optional_python_packages():
+    checks = run_doctor(
+        which=lambda command: "ffmpeg",
+        find_spec=lambda name: None,
+        environ={"ANTHROPIC_API_KEY": "test-key"},
+    )
+
+    statuses = {check.name: check.status for check in checks}
+
+    assert statuses["package:translation-local:transformers"] == "warn"
+    assert statuses["package:dubbing:numpy"] == "warn"

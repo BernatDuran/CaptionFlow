@@ -1,12 +1,12 @@
 import asyncio
 import os
 
-import edge_tts
-
 from .models import Segment
 
 
 async def _synthesize(text: str, voice: str, output_path: str, rate: int = 0):
+    import edge_tts
+
     rates = f"+{rate}%" if rate >= 0 else f"{rate}%"
     await edge_tts.Communicate(text, voice, rate=rates).save(output_path)
 

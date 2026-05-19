@@ -446,7 +446,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 
 | Avanzado | Cumplimiento | Item | Fase | Resumen | Evidencia actual |
 | --- | ---: | --- | --- | --- | --- |
-| X | 70% | Estabilizacion, tests y diagnostico base | 0-2 | Base de calidad, especificacion, validacion, diagnostico, config persistente y CLI minima. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py`, CLI `config` |
+| X | 80% | Estabilizacion, tests y diagnostico base | 0-2 | Base de calidad, especificacion, validacion, diagnostico por perfiles opcionales, config persistente y CLI minima. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py`, `pyproject.toml` extras, CLI `config` |
 | X | 85% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, seleccion provider/modelo por tarea, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `SubtitleConfig` provider-aware, `PipelineResult`, tests de pipeline con providers falsos |
 |  | 0% | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 | X | 60% | Editor de subtitulos | 4 | Nucleo de edicion puro integrado con proyectos/jobs: texto, tiempos, borrar, unir, dividir, ordenar, snapshots, validacion temporal, borradores JSON y proteccion antes de exportar. | `subtitle_editor.py`, `save_job_subtitle_draft`, `load_job_subtitle_draft`, `write_subtitles` con validacion, tests unitarios |
@@ -456,7 +456,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | X | 30% | Traduccion robusta y glosarios | 7 | Base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
 | X | 30% | Doblaje TTS mejorado | 8 | Base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
 | X | 70% | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, seleccion provider/modelo por transcripcion, traduccion y TTS, validacion provider-aware, errores propios y metadata de ejecucion. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `SubtitleConfig`, CLI provider flags, `ProviderResultMetadata`, `PipelineResult` |
-|  | 0% | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
+| X | 20% | Distribucion y mantenimiento | 10 | Primer paso de empaquetado mantenible con extras opcionales y dependencias pesadas desacopladas. | `pyproject.toml` extras, `requirements.txt` perfil completo, README de instalacion |
 
 ## 7. Orden Recomendado
 

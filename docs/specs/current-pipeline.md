@@ -49,17 +49,36 @@ It checks:
 
 - Python version.
 - `ffmpeg` executable availability.
-- Required Python packages.
+- Optional Python package profiles.
 - `ANTHROPIC_API_KEY` presence.
 - Initial AI provider availability for transcription, translation and TTS.
 
 Expected behavior:
 
 - Missing required runtime dependencies are reported as `FAIL`.
+- Missing optional Python packages are reported as `WARN` with
+  `package:<profile>:<name>` check names.
 - Missing optional credentials are reported as `WARN`.
 - Provider availability is reported using `provider:<task>:<name>` check names.
 - The command exits with code `1` when at least one check fails.
 - The command exits with code `0` when there are only passing checks or warnings.
+
+### 3.1.1 Dependency Profiles
+
+The base package has no mandatory Python runtime dependencies beyond the
+standard library. Optional extras install feature profiles:
+
+- `media`: `ffmpeg-python`
+- `transcription`: `faster-whisper`, `torch`
+- `translation-api`: `anthropic`
+- `translation-local`: `transformers`, `torch`, `sentencepiece`
+- `tts`: `edge-tts`
+- `dubbing`: `numpy`, `soundfile`, `librosa`
+- `all`: full end-to-end runtime stack
+
+Heavy provider and media dependencies should be imported lazily so CLI help,
+configuration, projects, editor operations and tests can run without installing
+the complete stack.
 
 ### 3.2 Validate Configuration
 

@@ -19,16 +19,16 @@ class DoctorCheck:
 
 
 PACKAGE_CHECKS = {
-    "ffmpeg-python": "ffmpeg",
-    "faster-whisper": "faster_whisper",
-    "transformers": "transformers",
-    "torch": "torch",
-    "sentencepiece": "sentencepiece",
-    "anthropic": "anthropic",
-    "edge-tts": "edge_tts",
-    "numpy": "numpy",
-    "soundfile": "soundfile",
-    "librosa": "librosa",
+    "media:ffmpeg-python": "ffmpeg",
+    "transcription:faster-whisper": "faster_whisper",
+    "transcription:torch": "torch",
+    "translation-local:transformers": "transformers",
+    "translation-local:sentencepiece": "sentencepiece",
+    "translation-api:anthropic": "anthropic",
+    "tts:edge-tts": "edge_tts",
+    "dubbing:numpy": "numpy",
+    "dubbing:soundfile": "soundfile",
+    "dubbing:librosa": "librosa",
 }
 
 
@@ -79,17 +79,18 @@ def _check_python_packages(
     find_spec: Callable[[str], object | None],
 ) -> list[DoctorCheck]:
     checks = []
-    for display_name, import_name in PACKAGE_CHECKS.items():
+    for check_name, import_name in PACKAGE_CHECKS.items():
+        profile, display_name = check_name.split(":", 1)
         if find_spec(import_name) is None:
             checks.append(
                 DoctorCheck(
-                    display_name,
-                    "fail",
-                    f"Python package '{import_name}' is not importable",
+                    f"package:{profile}:{display_name}",
+                    "warn",
+                    f"optional Python package '{import_name}' is not importable",
                 )
             )
         else:
-            checks.append(DoctorCheck(display_name, "pass", "importable"))
+            checks.append(DoctorCheck(f"package:{profile}:{display_name}", "pass", "importable"))
     return checks
 
 

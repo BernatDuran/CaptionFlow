@@ -19,14 +19,39 @@ Es util para traducir videos, preparar subtitulos para edicion y crear versiones
 
 - Python 3.10 o superior.
 - `ffmpeg` instalado y disponible en el `PATH`.
-- Dependencias Python del archivo `requirements.txt`.
 - Clave de Anthropic si se usa el traductor `claude`.
 
-Instalacion basica:
+Instalacion ligera para usar CLI, configuracion, proyectos y editor:
+
+```bash
+pip install -e .
+```
+
+Instalacion por perfiles:
+
+```bash
+pip install -e ".[media,transcription,translation-api]"
+pip install -e ".[media,transcription,translation-local]"
+pip install -e ".[media,transcription,translation-api,tts,dubbing]"
+```
+
+Instalacion completa equivalente al flujo actual:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+Perfiles disponibles:
+
+| Extra | Incluye |
+| --- | --- |
+| `media` | Extraccion y procesamiento con `ffmpeg-python` |
+| `transcription` | `faster-whisper` y `torch` |
+| `translation-api` | Traduccion remota con Anthropic |
+| `translation-local` | Traduccion local con NLLB, Transformers y SentencePiece |
+| `tts` | Sintesis con Edge-TTS |
+| `dubbing` | Mezcla de audio con NumPy, SoundFile y Librosa |
+| `all` | Todas las dependencias anteriores |
 
 ## Uso rapido
 

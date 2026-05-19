@@ -1,13 +1,13 @@
 import os
 import subprocess
-import numpy as np
-import soundfile as sf
 
 from .errors import ExportError
 from .models import Segment
 
 
 def get_audio_duration(path: str) -> float:
+    import soundfile as sf
+
     info = sf.info(path)
     return info.duration
 
@@ -41,6 +41,9 @@ def merge_segments_to_track(
     sample_rate: int = 24000,
 ) -> str:
     """Merge individual audio segments into a single track aligned to timestamps."""
+    import numpy as np
+    import soundfile as sf
+
     if not segments:
         raise ExportError("No segments to merge")
 

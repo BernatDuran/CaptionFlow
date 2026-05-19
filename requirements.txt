@@ -1,5 +1,10 @@
-faster-whisper>=1.0.0
+# Full runtime profile for the current end-to-end CaptionFlow pipeline.
+# For lighter installs, prefer pyproject extras, for example:
+#   pip install -e ".[media,transcription,translation-api]"
+#   pip install -e ".[media,transcription,translation-local,tts,dubbing]"
+
 ffmpeg-python>=0.2.0
+faster-whisper>=1.0.0
 transformers>=4.34.0
 torch>=2.0.0
 sentencepiece

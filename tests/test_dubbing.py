@@ -59,3 +59,9 @@ def test_run_dubbing_pipeline_detailed_emits_events(tmp_path, monkeypatch):
         ("dub", "completed"),
     ]
     assert events[1].details == {"synthesized_count": 1}
+
+
+def test_dubbing_module_does_not_import_audio_mixer_until_needed():
+    import sys
+
+    assert "subtitle_pipeline.audio_mixer" not in sys.modules
