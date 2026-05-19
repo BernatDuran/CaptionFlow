@@ -450,7 +450,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | X | 75% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
 |  | 0% | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 | X | 60% | Editor de subtitulos | 4 | Nucleo de edicion puro integrado con proyectos/jobs: texto, tiempos, borrar, unir, dividir, ordenar, snapshots, validacion temporal, borradores JSON y proteccion antes de exportar. | `subtitle_editor.py`, `save_job_subtitle_draft`, `load_job_subtitle_draft`, `write_subtitles` con validacion, tests unitarios |
-| X | 35% | Cola de trabajos e historial | 3 | Proyectos, jobs, estados reales, persistencia y orquestador minimo. | `projects.py`, `job_runner.py`, CLI `project`, persistencia JSON |
+| X | 45% | Cola de trabajos e historial | 3 | Proyectos, jobs, estados reales, persistencia, orquestador minimo y eventos de progreso reutilizables por CLI/UI. | `projects.py`, `job_runner.py`, `progress.py`, CLI `project`, persistencia JSON |
 |  | 0% | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
 |  | 0% | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
 | X | 30% | Traduccion robusta y glosarios | 7 | Base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |

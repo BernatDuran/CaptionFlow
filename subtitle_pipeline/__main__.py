@@ -7,6 +7,7 @@ from .app_config import load_app_config, save_app_config
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
 from .models import SubtitleConfig
+from .progress import console_event_sink
 from .projects import add_job, create_project, load_project, save_project
 
 
@@ -100,7 +101,7 @@ def main(argv: list[str] | None = None):
     try:
         from .pipeline import run_subtitle_pipeline
 
-        run_subtitle_pipeline(config)
+        run_subtitle_pipeline(config, event_sink=console_event_sink)
     except ConfigError as exc:
         print(f"Configuration error: {exc}", file=sys.stderr)
         raise SystemExit(2) from exc

@@ -5,6 +5,7 @@ import tempfile
 from .models import PipelineResult, SubtitleConfig
 from .audio_extractor import extract_audio
 from .formatter import write_subtitles
+from .progress import EventSink, emit_event
 from .providers import (
     TranscriptionProvider,
     TranslationProvider,
@@ -34,11 +35,13 @@ def run_subtitle_pipeline(
     config: SubtitleConfig,
     transcription_provider: TranscriptionProvider | None = None,
     translation_provider: TranslationProvider | None = None,
+    event_sink: EventSink | None = None,
 ) -> list[str]:
     result = run_subtitle_pipeline_detailed(
         config,
         transcription_provider,
         translation_provider,
+        event_sink,
     )
     return result.output_files
 
@@ -47,6 +50,7 @@ def run_subtitle_pipeline_detailed(
     config: SubtitleConfig,
     transcription_provider: TranscriptionProvider | None = None,
     translation_provider: TranslationProvider | None = None,
+    event_sink: EventSink | None = None,
 ) -> PipelineResult:
     validate_config(config)
     transcription_provider = transcription_provider or create_transcription_provider(config)
@@ -57,28 +61,65 @@ def run_subtitle_pipeline_detailed(
 
     try:
         # 1. Extract audio
-        print(f"Extracting audio from {config.input_path}...")
+        emit_event(
+            event_sink,
+            "extract",
+            "started",
+            f"Extracting audio from {config.input_path}...",
+            details={"input_path": config.input_path},
+        )
         audio_path = extract_audio(
             config.input_path,
             os.path.join(tmp_dir, f"{base_name}.wav"),
         )
+        emit_event(
+            event_sink,
+            "extract",
+            "completed",
+            f"Audio extracted: {audio_path}",
+            details={"audio_path": audio_path},
+        )
 
         # 2. Transcribe
         provider_config = transcription_provider.config
-        print(f"Transcribing with {provider_config.name} ({provider_config.model})...")
+        emit_event(
+            event_sink,
+            "transcribe",
+            "started",
+            f"Transcribing with {provider_config.name} ({provider_config.model})...",
+            details={
+                "provider": provider_config.name,
+                "model": provider_config.model,
+            },
+        )
         transcription = transcription_provider.transcribe(audio_path, config.source_lang)
         provider_metadata.append(transcription.metadata)
         segments = transcription.segments
-        print(f"  {len(segments)} segments found.")
+        emit_event(
+            event_sink,
+            "transcribe",
+            "completed",
+            f"  {len(segments)} segments found.",
+            details={"segment_count": len(segments)},
+        )
 
         # 3. Translate (skip if same language)
         use_translated = False
         if config.source_lang != config.target_lang:
             translation_provider = translation_provider or create_translation_provider(config)
             provider_config = translation_provider.config
-            print(
+            emit_event(
+                event_sink,
+                "translate",
+                "started",
                 f"Translating {config.source_lang} -> {config.target_lang} "
-                f"({provider_config.name}/{provider_config.model})..."
+                f"({provider_config.name}/{provider_config.model})...",
+                details={
+                    "source_lang": config.source_lang,
+                    "target_lang": config.target_lang,
+                    "provider": provider_config.name,
+                    "model": provider_config.model,
+                },
             )
             translation = translation_provider.translate_segments(
                 segments,
@@ -88,14 +129,26 @@ def run_subtitle_pipeline_detailed(
             provider_metadata.append(translation.metadata)
             segments = translation.segments
             use_translated = True
-            print("  Translation complete.")
+            emit_event(
+                event_sink,
+                "translate",
+                "completed",
+                "  Translation complete.",
+                details={"segment_count": len(segments)},
+            )
 
         # 4. Write subtitle files
         output_files = write_subtitles(
             segments, config.output_dir, base_name, config.formats, use_translated
         )
-        for f in output_files:
-            print(f"  Created: {f}")
+        for output_file in output_files:
+            emit_event(
+                event_sink,
+                "export",
+                "completed",
+                f"  Created: {output_file}",
+                details={"output_file": output_file},
+            )
 
         # 5. Dubbing
         if config.dub:
@@ -105,6 +158,7 @@ def run_subtitle_pipeline_detailed(
                 segments,
                 config,
                 tts_provider=create_tts_provider(config),
+                event_sink=event_sink,
             )
             dubbed_video = dubbing_result.output_video
             provider_metadata.append(dubbing_result.provider_metadata)
@@ -120,10 +174,22 @@ def run_subtitle_pipeline_detailed(
                     f.write(content)
 
             output_video = os.path.join(config.output_dir, f"{base_name}_subtitled.mp4")
-            print("Burning subtitles into video...")
+            emit_event(
+                event_sink,
+                "burn_in",
+                "started",
+                "Burning subtitles into video...",
+                details={"output_video": output_video},
+            )
             _burn_subtitles(config.input_path, srt_path, output_video)
             output_files.append(output_video)
-            print(f"  Created: {output_video}")
+            emit_event(
+                event_sink,
+                "burn_in",
+                "completed",
+                f"  Created: {output_video}",
+                details={"output_file": output_video},
+            )
 
         return PipelineResult(
             output_files=output_files,

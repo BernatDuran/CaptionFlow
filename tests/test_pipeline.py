@@ -108,6 +108,44 @@ def test_run_subtitle_pipeline_detailed_returns_provider_metadata(tmp_path, monk
     assert result.segments[0].translated == "hola-es"
 
 
+def test_run_subtitle_pipeline_detailed_emits_progress_events(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    output_dir = tmp_path / "out"
+    events = []
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.extract_audio",
+        lambda input_file, output_path: output_path,
+    )
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(output_dir),
+        source_lang="en",
+        target_lang="es",
+        translator="nllb",
+    )
+
+    run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider=FakeTranscriptionProvider(),
+        translation_provider=FakeTranslationProvider(),
+        event_sink=events.append,
+    )
+
+    assert [(event.stage, event.status) for event in events] == [
+        ("extract", "started"),
+        ("extract", "completed"),
+        ("transcribe", "started"),
+        ("transcribe", "completed"),
+        ("translate", "started"),
+        ("translate", "completed"),
+        ("export", "completed"),
+    ]
+    assert events[3].details == {"segment_count": 1}
+
+
 def test_run_subtitle_pipeline_skips_translation_for_same_language(tmp_path, monkeypatch):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

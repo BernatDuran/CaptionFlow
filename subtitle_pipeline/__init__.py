@@ -27,6 +27,7 @@ from .subtitle_editor import (
     split_segment,
     validate_segments,
 )
+from .progress import EventSink, PipelineEvent, console_event_sink, emit_event
 from .providers import (
     ProviderCapabilities,
     ProviderAvailabilityCheck,
@@ -134,4 +135,8 @@ __all__ = [
     "snapshot_segments",
     "split_segment",
     "validate_segments",
+    "EventSink",
+    "PipelineEvent",
+    "console_event_sink",
+    "emit_event",
 ]

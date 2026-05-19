@@ -228,6 +228,22 @@ The `run_project_job` orchestrator can execute a job with an injected pipeline r
 - error message on failure
 - persistence after state changes when a project path is provided
 
+Pipeline and dubbing use cases support optional progress events through an
+`EventSink`.
+
+Event contract:
+
+- `PipelineEvent.stage`: `extract`, `transcribe`, `translate`, `export`, `dub`
+  or `burn_in`.
+- `PipelineEvent.status`: `started`, `progress` or `completed`.
+- `PipelineEvent.message`: human-readable status text.
+- `PipelineEvent.details`: structured metadata such as provider, model, output
+  file or segment count.
+
+The use cases do not print directly. The CLI passes `console_event_sink` to
+render progress messages, while future UI or job runners can consume the same
+events without parsing console output.
+
 Jobs can also store edited subtitle drafts:
 
 - `save_job_subtitle_draft(project, job_id, segments)` writes a versioned JSON
