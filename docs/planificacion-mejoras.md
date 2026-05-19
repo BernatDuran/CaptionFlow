@@ -442,6 +442,22 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | 10 | Configuracion avanzada de modelos y proveedores | 9 | Media | Alto |
 | 11 | Distribucion y mantenimiento | 10 | Media | Alto |
 
+### 6.1 Estado de Avance
+
+| Avanzado | Item | Fase | Resumen | Evidencia actual |
+| --- | --- | --- | --- | --- |
+| X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion y diagnostico. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py` |
+| X | Arquitectura provider-ready ligera | 1-2 | Contratos y registry inicial para proveedores IA sin sistema complejo de plugins. | `providers.py`, capacidades iniciales, checks `provider:<task>:<name>` |
+|  | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
+|  | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
+|  | Cola de trabajos e historial | 3 | Proyectos, jobs, estados, reintentos, logs e historial. | Pendiente |
+|  | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
+|  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
+| X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables. | Contratos `TranslationProvider`, registry `claude`/`nllb` |
+| X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables. | Contrato `TTSProvider`, registry `edge-tts` |
+| X | Configuracion avanzada de modelos y proveedores | 9 | Primer modelo de capacidades, disponibilidad y requisitos por proveedor. | `ProviderCapabilities`, `ProviderAvailabilityCheck` |
+|  | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
+
 ## 7. Orden Recomendado
 
 El orden recomendado no es construir primero la UI, sino estabilizar el nucleo:
