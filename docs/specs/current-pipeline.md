@@ -17,13 +17,19 @@ Configuration inputs:
 - `output_dir`: output directory. Created if it does not exist.
 - `source_lang`: source language code. Defaults to `en`.
 - `target_lang`: target language code. Defaults to `es`.
+- `transcription_provider`: transcription provider. Defaults to `faster-whisper`.
+- `transcription_model`: transcription model. Defaults to `model_size`.
 - `model_size`: faster-whisper model size. Defaults to `large-v3`.
 - `device`: `auto`, `cuda` or `cpu`.
 - `formats`: one or more subtitle formats: `srt`, `vtt`, `txt`.
+- `translation_provider`: translation provider. Defaults to `claude`.
+- `translation_model`: optional translation model override.
 - `translator`: `claude` or `nllb`.
 - `api_key`: Anthropic API key when Claude translation is used.
 - `burn_in`: whether to burn subtitles into the video.
 - `dub`: whether to generate a TTS-dubbed video.
+- `tts_provider`: TTS provider. Defaults to `edge-tts`.
+- `tts_model`: TTS model identifier. Defaults to `edge-tts`.
 - `tts_voice`: Edge-TTS voice name.
 - `tts_rate`: Edge-TTS speed adjustment from `-100` to `100`.
 
@@ -63,7 +69,10 @@ The pipeline should fail before starting long-running work when:
 - `output_dir` points to an existing file.
 - Any requested subtitle format is unsupported.
 - The translator is unsupported.
+- Any selected transcription, translation or TTS provider is unsupported for
+  its task.
 - Translation languages are unsupported by the selected translation provider.
+- Dubbing target language is unsupported by the selected TTS provider.
 - The device value is unsupported.
 - `tts_rate` is outside the supported range.
 - A remote translation provider requires an API key and none is available.
@@ -177,10 +186,17 @@ The configuration stores defaults for:
 - languages
 - output directory
 - subtitle formats
-- model size and device
-- translation provider
+- transcription provider, model size and device
+- translation provider and optional model override
+- TTS provider and model identifier
 - TTS voice and speed
 - provider names for transcription, translation and TTS
+
+Legacy aliases remain supported:
+
+- `model_size` maps to `transcription_model` when no explicit transcription
+  model is provided.
+- `translator` maps to `translation_provider` for backward compatibility.
 
 The default path is:
 

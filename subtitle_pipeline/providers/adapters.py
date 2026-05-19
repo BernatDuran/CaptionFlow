@@ -49,12 +49,13 @@ class TranslatorProviderAdapter:
         source_lang: str,
         target_lang: str,
         api_key: str | None = None,
+        model: str | None = None,
     ):
         capabilities = get_provider_capabilities(provider_name)
         self.config = ProviderConfig(
             name=provider_name,
             task="translation",
-            model=default_translation_model(provider_name),
+            model=model or default_translation_model(provider_name),
         )
         self._source_lang = source_lang
         self._target_lang = target_lang
@@ -96,11 +97,11 @@ class TranslatorProviderAdapter:
 
 
 class EdgeTTSProvider:
-    def __init__(self):
+    def __init__(self, model: str = "edge-tts"):
         self.config = ProviderConfig(
             name="edge-tts",
             task="tts",
-            model="edge-tts",
+            model=model,
         )
 
     def capabilities(self) -> ProviderCapabilities:

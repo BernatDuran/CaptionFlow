@@ -25,12 +25,9 @@ def validate_config(config: SubtitleConfig) -> None:
             f"Unsupported device '{config.device}'. Supported: {sorted(SUPPORTED_DEVICES)}"
         )
 
-    supported_translators = list_provider_names(task="translation")
-    if config.translator not in supported_translators:
-        raise ConfigError(
-            f"Unsupported translator '{config.translator}'. "
-            f"Supported: {supported_translators}"
-        )
+    _validate_provider_name(config.transcription_provider, "transcription")
+    _validate_provider_name(config.translation_provider, "translation")
+    _validate_provider_name(config.tts_provider, "tts")
 
     unsupported_formats = sorted(set(config.formats) - SUPPORTED_FORMATS)
     if unsupported_formats:
@@ -49,22 +46,23 @@ def validate_config(config: SubtitleConfig) -> None:
         )
 
     _validate_translation_provider(config)
+    _validate_tts_provider(config)
 
 def _validate_translation_provider(config: SubtitleConfig) -> None:
     if config.source_lang == config.target_lang:
         return
 
-    capabilities = get_provider_capabilities(config.translator)
+    capabilities = get_provider_capabilities(config.translation_provider)
     if config.source_lang not in capabilities.supported_languages:
         raise ConfigError(
             f"Source language '{config.source_lang}' is not supported by "
-            f"translator '{config.translator}'. "
+            f"translation provider '{config.translation_provider}'. "
             f"Supported: {sorted(capabilities.supported_languages)}"
         )
     if config.target_lang not in capabilities.supported_languages:
         raise ConfigError(
             f"Target language '{config.target_lang}' is not supported by "
-            f"translator '{config.translator}'. "
+            f"translation provider '{config.translation_provider}'. "
             f"Supported: {sorted(capabilities.supported_languages)}"
         )
     if capabilities.requires_api_key and not _has_provider_key(
@@ -76,7 +74,29 @@ def _validate_translation_provider(config: SubtitleConfig) -> None:
             if capabilities.api_key_env_var
             else "Configure the provider API key"
         )
-        raise ConfigError(f"API key required for translator '{config.translator}'. {key_hint}")
+        raise ConfigError(
+            f"API key required for translation provider "
+            f"'{config.translation_provider}'. {key_hint}"
+        )
+
+
+def _validate_tts_provider(config: SubtitleConfig) -> None:
+    if not config.dub:
+        return
+
+    capabilities = get_provider_capabilities(config.tts_provider)
+    if config.target_lang not in capabilities.supported_languages:
+        raise ConfigError(
+            f"Target language '{config.target_lang}' is not supported by "
+            f"TTS provider '{config.tts_provider}'. "
+            f"Supported: {sorted(capabilities.supported_languages)}"
+        )
+
+
+def _validate_provider_name(name: str, task: str) -> None:
+    supported = list_provider_names(task=task)
+    if name not in supported:
+        raise ConfigError(f"Unsupported {task} provider '{name}'. Supported: {supported}")
 
 
 def _has_provider_key(config: SubtitleConfig, env_var: str | None) -> bool:

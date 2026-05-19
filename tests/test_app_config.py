@@ -39,7 +39,10 @@ def test_app_config_from_dict_merges_defaults_and_forces_supported_version():
     assert config.version == 1
     assert config.translator == "nllb"
     assert config.formats == ["txt"]
+    assert config.transcription_provider == "faster-whisper"
+    assert config.transcription_model == "large-v3"
     assert config.tts_provider == "edge-tts"
+    assert config.tts_model == "edge-tts"
 
 
 def test_default_config_path_uses_captionflow_directory(tmp_path):

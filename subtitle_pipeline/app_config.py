@@ -19,8 +19,11 @@ class AppConfig:
     tts_voice: str = "es-ES-AlvaroNeural"
     tts_rate: int = 0
     transcription_provider: str = "faster-whisper"
+    transcription_model: str = "large-v3"
     translation_provider: str = "claude"
+    translation_model: str | None = None
     tts_provider: str = "edge-tts"
+    tts_model: str = "edge-tts"
 
 
 def default_config_path(home: Path | None = None) -> Path:

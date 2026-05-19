@@ -447,7 +447,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | Avanzado | Cumplimiento | Item | Fase | Resumen | Evidencia actual |
 | --- | ---: | --- | --- | --- | --- |
 | X | 70% | Estabilizacion, tests y diagnostico base | 0-2 | Base de calidad, especificacion, validacion, diagnostico, config persistente y CLI minima. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py`, CLI `config` |
-| X | 75% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
+| X | 85% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, seleccion provider/modelo por tarea, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `SubtitleConfig` provider-aware, `PipelineResult`, tests de pipeline con providers falsos |
 |  | 0% | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 | X | 60% | Editor de subtitulos | 4 | Nucleo de edicion puro integrado con proyectos/jobs: texto, tiempos, borrar, unir, dividir, ordenar, snapshots, validacion temporal, borradores JSON y proteccion antes de exportar. | `subtitle_editor.py`, `save_job_subtitle_draft`, `load_job_subtitle_draft`, `write_subtitles` con validacion, tests unitarios |
 | X | 45% | Cola de trabajos e historial | 3 | Proyectos, jobs, estados reales, persistencia, orquestador minimo y eventos de progreso reutilizables por CLI/UI. | `projects.py`, `job_runner.py`, `progress.py`, CLI `project`, persistencia JSON |
@@ -455,7 +455,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 |  | 0% | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
 | X | 30% | Traduccion robusta y glosarios | 7 | Base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
 | X | 30% | Doblaje TTS mejorado | 8 | Base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
-| X | 55% | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, validacion provider-aware, errores propios y metadata de ejecucion. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `ProviderResultMetadata`, `PipelineResult` |
+| X | 70% | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, seleccion provider/modelo por transcripcion, traduccion y TTS, validacion provider-aware, errores propios y metadata de ejecucion. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `SubtitleConfig`, CLI provider flags, `ProviderResultMetadata`, `PipelineResult` |
 |  | 0% | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
 
 ## 7. Orden Recomendado

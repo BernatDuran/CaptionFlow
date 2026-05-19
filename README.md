@@ -100,12 +100,18 @@ out/video_dubbed.mp4
 | `--target-lang` | Idioma de salida | `es` |
 | `--output-dir` | Carpeta de salida | `./output` |
 | `--model-size` | Modelo de Whisper | `large-v3` |
+| `--transcription-provider` | Proveedor de transcripcion | `faster-whisper` |
+| `--transcription-model` | Modelo de transcripcion | Valor de `--model-size` |
 | `--device` | `auto`, `cuda` o `cpu` | `auto` |
 | `--formats` | Formatos de subtitulos: `srt`, `vtt`, `txt` | `srt` |
 | `--translator` | Motor de traduccion: `claude` o `nllb` | `claude` |
+| `--translation-provider` | Proveedor de traduccion, reemplaza `--translator` | `claude` |
+| `--translation-model` | Modelo de traduccion opcional | Modelo por defecto del proveedor |
 | `--api-key` | Clave API de Anthropic | Variable `ANTHROPIC_API_KEY` |
 | `--burn-in` | Incrusta subtitulos en el video | Desactivado |
 | `--dub` | Genera video doblado | Desactivado |
+| `--tts-provider` | Proveedor TTS | `edge-tts` |
+| `--tts-model` | Modelo TTS | `edge-tts` |
 | `--tts-voice` | Voz de Edge-TTS | `es-ES-AlvaroNeural` |
 | `--tts-rate` | Velocidad TTS de `-100` a `100` | `0` |
 

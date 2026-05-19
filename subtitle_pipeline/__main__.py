@@ -8,6 +8,7 @@ from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
 from .models import SubtitleConfig
 from .progress import console_event_sink
+from .providers import list_provider_names
 from .projects import add_job, create_project, load_project, save_project
 
 
@@ -38,7 +39,18 @@ def main(argv: list[str] | None = None):
     parser.add_argument(
         "--model-size",
         default="large-v3",
-        help="Whisper model size (default: large-v3)",
+        help="Legacy alias for --transcription-model (default: large-v3)",
+    )
+    parser.add_argument(
+        "--transcription-provider",
+        default="faster-whisper",
+        choices=list_provider_names(task="transcription"),
+        help="Transcription provider (default: faster-whisper)",
+    )
+    parser.add_argument(
+        "--transcription-model",
+        default=None,
+        help="Transcription model (default: value of --model-size)",
     )
     parser.add_argument("--device", default="auto", help="Device: auto, cuda, cpu (default: auto)")
     parser.add_argument(
@@ -56,11 +68,22 @@ def main(argv: list[str] | None = None):
     parser.add_argument(
         "--translator",
         default="claude",
-        choices=["claude", "nllb"],
+        choices=list_provider_names(task="translation"),
         help=(
-            "Translation engine: claude (API, best quality) or nllb "
+            "Legacy alias for --translation-provider: claude (API) or nllb "
             "(local, offline) (default: claude)"
         ),
+    )
+    parser.add_argument(
+        "--translation-provider",
+        default=None,
+        choices=list_provider_names(task="translation"),
+        help="Translation provider. Overrides --translator when provided.",
+    )
+    parser.add_argument(
+        "--translation-model",
+        default=None,
+        help="Translation model override for the selected provider.",
     )
     parser.add_argument(
         "--api-key",
@@ -69,6 +92,17 @@ def main(argv: list[str] | None = None):
     )
     # Dubbing options
     parser.add_argument("--dub", action="store_true", help="Generate dubbed video with TTS")
+    parser.add_argument(
+        "--tts-provider",
+        default="edge-tts",
+        choices=list_provider_names(task="tts"),
+        help="TTS provider (default: edge-tts)",
+    )
+    parser.add_argument(
+        "--tts-model",
+        default="edge-tts",
+        help="TTS model identifier (default: edge-tts)",
+    )
     parser.add_argument(
         "--tts-voice",
         default="es-ES-AlvaroNeural",
@@ -87,13 +121,19 @@ def main(argv: list[str] | None = None):
         output_dir=args.output_dir,
         source_lang=args.source_lang,
         target_lang=args.target_lang,
+        transcription_provider=args.transcription_provider,
+        transcription_model=args.transcription_model or args.model_size,
         model_size=args.model_size,
         device=args.device,
         formats=args.formats,
         burn_in=args.burn_in,
+        translation_provider=args.translation_provider or args.translator,
+        translation_model=args.translation_model,
         translator=args.translator,
         api_key=args.api_key,
         dub=args.dub,
+        tts_provider=args.tts_provider,
+        tts_model=args.tts_model,
         tts_voice=args.tts_voice,
         tts_rate=args.tts_rate,
     )

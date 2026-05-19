@@ -50,3 +50,53 @@ def test_project_create_add_job_and_list(tmp_path, capsys):
     assert job.id in output
     assert "pending" in output
     assert "video.mp4" in output
+
+
+def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    captured = {}
+
+    def fake_run_subtitle_pipeline(config, event_sink=None):
+        captured["config"] = config
+        captured["event_sink"] = event_sink
+        return []
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.run_subtitle_pipeline",
+        fake_run_subtitle_pipeline,
+    )
+
+    main(
+        [
+            "--input",
+            str(input_path),
+            "--output-dir",
+            str(tmp_path / "out"),
+            "--source-lang",
+            "es",
+            "--target-lang",
+            "es",
+            "--transcription-provider",
+            "faster-whisper",
+            "--transcription-model",
+            "base",
+            "--translation-provider",
+            "nllb",
+            "--translation-model",
+            "custom-nllb",
+            "--tts-provider",
+            "edge-tts",
+            "--tts-model",
+            "edge-custom",
+        ]
+    )
+
+    config = captured["config"]
+    assert config.transcription_provider == "faster-whisper"
+    assert config.transcription_model == "base"
+    assert config.translation_provider == "nllb"
+    assert config.translation_model == "custom-nllb"
+    assert config.tts_provider == "edge-tts"
+    assert config.tts_model == "edge-custom"
+    assert captured["event_sink"] is not None

@@ -66,7 +66,7 @@ def test_validate_config_requires_claude_key_when_translation_needed(tmp_path, m
         api_key=None,
     )
 
-    with pytest.raises(ConfigError, match="API key required for translator 'claude'"):
+    with pytest.raises(ConfigError, match="API key required for translation provider 'claude'"):
         validate_config(config)
 
 
@@ -120,7 +120,7 @@ def test_validate_config_uses_explicit_api_key_without_environment(tmp_path, mon
     validate_config(config)
 
 
-def test_validate_config_rejects_unsupported_translator_from_registry(tmp_path):
+def test_validate_config_rejects_unsupported_translation_provider_from_registry(tmp_path):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")
 
@@ -129,10 +129,10 @@ def test_validate_config_rejects_unsupported_translator_from_registry(tmp_path):
         output_dir=str(tmp_path / "out"),
         source_lang="en",
         target_lang="es",
-        translator="unknown",
+        translation_provider="unknown",
     )
 
-    with pytest.raises(ConfigError, match="Unsupported translator 'unknown'"):
+    with pytest.raises(ConfigError, match="Unsupported translation provider 'unknown'"):
         validate_config(config)
 
 
@@ -145,7 +145,7 @@ def test_validate_config_rejects_source_language_unsupported_by_provider(tmp_pat
         output_dir=str(tmp_path / "out"),
         source_lang="ca",
         target_lang="es",
-        translator="nllb",
+        translation_provider="nllb",
     )
 
     with pytest.raises(ConfigError, match="Source language 'ca' is not supported"):
@@ -161,8 +161,39 @@ def test_validate_config_rejects_target_language_unsupported_by_provider(tmp_pat
         output_dir=str(tmp_path / "out"),
         source_lang="en",
         target_lang="ca",
-        translator="nllb",
+        translation_provider="nllb",
     )
 
     with pytest.raises(ConfigError, match="Target language 'ca' is not supported"):
+        validate_config(config)
+
+
+def test_validate_config_rejects_unsupported_transcription_provider(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        transcription_provider="unknown",
+    )
+
+    with pytest.raises(ConfigError, match="Unsupported transcription provider 'unknown'"):
+        validate_config(config)
+
+
+def test_validate_config_rejects_unsupported_tts_provider_when_dubbing(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="es",
+        target_lang="es",
+        dub=True,
+        tts_provider="unknown",
+    )
+
+    with pytest.raises(ConfigError, match="Unsupported tts provider 'unknown'"):
         validate_config(config)
