@@ -1,4 +1,3 @@
-from .pipeline import run_subtitle_pipeline
 from .models import Segment, SubtitleConfig
 from .providers import (
     ProviderCapabilities,
@@ -11,6 +10,14 @@ from .providers import (
     TranslationProvider,
     TranslationResult,
 )
+
+
+def __getattr__(name: str):
+    if name == "run_subtitle_pipeline":
+        from .pipeline import run_subtitle_pipeline
+
+        return run_subtitle_pipeline
+    raise AttributeError(f"module 'subtitle_pipeline' has no attribute {name!r}")
 
 __all__ = [
     "run_subtitle_pipeline",

@@ -7,3 +7,5 @@ out/
 *.wav
 *.mp3
 .env
+.codex_pydeps/
+.pytest_cache/
