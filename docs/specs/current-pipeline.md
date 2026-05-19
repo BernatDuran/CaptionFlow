@@ -79,7 +79,8 @@ Expected behavior:
 
 ### 3.4 Transcribe
 
-The pipeline uses `faster-whisper` to produce ordered transcript segments.
+The pipeline uses a `TranscriptionProvider` to produce ordered transcript segments.
+The default provider is `faster-whisper`.
 
 Each segment contains:
 
@@ -96,6 +97,8 @@ If languages differ:
 
 - `translator=claude` uses the Anthropic API.
 - `translator=nllb` uses the local NLLB model.
+
+Translation is routed through a `TranslationProvider`.
 
 The translated text is stored in each segment's `translated` field.
 
@@ -123,9 +126,11 @@ If an SRT file was not requested explicitly, one is generated internally before 
 
 When `dub=True`, the pipeline:
 
-1. Synthesizes speech per segment with Edge-TTS.
+1. Synthesizes speech per segment with a `TTSProvider`.
 2. Aligns generated audio to segment timestamps.
 3. Replaces the original video audio track.
+
+The default TTS provider is Edge-TTS.
 
 Expected output:
 

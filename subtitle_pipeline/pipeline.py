@@ -4,9 +4,14 @@ import tempfile
 
 from .models import SubtitleConfig
 from .audio_extractor import extract_audio
-from .transcriber import FasterWhisperTranscriber
-from .translator import NLLBTranslator, ClaudeTranslator
 from .formatter import write_subtitles
+from .providers import (
+    TranscriptionProvider,
+    TranslationProvider,
+    create_transcription_provider,
+    create_translation_provider,
+    create_tts_provider,
+)
 from .validation import validate_config
 
 
@@ -25,8 +30,13 @@ def _burn_subtitles(video_path: str, srt_path: str, output_path: str):
     )
 
 
-def run_subtitle_pipeline(config: SubtitleConfig) -> list[str]:
+def run_subtitle_pipeline(
+    config: SubtitleConfig,
+    transcription_provider: TranscriptionProvider | None = None,
+    translation_provider: TranslationProvider | None = None,
+) -> list[str]:
     validate_config(config)
+    transcription_provider = transcription_provider or create_transcription_provider(config)
 
     base_name = os.path.splitext(os.path.basename(config.input_path))[0]
     tmp_dir = tempfile.mkdtemp(prefix="subtitle_")
@@ -40,28 +50,27 @@ def run_subtitle_pipeline(config: SubtitleConfig) -> list[str]:
         )
 
         # 2. Transcribe
-        print(f"Transcribing with faster-whisper ({config.model_size})...")
-        transcriber = FasterWhisperTranscriber(config.model_size, config.device)
-        segments = transcriber.transcribe(audio_path, config.source_lang)
+        provider_config = transcription_provider.config
+        print(f"Transcribing with {provider_config.name} ({provider_config.model})...")
+        transcription = transcription_provider.transcribe(audio_path, config.source_lang)
+        segments = transcription.segments
         print(f"  {len(segments)} segments found.")
 
         # 3. Translate (skip if same language)
         use_translated = False
         if config.source_lang != config.target_lang:
-            if config.translator == "claude":
-                print(
-                    f"Translating {config.source_lang} -> {config.target_lang} "
-                    "(Claude Sonnet)..."
-                )
-                translator = ClaudeTranslator(
-                    config.source_lang,
-                    config.target_lang,
-                    api_key=config.api_key,
-                )
-            else:
-                print(f"Translating {config.source_lang} -> {config.target_lang} (NLLB-200)...")
-                translator = NLLBTranslator(config.source_lang, config.target_lang)
-            segments = translator.translate_segments(segments)
+            translation_provider = translation_provider or create_translation_provider(config)
+            provider_config = translation_provider.config
+            print(
+                f"Translating {config.source_lang} -> {config.target_lang} "
+                f"({provider_config.name}/{provider_config.model})..."
+            )
+            translation = translation_provider.translate_segments(
+                segments,
+                config.source_lang,
+                config.target_lang,
+            )
+            segments = translation.segments
             use_translated = True
             print("  Translation complete.")
 
@@ -75,7 +84,12 @@ def run_subtitle_pipeline(config: SubtitleConfig) -> list[str]:
         # 5. Dubbing
         if config.dub:
             from .dubbing import run_dubbing_pipeline
-            dubbed_video = run_dubbing_pipeline(segments, config)
+
+            dubbed_video = run_dubbing_pipeline(
+                segments,
+                config,
+                tts_provider=create_tts_provider(config),
+            )
             output_files.append(dubbed_video)
 
         # 6. Burn subtitles into video

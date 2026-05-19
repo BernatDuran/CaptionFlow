@@ -447,14 +447,14 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | Avanzado | Item | Fase | Resumen | Evidencia actual |
 | --- | --- | --- | --- | --- |
 | X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion y diagnostico. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py` |
-| X | Arquitectura provider-ready ligera | 1-2 | Contratos y registry inicial para proveedores IA sin sistema complejo de plugins. | `providers.py`, capacidades iniciales, checks `provider:<task>:<name>` |
+| X | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories e inyeccion de providers en el pipeline. | `providers.py`, `create_*_provider`, tests de pipeline con providers falsos |
 |  | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 |  | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
 |  | Cola de trabajos e historial | 3 | Proyectos, jobs, estados, reintentos, logs e historial. | Pendiente |
 |  | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
 |  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
-| X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables. | Contratos `TranslationProvider`, registry `claude`/`nllb` |
-| X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables. | Contrato `TTSProvider`, registry `edge-tts` |
+| X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
+| X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
 | X | Configuracion avanzada de modelos y proveedores | 9 | Primer modelo de capacidades, disponibilidad y requisitos por proveedor. | `ProviderCapabilities`, `ProviderAvailabilityCheck` |
 |  | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
 

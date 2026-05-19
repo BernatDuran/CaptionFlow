@@ -1,8 +1,6 @@
 import os
 import tempfile
 
-import ffmpeg
-
 
 def extract_audio(
     video_path: str,
@@ -18,6 +16,8 @@ def extract_audio(
         output_path = os.path.join(tmp_dir, f"{base}.wav")
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    import ffmpeg
 
     (
         ffmpeg.input(video_path)
