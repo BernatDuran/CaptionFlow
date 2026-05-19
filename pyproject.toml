@@ -1,0 +1,8 @@
+[project]
+name = "subtitle-pipeline"
+version = "0.1.0"
+description = "Local video transcription and translation to subtitles"
+requires-python = ">=3.10"
+
+[project.scripts]
+subtitle-pipeline = "subtitle_pipeline.__main__:main"
