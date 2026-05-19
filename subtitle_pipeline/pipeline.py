@@ -7,6 +7,7 @@ from .audio_extractor import extract_audio
 from .transcriber import FasterWhisperTranscriber
 from .translator import NLLBTranslator, ClaudeTranslator
 from .formatter import write_subtitles
+from .validation import validate_config
 
 
 def _burn_subtitles(video_path: str, srt_path: str, output_path: str):
@@ -25,6 +26,8 @@ def _burn_subtitles(video_path: str, srt_path: str, output_path: str):
 
 
 def run_subtitle_pipeline(config: SubtitleConfig) -> list[str]:
+    validate_config(config)
+
     base_name = os.path.splitext(os.path.basename(config.input_path))[0]
     tmp_dir = tempfile.mkdtemp(prefix="subtitle_")
 
@@ -46,8 +49,15 @@ def run_subtitle_pipeline(config: SubtitleConfig) -> list[str]:
         use_translated = False
         if config.source_lang != config.target_lang:
             if config.translator == "claude":
-                print(f"Translating {config.source_lang} -> {config.target_lang} (Claude Sonnet)...")
-                translator = ClaudeTranslator(config.source_lang, config.target_lang, api_key=config.api_key)
+                print(
+                    f"Translating {config.source_lang} -> {config.target_lang} "
+                    "(Claude Sonnet)..."
+                )
+                translator = ClaudeTranslator(
+                    config.source_lang,
+                    config.target_lang,
+                    api_key=config.api_key,
+                )
             else:
                 print(f"Translating {config.source_lang} -> {config.target_lang} (NLLB-200)...")
                 translator = NLLBTranslator(config.source_lang, config.target_lang)

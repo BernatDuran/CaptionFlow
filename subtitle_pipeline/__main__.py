@@ -1,7 +1,9 @@
 import argparse
+import sys
 
 from .models import SubtitleConfig
 from .pipeline import run_subtitle_pipeline
+from .validation import ConfigError
 
 
 def main():
@@ -11,8 +13,16 @@ def main():
     parser.add_argument("--input", required=True, help="Path to the input video/audio file")
     parser.add_argument("--source-lang", default="en", help="Source language (default: en)")
     parser.add_argument("--target-lang", default="es", help="Target language (default: es)")
-    parser.add_argument("--output-dir", default="./output", help="Output directory (default: ./output)")
-    parser.add_argument("--model-size", default="large-v3", help="Whisper model size (default: large-v3)")
+    parser.add_argument(
+        "--output-dir",
+        default="./output",
+        help="Output directory (default: ./output)",
+    )
+    parser.add_argument(
+        "--model-size",
+        default="large-v3",
+        help="Whisper model size (default: large-v3)",
+    )
     parser.add_argument("--device", default="auto", help="Device: auto, cuda, cpu (default: auto)")
     parser.add_argument(
         "--formats",
@@ -30,13 +40,29 @@ def main():
         "--translator",
         default="claude",
         choices=["claude", "nllb"],
-        help="Translation engine: claude (API, best quality) or nllb (local, offline) (default: claude)",
+        help=(
+            "Translation engine: claude (API, best quality) or nllb "
+            "(local, offline) (default: claude)"
+        ),
     )
-    parser.add_argument("--api-key", default=None, help="Anthropic API key (or set ANTHROPIC_API_KEY env var)")
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="Anthropic API key (or set ANTHROPIC_API_KEY env var)",
+    )
     # Dubbing options
     parser.add_argument("--dub", action="store_true", help="Generate dubbed video with TTS")
-    parser.add_argument("--tts-voice", default="es-ES-AlvaroNeural", help="Edge-TTS voice (default: es-ES-AlvaroNeural)")
-    parser.add_argument("--tts-rate", type=int, default=0, help="TTS speed adjustment -100 to 100 (default: 0)")
+    parser.add_argument(
+        "--tts-voice",
+        default="es-ES-AlvaroNeural",
+        help="Edge-TTS voice (default: es-ES-AlvaroNeural)",
+    )
+    parser.add_argument(
+        "--tts-rate",
+        type=int,
+        default=0,
+        help="TTS speed adjustment -100 to 100 (default: 0)",
+    )
     args = parser.parse_args()
 
     config = SubtitleConfig(
@@ -55,7 +81,11 @@ def main():
         tts_rate=args.tts_rate,
     )
 
-    run_subtitle_pipeline(config)
+    try:
+        run_subtitle_pipeline(config)
+    except ConfigError as exc:
+        print(f"Configuration error: {exc}", file=sys.stderr)
+        raise SystemExit(2) from exc
 
 
 if __name__ == "__main__":
