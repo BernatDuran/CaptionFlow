@@ -12,6 +12,8 @@ def test_run_doctor_reports_successful_environment_when_everything_is_available(
 
     assert statuses["ffmpeg executable"] == "pass"
     assert statuses["faster-whisper"] == "pass"
+    assert statuses["provider:transcription:faster-whisper"] == "pass"
+    assert statuses["provider:translation:claude"] == "pass"
     assert statuses["ANTHROPIC_API_KEY"] == "pass"
     assert doctor_exit_code(checks) == 0
 
@@ -39,7 +41,22 @@ def test_run_doctor_warns_when_anthropic_key_is_missing():
     statuses = {check.name: check.status for check in checks}
 
     assert statuses["ANTHROPIC_API_KEY"] == "warn"
+    assert statuses["provider:translation:claude"] == "warn"
     assert doctor_exit_code(checks) == 0
+
+
+def test_run_doctor_reports_provider_dependency_failures():
+    checks = run_doctor(
+        which=lambda command: "ffmpeg",
+        find_spec=lambda name: None,
+        environ={"ANTHROPIC_API_KEY": "test-key"},
+    )
+
+    statuses = {check.name: check.status for check in checks}
+
+    assert statuses["provider:transcription:faster-whisper"] == "fail"
+    assert statuses["provider:translation:claude"] == "fail"
+    assert doctor_exit_code(checks) == 1
 
 
 def test_format_doctor_report_is_human_readable():

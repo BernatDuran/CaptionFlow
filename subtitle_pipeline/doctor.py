@@ -6,6 +6,8 @@ import sys
 from dataclasses import dataclass
 from typing import Callable, Literal
 
+from .providers import check_provider_availability, list_provider_capabilities
+
 CheckStatus = Literal["pass", "warn", "fail"]
 
 
@@ -42,6 +44,7 @@ def run_doctor(
         _check_ffmpeg_binary(which),
         *_check_python_packages(find_spec),
         _check_anthropic_key(env),
+        *_check_ai_providers(find_spec, env),
     ]
     return checks
 
@@ -98,3 +101,45 @@ def _check_anthropic_key(environ: dict[str, str]) -> DoctorCheck:
         "warn",
         "not set; required only when using translator=claude between different languages",
     )
+
+
+def _check_ai_providers(
+    find_spec: Callable[[str], object | None],
+    environ: dict[str, str],
+) -> list[DoctorCheck]:
+    checks = []
+    for capabilities in list_provider_capabilities():
+        availability = check_provider_availability(
+            capabilities,
+            has_package=_has_package(capabilities.package, find_spec),
+            has_api_key=_has_required_key(capabilities.name, environ),
+        )
+        checks.append(
+            DoctorCheck(
+                name=f"provider:{availability.task}:{availability.name}",
+                status=_provider_status_to_doctor_status(availability.status),
+                message=availability.message,
+            )
+        )
+    return checks
+
+
+def _has_package(
+    package: str | None,
+    find_spec: Callable[[str], object | None],
+) -> bool:
+    return package is None or find_spec(package) is not None
+
+
+def _has_required_key(provider_name: str, environ: dict[str, str]) -> bool:
+    if provider_name == "claude":
+        return bool(environ.get("ANTHROPIC_API_KEY"))
+    return True
+
+
+def _provider_status_to_doctor_status(status: str) -> CheckStatus:
+    if status == "available":
+        return "pass"
+    if status == "missing_api_key":
+        return "warn"
+    return "fail"

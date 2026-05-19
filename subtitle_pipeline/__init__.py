@@ -1,6 +1,7 @@
 from .models import Segment, SubtitleConfig
 from .providers import (
     ProviderCapabilities,
+    ProviderAvailabilityCheck,
     ProviderConfig,
     ProviderResultMetadata,
     TTSProvider,
@@ -9,6 +10,9 @@ from .providers import (
     TranscriptionResult,
     TranslationProvider,
     TranslationResult,
+    check_provider_availability,
+    get_provider_capabilities,
+    list_provider_capabilities,
 )
 
 
@@ -24,6 +28,7 @@ __all__ = [
     "Segment",
     "SubtitleConfig",
     "ProviderCapabilities",
+    "ProviderAvailabilityCheck",
     "ProviderConfig",
     "ProviderResultMetadata",
     "TTSProvider",
@@ -32,4 +37,7 @@ __all__ = [
     "TranscriptionResult",
     "TranslationProvider",
     "TranslationResult",
+    "check_provider_availability",
+    "get_provider_capabilities",
+    "list_provider_capabilities",
 ]

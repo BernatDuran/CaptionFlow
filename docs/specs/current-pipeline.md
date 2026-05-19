@@ -45,11 +45,13 @@ It checks:
 - `ffmpeg` executable availability.
 - Required Python packages.
 - `ANTHROPIC_API_KEY` presence.
+- Initial AI provider availability for transcription, translation and TTS.
 
 Expected behavior:
 
 - Missing required runtime dependencies are reported as `FAIL`.
 - Missing optional credentials are reported as `WARN`.
+- Provider availability is reported using `provider:<task>:<name>` check names.
 - The command exits with code `1` when at least one check fails.
 - The command exits with code `0` when there are only passing checks or warnings.
 

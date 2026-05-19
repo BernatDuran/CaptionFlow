@@ -4,6 +4,9 @@ from subtitle_pipeline.providers import (
     ProviderConfig,
     ProviderResultMetadata,
     TranslationResult,
+    check_provider_availability,
+    get_provider_capabilities,
+    list_provider_capabilities,
 )
 
 
@@ -14,6 +17,7 @@ class FakeTranslationProvider:
         return ProviderCapabilities(
             name="fake",
             task="translation",
+            package=None,
             supports_local_execution=True,
             requires_network=False,
             requires_api_key=False,
@@ -44,3 +48,52 @@ def test_translation_provider_contract_shape():
     assert result.segments[0].translated == "hello-es"
     assert result.metadata.provider == "fake"
     assert provider.capabilities().supported_languages == {"en", "es"}
+
+
+def test_list_provider_capabilities_can_filter_by_task():
+    translation_providers = list_provider_capabilities(task="translation")
+
+    assert {provider.name for provider in translation_providers} == {"claude", "nllb"}
+
+
+def test_get_provider_capabilities_returns_known_provider():
+    capabilities = get_provider_capabilities("faster-whisper")
+
+    assert capabilities.task == "transcription"
+    assert capabilities.package == "faster_whisper"
+
+
+def test_check_provider_availability_reports_missing_dependency_first():
+    capabilities = get_provider_capabilities("claude")
+
+    availability = check_provider_availability(
+        capabilities,
+        has_package=False,
+        has_api_key=False,
+    )
+
+    assert availability.status == "missing_dependency"
+
+
+def test_check_provider_availability_reports_missing_api_key():
+    capabilities = get_provider_capabilities("claude")
+
+    availability = check_provider_availability(
+        capabilities,
+        has_package=True,
+        has_api_key=False,
+    )
+
+    assert availability.status == "missing_api_key"
+
+
+def test_check_provider_availability_reports_available_provider():
+    capabilities = get_provider_capabilities("edge-tts")
+
+    availability = check_provider_availability(
+        capabilities,
+        has_package=True,
+        has_api_key=True,
+    )
+
+    assert availability.status == "available"
