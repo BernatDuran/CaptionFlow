@@ -209,6 +209,7 @@ Project files are stored as JSON and contain:
 - job status
 - output files
 - provider metadata
+- subtitle draft path when a job has edited subtitles
 - error message when a job fails
 
 Supported job states:
@@ -227,6 +228,13 @@ The `run_project_job` orchestrator can execute a job with an injected pipeline r
 - error message on failure
 - persistence after state changes when a project path is provided
 
+Jobs can also store edited subtitle drafts:
+
+- `save_job_subtitle_draft(project, job_id, segments)` writes a versioned JSON
+  draft under `<project root>/drafts/<job id>.json` by default.
+- `load_job_subtitle_draft(project, job_id)` reopens the edited segment list.
+- the project record stores `subtitle_draft_path` for traceability.
+
 ## 8. Subtitle Editing Domain
 
 CaptionFlow includes a pure subtitle editing module for reviewing generated
@@ -242,6 +250,7 @@ Supported operations:
 - normalize segment order by start and end time
 - create immutable snapshots for undo/redo layers
 - save and load versioned JSON subtitle drafts
+- attach subtitle drafts to project jobs
 
 Validation rules:
 
@@ -254,6 +263,10 @@ Validation rules:
 
 Editing functions return new segment lists and do not mutate the input list.
 Invalid editing operations raise `SubtitleEditError`.
+
+Subtitle export validates segments before writing files. Invalid timings,
+overlaps or empty original text raise `ExportError` instead of producing a
+broken subtitle file.
 
 ## 9. Acceptance Criteria
 

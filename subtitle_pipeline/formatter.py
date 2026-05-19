@@ -2,6 +2,7 @@ import os
 
 from .errors import ExportError
 from .models import Segment
+from .subtitle_editor import validate_segments
 
 
 def _format_time_srt(seconds: float) -> str:
@@ -63,6 +64,7 @@ def write_subtitles(
     formats: list[str],
     use_translated: bool = True,
 ) -> list[str]:
+    _raise_if_invalid_segments(segments)
     os.makedirs(output_dir, exist_ok=True)
     output_files = []
     for fmt in formats:
@@ -75,3 +77,17 @@ def write_subtitles(
             f.write(content)
         output_files.append(path)
     return output_files
+
+
+def _raise_if_invalid_segments(segments: list[Segment]) -> None:
+    issues = validate_segments(segments)
+    errors = [issue for issue in issues if issue.severity == "error"]
+    if not errors:
+        return
+
+    summary = "; ".join(
+        f"{issue.code} at segment {issue.index}" for issue in errors[:5]
+    )
+    if len(errors) > 5:
+        summary = f"{summary}; {len(errors) - 5} more"
+    raise ExportError(f"Cannot export invalid subtitle segments: {summary}")

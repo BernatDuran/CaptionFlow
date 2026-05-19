@@ -1,4 +1,8 @@
+import pytest
+
+from subtitle_pipeline.errors import ExportError
 from subtitle_pipeline.formatter import to_srt, to_txt, to_vtt
+from subtitle_pipeline.formatter import write_subtitles
 from subtitle_pipeline.models import Segment
 
 
@@ -38,3 +42,13 @@ def test_to_txt_writes_one_segment_per_line():
     ]
 
     assert to_txt(segments) == "Hola\nMundo"
+
+
+def test_write_subtitles_rejects_invalid_segments(tmp_path):
+    segments = [
+        Segment(start=0.0, end=1.0, text="Hello"),
+        Segment(start=0.5, end=2.0, text="Overlap"),
+    ]
+
+    with pytest.raises(ExportError, match="Cannot export invalid subtitle segments"):
+        write_subtitles(segments, str(tmp_path), "video", ["srt"])

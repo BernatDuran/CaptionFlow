@@ -5,7 +5,9 @@ from pathlib import Path
 from typing import Any, Literal
 from uuid import uuid4
 
-from .models import SubtitleConfig
+from .errors import SubtitleEditError
+from .models import Segment, SubtitleConfig
+from .subtitle_editor import load_subtitle_draft, save_subtitle_draft
 
 PROJECT_FILE = "captionflow_project.json"
 JobStatus = Literal["pending", "running", "completed", "failed", "cancelled"]
@@ -18,6 +20,7 @@ class JobRecord:
     status: JobStatus = "pending"
     output_files: list[str] = field(default_factory=list)
     provider_metadata: list[dict[str, Any]] = field(default_factory=list)
+    subtitle_draft_path: str | None = None
     error: str | None = None
     created_at: str = field(default_factory=lambda: _utc_now())
     updated_at: str = field(default_factory=lambda: _utc_now())
@@ -66,6 +69,29 @@ def update_job_status(
     return job
 
 
+def save_job_subtitle_draft(
+    project: Project,
+    job_id: str,
+    segments: list[Segment],
+    *,
+    draft_path: str | Path | None = None,
+) -> Path:
+    job = get_job(project, job_id)
+    path = Path(draft_path) if draft_path is not None else _default_draft_path(project, job)
+    saved_path = save_subtitle_draft(segments, path)
+    job.subtitle_draft_path = str(saved_path)
+    job.updated_at = _utc_now()
+    touch_project(project)
+    return saved_path
+
+
+def load_job_subtitle_draft(project: Project, job_id: str) -> list[Segment]:
+    job = get_job(project, job_id)
+    if job.subtitle_draft_path is None:
+        raise SubtitleEditError(f"Job has no subtitle draft: {job_id}")
+    return load_subtitle_draft(job.subtitle_draft_path)
+
+
 def get_job(project: Project, job_id: str) -> JobRecord:
     for job in project.jobs:
         if job.id == job_id:
@@ -102,6 +128,10 @@ def load_project(path: str | Path) -> Project:
 
 def touch_project(project: Project) -> None:
     project.updated_at = _utc_now()
+
+
+def _default_draft_path(project: Project, job: JobRecord) -> Path:
+    return Path(project.root_dir) / "drafts" / f"{job.id}.json"
 
 
 def _utc_now() -> str:
