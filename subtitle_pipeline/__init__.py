@@ -1,4 +1,5 @@
 from .models import PipelineResult, Segment, SubtitleConfig
+from .app_config import AppConfig, load_app_config, save_app_config
 from .errors import (
     CaptionFlowError,
     ConfigError,
@@ -33,6 +34,15 @@ from .providers import (
     list_provider_capabilities,
     list_provider_names,
 )
+from .projects import (
+    JobRecord,
+    Project,
+    add_job,
+    create_project,
+    load_project,
+    save_project,
+    update_job_status,
+)
 
 
 def __getattr__(name: str):
@@ -52,6 +62,9 @@ __all__ = [
     "Segment",
     "SubtitleConfig",
     "PipelineResult",
+    "AppConfig",
+    "load_app_config",
+    "save_app_config",
     "CaptionFlowError",
     "ConfigError",
     "ExportError",
@@ -82,4 +95,11 @@ __all__ = [
     "get_provider_capabilities",
     "list_provider_capabilities",
     "list_provider_names",
+    "JobRecord",
+    "Project",
+    "add_job",
+    "create_project",
+    "load_project",
+    "save_project",
+    "update_job_status",
 ]

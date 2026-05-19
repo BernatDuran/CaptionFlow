@@ -156,14 +156,55 @@ The detailed function exists for traceability while the original function preser
 The current version does not provide:
 
 - Graphical UI.
-- Project history.
-- Job queue.
+- Full project history UI.
+- Automated job queue runner.
 - Subtitle editor.
-- Provider registry.
-- Multiple interchangeable model providers through formal contracts.
 - Voice conversion.
 
-## 6. Acceptance Criteria
+## 6. Persistent App Configuration
+
+CaptionFlow supports a versioned JSON app configuration through `AppConfig`.
+
+The configuration stores defaults for:
+
+- languages
+- output directory
+- subtitle formats
+- model size and device
+- translation provider
+- TTS voice and speed
+- provider names for transcription, translation and TTS
+
+The default path is:
+
+```text
+~/.captionflow/config.json
+```
+
+Loading a missing config file returns defaults. Saving creates parent directories.
+
+## 7. Project And Job Records
+
+CaptionFlow supports a minimal project file for future queue and history features.
+
+Project files are stored as JSON and contain:
+
+- project name and root directory
+- jobs
+- job status
+- output files
+- provider metadata
+- error message when a job fails
+
+Supported job states:
+
+- `pending`
+- `running`
+- `completed`
+- `failed`
+- `cancelled`
+
+## 8. Acceptance Criteria
 
 - CLI help can be displayed without loading AI models.
 - The `doctor` command can run without loading AI models.
@@ -171,3 +212,5 @@ The current version does not provide:
 - Invalid configuration fails before model loading or media processing.
 - Existing CLI options remain backward compatible, except removed voice-conversion options.
 - Future refactors must preserve the output contract unless this spec is intentionally updated.
+- App configuration can be saved and loaded without importing AI model dependencies.
+- Project/job records can be saved and loaded without running pipeline work.

@@ -446,11 +446,11 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 
 | Avanzado | Item | Fase | Resumen | Evidencia actual |
 | --- | --- | --- | --- | --- |
-| X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion y diagnostico. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py` |
+| X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion, diagnostico y config persistente. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py` |
 | X | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
 |  | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 |  | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
-|  | Cola de trabajos e historial | 3 | Proyectos, jobs, estados, reintentos, logs e historial. | Pendiente |
+| X | Cola de trabajos e historial | 3 | Base inicial de proyectos y jobs versionados para historial y cola futura. | `projects.py`, `Project`, `JobRecord`, persistencia JSON |
 |  | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
 |  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
 | X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
