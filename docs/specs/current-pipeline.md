@@ -165,6 +165,13 @@ The current version does not provide:
 
 CaptionFlow supports a versioned JSON app configuration through `AppConfig`.
 
+The CLI exposes:
+
+```bash
+python -m subtitle_pipeline config show
+python -m subtitle_pipeline config init
+```
+
 The configuration stores defaults for:
 
 - languages
@@ -187,6 +194,14 @@ Loading a missing config file returns defaults. Saving creates parent directorie
 
 CaptionFlow supports a minimal project file for future queue and history features.
 
+The CLI exposes:
+
+```bash
+python -m subtitle_pipeline project create --name "Demo" --root-dir ./demo
+python -m subtitle_pipeline project add-job --project ./demo/captionflow_project.json --input video.mp4
+python -m subtitle_pipeline project list --project ./demo/captionflow_project.json
+```
+
 Project files are stored as JSON and contain:
 
 - project name and root directory
@@ -203,6 +218,14 @@ Supported job states:
 - `completed`
 - `failed`
 - `cancelled`
+
+The `run_project_job` orchestrator can execute a job with an injected pipeline runner and records:
+
+- `running`, `completed` and `failed` states
+- output files
+- provider metadata
+- error message on failure
+- persistence after state changes when a project path is provided
 
 ## 8. Acceptance Criteria
 

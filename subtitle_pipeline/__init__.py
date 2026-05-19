@@ -1,5 +1,6 @@
 from .models import PipelineResult, Segment, SubtitleConfig
 from .app_config import AppConfig, load_app_config, save_app_config
+from .job_runner import run_project_job
 from .errors import (
     CaptionFlowError,
     ConfigError,
@@ -65,6 +66,7 @@ __all__ = [
     "AppConfig",
     "load_app_config",
     "save_app_config",
+    "run_project_job",
     "CaptionFlowError",
     "ConfigError",
     "ExportError",

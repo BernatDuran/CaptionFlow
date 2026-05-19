@@ -1,9 +1,13 @@
 import argparse
+import json
 import sys
+from dataclasses import asdict
 
+from .app_config import load_app_config, save_app_config
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
 from .models import SubtitleConfig
+from .projects import add_job, create_project, load_project, save_project
 
 
 def main(argv: list[str] | None = None):
@@ -12,6 +16,12 @@ def main(argv: list[str] | None = None):
         checks = run_doctor()
         print(format_doctor_report(checks))
         raise SystemExit(doctor_exit_code(checks))
+    if argv and argv[0] == "config":
+        _handle_config_command(argv[1:])
+        return
+    if argv and argv[0] == "project":
+        _handle_project_command(argv[1:])
+        return
 
     parser = argparse.ArgumentParser(
         description="Generate translated subtitles from video/audio files."
@@ -94,6 +104,65 @@ def main(argv: list[str] | None = None):
     except ConfigError as exc:
         print(f"Configuration error: {exc}", file=sys.stderr)
         raise SystemExit(2) from exc
+
+
+def _handle_config_command(argv: list[str]) -> None:
+    parser = argparse.ArgumentParser(description="Manage CaptionFlow configuration.")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    show_parser = subparsers.add_parser("show", help="Print effective app configuration.")
+    show_parser.add_argument("--path", default=None, help="Optional config JSON path.")
+
+    init_parser = subparsers.add_parser("init", help="Create a config file with defaults.")
+    init_parser.add_argument("--path", default=None, help="Optional config JSON path.")
+
+    args = parser.parse_args(argv)
+    if args.command == "show":
+        config = load_app_config(args.path)
+        print(json.dumps(asdict(config), indent=2, sort_keys=True))
+        return
+    if args.command == "init":
+        path = save_app_config(load_app_config(args.path), args.path)
+        print(f"Created config: {path}")
+        return
+
+
+def _handle_project_command(argv: list[str]) -> None:
+    parser = argparse.ArgumentParser(description="Manage CaptionFlow projects.")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    create_parser = subparsers.add_parser("create", help="Create a project file.")
+    create_parser.add_argument("--name", required=True)
+    create_parser.add_argument("--root-dir", required=True)
+
+    add_job_parser = subparsers.add_parser("add-job", help="Add a pending job to a project.")
+    add_job_parser.add_argument("--project", required=True)
+    add_job_parser.add_argument("--input", required=True)
+    add_job_parser.add_argument("--output-dir", default="./output")
+
+    list_parser = subparsers.add_parser("list", help="List project jobs.")
+    list_parser.add_argument("--project", required=True)
+
+    args = parser.parse_args(argv)
+    if args.command == "create":
+        project = create_project(args.name, args.root_dir)
+        path = save_project(project)
+        print(f"Created project: {path}")
+        return
+    if args.command == "add-job":
+        project = load_project(args.project)
+        job = add_job(
+            project,
+            SubtitleConfig(input_path=args.input, output_dir=args.output_dir),
+        )
+        save_project(project, args.project)
+        print(f"Added job: {job.id}")
+        return
+    if args.command == "list":
+        project = load_project(args.project)
+        for job in project.jobs:
+            print(f"{job.id}\t{job.status}\t{job.input_path}")
+        return
 
 
 if __name__ == "__main__":

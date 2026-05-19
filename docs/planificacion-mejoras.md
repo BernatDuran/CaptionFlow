@@ -444,19 +444,19 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 
 ### 6.1 Estado de Avance
 
-| Avanzado | Item | Fase | Resumen | Evidencia actual |
-| --- | --- | --- | --- | --- |
-| X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion, diagnostico y config persistente. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py` |
-| X | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
-|  | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
-|  | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
-| X | Cola de trabajos e historial | 3 | Base inicial de proyectos y jobs versionados para historial y cola futura. | `projects.py`, `Project`, `JobRecord`, persistencia JSON |
-|  | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
-|  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
-| X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
-| X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
-| X | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, validacion provider-aware, errores propios y metadata de ejecucion. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `ProviderResultMetadata`, `PipelineResult` |
-|  | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
+| Avanzado | Cumplimiento | Item | Fase | Resumen | Evidencia actual |
+| --- | ---: | --- | --- | --- | --- |
+| X | 70% | Estabilizacion, tests y diagnostico base | 0-2 | Base de calidad, especificacion, validacion, diagnostico, config persistente y CLI minima. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py`, CLI `config` |
+| X | 75% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
+|  | 0% | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
+|  | 0% | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
+| X | 35% | Cola de trabajos e historial | 3 | Proyectos, jobs, estados reales, persistencia y orquestador minimo. | `projects.py`, `job_runner.py`, CLI `project`, persistencia JSON |
+|  | 0% | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
+|  | 0% | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
+| X | 30% | Traduccion robusta y glosarios | 7 | Base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
+| X | 30% | Doblaje TTS mejorado | 8 | Base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
+| X | 55% | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, validacion provider-aware, errores propios y metadata de ejecucion. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `ProviderResultMetadata`, `PipelineResult` |
+|  | 0% | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
 
 ## 7. Orden Recomendado
 
