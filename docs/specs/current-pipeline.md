@@ -29,7 +29,31 @@ Configuration inputs:
 
 ## 3. Pipeline Stages
 
-### 3.1 Validate Configuration
+### 3.1 Environment Doctor
+
+The CLI supports a lightweight environment check:
+
+```bash
+python -m subtitle_pipeline doctor
+```
+
+The doctor command must not load AI models or import heavy pipeline dependencies.
+
+It checks:
+
+- Python version.
+- `ffmpeg` executable availability.
+- Required Python packages.
+- `ANTHROPIC_API_KEY` presence.
+
+Expected behavior:
+
+- Missing required runtime dependencies are reported as `FAIL`.
+- Missing optional credentials are reported as `WARN`.
+- The command exits with code `1` when at least one check fails.
+- The command exits with code `0` when there are only passing checks or warnings.
+
+### 3.2 Validate Configuration
 
 The pipeline should fail before starting long-running work when:
 
@@ -41,7 +65,7 @@ The pipeline should fail before starting long-running work when:
 - `tts_rate` is outside the supported range.
 - Claude translation is requested between different languages and no API key is available.
 
-### 3.2 Extract Audio
+### 3.3 Extract Audio
 
 The pipeline extracts a mono WAV file at 16 kHz using `ffmpeg`.
 
@@ -51,7 +75,7 @@ Expected behavior:
 - Temporary audio is written into a temporary working directory.
 - Temporary files are removed at the end of the run.
 
-### 3.3 Transcribe
+### 3.4 Transcribe
 
 The pipeline uses `faster-whisper` to produce ordered transcript segments.
 
@@ -62,7 +86,7 @@ Each segment contains:
 - `text`: original transcription.
 - `translated`: optional translated text.
 
-### 3.4 Translate
+### 3.5 Translate
 
 If `source_lang` and `target_lang` are equal, translation is skipped.
 
@@ -73,7 +97,7 @@ If languages differ:
 
 The translated text is stored in each segment's `translated` field.
 
-### 3.5 Export Subtitles
+### 3.6 Export Subtitles
 
 The pipeline writes subtitle files to `output_dir` using the input file base name.
 
@@ -85,7 +109,7 @@ Supported outputs:
 
 When translated text exists and translated output is requested, exporters prefer `translated`; otherwise they fall back to `text`.
 
-### 3.6 Optional Burn-In Video
+### 3.7 Optional Burn-In Video
 
 When `burn_in=True`, the pipeline uses `ffmpeg` to create:
 
@@ -93,7 +117,7 @@ When `burn_in=True`, the pipeline uses `ffmpeg` to create:
 
 If an SRT file was not requested explicitly, one is generated internally before burn-in.
 
-### 3.7 Optional TTS Dubbing
+### 3.8 Optional TTS Dubbing
 
 When `dub=True`, the pipeline:
 
@@ -126,8 +150,8 @@ The current version does not provide:
 ## 6. Acceptance Criteria
 
 - CLI help can be displayed without loading AI models.
+- The `doctor` command can run without loading AI models.
 - Formatting functions work without external dependencies.
 - Invalid configuration fails before model loading or media processing.
 - Existing CLI options remain backward compatible, except removed voice-conversion options.
 - Future refactors must preserve the output contract unless this spec is intentionally updated.
-

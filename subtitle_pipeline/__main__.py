@@ -1,12 +1,18 @@
 import argparse
 import sys
 
+from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .models import SubtitleConfig
-from .pipeline import run_subtitle_pipeline
 from .validation import ConfigError
 
 
-def main():
+def main(argv: list[str] | None = None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == "doctor":
+        checks = run_doctor()
+        print(format_doctor_report(checks))
+        raise SystemExit(doctor_exit_code(checks))
+
     parser = argparse.ArgumentParser(
         description="Generate translated subtitles from video/audio files."
     )
@@ -63,7 +69,7 @@ def main():
         default=0,
         help="TTS speed adjustment -100 to 100 (default: 0)",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     config = SubtitleConfig(
         input_path=args.input,
@@ -82,6 +88,8 @@ def main():
     )
 
     try:
+        from .pipeline import run_subtitle_pipeline
+
         run_subtitle_pipeline(config)
     except ConfigError as exc:
         print(f"Configuration error: {exc}", file=sys.stderr)
