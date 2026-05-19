@@ -3,6 +3,7 @@ import subprocess
 import numpy as np
 import soundfile as sf
 
+from .errors import ExportError
 from .models import Segment
 
 
@@ -41,7 +42,7 @@ def merge_segments_to_track(
 ) -> str:
     """Merge individual audio segments into a single track aligned to timestamps."""
     if not segments:
-        raise ValueError("No segments to merge")
+        raise ExportError("No segments to merge")
 
     total_duration = max(seg.end for seg in segments)
     total_samples = int(total_duration * sample_rate) + sample_rate  # +1s padding

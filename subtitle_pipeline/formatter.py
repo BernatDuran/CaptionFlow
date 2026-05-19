@@ -1,5 +1,6 @@
 import os
 
+from .errors import ExportError
 from .models import Segment
 
 
@@ -67,7 +68,7 @@ def write_subtitles(
     for fmt in formats:
         formatter = _FORMATTERS.get(fmt)
         if formatter is None:
-            raise ValueError(f"Unknown format: {fmt}. Supported: {list(_FORMATTERS)}")
+            raise ExportError(f"Unknown format: {fmt}. Supported: {list(_FORMATTERS)}")
         content = formatter(segments, use_translated)
         path = os.path.join(output_dir, f"{base_name}.{fmt}")
         with open(path, "w", encoding="utf-8") as f:

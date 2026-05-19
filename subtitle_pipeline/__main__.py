@@ -2,8 +2,8 @@ import argparse
 import sys
 
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
+from .errors import ConfigError
 from .models import SubtitleConfig
-from .validation import ConfigError
 
 
 def main(argv: list[str] | None = None):

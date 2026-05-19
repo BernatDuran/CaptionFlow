@@ -1,4 +1,16 @@
 from .models import Segment, SubtitleConfig
+from .errors import (
+    CaptionFlowError,
+    ConfigError,
+    ExportError,
+    ProviderAuthError,
+    ProviderDependencyError,
+    ProviderError,
+    ProviderNotFoundError,
+    TTSError,
+    TranscriptionError,
+    TranslationError,
+)
 from .providers import (
     ProviderCapabilities,
     ProviderAvailabilityCheck,
@@ -34,6 +46,16 @@ __all__ = [
     "run_subtitle_pipeline",
     "Segment",
     "SubtitleConfig",
+    "CaptionFlowError",
+    "ConfigError",
+    "ExportError",
+    "ProviderAuthError",
+    "ProviderDependencyError",
+    "ProviderError",
+    "ProviderNotFoundError",
+    "TTSError",
+    "TranscriptionError",
+    "TranslationError",
     "ProviderCapabilities",
     "ProviderAvailabilityCheck",
     "ProviderConfig",

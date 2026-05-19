@@ -1,5 +1,6 @@
 import os
 
+from .errors import ConfigError
 from .models import SubtitleConfig
 from .providers import (
     get_provider_capabilities,
@@ -10,10 +11,6 @@ SUPPORTED_DEVICES = {"auto", "cuda", "cpu"}
 SUPPORTED_FORMATS = {"srt", "vtt", "txt"}
 MIN_TTS_RATE = -100
 MAX_TTS_RATE = 100
-
-
-class ConfigError(ValueError):
-    """Raised when pipeline configuration is invalid before work starts."""
 
 
 def validate_config(config: SubtitleConfig) -> None:

@@ -1,7 +1,8 @@
 import pytest
 
+from subtitle_pipeline.errors import ConfigError
 from subtitle_pipeline.models import SubtitleConfig
-from subtitle_pipeline.validation import ConfigError, validate_config
+from subtitle_pipeline.validation import validate_config
 
 
 def test_validate_config_accepts_minimal_valid_config(tmp_path):

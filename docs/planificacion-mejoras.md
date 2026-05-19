@@ -447,7 +447,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | Avanzado | Item | Fase | Resumen | Evidencia actual |
 | --- | --- | --- | --- | --- |
 | X | Estabilizacion, tests y diagnostico base | 0-2 | Base inicial de calidad, especificacion, validacion y diagnostico. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py` |
-| X | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories e inyeccion de providers en el pipeline. | `providers.py`, `create_*_provider`, tests de pipeline con providers falsos |
+| X | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories e inyeccion de providers en el pipeline, separados por responsabilidad. | `providers/`, `create_*_provider`, tests de pipeline con providers falsos |
 |  | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
 |  | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
 |  | Cola de trabajos e historial | 3 | Proyectos, jobs, estados, reintentos, logs e historial. | Pendiente |
@@ -455,7 +455,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 |  | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |
 | X | Traduccion robusta y glosarios | 7 | Inicio de base tecnica para proveedores de traduccion intercambiables usados por el pipeline. | `TranslationProvider`, `create_translation_provider`, registry `claude`/`nllb` |
 | X | Doblaje TTS mejorado | 8 | Inicio de base tecnica para proveedores TTS intercambiables usados por doblaje. | `TTSProvider`, `create_tts_provider`, registry `edge-tts` |
-| X | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos y validacion config/provider-aware. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `validation.py` |
+| X | Configuracion avanzada de modelos y proveedores | 9 | Capacidades, disponibilidad, requisitos, validacion provider-aware y errores propios. | `ProviderCapabilities`, `ProviderAvailabilityCheck`, `validation.py`, `errors.py` |
 |  | Distribucion y mantenimiento | 10 | Releases, documentacion final, instaladores y mantenimiento continuo. | Pendiente |
 
 ## 7. Orden Recomendado

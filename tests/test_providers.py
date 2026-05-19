@@ -1,4 +1,5 @@
 from subtitle_pipeline.models import Segment
+from subtitle_pipeline.errors import ProviderNotFoundError
 from subtitle_pipeline.providers import (
     ProviderCapabilities,
     ProviderConfig,
@@ -66,6 +67,15 @@ def test_get_provider_capabilities_returns_known_provider():
 
     assert capabilities.task == "transcription"
     assert capabilities.package == "faster_whisper"
+
+
+def test_get_provider_capabilities_rejects_unknown_provider():
+    try:
+        get_provider_capabilities("unknown")
+    except ProviderNotFoundError as exc:
+        assert "Unknown provider" in str(exc)
+    else:
+        raise AssertionError("Expected ProviderNotFoundError")
 
 
 def test_check_provider_availability_reports_missing_dependency_first():
