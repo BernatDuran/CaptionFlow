@@ -449,7 +449,7 @@ Preparar la aplicacion para uso recurrente y evolucion sostenida.
 | X | 70% | Estabilizacion, tests y diagnostico base | 0-2 | Base de calidad, especificacion, validacion, diagnostico, config persistente y CLI minima. | `docs/specs/current-pipeline.md`, `pytest`, `ruff`, `validation.py`, `doctor.py`, `app_config.py`, CLI `config` |
 | X | 75% | Arquitectura provider-ready ligera | 1-2 | Contratos, registry, factories, inyeccion de providers, errores propios y resultado trazable. | `providers/`, `create_*_provider`, `PipelineResult`, tests de pipeline con providers falsos |
 |  | 0% | Interfaz visual local | 5 | UI para importar, configurar, procesar, revisar y exportar. | Pendiente |
-|  | 0% | Editor de subtitulos | 4 | Edicion de texto, tiempos, union/division y validaciones temporales. | Pendiente |
+| X | 45% | Editor de subtitulos | 4 | Nucleo de edicion puro: texto, tiempos, borrar, unir, dividir, ordenar, snapshots, validacion temporal y borradores JSON. | `subtitle_editor.py`, `SubtitleEditError`, tests unitarios de operaciones y drafts |
 | X | 35% | Cola de trabajos e historial | 3 | Proyectos, jobs, estados reales, persistencia y orquestador minimo. | `projects.py`, `job_runner.py`, CLI `project`, persistencia JSON |
 |  | 0% | Previsualizacion de video | 5 | Reproductor con subtitulos y feedback antes de exportar. | Pendiente |
 |  | 0% | Exportacion profesional | 6 | Perfiles para plataformas y formatos profesionales. | Pendiente |

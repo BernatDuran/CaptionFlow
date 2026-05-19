@@ -36,3 +36,7 @@ class TTSError(CaptionFlowError):
 
 class ExportError(CaptionFlowError):
     """Raised when subtitle or media export fails."""
+
+
+class SubtitleEditError(CaptionFlowError, ValueError):
+    """Raised when a subtitle editing operation is invalid."""

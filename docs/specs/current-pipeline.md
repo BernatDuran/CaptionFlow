@@ -227,7 +227,35 @@ The `run_project_job` orchestrator can execute a job with an injected pipeline r
 - error message on failure
 - persistence after state changes when a project path is provided
 
-## 8. Acceptance Criteria
+## 8. Subtitle Editing Domain
+
+CaptionFlow includes a pure subtitle editing module for reviewing generated
+segments before export.
+
+Supported operations:
+
+- edit original and translated text
+- adjust segment start and end times
+- delete segments
+- merge two or more consecutive segments
+- split one segment into two parts
+- normalize segment order by start and end time
+- create immutable snapshots for undo/redo layers
+- save and load versioned JSON subtitle drafts
+
+Validation rules:
+
+- start time cannot be negative
+- end time must be greater than start time
+- duration must meet the configured minimum duration
+- original text cannot be empty
+- segments cannot overlap the previous segment
+- segments must remain ordered by start time
+
+Editing functions return new segment lists and do not mutate the input list.
+Invalid editing operations raise `SubtitleEditError`.
+
+## 9. Acceptance Criteria
 
 - CLI help can be displayed without loading AI models.
 - The `doctor` command can run without loading AI models.
@@ -237,3 +265,5 @@ The `run_project_job` orchestrator can execute a job with an injected pipeline r
 - Future refactors must preserve the output contract unless this spec is intentionally updated.
 - App configuration can be saved and loaded without importing AI model dependencies.
 - Project/job records can be saved and loaded without running pipeline work.
+- Subtitle editing operations are covered by unit tests and do not require
+  provider, model or media dependencies.
