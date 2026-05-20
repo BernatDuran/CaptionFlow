@@ -14,6 +14,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -34,6 +35,7 @@ button:disabled {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 1px solid #c9d3cf;
@@ -147,11 +149,75 @@ nav button:hover {
   font-size: 18px;
 }
 
+.notice {
+  border: 1px solid #c9d3cf;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #384842;
+}
+
+.notice-success {
+  border-color: #9ccdb7;
+  background: #edf8f1;
+}
+
+.notice-warning {
+  border-color: #d8c27b;
+  background: #fff7df;
+}
+
+.notice-error {
+  border-color: #e2a093;
+  background: #fff0ed;
+  color: #8d3126;
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: 2fr 90px 90px auto auto;
   gap: 10px;
   align-items: center;
+}
+
+.editor-toolbar {
+  grid-template-columns: auto auto 1fr;
+}
+
+.metrics-panel {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.metrics-panel h2 {
+  grid-column: 1 / -1;
+}
+
+.metric {
+  border: 1px solid #dbe3df;
+  border-radius: 8px;
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+  background: #f8faf8;
+}
+
+.metric strong {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.metric span {
+  color: #586762;
+  font-size: 13px;
+}
+
+.metric-fail strong {
+  color: #a33b2f;
+}
+
+.metric-warn strong {
+  color: #8a681c;
 }
 
 table {
@@ -171,6 +237,40 @@ td {
 
 tr.selected {
   background: #e8f3ef;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+.job-status,
+.issue-count {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #edf3f0;
+  color: #2d5c57;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.job-status.failed,
+.issue-count.warning {
+  background: #fff0ed;
+  color: #a33b2f;
+}
+
+.job-status.completed {
+  background: #edf8f1;
+  color: #246546;
+}
+
+.job-status.running {
+  background: #fff7df;
+  color: #8a681c;
 }
 
 .editor-grid {
@@ -209,6 +309,26 @@ tr.selected {
 .config-input span {
   color: #586762;
   font-size: 13px;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #384842;
+}
+
+.checkbox-row input {
+  width: auto;
+}
+
+.empty-state {
+  border: 1px dashed #bac8c3;
+  border-radius: 8px;
+  color: #586762;
+  padding: 18px;
+  text-align: center;
+  background: #fbfcfb;
 }
 
 .secret-row,
@@ -269,6 +389,8 @@ tr.selected {
   }
 
   .toolbar,
+  .editor-toolbar,
+  .metrics-panel,
   .segment-row {
     grid-template-columns: 1fr;
   }

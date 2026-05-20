@@ -9,3 +9,5 @@ out/
 .env
 .codex_pydeps/
 .pytest_cache/
+web/dist/
+web/node_modules/
