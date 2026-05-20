@@ -71,6 +71,19 @@ def test_create_translation_provider_uses_model_override():
     assert provider.config.model == "custom-claude"
 
 
+def test_create_translation_provider_rejects_registered_provider_without_adapter():
+    config = SubtitleConfig(
+        input_path="video.mp4",
+        output_dir="out",
+        source_lang="en",
+        target_lang="es",
+        translation_provider="nano-gpt",
+    )
+
+    with pytest.raises(ProviderNotFoundError, match="does not have a runtime adapter yet"):
+        create_translation_provider(config)
+
+
 def test_create_tts_provider_returns_edge_tts_provider():
     config = SubtitleConfig(input_path="video.mp4", output_dir="out", tts_model="edge-custom")
 

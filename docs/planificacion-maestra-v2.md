@@ -500,3 +500,11 @@ La siguiente accion correcta es:
 5. implementar router con tests y providers falsos.
 
 Esto reduce riesgo y prepara el cambio grande sin romper el pipeline actual.
+
+Estado de esta primera accion:
+
+- `ProviderConfig`, `ProviderCapabilities` y `ProviderResultMetadata` ya estan
+  preparados para `base_url`, `api_key_env_var`, privacidad, cache y fallback.
+- El registry ya declara providers v2 de nano-gpt/OpenAI como capacidades.
+- `docs/specs/provider-router-v2.md` define el contrato antes de implementar el
+  router real.

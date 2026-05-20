@@ -5,6 +5,7 @@ from ..models import Segment
 
 ProviderTask = Literal["transcription", "translation", "tts"]
 ProviderAvailability = Literal["available", "missing_dependency", "missing_api_key"]
+ProviderPrivacyLevel = Literal["local", "api_cloud", "hybrid"]
 
 
 @dataclass(frozen=True)
@@ -12,6 +13,10 @@ class ProviderConfig:
     name: str
     task: ProviderTask
     model: str
+    api_key_env_var: str | None = None
+    base_url: str | None = None
+    fallback_provider: str | None = None
+    fallback_model: str | None = None
     options: dict[str, Any] = field(default_factory=dict)
 
 
@@ -24,8 +29,12 @@ class ProviderCapabilities:
     requires_network: bool
     requires_api_key: bool
     api_key_env_var: str | None = None
+    base_url: str | None = None
+    privacy_level: ProviderPrivacyLevel = "local"
+    estimated_unit_cost: float | None = None
     supported_languages: set[str] = field(default_factory=set)
     supported_output_formats: set[str] = field(default_factory=set)
+    supports_fallback: bool = False
     notes: str = ""
 
 
@@ -42,6 +51,11 @@ class ProviderResultMetadata:
     provider: str
     model: str
     task: ProviderTask
+    api_provider: str | None = None
+    base_url: str | None = None
+    privacy_level: ProviderPrivacyLevel | None = None
+    fallback_used: bool = False
+    cache_hit: bool = False
     duration_seconds: float | None = None
     estimated_cost: float | None = None
     warnings: list[str] = field(default_factory=list)

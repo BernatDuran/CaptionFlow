@@ -17,6 +17,9 @@ transcription = [
     "torch>=2.0.0",
 ]
 translation-api = [
+    "openai>=1.30.0",
+]
+legacy-claude = [
     "anthropic>=0.30.0",
 ]
 translation-local = [
@@ -35,6 +38,7 @@ dubbing = [
 all = [
     "ffmpeg-python>=0.2.0",
     "faster-whisper>=1.0.0",
+    "openai>=1.30.0",
     "transformers>=4.34.0",
     "torch>=2.0.0",
     "sentencepiece",

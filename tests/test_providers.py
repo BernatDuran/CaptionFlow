@@ -50,16 +50,27 @@ def test_translation_provider_contract_shape():
     assert result.segments[0].translated == "hello-es"
     assert result.metadata.provider == "fake"
     assert provider.capabilities().supported_languages == {"en", "es"}
+    assert provider.capabilities().privacy_level == "local"
 
 
 def test_list_provider_capabilities_can_filter_by_task():
     translation_providers = list_provider_capabilities(task="translation")
 
-    assert {provider.name for provider in translation_providers} == {"claude", "nllb"}
+    assert {provider.name for provider in translation_providers} == {
+        "claude",
+        "nano-gpt",
+        "nllb",
+        "openai",
+    }
 
 
 def test_list_provider_names_can_filter_by_task():
-    assert list_provider_names(task="translation") == ["claude", "nllb"]
+    assert list_provider_names(task="translation") == [
+        "claude",
+        "nano-gpt",
+        "nllb",
+        "openai",
+    ]
 
 
 def test_get_provider_capabilities_returns_known_provider():
@@ -67,6 +78,18 @@ def test_get_provider_capabilities_returns_known_provider():
 
     assert capabilities.task == "transcription"
     assert capabilities.package == "faster_whisper"
+    assert capabilities.privacy_level == "local"
+
+
+def test_get_provider_capabilities_includes_v2_api_metadata():
+    capabilities = get_provider_capabilities("nano-gpt")
+
+    assert capabilities.task == "translation"
+    assert capabilities.package == "openai"
+    assert capabilities.api_key_env_var == "NANO_GPT_API_KEY"
+    assert capabilities.base_url == "https://nano-gpt.com/api/v1"
+    assert capabilities.privacy_level == "api_cloud"
+    assert capabilities.supports_fallback is True
 
 
 def test_get_provider_capabilities_rejects_unknown_provider():

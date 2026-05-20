@@ -22,9 +22,10 @@ PACKAGE_CHECKS = {
     "media:ffmpeg-python": "ffmpeg",
     "transcription:faster-whisper": "faster_whisper",
     "transcription:torch": "torch",
+    "api:openai": "openai",
     "translation-local:transformers": "transformers",
     "translation-local:sentencepiece": "sentencepiece",
-    "translation-api:anthropic": "anthropic",
+    "legacy-claude:anthropic": "anthropic",
     "tts:edge-tts": "edge_tts",
     "dubbing:numpy": "numpy",
     "dubbing:soundfile": "soundfile",
@@ -43,7 +44,7 @@ def run_doctor(
         _check_python_version(),
         _check_ffmpeg_binary(which),
         *_check_python_packages(find_spec),
-        _check_anthropic_key(env),
+        *_check_api_keys(env),
         *_check_ai_providers(find_spec, env),
     ]
     return checks
@@ -94,14 +95,14 @@ def _check_python_packages(
     return checks
 
 
-def _check_anthropic_key(environ: dict[str, str]) -> DoctorCheck:
-    if environ.get("ANTHROPIC_API_KEY"):
-        return DoctorCheck("ANTHROPIC_API_KEY", "pass", "configured")
-    return DoctorCheck(
-        "ANTHROPIC_API_KEY",
-        "warn",
-        "not set; required only when using translator=claude between different languages",
-    )
+def _check_api_keys(environ: dict[str, str]) -> list[DoctorCheck]:
+    checks = []
+    for env_var in _known_api_key_env_vars():
+        if environ.get(env_var):
+            checks.append(DoctorCheck(env_var, "pass", "configured"))
+        else:
+            checks.append(DoctorCheck(env_var, "warn", "not configured for API providers"))
+    return checks
 
 
 def _check_ai_providers(
@@ -140,6 +141,15 @@ def _has_required_key(provider_name: str, environ: dict[str, str]) -> bool:
                 and environ.get(capabilities.api_key_env_var)
             )
     return False
+
+
+def _known_api_key_env_vars() -> list[str]:
+    env_vars = {
+        capabilities.api_key_env_var
+        for capabilities in list_provider_capabilities()
+        if capabilities.api_key_env_var
+    }
+    return sorted(env_vars)
 
 
 def _provider_status_to_doctor_status(status: str) -> CheckStatus:

@@ -12,8 +12,13 @@ def create_transcription_provider(config) -> TranscriptionProvider:
 
 
 def create_translation_provider(config) -> TranslationProvider:
+    if config.translation_provider not in {"claude", "nllb"}:
+        raise ProviderNotFoundError(
+            f"Translation provider '{config.translation_provider}' is registered "
+            "but does not have a runtime adapter yet."
+        )
     return TranslatorProviderAdapter(
-        provider_name=config.translator,
+        provider_name=config.translation_provider,
         source_lang=config.source_lang,
         target_lang=config.target_lang,
         api_key=config.api_key,

@@ -38,6 +38,7 @@ class FasterWhisperProvider:
                 provider=self.config.name,
                 model=self.config.model,
                 task=self.config.task,
+                privacy_level=self.capabilities().privacy_level,
             ),
         )
 
@@ -56,6 +57,8 @@ class TranslatorProviderAdapter:
             name=provider_name,
             task="translation",
             model=model or default_translation_model(provider_name),
+            api_key_env_var=capabilities.api_key_env_var,
+            base_url=capabilities.base_url,
         )
         self._source_lang = source_lang
         self._target_lang = target_lang
@@ -80,6 +83,9 @@ class TranslatorProviderAdapter:
                 provider=self.config.name,
                 model=self.config.model,
                 task=self.config.task,
+                api_provider=self.config.name,
+                base_url=self.config.base_url,
+                privacy_level=self.capabilities().privacy_level,
             ),
         )
 
@@ -102,6 +108,7 @@ class EdgeTTSProvider:
             name="edge-tts",
             task="tts",
             model=model,
+            base_url=get_provider_capabilities("edge-tts").base_url,
         )
 
     def capabilities(self) -> ProviderCapabilities:
@@ -124,6 +131,9 @@ class EdgeTTSProvider:
                 provider=self.config.name,
                 model=self.config.model,
                 task=self.config.task,
+                api_provider=self.config.name,
+                base_url=self.config.base_url,
+                privacy_level=self.capabilities().privacy_level,
             ),
         )
 
