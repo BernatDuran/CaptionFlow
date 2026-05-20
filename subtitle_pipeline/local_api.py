@@ -276,7 +276,7 @@ def _make_handler(service: LocalApiService, static_dir: Path | None = None):
             return json.loads(self.rfile.read(length).decode("utf-8"))
 
         def _send_json(self, status: int, payload: dict[str, Any]) -> None:
-            body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            body = json.dumps(_json_ready(payload), ensure_ascii=False).encode("utf-8")
             self.send_response(status)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")

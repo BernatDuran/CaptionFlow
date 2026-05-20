@@ -1,4 +1,10 @@
-from subtitle_pipeline.local_api import LocalApiService, _is_api_path, _setup_page_html, _static_target
+from subtitle_pipeline.local_api import (
+    LocalApiService,
+    _is_api_path,
+    _json_ready,
+    _setup_page_html,
+    _static_target,
+)
 
 
 def test_local_api_config_and_providers(tmp_path):
@@ -136,3 +142,12 @@ def test_local_api_setup_page_explains_missing_frontend():
 
     assert "CaptionFlow API activa" in html
     assert "CaptionFlow.cmd" in html
+
+
+def test_local_api_json_ready_converts_sets_recursively():
+    payload = {"items": {"b", "a"}, "nested": [{"formats": {"srt", "vtt"}}]}
+
+    assert _json_ready(payload) == {
+        "items": ["a", "b"],
+        "nested": [{"formats": ["srt", "vtt"]}],
+    }
