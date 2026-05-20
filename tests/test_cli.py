@@ -24,6 +24,17 @@ def test_config_init_creates_file(tmp_path, capsys):
     assert "Created config:" in capsys.readouterr().out
 
 
+def test_config_init_accepts_personal_preset(tmp_path):
+    path = tmp_path / "config.json"
+
+    main(["config", "init", "--path", str(path), "--preset", "personal-youtube"])
+
+    output = json.loads(path.read_text(encoding="utf-8"))
+    assert output["export_profile"] == "youtube"
+    assert output["translation_provider"] == "nano-gpt"
+    assert output["translation_cache_enabled"] is True
+
+
 def test_project_create_add_job_and_list(tmp_path, capsys):
     root_dir = tmp_path / "project"
     project_path = root_dir / "captionflow_project.json"

@@ -448,7 +448,7 @@ Entregables:
 | Traduccion robusta | 65% | nano-gpt/OpenAI, fallback, cache y glosario base hechos; faltan controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
 | API interna/UI | 0% | Pendiente |
-| Distribucion | 25% | Extras/docs y doctor accionable inicial; falta release/CI/instalador |
+| Distribucion | 30% | Extras/docs, presets personales y doctor accionable; falta release/CI/instalador |
 
 ## 11. Backlog Priorizado v2
 
@@ -540,3 +540,5 @@ Estado de esta primera accion:
   providers no disponibles, orientado a uso personal.
 - La traduccion OpenAI-compatible ya acepta glosario JSON para terminos
   personales, y la cache considera el glosario dentro de la clave.
+- La configuracion ya ofrece presets personales `personal-youtube` y
+  `local-review` para arrancar con menos flags.

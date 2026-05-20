@@ -4,7 +4,12 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
-from .app_config import load_app_config, save_app_config
+from .app_config import (
+    SUPPORTED_CONFIG_PRESETS,
+    load_app_config,
+    recommended_app_config,
+    save_app_config,
+)
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
 from .export_profiles import SUPPORTED_EXPORT_PROFILES, export_subtitles
@@ -209,6 +214,12 @@ def _handle_config_command(argv: list[str]) -> None:
 
     init_parser = subparsers.add_parser("init", help="Create a config file with defaults.")
     init_parser.add_argument("--path", default=None, help="Optional config JSON path.")
+    init_parser.add_argument(
+        "--preset",
+        default="default",
+        choices=sorted(SUPPORTED_CONFIG_PRESETS),
+        help="Configuration preset for personal workflows.",
+    )
 
     args = parser.parse_args(argv)
     if args.command == "show":
@@ -216,7 +227,7 @@ def _handle_config_command(argv: list[str]) -> None:
         print(json.dumps(asdict(config), indent=2, sort_keys=True))
         return
     if args.command == "init":
-        path = save_app_config(load_app_config(args.path), args.path)
+        path = save_app_config(recommended_app_config(args.preset), args.path)
         print(f"Created config: {path}")
         return
 

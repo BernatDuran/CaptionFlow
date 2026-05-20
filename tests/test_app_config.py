@@ -5,6 +5,7 @@ from subtitle_pipeline.app_config import (
     app_config_from_dict,
     default_config_path,
     load_app_config,
+    recommended_app_config,
     save_app_config,
 )
 
@@ -49,3 +50,13 @@ def test_default_config_path_uses_captionflow_directory(tmp_path):
     path = default_config_path(home=tmp_path)
 
     assert path == tmp_path / ".captionflow" / "config.json"
+
+
+def test_recommended_app_config_returns_personal_youtube_preset():
+    config = recommended_app_config("personal-youtube")
+
+    assert config.export_profile == "youtube"
+    assert config.formats == ["srt", "vtt"]
+    assert config.translation_provider == "nano-gpt"
+    assert config.translation_fallback_provider == "openai"
+    assert config.translation_cache_enabled is True

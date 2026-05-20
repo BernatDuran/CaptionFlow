@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 CONFIG_VERSION = 1
+SUPPORTED_CONFIG_PRESETS = {"default", "personal-youtube", "local-review"}
 
 
 @dataclass
@@ -56,6 +57,27 @@ def save_app_config(config: AppConfig, path: str | Path | None = None) -> Path:
         json.dump(asdict(config), file, indent=2, sort_keys=True)
         file.write("\n")
     return config_path
+
+
+def recommended_app_config(preset: str = "default") -> AppConfig:
+    if preset == "default":
+        return AppConfig()
+    if preset == "personal-youtube":
+        return AppConfig(
+            formats=["srt", "vtt"],
+            export_profile="youtube",
+            translation_provider="nano-gpt",
+            translation_fallback_provider="openai",
+            translation_cache_enabled=True,
+        )
+    if preset == "local-review":
+        return AppConfig(
+            formats=["txt"],
+            export_profile="review",
+            translation_provider="nllb",
+            translation_cache_enabled=False,
+        )
+    raise ValueError(f"Unsupported config preset: {preset}")
 
 
 def app_config_from_dict(data: dict[str, Any]) -> AppConfig:
