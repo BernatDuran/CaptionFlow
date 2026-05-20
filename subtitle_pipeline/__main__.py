@@ -97,6 +97,16 @@ def main(argv: list[str] | None = None):
         help="Translation model override for the fallback provider.",
     )
     parser.add_argument(
+        "--translation-cache",
+        action="store_true",
+        help="Enable local translation cache for deterministic API calls.",
+    )
+    parser.add_argument(
+        "--translation-cache-dir",
+        default=None,
+        help="Directory for local translation cache entries.",
+    )
+    parser.add_argument(
         "--api-key",
         default=None,
         help="Anthropic API key (or set ANTHROPIC_API_KEY env var)",
@@ -142,6 +152,8 @@ def main(argv: list[str] | None = None):
         translation_model=args.translation_model,
         translation_fallback_provider=args.translation_fallback_provider,
         translation_fallback_model=args.translation_fallback_model,
+        translation_cache_enabled=args.translation_cache,
+        translation_cache_dir=args.translation_cache_dir,
         translator=args.translator,
         api_key=args.api_key,
         dub=args.dub,

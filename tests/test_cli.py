@@ -89,6 +89,9 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
             "openai",
             "--translation-fallback-model",
             "fallback-model",
+            "--translation-cache",
+            "--translation-cache-dir",
+            str(tmp_path / "cache"),
             "--tts-provider",
             "edge-tts",
             "--tts-model",
@@ -103,6 +106,8 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
     assert config.translation_model == "custom-nllb"
     assert config.translation_fallback_provider == "openai"
     assert config.translation_fallback_model == "fallback-model"
+    assert config.translation_cache_enabled is True
+    assert config.translation_cache_dir == str(tmp_path / "cache")
     assert config.tts_provider == "edge-tts"
     assert config.tts_model == "edge-custom"
     assert captured["event_sink"] is not None

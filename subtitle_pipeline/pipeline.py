@@ -3,14 +3,18 @@ import os
 import shutil
 import tempfile
 
-from .models import PipelineResult, SubtitleConfig
+from .cache import TranslationCache, build_translation_cache_key
+from .models import PipelineResult, Segment, SubtitleConfig
 from .audio_extractor import extract_audio
 from .formatter import write_subtitles
 from .progress import EventSink, emit_event
 from .providers import (
     ProviderRoute,
     ProviderRouter,
+    ProviderConfig,
+    ProviderResultMetadata,
     TranscriptionProvider,
+    TranslationResult,
     TranslationProvider,
     build_translation_provider_config,
     check_provider_availability,
@@ -218,10 +222,10 @@ def _translation_provider_config(
 
 def _translate_segments(
     config: SubtitleConfig,
-    segments,
+    segments: list[Segment],
     translation_provider: TranslationProvider | None,
     event_sink: EventSink | None,
-):
+) -> TranslationResult:
     if translation_provider is not None:
         return translation_provider.translate_segments(
             segments,
@@ -239,6 +243,10 @@ def _translate_segments(
             config.translation_fallback_provider,
             config.translation_fallback_model,
         )
+    cached = _get_cached_translation(config, segments, primary, fallback)
+    if cached is not None:
+        return cached
+
     route = ProviderRoute(task="translation", primary=primary, fallback=fallback)
     router = ProviderRouter(
         lambda provider_config: create_translation_provider_from_config(
@@ -253,7 +261,7 @@ def _translate_segments(
         ),
         event_sink=event_sink,
     )
-    return router.execute(
+    translation = router.execute(
         route,
         lambda provider: provider.translate_segments(
             segments,
@@ -261,6 +269,66 @@ def _translate_segments(
             config.target_lang,
         ),
     )
+    _store_cached_translation(config, segments, translation)
+    return translation
+
+
+def _get_cached_translation(
+    config: SubtitleConfig,
+    source_segments: list[Segment],
+    primary: ProviderConfig,
+    fallback: ProviderConfig | None,
+) -> TranslationResult | None:
+    if not config.translation_cache_enabled:
+        return None
+
+    cache = TranslationCache(config.translation_cache_dir)
+    for provider_config in (primary, fallback):
+        if provider_config is None:
+            continue
+        key = build_translation_cache_key(
+            provider_config,
+            source_lang=config.source_lang,
+            target_lang=config.target_lang,
+            segments=source_segments,
+        )
+        cached_segments = cache.get(key)
+        if cached_segments is None:
+            continue
+        metadata = ProviderResultMetadata(
+            provider=provider_config.name,
+            model=provider_config.model,
+            task="translation",
+            requested_provider=primary.name,
+            api_provider=provider_config.name,
+            base_url=provider_config.base_url,
+            privacy_level=get_provider_capabilities(provider_config.name).privacy_level,
+            fallback_used=provider_config.name != primary.name,
+            cache_hit=True,
+        )
+        return TranslationResult(segments=cached_segments, metadata=metadata)
+    return None
+
+
+def _store_cached_translation(
+    config: SubtitleConfig,
+    source_segments: list[Segment],
+    translation: TranslationResult,
+) -> None:
+    if not config.translation_cache_enabled or translation.metadata.cache_hit:
+        return
+
+    provider_config = build_translation_provider_config(
+        translation.metadata.provider,
+        translation.metadata.model,
+    )
+    key = build_translation_cache_key(
+        provider_config,
+        source_lang=config.source_lang,
+        target_lang=config.target_lang,
+        segments=source_segments,
+    )
+    TranslationCache(config.translation_cache_dir).set(key, translation.segments)
 
 
 def _check_translation_availability(config: SubtitleConfig, provider_name: str):

@@ -31,6 +31,8 @@ class SubtitleConfig:
     translation_model: str | None = None
     translation_fallback_provider: str | None = None
     translation_fallback_model: str | None = None
+    translation_cache_enabled: bool = False
+    translation_cache_dir: str | None = None
     translator: str = "claude"
     api_key: str | None = None
     # Dubbing options

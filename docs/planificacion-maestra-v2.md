@@ -330,16 +330,18 @@ Cambios tecnicos:
 
 - crear cache JSON versionada en `~/.captionflow/cache`;
 - key por hash de provider, modelo, input normalizado y parametros;
-- TTL configurable;
 - metadata `cache_hit`;
+- cache opt-in mediante configuracion/CLI;
+- TTL configurable;
 - no cachear audio crudo salvo decision explicita;
 - limpiar cache por CLI futura.
 
 Criterios:
 
 - test cache hit/miss;
-- test expiracion;
+- test entradas corruptas;
 - test no fuga de API keys;
+- test expiracion;
 - coste estimado no se duplica en cache hit.
 
 ### Fase G: Migracion de Defaults
@@ -439,11 +441,11 @@ Entregables:
 | --- | ---: | --- |
 | Base tecnica y tests | 80% | Hecho inicial, falta CI/type check |
 | Dependencias opcionales | 55% | Extras creados, falta reorientar a OpenAI SDK v2 |
-| Provider-ready | 72% | Contratos, router y fallback de traduccion integrados; falta coste/cache/privacy UI |
+| Provider-ready | 78% | Contratos, router, fallback y cache base integrados; falta coste/privacy UI |
 | Proyectos/jobs | 45% | Persistencia JSON y eventos, falta cola real/cache/logs |
 | Editor subtitulos | 60% | Dominio y drafts hechos, falta UI/undo-redo completo |
 | Exportacion profesional | 0% | Pendiente |
-| Traduccion robusta | 45% | nano-gpt/OpenAI y fallback base hechos; faltan cache, glosarios y controles de calidad |
+| Traduccion robusta | 55% | nano-gpt/OpenAI, fallback y cache base hechos; faltan glosarios y controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
 | API interna/UI | 0% | Pendiente |
 | Distribucion | 20% | Extras/docs iniciales, falta release/CI/instalador |
@@ -473,6 +475,7 @@ Entregables:
 | `docs/planificacion-mejoras.md` | Deprecado | Mantener solo como referencia historica |
 | `docs/cambios-propuestos-v2.md` | Fuente de propuesta | Documento de cambio estrategico |
 | `docs/specs/current-pipeline.md` | Spec actual | Contrato de comportamiento implementado hoy |
+| `docs/specs/translation-cache-v1.md` | Spec activa | Contrato de cache local de traduccion |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
@@ -521,3 +524,5 @@ Estado de esta primera accion:
   historico cuando no se configuran.
 - El pipeline ya conecta el preflight del router para validar dependencia
   importable y credencial disponible antes de crear providers de traduccion.
+- La cache local de traduccion ya existe como JSON versionado, opt-in por CLI y
+  configuracion, con `cache_hit` en metadata y tests de hit/miss.

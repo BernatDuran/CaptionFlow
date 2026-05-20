@@ -236,3 +236,54 @@ def test_run_subtitle_pipeline_uses_translation_fallback(tmp_path, monkeypatch):
     assert translation_metadata.warnings == [
         "Fallback used after provider nano-gpt failed: primary unavailable"
     ]
+
+
+def test_run_subtitle_pipeline_uses_translation_cache(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    output_dir = tmp_path / "out"
+    created_providers = []
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.extract_audio",
+        lambda input_file, output_path: output_path,
+    )
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.importlib.util.find_spec",
+        lambda package: object(),
+    )
+
+    def fake_create_translation_provider(provider_config, **kwargs):
+        created_providers.append(provider_config.name)
+        return FallbackTranslationProvider()
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.create_translation_provider_from_config",
+        fake_create_translation_provider,
+    )
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(output_dir),
+        source_lang="en",
+        target_lang="es",
+        translation_provider="openai",
+        translation_model="fallback",
+        translation_cache_enabled=True,
+        translation_cache_dir=str(tmp_path / "cache"),
+        api_key="test-key",
+    )
+
+    first = run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider=FakeTranscriptionProvider(),
+    )
+    second = run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider=FakeTranscriptionProvider(),
+    )
+
+    assert created_providers == ["openai"]
+    assert first.provider_metadata[1].cache_hit is False
+    assert second.provider_metadata[1].cache_hit is True
+    assert second.segments[0].translated == "hola-es"

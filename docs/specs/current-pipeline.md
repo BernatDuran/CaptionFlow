@@ -27,6 +27,9 @@ Configuration inputs:
 - `translation_fallback_provider`: optional fallback translation provider used
   when the primary provider raises a recoverable provider runtime error.
 - `translation_fallback_model`: optional fallback translation model override.
+- `translation_cache_enabled`: whether local translation cache is enabled.
+  Defaults to `False`.
+- `translation_cache_dir`: optional cache directory override.
 - `translator`: `claude` or `nllb`.
 - `api_key`: provider API key override when the selected translation provider
   supports explicit credentials.
