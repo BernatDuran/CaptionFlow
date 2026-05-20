@@ -194,6 +194,10 @@ def test_run_subtitle_pipeline_uses_translation_fallback(tmp_path, monkeypatch):
         "subtitle_pipeline.pipeline.extract_audio",
         lambda input_file, output_path: output_path,
     )
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.importlib.util.find_spec",
+        lambda package: object(),
+    )
 
     def fake_create_translation_provider(provider_config, **kwargs):
         created_providers.append(provider_config.name)

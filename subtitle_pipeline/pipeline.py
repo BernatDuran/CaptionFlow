@@ -1,3 +1,4 @@
+import importlib.util
 import os
 import shutil
 import tempfile
@@ -12,9 +13,11 @@ from .providers import (
     TranscriptionProvider,
     TranslationProvider,
     build_translation_provider_config,
+    check_provider_availability,
     create_transcription_provider,
     create_translation_provider_from_config,
     create_tts_provider,
+    get_provider_capabilities,
 )
 from .validation import validate_config
 
@@ -244,6 +247,10 @@ def _translate_segments(
             target_lang=config.target_lang,
             api_key=config.api_key,
         ),
+        availability_checker=lambda provider_config: _check_translation_availability(
+            config,
+            provider_config.name,
+        ),
         event_sink=event_sink,
     )
     return router.execute(
@@ -253,4 +260,25 @@ def _translate_segments(
             config.source_lang,
             config.target_lang,
         ),
+    )
+
+
+def _check_translation_availability(config: SubtitleConfig, provider_name: str):
+    capabilities = get_provider_capabilities(provider_name)
+    has_package = (
+        importlib.util.find_spec(capabilities.package) is not None
+        if capabilities.package
+        else True
+    )
+    has_api_key = bool(
+        config.api_key
+        or (
+            capabilities.api_key_env_var
+            and os.environ.get(capabilities.api_key_env_var)
+        )
+    )
+    return check_provider_availability(
+        capabilities,
+        has_package=has_package,
+        has_api_key=has_api_key,
     )

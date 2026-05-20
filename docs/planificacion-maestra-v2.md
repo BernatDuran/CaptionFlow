@@ -519,3 +519,5 @@ Estado de esta primera accion:
 - La CLI y `SubtitleConfig` ya aceptan `translation_fallback_provider` y
   `translation_fallback_model` de forma opcional, manteniendo el comportamiento
   historico cuando no se configuran.
+- El pipeline ya conecta el preflight del router para validar dependencia
+  importable y credencial disponible antes de crear providers de traduccion.
