@@ -443,7 +443,7 @@ Entregables:
 | Dependencias opcionales | 55% | Extras creados, falta reorientar a OpenAI SDK v2 |
 | Provider-ready | 78% | Contratos, router, fallback y cache base integrados; falta coste/privacy UI |
 | Proyectos/jobs | 45% | Persistencia JSON y eventos, falta cola real/cache/logs |
-| Editor subtitulos | 60% | Dominio y drafts hechos, falta UI/undo-redo completo |
+| Editor subtitulos | 72% | Dominio, drafts y CLI basico hechos; falta flujo proyecto/revision completo |
 | Exportacion profesional | 35% | Perfiles legacy/basic/youtube/review/archive base, manifiesto y review bilingue |
 | Traduccion robusta | 55% | nano-gpt/OpenAI, fallback y cache base hechos; faltan glosarios y controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
@@ -477,6 +477,7 @@ Entregables:
 | `docs/specs/current-pipeline.md` | Spec actual | Contrato de comportamiento implementado hoy |
 | `docs/specs/translation-cache-v1.md` | Spec activa | Contrato de cache local de traduccion |
 | `docs/specs/export-profiles-v1.md` | Spec activa | Contrato de perfiles de exportacion basicos |
+| `docs/specs/subtitle-cli-v1.md` | Spec activa | Contrato del CLI de edicion de drafts |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
@@ -529,3 +530,5 @@ Estado de esta primera accion:
   configuracion, con `cache_hit` en metadata y tests de hit/miss.
 - La exportacion profesional basica ya tiene perfiles opt-in, manifiesto JSON,
   estructura por trabajo, salida YouTube y archivo bilingue de revision.
+- El editor de subtitulos ya tiene CLI basico para listar, validar y aplicar
+  ediciones sobre drafts JSON con indices 1-based.

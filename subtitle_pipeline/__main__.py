@@ -25,6 +25,11 @@ def main(argv: list[str] | None = None):
     if argv and argv[0] == "project":
         _handle_project_command(argv[1:])
         return
+    if argv and argv[0] == "subtitle":
+        from .subtitle_cli import handle_subtitle_command
+
+        handle_subtitle_command(argv[1:])
+        return
 
     parser = argparse.ArgumentParser(
         description="Generate translated subtitles from video/audio files."
