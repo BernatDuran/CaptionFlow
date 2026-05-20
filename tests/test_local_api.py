@@ -12,6 +12,8 @@ def test_local_api_config_and_providers(tmp_path):
     assert created["config"]["export_profile"] == "youtube"
     assert loaded["translation_provider"] == "nano-gpt"
     assert any(provider["name"] == "openai" for provider in providers["providers"])
+    assert isinstance(providers["providers"][0]["supported_languages"], list)
+    assert isinstance(providers["providers"][0]["supported_output_formats"], list)
 
 
 def test_local_api_secret_status_and_set_secret(monkeypatch):

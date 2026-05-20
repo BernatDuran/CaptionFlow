@@ -581,6 +581,11 @@ tbody tr {
   border-bottom: 1px solid #edf2ef;
 }
 
+.hint-text {
+  color: #586762;
+  line-height: 1.4;
+}
+
 .check-list {
   display: grid;
   gap: 4px;

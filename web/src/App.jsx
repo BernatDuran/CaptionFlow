@@ -6,6 +6,7 @@ const EXPORT_PROFILES = ["legacy", "basic", "youtube", "review", "archive"];
 const CONFIG_PRESETS = ["personal-youtube", "local-review"];
 const FORMATS = ["srt", "vtt", "txt"];
 const RECENT_PROJECTS_KEY = "captionflow.recentProjects";
+const API_KEY_ENV_VARS = ["OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY"];
 
 const initialProjectForm = {
   name: "CaptionFlow Project",
@@ -116,7 +117,7 @@ export default function App() {
         api.secrets(),
       ]);
       setConfig(configPayload);
-      setProviders(providersPayload.providers);
+      setProviders(providersPayload.providers || []);
       setDoctor(doctorPayload);
       setSecrets(secretsPayload);
       setJobForm((form) => ({
@@ -689,6 +690,10 @@ function SettingsView({
   setSecret,
   openBrowser,
 }) {
+  const secretEntries = Object.entries(secrets?.keys || Object.fromEntries(
+    API_KEY_ENV_VARS.map((envVar) => [envVar, { configured: false, preview: "sin cargar" }]),
+  ));
+
   return (
     <section className="settings-grid">
       <div className="panel">
@@ -767,13 +772,16 @@ function SettingsView({
       </div>
       <div className="panel">
         <PanelHeader title="API keys" meta="Solo proceso local" />
-        {Object.entries(secrets?.keys || {}).map(([envVar, info]) => (
+        {secretEntries.map(([envVar, info]) => (
           <div className="secret-row" key={envVar}>
             <span>{envVar}</span>
             <strong>{info.configured ? info.preview : "sin configurar"}</strong>
             <button onClick={() => setSecret(envVar)}>Configurar</button>
           </div>
         ))}
+        <small className="hint-text">
+          Usa OPENAI_API_KEY para OpenAI, NANO_GPT_API_KEY para nano-gpt y ANTHROPIC_API_KEY solo para Claude legacy.
+        </small>
       </div>
       <div className="panel">
         <PanelHeader title="Doctor" meta="Acciones recomendadas" />

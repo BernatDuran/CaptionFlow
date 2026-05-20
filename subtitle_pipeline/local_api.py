@@ -71,7 +71,7 @@ class LocalApiService:
         return {"path": str(path), "config": asdict(config)}
 
     def providers(self) -> dict[str, Any]:
-        providers = [asdict(provider) for provider in list_provider_capabilities()]
+        providers = [_json_ready(asdict(provider)) for provider in list_provider_capabilities()]
         return {"providers": providers}
 
     def filesystem(self, path: str | None = None, mode: str = "any") -> dict[str, Any]:
@@ -473,6 +473,16 @@ def _mask_secret(value: str | None) -> str | None:
     if len(value) <= 8:
         return "***"
     return f"{value[:4]}...{value[-4:]}"
+
+
+def _json_ready(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: _json_ready(item) for key, item in value.items()}
+    if isinstance(value, set):
+        return sorted(value)
+    if isinstance(value, list):
+        return [_json_ready(item) for item in value]
+    return value
 
 
 def _safe_browser_path(path: str | None) -> Path:
