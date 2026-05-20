@@ -1,4 +1,5 @@
 import os
+import subprocess
 import tempfile
 
 
@@ -17,7 +18,13 @@ def extract_audio(
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    import ffmpeg
+    try:
+        import ffmpeg
+    except ModuleNotFoundError as exc:
+        if exc.name != "ffmpeg":
+            raise
+        _extract_audio_with_ffmpeg_binary(video_path, output_path, sample_rate)
+        return output_path
 
     (
         ffmpeg.input(video_path)
@@ -27,3 +34,39 @@ def extract_audio(
     )
 
     return output_path
+
+
+def _extract_audio_with_ffmpeg_binary(
+    input_path: str,
+    output_path: str,
+    sample_rate: int,
+) -> None:
+    command = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        input_path,
+        "-ac",
+        "1",
+        "-ar",
+        str(sample_rate),
+        "-f",
+        "wav",
+        output_path,
+    ]
+    try:
+        subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            "ffmpeg executable was not found in PATH. Install ffmpeg or add it to PATH."
+        ) from exc
+    except subprocess.CalledProcessError as exc:
+        details = (exc.stderr or exc.stdout or "").strip()
+        if len(details) > 600:
+            details = details[-600:]
+        raise RuntimeError(f"ffmpeg failed to extract audio: {details}") from exc
