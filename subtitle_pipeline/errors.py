@@ -22,6 +22,10 @@ class ProviderAuthError(ProviderError):
     """Raised when a provider cannot run because credentials are missing."""
 
 
+class ProviderRuntimeError(ProviderError):
+    """Raised when a provider fails during execution and fallback may apply."""
+
+
 class TranscriptionError(CaptionFlowError):
     """Raised when transcription fails."""
 

@@ -51,6 +51,7 @@ class ProviderResultMetadata:
     provider: str
     model: str
     task: ProviderTask
+    requested_provider: str | None = None
     api_provider: str | None = None
     base_url: str | None = None
     privacy_level: ProviderPrivacyLevel | None = None

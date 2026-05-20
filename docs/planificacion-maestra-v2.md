@@ -508,3 +508,5 @@ Estado de esta primera accion:
 - El registry ya declara providers v2 de nano-gpt/OpenAI como capacidades.
 - `docs/specs/provider-router-v2.md` define el contrato antes de implementar el
   router real.
+- `ProviderRouter` ya existe con fallback controlado mediante
+  `ProviderRuntimeError` y tests con providers falsos.

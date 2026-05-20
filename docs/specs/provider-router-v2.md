@@ -112,3 +112,24 @@ Non-recoverable errors:
 - Metadata records `fallback_used=True` only when fallback really executed.
 - Pipeline code does not branch on concrete vendor names.
 - Tests use fake providers and perform no network calls.
+
+## 9. Current Implementation Status
+
+Implemented now:
+
+- generic `ProviderRouter`;
+- `ProviderRoute` dataclass;
+- fallback only on `ProviderRuntimeError`;
+- no fallback on `ConfigError`;
+- route task validation;
+- routed metadata enrichment;
+- fallback progress events;
+- unit tests with fake providers and no network calls.
+
+Not implemented yet:
+
+- runtime integration with the main pipeline;
+- provider dependency/key preflight inside the router;
+- API cache;
+- real nano-gpt/OpenAI adapters;
+- cost calculation.

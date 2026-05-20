@@ -24,6 +24,7 @@ from .registry import (
     list_provider_capabilities,
     list_provider_names,
 )
+from .router import ProviderRoute, ProviderRouter
 
 __all__ = [
     "EdgeTTSProvider",
@@ -33,6 +34,8 @@ __all__ = [
     "ProviderCapabilities",
     "ProviderConfig",
     "ProviderResultMetadata",
+    "ProviderRoute",
+    "ProviderRouter",
     "ProviderTask",
     "TTSProvider",
     "TTSResult",

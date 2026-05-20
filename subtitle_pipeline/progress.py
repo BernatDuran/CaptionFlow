@@ -6,9 +6,12 @@ from typing import Any, Literal
 
 PipelineStage = Literal[
     "extract",
+    "transcription",
     "transcribe",
+    "translation",
     "translate",
     "export",
+    "tts",
     "dub",
     "burn_in",
 ]
