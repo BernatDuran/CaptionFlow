@@ -1,7 +1,9 @@
 import json
 
 from subtitle_pipeline.__main__ import main
+from subtitle_pipeline.models import PipelineResult, Segment
 from subtitle_pipeline.projects import load_project
+from subtitle_pipeline.providers import ProviderResultMetadata
 
 
 def test_config_show_prints_defaults(capsys):
@@ -50,6 +52,131 @@ def test_project_create_add_job_and_list(tmp_path, capsys):
     assert job.id in output
     assert "pending" in output
     assert "video.mp4" in output
+
+
+def test_project_run_saves_outputs_metadata_and_draft(tmp_path, monkeypatch, capsys):
+    root_dir = tmp_path / "project"
+    project_path = root_dir / "captionflow_project.json"
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    main(["project", "create", "--name", "Demo", "--root-dir", str(root_dir)])
+    main(
+        [
+            "project",
+            "add-job",
+            "--project",
+            str(project_path),
+            "--input",
+            str(input_path),
+            "--output-dir",
+            "out",
+        ]
+    )
+    job = load_project(project_path).jobs[0]
+
+    def fake_run_subtitle_pipeline_detailed(config):
+        assert config.input_path == str(input_path)
+        assert config.export_profile == "review"
+        return PipelineResult(
+            output_files=["out/video.txt"],
+            segments=[Segment(start=0.0, end=1.0, text="hello", translated="hola")],
+            provider_metadata=[
+                ProviderResultMetadata(
+                    provider="fake",
+                    model="test",
+                    task="translation",
+                )
+            ],
+        )
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.run_subtitle_pipeline_detailed",
+        fake_run_subtitle_pipeline_detailed,
+    )
+
+    main(
+        [
+            "project",
+            "run",
+            "--project",
+            str(project_path),
+            "--job-id",
+            job.id,
+            "--translation-provider",
+            "nllb",
+            "--export-profile",
+            "review",
+        ]
+    )
+
+    output = capsys.readouterr().out
+    project = load_project(project_path)
+    completed = project.jobs[0]
+    assert "Completed job:" in output
+    assert completed.status == "completed"
+    assert completed.output_files == ["out/video.txt"]
+    assert completed.provider_metadata[0]["provider"] == "fake"
+    assert completed.subtitle_draft_path is not None
+
+
+def test_project_export_uses_saved_draft(tmp_path, capsys):
+    root_dir = tmp_path / "project"
+    project_path = root_dir / "captionflow_project.json"
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    main(["project", "create", "--name", "Demo", "--root-dir", str(root_dir)])
+    main(["project", "add-job", "--project", str(project_path), "--input", str(input_path)])
+    project = load_project(project_path)
+    job = project.jobs[0]
+    from subtitle_pipeline.projects import save_job_subtitle_draft, save_project
+
+    save_job_subtitle_draft(
+        project,
+        job.id,
+        [Segment(start=0.0, end=1.0, text="hello", translated="hola")],
+    )
+    job.provider_metadata = [
+        {
+            "provider": "fake",
+            "model": "test",
+            "task": "translation",
+            "requested_provider": None,
+            "api_provider": None,
+            "base_url": None,
+            "privacy_level": None,
+            "fallback_used": False,
+            "cache_hit": False,
+            "duration_seconds": None,
+            "estimated_cost": None,
+            "warnings": [],
+        }
+    ]
+    save_project(project, project_path)
+
+    main(
+        [
+            "project",
+            "export",
+            "--project",
+            str(project_path),
+            "--job-id",
+            job.id,
+            "--export-profile",
+            "youtube",
+            "--source-lang",
+            "en",
+            "--target-lang",
+            "es",
+        ]
+    )
+
+    output = capsys.readouterr().out
+    project = load_project(project_path)
+    assert "Exported job:" in output
+    assert any(path.endswith(".es.srt") for path in project.jobs[0].output_files)
+    assert any(path.endswith("export_manifest.json") for path in project.jobs[0].output_files)
 
 
 def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):

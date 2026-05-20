@@ -34,6 +34,7 @@ def test_run_project_job_marks_completed_and_persists_metadata(tmp_path):
     assert loaded.jobs[0].status == "completed"
     assert loaded.jobs[0].output_files == ["out/video.srt"]
     assert loaded.jobs[0].provider_metadata[0]["provider"] == "fake"
+    assert loaded.jobs[0].subtitle_draft_path is not None
 
 
 def test_run_project_job_marks_failed_and_persists_error(tmp_path):

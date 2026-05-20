@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Callable
 
 from .models import PipelineResult, SubtitleConfig
-from .projects import Project, save_project, update_job_status
+from .projects import Project, save_job_subtitle_draft, save_project, update_job_status
 
 PipelineRunner = Callable[[SubtitleConfig], PipelineResult]
 
@@ -34,6 +34,7 @@ def run_project_job(
         provider_metadata=[asdict(metadata) for metadata in result.provider_metadata],
         error=None,
     )
+    save_job_subtitle_draft(project, job_id, result.segments)
     _save_if_requested(project, project_path)
     return result
 

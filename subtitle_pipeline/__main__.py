@@ -2,15 +2,24 @@ import argparse
 import json
 import sys
 from dataclasses import asdict
+from pathlib import Path
 
 from .app_config import load_app_config, save_app_config
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
-from .export_profiles import SUPPORTED_EXPORT_PROFILES
+from .export_profiles import SUPPORTED_EXPORT_PROFILES, export_subtitles
+from .job_runner import run_project_job
 from .models import SubtitleConfig
 from .progress import console_event_sink
-from .providers import list_provider_names
-from .projects import add_job, create_project, load_project, save_project
+from .providers import ProviderResultMetadata, list_provider_names
+from .projects import (
+    add_job,
+    create_project,
+    get_job,
+    load_job_subtitle_draft,
+    load_project,
+    save_project,
+)
 
 
 def main(argv: list[str] | None = None):
@@ -222,6 +231,63 @@ def _handle_project_command(argv: list[str]) -> None:
     list_parser = subparsers.add_parser("list", help="List project jobs.")
     list_parser.add_argument("--project", required=True)
 
+    run_parser = subparsers.add_parser("run", help="Run a project job and save an editable draft.")
+    run_parser.add_argument("--project", required=True)
+    run_parser.add_argument("--job-id", required=True)
+    run_parser.add_argument("--output-dir", default=None)
+    run_parser.add_argument("--source-lang", default="en")
+    run_parser.add_argument("--target-lang", default="es")
+    run_parser.add_argument(
+        "--transcription-provider",
+        default="faster-whisper",
+        choices=list_provider_names(task="transcription"),
+    )
+    run_parser.add_argument("--transcription-model", default=None)
+    run_parser.add_argument("--device", default="auto")
+    run_parser.add_argument(
+        "--translation-provider",
+        default="nllb",
+        choices=list_provider_names(task="translation"),
+    )
+    run_parser.add_argument("--translation-model", default=None)
+    run_parser.add_argument(
+        "--translation-fallback-provider",
+        default=None,
+        choices=list_provider_names(task="translation"),
+    )
+    run_parser.add_argument("--translation-fallback-model", default=None)
+    run_parser.add_argument("--translation-cache", action="store_true")
+    run_parser.add_argument("--api-key", default=None)
+    run_parser.add_argument(
+        "--formats",
+        nargs="+",
+        default=["srt"],
+        choices=["srt", "vtt", "txt"],
+    )
+    run_parser.add_argument(
+        "--export-profile",
+        default="legacy",
+        choices=sorted(SUPPORTED_EXPORT_PROFILES),
+    )
+
+    export_parser = subparsers.add_parser("export", help="Export a completed job draft.")
+    export_parser.add_argument("--project", required=True)
+    export_parser.add_argument("--job-id", required=True)
+    export_parser.add_argument("--output-dir", default=None)
+    export_parser.add_argument("--source-lang", default="en")
+    export_parser.add_argument("--target-lang", default="es")
+    export_parser.add_argument(
+        "--formats",
+        nargs="+",
+        default=["srt"],
+        choices=["srt", "vtt", "txt"],
+    )
+    export_parser.add_argument(
+        "--export-profile",
+        default="youtube",
+        choices=sorted(SUPPORTED_EXPORT_PROFILES),
+    )
+
     args = parser.parse_args(argv)
     if args.command == "create":
         project = create_project(args.name, args.root_dir)
@@ -241,6 +307,67 @@ def _handle_project_command(argv: list[str]) -> None:
         project = load_project(args.project)
         for job in project.jobs:
             print(f"{job.id}\t{job.status}\t{job.input_path}")
+        return
+    if args.command == "run":
+        project = load_project(args.project)
+        job = get_job(project, args.job_id)
+        output_dir = args.output_dir or str(Path(project.root_dir) / "output")
+        config = SubtitleConfig(
+            input_path=job.input_path,
+            output_dir=output_dir,
+            source_lang=args.source_lang,
+            target_lang=args.target_lang,
+            transcription_provider=args.transcription_provider,
+            transcription_model=args.transcription_model,
+            device=args.device,
+            formats=args.formats,
+            export_profile=args.export_profile,
+            translation_provider=args.translation_provider,
+            translation_model=args.translation_model,
+            translation_fallback_provider=args.translation_fallback_provider,
+            translation_fallback_model=args.translation_fallback_model,
+            translation_cache_enabled=args.translation_cache,
+            api_key=args.api_key,
+        )
+
+        from .pipeline import run_subtitle_pipeline_detailed
+
+        result = run_project_job(
+            project,
+            job.id,
+            config,
+            runner=run_subtitle_pipeline_detailed,
+            project_path=args.project,
+        )
+        print(f"Completed job: {job.id}")
+        print(f"Draft: {get_job(project, job.id).subtitle_draft_path}")
+        for output_file in result.output_files:
+            print(f"Output: {output_file}")
+        return
+    if args.command == "export":
+        project = load_project(args.project)
+        job = get_job(project, args.job_id)
+        segments = load_job_subtitle_draft(project, job.id)
+        output_dir = args.output_dir or str(Path(project.root_dir) / "exports")
+        base_name = Path(job.input_path).stem
+        export_result = export_subtitles(
+            segments,
+            output_dir,
+            base_name,
+            profile=args.export_profile,
+            formats=args.formats,
+            source_lang=args.source_lang,
+            target_lang=args.target_lang,
+            use_translated=args.source_lang != args.target_lang,
+            provider_metadata=[
+                ProviderResultMetadata(**metadata) for metadata in job.provider_metadata
+            ],
+        )
+        job.output_files = export_result.files
+        save_project(project, args.project)
+        print(f"Exported job: {job.id}")
+        for output_file in export_result.files:
+            print(f"Output: {output_file}")
         return
 
 
