@@ -24,8 +24,12 @@ Configuration inputs:
 - `formats`: one or more subtitle formats: `srt`, `vtt`, `txt`.
 - `translation_provider`: translation provider. Defaults to `claude`.
 - `translation_model`: optional translation model override.
+- `translation_fallback_provider`: optional fallback translation provider used
+  when the primary provider raises a recoverable provider runtime error.
+- `translation_fallback_model`: optional fallback translation model override.
 - `translator`: `claude` or `nllb`.
-- `api_key`: Anthropic API key when Claude translation is used.
+- `api_key`: provider API key override when the selected translation provider
+  supports explicit credentials.
 - `burn_in`: whether to burn subtitles into the video.
 - `dub`: whether to generate a TTS-dubbed video.
 - `tts_provider`: TTS provider. Defaults to `edge-tts`.

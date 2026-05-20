@@ -14,8 +14,10 @@ from .contracts import (
     TranslationResult,
 )
 from .factories import (
+    build_translation_provider_config,
     create_transcription_provider,
     create_translation_provider,
+    create_translation_provider_from_config,
     create_tts_provider,
 )
 from .openai_compatible import (
@@ -54,8 +56,10 @@ __all__ = [
     "TranslationResult",
     "TranslatorProviderAdapter",
     "check_provider_availability",
+    "build_translation_provider_config",
     "create_transcription_provider",
     "create_translation_provider",
+    "create_translation_provider_from_config",
     "create_tts_provider",
     "get_provider_capabilities",
     "list_provider_capabilities",

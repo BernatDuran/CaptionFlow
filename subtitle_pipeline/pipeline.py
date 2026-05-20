@@ -7,10 +7,13 @@ from .audio_extractor import extract_audio
 from .formatter import write_subtitles
 from .progress import EventSink, emit_event
 from .providers import (
+    ProviderRoute,
+    ProviderRouter,
     TranscriptionProvider,
     TranslationProvider,
+    build_translation_provider_config,
     create_transcription_provider,
-    create_translation_provider,
+    create_translation_provider_from_config,
     create_tts_provider,
 )
 from .validation import validate_config
@@ -106,8 +109,7 @@ def run_subtitle_pipeline_detailed(
         # 3. Translate (skip if same language)
         use_translated = False
         if config.source_lang != config.target_lang:
-            translation_provider = translation_provider or create_translation_provider(config)
-            provider_config = translation_provider.config
+            provider_config = _translation_provider_config(config, translation_provider)
             emit_event(
                 event_sink,
                 "translate",
@@ -119,13 +121,11 @@ def run_subtitle_pipeline_detailed(
                     "target_lang": config.target_lang,
                     "provider": provider_config.name,
                     "model": provider_config.model,
+                    "fallback_provider": config.translation_fallback_provider,
+                    "fallback_model": config.translation_fallback_model,
                 },
             )
-            translation = translation_provider.translate_segments(
-                segments,
-                config.source_lang,
-                config.target_lang,
-            )
+            translation = _translate_segments(config, segments, translation_provider, event_sink)
             provider_metadata.append(translation.metadata)
             segments = translation.segments
             use_translated = True
@@ -199,3 +199,58 @@ def run_subtitle_pipeline_detailed(
 
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)
+
+
+def _translation_provider_config(
+    config: SubtitleConfig,
+    translation_provider: TranslationProvider | None,
+):
+    if translation_provider is not None:
+        return translation_provider.config
+    return build_translation_provider_config(
+        config.translation_provider,
+        config.translation_model,
+    )
+
+
+def _translate_segments(
+    config: SubtitleConfig,
+    segments,
+    translation_provider: TranslationProvider | None,
+    event_sink: EventSink | None,
+):
+    if translation_provider is not None:
+        return translation_provider.translate_segments(
+            segments,
+            config.source_lang,
+            config.target_lang,
+        )
+
+    primary = build_translation_provider_config(
+        config.translation_provider,
+        config.translation_model,
+    )
+    fallback = None
+    if config.translation_fallback_provider is not None:
+        fallback = build_translation_provider_config(
+            config.translation_fallback_provider,
+            config.translation_fallback_model,
+        )
+    route = ProviderRoute(task="translation", primary=primary, fallback=fallback)
+    router = ProviderRouter(
+        lambda provider_config: create_translation_provider_from_config(
+            provider_config,
+            source_lang=config.source_lang,
+            target_lang=config.target_lang,
+            api_key=config.api_key,
+        ),
+        event_sink=event_sink,
+    )
+    return router.execute(
+        route,
+        lambda provider: provider.translate_segments(
+            segments,
+            config.source_lang,
+            config.target_lang,
+        ),
+    )

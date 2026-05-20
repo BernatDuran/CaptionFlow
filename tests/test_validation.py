@@ -136,6 +136,21 @@ def test_validate_config_rejects_unsupported_translation_provider_from_registry(
         validate_config(config)
 
 
+def test_validate_config_rejects_unsupported_translation_fallback_provider(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        translation_provider="nllb",
+        translation_fallback_provider="unknown",
+    )
+
+    with pytest.raises(ConfigError, match="Unsupported translation provider 'unknown'"):
+        validate_config(config)
+
+
 def test_validate_config_requires_nano_gpt_key_when_selected(tmp_path, monkeypatch):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

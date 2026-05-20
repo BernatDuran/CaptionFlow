@@ -86,6 +86,17 @@ def main(argv: list[str] | None = None):
         help="Translation model override for the selected provider.",
     )
     parser.add_argument(
+        "--translation-fallback-provider",
+        default=None,
+        choices=list_provider_names(task="translation"),
+        help="Optional fallback translation provider used when the primary provider fails.",
+    )
+    parser.add_argument(
+        "--translation-fallback-model",
+        default=None,
+        help="Translation model override for the fallback provider.",
+    )
+    parser.add_argument(
         "--api-key",
         default=None,
         help="Anthropic API key (or set ANTHROPIC_API_KEY env var)",
@@ -129,6 +140,8 @@ def main(argv: list[str] | None = None):
         burn_in=args.burn_in,
         translation_provider=args.translation_provider or args.translator,
         translation_model=args.translation_model,
+        translation_fallback_provider=args.translation_fallback_provider,
+        translation_fallback_model=args.translation_fallback_model,
         translator=args.translator,
         api_key=args.api_key,
         dub=args.dub,

@@ -85,6 +85,10 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
             "nllb",
             "--translation-model",
             "custom-nllb",
+            "--translation-fallback-provider",
+            "openai",
+            "--translation-fallback-model",
+            "fallback-model",
             "--tts-provider",
             "edge-tts",
             "--tts-model",
@@ -97,6 +101,8 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
     assert config.transcription_model == "base"
     assert config.translation_provider == "nllb"
     assert config.translation_model == "custom-nllb"
+    assert config.translation_fallback_provider == "openai"
+    assert config.translation_fallback_model == "fallback-model"
     assert config.tts_provider == "edge-tts"
     assert config.tts_model == "edge-custom"
     assert captured["event_sink"] is not None

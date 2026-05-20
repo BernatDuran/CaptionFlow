@@ -22,6 +22,8 @@ class AppConfig:
     transcription_model: str = "large-v3"
     translation_provider: str = "claude"
     translation_model: str | None = None
+    translation_fallback_provider: str | None = None
+    translation_fallback_model: str | None = None
     tts_provider: str = "edge-tts"
     tts_model: str = "edge-tts"
 

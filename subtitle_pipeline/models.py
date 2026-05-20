@@ -29,6 +29,8 @@ class SubtitleConfig:
     burn_in: bool = False
     translation_provider: str = "claude"
     translation_model: str | None = None
+    translation_fallback_provider: str | None = None
+    translation_fallback_model: str | None = None
     translator: str = "claude"
     api_key: str | None = None
     # Dubbing options

@@ -27,6 +27,8 @@ def validate_config(config: SubtitleConfig) -> None:
 
     _validate_provider_name(config.transcription_provider, "transcription")
     _validate_provider_name(config.translation_provider, "translation")
+    if config.translation_fallback_provider is not None:
+        _validate_provider_name(config.translation_fallback_provider, "translation")
     _validate_provider_name(config.tts_provider, "tts")
 
     unsupported_formats = sorted(set(config.formats) - SUPPORTED_FORMATS)
@@ -46,7 +48,9 @@ def validate_config(config: SubtitleConfig) -> None:
         )
 
     _validate_translation_provider(config)
+    _validate_translation_fallback_provider(config)
     _validate_tts_provider(config)
+
 
 def _validate_translation_provider(config: SubtitleConfig) -> None:
     if config.source_lang == config.target_lang:
@@ -77,6 +81,25 @@ def _validate_translation_provider(config: SubtitleConfig) -> None:
         raise ConfigError(
             f"API key required for translation provider "
             f"'{config.translation_provider}'. {key_hint}"
+        )
+
+
+def _validate_translation_fallback_provider(config: SubtitleConfig) -> None:
+    if config.source_lang == config.target_lang or config.translation_fallback_provider is None:
+        return
+
+    capabilities = get_provider_capabilities(config.translation_fallback_provider)
+    if config.source_lang not in capabilities.supported_languages:
+        raise ConfigError(
+            f"Source language '{config.source_lang}' is not supported by "
+            f"translation fallback provider '{config.translation_fallback_provider}'. "
+            f"Supported: {sorted(capabilities.supported_languages)}"
+        )
+    if config.target_lang not in capabilities.supported_languages:
+        raise ConfigError(
+            f"Target language '{config.target_lang}' is not supported by "
+            f"translation fallback provider '{config.translation_fallback_provider}'. "
+            f"Supported: {sorted(capabilities.supported_languages)}"
         )
 
 

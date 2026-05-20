@@ -1,4 +1,5 @@
 from subtitle_pipeline.models import Segment, SubtitleConfig
+from subtitle_pipeline.errors import ProviderRuntimeError
 from subtitle_pipeline.pipeline import run_subtitle_pipeline, run_subtitle_pipeline_detailed
 from subtitle_pipeline.providers import (
     ProviderConfig,
@@ -43,6 +44,17 @@ class FakeTranslationProvider:
                 task=self.config.task,
             ),
         )
+
+
+class FailingTranslationProvider:
+    config = ProviderConfig(name="nano-gpt", task="translation", model="primary")
+
+    def translate_segments(self, segments, source_lang, target_lang):
+        raise ProviderRuntimeError("primary unavailable")
+
+
+class FallbackTranslationProvider(FakeTranslationProvider):
+    config = ProviderConfig(name="openai", task="translation", model="fallback")
 
 
 def test_run_subtitle_pipeline_uses_injected_providers(tmp_path, monkeypatch):
@@ -170,3 +182,53 @@ def test_run_subtitle_pipeline_skips_translation_for_same_language(tmp_path, mon
 
     assert output_files == [str(output_dir / "video.srt")]
     assert "hello-es" in (output_dir / "video.srt").read_text(encoding="utf-8")
+
+
+def test_run_subtitle_pipeline_uses_translation_fallback(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    output_dir = tmp_path / "out"
+    created_providers = []
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.extract_audio",
+        lambda input_file, output_path: output_path,
+    )
+
+    def fake_create_translation_provider(provider_config, **kwargs):
+        created_providers.append(provider_config.name)
+        if provider_config.name == "nano-gpt":
+            return FailingTranslationProvider()
+        return FallbackTranslationProvider()
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.create_translation_provider_from_config",
+        fake_create_translation_provider,
+    )
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(output_dir),
+        source_lang="en",
+        target_lang="es",
+        translation_provider="nano-gpt",
+        translation_model="primary",
+        translation_fallback_provider="openai",
+        translation_fallback_model="fallback",
+        api_key="test-key",
+    )
+
+    result = run_subtitle_pipeline_detailed(
+        config,
+        transcription_provider=FakeTranscriptionProvider(),
+    )
+
+    assert created_providers == ["nano-gpt", "openai"]
+    assert result.segments[0].translated == "hola-es"
+    translation_metadata = result.provider_metadata[1]
+    assert translation_metadata.provider == "openai"
+    assert translation_metadata.requested_provider == "nano-gpt"
+    assert translation_metadata.fallback_used is True
+    assert translation_metadata.warnings == [
+        "Fallback used after provider nano-gpt failed: primary unavailable"
+    ]

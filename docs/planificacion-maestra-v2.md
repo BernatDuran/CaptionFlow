@@ -439,11 +439,11 @@ Entregables:
 | --- | ---: | --- |
 | Base tecnica y tests | 80% | Hecho inicial, falta CI/type check |
 | Dependencias opcionales | 55% | Extras creados, falta reorientar a OpenAI SDK v2 |
-| Provider-ready | 60% | Contratos base hechos, falta router/fallback/coste/privacy |
+| Provider-ready | 72% | Contratos, router y fallback de traduccion integrados; falta coste/cache/privacy UI |
 | Proyectos/jobs | 45% | Persistencia JSON y eventos, falta cola real/cache/logs |
 | Editor subtitulos | 60% | Dominio y drafts hechos, falta UI/undo-redo completo |
 | Exportacion profesional | 0% | Pendiente |
-| Traduccion robusta | 25% | Providers base, falta nano-gpt/OpenAI/glosarios/cardinalidad |
+| Traduccion robusta | 45% | nano-gpt/OpenAI y fallback base hechos; faltan cache, glosarios y controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
 | API interna/UI | 0% | Pendiente |
 | Distribucion | 20% | Extras/docs iniciales, falta release/CI/instalador |
@@ -514,3 +514,8 @@ Estado de esta primera accion:
   inyectable antes de ejecutar providers.
 - Ya existe un primer adapter de traduccion OpenAI-compatible para `nano-gpt`
   y `openai`, con cliente inyectable y validacion estricta de cardinalidad.
+- El pipeline real ya usa `ProviderRouter` para traduccion cuando no recibe un
+  provider inyectado por tests/integraciones externas.
+- La CLI y `SubtitleConfig` ya aceptan `translation_fallback_provider` y
+  `translation_fallback_model` de forma opcional, manteniendo el comportamiento
+  historico cuando no se configuran.
