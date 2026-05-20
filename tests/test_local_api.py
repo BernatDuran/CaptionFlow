@@ -1,4 +1,4 @@
-from subtitle_pipeline.local_api import LocalApiService, _is_api_path, _static_target
+from subtitle_pipeline.local_api import LocalApiService, _is_api_path, _setup_page_html, _static_target
 
 
 def test_local_api_config_and_providers(tmp_path):
@@ -127,3 +127,10 @@ def test_local_api_static_target_serves_spa_and_blocks_traversal(tmp_path):
     assert _static_target(dist.resolve(), "/../secret.txt") is None
     assert _is_api_path("/health")
     assert not _is_api_path("/assets/index.js")
+
+
+def test_local_api_setup_page_explains_missing_frontend():
+    html = _setup_page_html()
+
+    assert "CaptionFlow API activa" in html
+    assert "CaptionFlow.cmd" in html

@@ -18,11 +18,25 @@ El lanzador:
 1. entra en el repositorio;
 2. instala dependencias frontend si falta `web/node_modules`;
 3. compila la web con Vite;
-4. arranca el backend Python;
-5. abre el navegador en `http://127.0.0.1:8765`.
+4. busca un puerto libre empezando por `8765`;
+5. arranca el backend Python;
+6. abre el navegador en la URL correcta.
 
 Deja la ventana abierta mientras uses CaptionFlow. Para cerrar la app, pulsa
 `Ctrl+C` en esa ventana.
+
+Si `8765` esta ocupado por un servidor antiguo, el lanzador usara `8766`,
+`8767`, etc. Usa siempre la URL que imprima la ventana del lanzador.
+
+Si ves en el navegador:
+
+```json
+{"error": "Unsupported endpoint: GET /"}
+```
+
+estas entrando a un backend antiguo sin frontend servido. Cierra la ventana de
+PowerShell anterior que lo arranco, o vuelve a ejecutar `CaptionFlow.cmd` y usa
+la URL que abra/imprima el lanzador.
 
 ## Arquitectura
 

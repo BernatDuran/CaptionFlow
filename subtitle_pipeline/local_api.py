@@ -251,6 +251,9 @@ def _make_handler(service: LocalApiService, static_dir: Path | None = None):
             if static_dir is not None and not _is_api_path(self.path):
                 self._send_static(static_dir)
                 return
+            if not _is_api_path(self.path):
+                self._send_setup_page()
+                return
             self._handle("GET")
 
         def do_POST(self) -> None:
@@ -292,6 +295,15 @@ def _make_handler(service: LocalApiService, static_dir: Path | None = None):
             content_type = mimetypes.guess_type(str(target))[0] or "application/octet-stream"
             self.send_response(200)
             self.send_header("Content-Type", content_type)
+            self.send_header("Cache-Control", "no-cache")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def _send_setup_page(self) -> None:
+            body = _setup_page_html().encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Cache-Control", "no-cache")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
@@ -381,6 +393,52 @@ def _static_target(static_root: Path, raw_path: str) -> Path | None:
         return None
     fallback = static_root / "index.html"
     return fallback if fallback.exists() else None
+
+
+def _setup_page_html() -> str:
+    return """<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CaptionFlow</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #eef3ef;
+        color: #182026;
+        font-family: Segoe UI, Arial, sans-serif;
+      }
+      main {
+        width: min(680px, calc(100% - 32px));
+        background: white;
+        border: 1px solid #dbe3df;
+        border-radius: 8px;
+        padding: 24px;
+        display: grid;
+        gap: 12px;
+      }
+      h1, p {
+        margin: 0;
+      }
+      code {
+        background: #edf3f0;
+        border-radius: 6px;
+        padding: 2px 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>CaptionFlow API activa</h1>
+      <p>El backend esta funcionando, pero la interfaz web compilada no esta disponible en <code>web/dist</code>.</p>
+      <p>Para abrir la app completa, cierra este servidor y ejecuta <code>CaptionFlow.cmd</code>. El lanzador compilara la web y abrira la URL correcta automaticamente.</p>
+    </main>
+  </body>
+</html>"""
 
 
 def _first(query: dict[str, list[str]], key: str) -> str | None:

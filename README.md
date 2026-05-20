@@ -69,6 +69,13 @@ El lanzador prepara el frontend, arranca el backend local y abre:
 http://127.0.0.1:8765
 ```
 
+Si ese puerto esta ocupado, el lanzador usara el siguiente puerto libre y abrira
+esa URL automaticamente.
+
+Si al entrar manualmente en `127.0.0.1:8765` ves
+`{"error": "Unsupported endpoint: GET /"}`, tienes un backend antiguo abierto.
+Cierra esa ventana o usa la URL que abra `CaptionFlow.cmd`.
+
 Deja la ventana del lanzador abierta mientras uses la app. Para cerrar
 CaptionFlow, pulsa `Ctrl+C` en esa ventana.
 

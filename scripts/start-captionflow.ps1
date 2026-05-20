@@ -8,7 +8,6 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 $Web = Join-Path $Root "web"
 $HostName = "127.0.0.1"
-$Url = "http://${HostName}:${Port}"
 
 function Write-Step($Message) {
     Write-Host ""
@@ -49,11 +48,42 @@ function Resolve-Npm {
     throw "No se ha encontrado npm. Instala Node.js LTS para ejecutar la app web local."
 }
 
+function Test-PortAvailable($CandidatePort) {
+    $Listener = $null
+    try {
+        $Address = [System.Net.IPAddress]::Parse($HostName)
+        $Listener = [System.Net.Sockets.TcpListener]::new($Address, $CandidatePort)
+        $Listener.Start()
+        return $true
+    } catch {
+        return $false
+    } finally {
+        if ($null -ne $Listener) {
+            $Listener.Stop()
+        }
+    }
+}
+
+function Resolve-FreePort($PreferredPort) {
+    for ($Candidate = $PreferredPort; $Candidate -lt ($PreferredPort + 20); $Candidate++) {
+        if (Test-PortAvailable $Candidate) {
+            return $Candidate
+        }
+    }
+    throw "No hay puertos libres entre $PreferredPort y $($PreferredPort + 19). Cierra servidores locales antiguos e intentalo de nuevo."
+}
+
 Write-Host "CaptionFlow local launcher" -ForegroundColor Green
 Write-Host "Repo: $Root"
 
 $Python = Resolve-Python
 $Npm = Resolve-Npm
+$ResolvedPort = Resolve-FreePort $Port
+if ($ResolvedPort -ne $Port) {
+    Write-Host "El puerto $Port esta ocupado. Usare el puerto libre $ResolvedPort." -ForegroundColor Yellow
+    $Port = $ResolvedPort
+}
+$Url = "http://${HostName}:${Port}"
 
 Write-Step "Preparando frontend"
 Push-Location $Web
