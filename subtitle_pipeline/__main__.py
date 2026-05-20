@@ -44,6 +44,9 @@ def main(argv: list[str] | None = None):
 
         handle_subtitle_command(argv[1:])
         return
+    if argv and argv[0] == "app":
+        _handle_app_command(argv[1:])
+        return
 
     parser = argparse.ArgumentParser(
         description="Generate translated subtitles from video/audio files."
@@ -242,6 +245,22 @@ def _handle_config_command(argv: list[str]) -> None:
     if args.command == "init":
         path = save_app_config(recommended_app_config(args.preset), args.path)
         print(f"Created config: {path}")
+        return
+
+
+def _handle_app_command(argv: list[str]) -> None:
+    parser = argparse.ArgumentParser(description="Run CaptionFlow local web API.")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    serve_parser = subparsers.add_parser("serve", help="Start the local HTTP API.")
+    serve_parser.add_argument("--host", default="127.0.0.1")
+    serve_parser.add_argument("--port", type=int, default=8765)
+
+    args = parser.parse_args(argv)
+    if args.command == "serve":
+        from .local_api import run_local_api_server
+
+        run_local_api_server(args.host, args.port)
         return
 
 

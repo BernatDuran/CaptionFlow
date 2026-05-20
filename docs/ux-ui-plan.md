@@ -122,12 +122,16 @@ ser la herramienta.
 - endpoint para cargar/guardar draft;
 - endpoint para exportar.
 
+Estado: implementacion inicial disponible en `subtitle_pipeline/local_api.py`.
+
 ### Fase UI-2: App Base
 
 - layout principal;
 - dashboard;
 - vista proyecto;
 - crear job.
+
+Estado: scaffold inicial React/Vite disponible en `web/`.
 
 ### Fase UI-3: Editor
 
@@ -143,3 +147,5 @@ ser la herramienta.
 - cache;
 - providers/API keys;
 - doctor visual.
+
+Estado: pantalla inicial de ajustes incluida en el frontend.

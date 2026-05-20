@@ -447,7 +447,7 @@ Entregables:
 | Exportacion profesional | 35% | Perfiles legacy/basic/youtube/review/archive base, manifiesto y review bilingue |
 | Traduccion robusta | 65% | nano-gpt/OpenAI, fallback, cache y glosario base hechos; faltan controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
-| API interna/UI | 0% | Pendiente |
+| API interna/UI | 28% | API local inicial y frontend React/Vite scaffold con ajustes/proyectos/editor |
 | Distribucion | 30% | Extras/docs, presets personales y doctor accionable; falta release/CI/instalador |
 
 ## 11. Backlog Priorizado v2
@@ -483,6 +483,7 @@ Entregables:
 | `docs/specs/api-transcription-v1.md` | Spec activa | Contrato de transcripcion API OpenAI-compatible |
 | `docs/guia-uso-personal.md` | Guia activa | Flujo de uso personal end-to-end |
 | `docs/ux-ui-plan.md` | Plan activo | Propuesta UX/UI para app local completa |
+| `docs/app-web-local.md` | Guia activa | Arranque y arquitectura de la app web local |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
