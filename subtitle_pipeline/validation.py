@@ -57,6 +57,7 @@ def validate_config(config: SubtitleConfig) -> None:
 
     load_translation_glossary(config.translation_glossary_path)
 
+    _validate_transcription_provider(config)
     _validate_translation_provider(config)
     _validate_translation_fallback_provider(config)
     _validate_tts_provider(config)
@@ -91,6 +92,23 @@ def _validate_translation_provider(config: SubtitleConfig) -> None:
         raise ConfigError(
             f"API key required for translation provider "
             f"'{config.translation_provider}'. {key_hint}"
+        )
+
+
+def _validate_transcription_provider(config: SubtitleConfig) -> None:
+    capabilities = get_provider_capabilities(config.transcription_provider)
+    if capabilities.requires_api_key and not _has_provider_key(
+        config,
+        capabilities.api_key_env_var,
+    ):
+        key_hint = (
+            f"Set {capabilities.api_key_env_var} env var or pass --api-key"
+            if capabilities.api_key_env_var
+            else "Configure the provider API key"
+        )
+        raise ConfigError(
+            f"API key required for transcription provider "
+            f"'{config.transcription_provider}'. {key_hint}"
         )
 
 

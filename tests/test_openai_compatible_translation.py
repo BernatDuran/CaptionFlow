@@ -2,7 +2,11 @@ import pytest
 
 from subtitle_pipeline.errors import TranslationError
 from subtitle_pipeline.models import Segment
-from subtitle_pipeline.providers import ChatCompletionResult, OpenAICompatibleTranslationProvider
+from subtitle_pipeline.providers import (
+    ChatCompletionResult,
+    OpenAICompatibleTranscriptionProvider,
+    OpenAICompatibleTranslationProvider,
+)
 
 
 class FakeChatClient:
@@ -20,6 +24,15 @@ class FakeChatClient:
             }
         )
         return ChatCompletionResult(text=self.text, estimated_cost=0.01)
+
+
+class FakeAudioClient:
+    def __init__(self):
+        self.calls = []
+
+    def create_audio_transcription(self, *, model, audio_path, language):
+        self.calls.append({"model": model, "audio_path": audio_path, "language": language})
+        return [Segment(start=0.0, end=1.0, text="hello")]
 
 
 def _segments() -> list[Segment]:
@@ -110,3 +123,19 @@ def test_openai_compatible_translation_provider_handles_empty_segments():
 
     assert result.segments == []
     assert client.calls == []
+
+
+def test_openai_compatible_transcription_provider_returns_timed_segments(tmp_path):
+    audio_path = tmp_path / "audio.wav"
+    audio_path.write_bytes(b"fake")
+    client = FakeAudioClient()
+    provider = OpenAICompatibleTranscriptionProvider("openai-whisper", client=client)
+
+    result = provider.transcribe(str(audio_path), "en")
+
+    assert result.segments == [Segment(start=0.0, end=1.0, text="hello")]
+    assert result.metadata.provider == "openai-whisper"
+    assert result.metadata.model == "whisper-1"
+    assert client.calls == [
+        {"model": "whisper-1", "audio_path": str(audio_path), "language": "en"}
+    ]

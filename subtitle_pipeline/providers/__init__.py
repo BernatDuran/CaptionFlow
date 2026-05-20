@@ -21,8 +21,10 @@ from .factories import (
     create_tts_provider,
 )
 from .openai_compatible import (
+    AudioTranscriptionClient,
     ChatCompletionResult,
     OpenAICompatibleClient,
+    OpenAICompatibleTranscriptionProvider,
     OpenAICompatibleTranslationProvider,
 )
 from .registry import (
@@ -45,7 +47,9 @@ __all__ = [
     "ProviderRoute",
     "ProviderRouter",
     "ChatCompletionResult",
+    "AudioTranscriptionClient",
     "OpenAICompatibleClient",
+    "OpenAICompatibleTranscriptionProvider",
     "OpenAICompatibleTranslationProvider",
     "ProviderTask",
     "TTSProvider",

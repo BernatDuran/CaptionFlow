@@ -6,6 +6,7 @@ from subtitle_pipeline.providers import (
     EdgeTTSProvider,
     FasterWhisperProvider,
     OpenAICompatibleTranslationProvider,
+    OpenAICompatibleTranscriptionProvider,
     TranslatorProviderAdapter,
     create_transcription_provider,
     create_translation_provider,
@@ -38,6 +39,21 @@ def test_create_transcription_provider_rejects_unknown_provider():
 
     with pytest.raises(ProviderNotFoundError, match="Unsupported transcription provider"):
         create_transcription_provider(config)
+
+
+def test_create_transcription_provider_returns_openai_compatible_provider():
+    config = SubtitleConfig(
+        input_path="video.mp4",
+        output_dir="out",
+        transcription_provider="openai-whisper",
+        api_key="test-key",
+    )
+
+    provider = create_transcription_provider(config)
+
+    assert isinstance(provider, OpenAICompatibleTranscriptionProvider)
+    assert provider.config.name == "openai-whisper"
+    assert provider.config.model == "whisper-1"
 
 
 def test_create_translation_provider_uses_selected_translator():

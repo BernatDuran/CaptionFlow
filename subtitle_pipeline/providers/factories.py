@@ -6,7 +6,9 @@ from .adapters import (
 )
 from .contracts import ProviderConfig, TTSProvider, TranscriptionProvider, TranslationProvider
 from .openai_compatible import (
+    OpenAICompatibleTranscriptionProvider,
     OpenAICompatibleTranslationProvider,
+    default_openai_compatible_transcription_model,
     default_openai_compatible_translation_model,
 )
 from .registry import get_provider_capabilities
@@ -17,6 +19,13 @@ from ..glossary import load_translation_glossary
 def create_transcription_provider(config) -> TranscriptionProvider:
     if config.transcription_provider == "faster-whisper":
         return FasterWhisperProvider(config.transcription_model, config.device)
+    if config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"}:
+        model = None if config.transcription_model == "large-v3" else config.transcription_model
+        return OpenAICompatibleTranscriptionProvider(
+            provider_name=config.transcription_provider,
+            model=model,
+            api_key=config.api_key,
+        )
     raise ProviderNotFoundError(
         f"Unsupported transcription provider: {config.transcription_provider}"
     )
@@ -95,6 +104,14 @@ def _default_translation_model(provider_name: str) -> str:
     if provider_name in {"nano-gpt", "openai"}:
         return default_openai_compatible_translation_model(provider_name)
     return default_translation_model(provider_name)
+
+
+def default_transcription_model(provider_name: str) -> str:
+    if provider_name == "faster-whisper":
+        return "large-v3"
+    if provider_name in {"nano-gpt-whisper", "openai-whisper"}:
+        return default_openai_compatible_transcription_model(provider_name)
+    raise ProviderNotFoundError(f"Unsupported transcription provider: {provider_name}")
 
 
 def _translation_options(config) -> dict:

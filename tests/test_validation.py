@@ -253,6 +253,24 @@ def test_validate_config_rejects_unsupported_transcription_provider(tmp_path):
         validate_config(config)
 
 
+def test_validate_config_requires_openai_whisper_key_when_selected(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="es",
+        target_lang="es",
+        transcription_provider="openai-whisper",
+        api_key=None,
+    )
+
+    with pytest.raises(ConfigError, match="API key required for transcription provider"):
+        validate_config(config)
+
+
 def test_validate_config_rejects_unsupported_tts_provider_when_dubbing(tmp_path):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

@@ -441,7 +441,7 @@ Entregables:
 | --- | ---: | --- |
 | Base tecnica y tests | 80% | Hecho inicial, falta CI/type check |
 | Dependencias opcionales | 55% | Extras creados, falta reorientar a OpenAI SDK v2 |
-| Provider-ready | 78% | Contratos, router, fallback y cache base integrados; falta coste/privacy UI |
+| Provider-ready | 82% | Contratos, router, fallback, cache y providers API base integrados; falta coste/privacy UI |
 | Proyectos/jobs | 68% | Flujo create/add/run/export y drafts integrado; falta ergonomia avanzada/logs |
 | Editor subtitulos | 72% | Dominio, drafts y CLI basico hechos; falta flujo proyecto/revision completo |
 | Exportacion profesional | 35% | Perfiles legacy/basic/youtube/review/archive base, manifiesto y review bilingue |
@@ -480,6 +480,7 @@ Entregables:
 | `docs/specs/subtitle-cli-v1.md` | Spec activa | Contrato del CLI de edicion de drafts |
 | `docs/specs/project-flow-v1.md` | Spec activa | Contrato del flujo proyecto-job-draft-export |
 | `docs/specs/translation-glossary-v1.md` | Spec activa | Contrato del glosario de traduccion |
+| `docs/specs/api-transcription-v1.md` | Spec activa | Contrato de transcripcion API OpenAI-compatible |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
@@ -542,3 +543,6 @@ Estado de esta primera accion:
   personales, y la cache considera el glosario dentro de la clave.
 - La configuracion ya ofrece presets personales `personal-youtube` y
   `local-review` para arrancar con menos flags.
+- La transcripcion API base ya existe para `openai-whisper` y
+  `nano-gpt-whisper` mediante provider OpenAI-compatible con segmentos
+  temporizados.

@@ -4,12 +4,13 @@ import os
 from dataclasses import dataclass
 from typing import Protocol
 
-from ..errors import ProviderAuthError, ProviderRuntimeError, TranslationError
+from ..errors import ProviderAuthError, ProviderRuntimeError, TranscriptionError, TranslationError
 from ..models import Segment
 from .contracts import (
     ProviderCapabilities,
     ProviderConfig,
     ProviderResultMetadata,
+    TranscriptionResult,
     TranslationResult,
 )
 from .registry import get_provider_capabilities
@@ -24,6 +25,17 @@ class ChatCompletionClient(Protocol):
         max_tokens: int,
         temperature: float,
     ) -> "ChatCompletionResult":
+        ...
+
+
+class AudioTranscriptionClient(Protocol):
+    def create_audio_transcription(
+        self,
+        *,
+        model: str,
+        audio_path: str,
+        language: str,
+    ) -> list[Segment]:
         ...
 
 
@@ -76,6 +88,87 @@ class OpenAICompatibleClient:
 
         text = response.choices[0].message.content or ""
         return ChatCompletionResult(text=text)
+
+    def create_audio_transcription(
+        self,
+        *,
+        model: str,
+        audio_path: str,
+        language: str,
+    ) -> list[Segment]:
+        try:
+            with open(audio_path, "rb") as audio_file:
+                response = self._client.audio.transcriptions.create(
+                    model=model,
+                    file=audio_file,
+                    language=language,
+                    response_format="verbose_json",
+                )
+        except Exception as exc:
+            raise ProviderRuntimeError(f"OpenAI-compatible transcription failed: {exc}") from exc
+
+        raw_segments = getattr(response, "segments", None)
+        if not raw_segments:
+            raise ProviderRuntimeError("Transcription provider did not return timed segments.")
+
+        segments = []
+        for raw_segment in raw_segments:
+            segments.append(
+                Segment(
+                    start=float(_get_response_value(raw_segment, "start")),
+                    end=float(_get_response_value(raw_segment, "end")),
+                    text=str(_get_response_value(raw_segment, "text")).strip(),
+                )
+            )
+        return segments
+
+
+class OpenAICompatibleTranscriptionProvider:
+    def __init__(
+        self,
+        provider_name: str,
+        *,
+        model: str | None = None,
+        api_key: str | None = None,
+        client: AudioTranscriptionClient | None = None,
+    ):
+        capabilities = get_provider_capabilities(provider_name)
+        self.config = ProviderConfig(
+            name=provider_name,
+            task="transcription",
+            model=model or default_openai_compatible_transcription_model(provider_name),
+            api_key_env_var=capabilities.api_key_env_var,
+            base_url=capabilities.base_url,
+        )
+        self._api_key = api_key
+        self._client = client
+        self._capabilities = capabilities
+
+    def capabilities(self) -> ProviderCapabilities:
+        return self._capabilities
+
+    def transcribe(self, audio_path: str, language: str) -> TranscriptionResult:
+        client = self._client or OpenAICompatibleClient(
+            api_key_env_var=self.config.api_key_env_var or "",
+            api_key=self._api_key,
+            base_url=self.config.base_url,
+        )
+        segments = client.create_audio_transcription(
+            model=self.config.model,
+            audio_path=audio_path,
+            language=language,
+        )
+        return TranscriptionResult(
+            segments=segments,
+            metadata=ProviderResultMetadata(
+                provider=self.config.name,
+                model=self.config.model,
+                task=self.config.task,
+                api_provider=self.config.name,
+                base_url=self.config.base_url,
+                privacy_level=self.capabilities().privacy_level,
+            ),
+        )
 
 
 class OpenAICompatibleTranslationProvider:
@@ -195,6 +288,14 @@ def default_openai_compatible_translation_model(provider_name: str) -> str:
     raise TranslationError(f"Unsupported OpenAI-compatible translation provider: {provider_name}")
 
 
+def default_openai_compatible_transcription_model(provider_name: str) -> str:
+    if provider_name in {"nano-gpt-whisper", "openai-whisper"}:
+        return "whisper-1"
+    raise TranscriptionError(
+        f"Unsupported OpenAI-compatible transcription provider: {provider_name}"
+    )
+
+
 def _build_translation_prompt(
     segments: list[Segment],
     source_lang: str,
@@ -240,3 +341,9 @@ def _parse_numbered_lines(text: str, *, expected_count: int) -> list[str]:
             f"expected {expected_count}, got {len(translations)}"
         )
     return translations
+
+
+def _get_response_value(raw_segment: object, key: str) -> object:
+    if isinstance(raw_segment, dict):
+        return raw_segment[key]
+    return getattr(raw_segment, key)
