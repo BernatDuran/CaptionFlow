@@ -24,13 +24,14 @@ from .registry import (
     list_provider_capabilities,
     list_provider_names,
 )
-from .router import ProviderRoute, ProviderRouter
+from .router import ProviderAvailabilityChecker, ProviderRoute, ProviderRouter
 
 __all__ = [
     "EdgeTTSProvider",
     "FasterWhisperProvider",
     "ProviderAvailability",
     "ProviderAvailabilityCheck",
+    "ProviderAvailabilityChecker",
     "ProviderCapabilities",
     "ProviderConfig",
     "ProviderResultMetadata",

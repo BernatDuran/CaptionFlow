@@ -32,6 +32,7 @@ from .progress import EventSink, PipelineEvent, console_event_sink, emit_event
 from .providers import (
     ProviderCapabilities,
     ProviderAvailabilityCheck,
+    ProviderAvailabilityChecker,
     ProviderConfig,
     ProviderResultMetadata,
     ProviderRoute,
@@ -101,6 +102,7 @@ __all__ = [
     "TranslationError",
     "ProviderCapabilities",
     "ProviderAvailabilityCheck",
+    "ProviderAvailabilityChecker",
     "ProviderConfig",
     "ProviderResultMetadata",
     "ProviderRoute",

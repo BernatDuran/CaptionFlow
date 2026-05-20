@@ -1,8 +1,14 @@
 import pytest
 
-from subtitle_pipeline.errors import ConfigError, ProviderRuntimeError
+from subtitle_pipeline.errors import (
+    ConfigError,
+    ProviderAuthError,
+    ProviderDependencyError,
+    ProviderRuntimeError,
+)
 from subtitle_pipeline.models import Segment
 from subtitle_pipeline.providers import (
+    ProviderAvailabilityCheck,
     ProviderConfig,
     ProviderResultMetadata,
     ProviderRoute,
@@ -77,6 +83,83 @@ def test_provider_router_uses_fallback_on_runtime_error():
         ("translation", "progress"),
         ("translation", "completed"),
     ]
+
+
+def test_provider_router_uses_fallback_when_primary_preflight_fails():
+    route = ProviderRoute(
+        task="translation",
+        primary=_translation_config("primary"),
+        fallback=_translation_config("fallback"),
+    )
+    created = []
+
+    def availability(config):
+        if config.name == "primary":
+            return ProviderAvailabilityCheck(
+                name=config.name,
+                task=config.task,
+                status="missing_api_key",
+                message="missing PRIMARY_KEY",
+            )
+        return ProviderAvailabilityCheck(
+            name=config.name,
+            task=config.task,
+            status="available",
+            message="available",
+        )
+
+    def factory(config):
+        created.append(config.name)
+        return FakeProvider(config)
+
+    router = ProviderRouter(factory, availability_checker=availability)
+
+    result = router.execute(route, lambda provider: provider.translate())
+
+    assert created == ["fallback"]
+    assert result.segments[0].translated == "fallback"
+    assert result.metadata.requested_provider == "primary"
+    assert result.metadata.fallback_used is True
+    assert "missing PRIMARY_KEY" in result.metadata.warnings[0]
+
+
+def test_provider_router_raises_when_primary_preflight_fails_without_fallback():
+    route = ProviderRoute(task="translation", primary=_translation_config("primary"))
+
+    def availability(config):
+        return ProviderAvailabilityCheck(
+            name=config.name,
+            task=config.task,
+            status="missing_dependency",
+            message="missing package",
+        )
+
+    router = ProviderRouter(lambda config: FakeProvider(config), availability_checker=availability)
+
+    with pytest.raises(ProviderDependencyError, match="missing dependencies"):
+        router.execute(route, lambda provider: provider.translate())
+
+
+def test_provider_router_raises_when_fallback_preflight_fails():
+    route = ProviderRoute(
+        task="translation",
+        primary=_translation_config("primary"),
+        fallback=_translation_config("fallback"),
+    )
+
+    def availability(config):
+        status = "missing_api_key" if config.name == "fallback" else "missing_dependency"
+        return ProviderAvailabilityCheck(
+            name=config.name,
+            task=config.task,
+            status=status,
+            message=f"{config.name} unavailable",
+        )
+
+    router = ProviderRouter(lambda config: FakeProvider(config), availability_checker=availability)
+
+    with pytest.raises(ProviderAuthError, match="missing credentials"):
+        router.execute(route, lambda provider: provider.translate())
 
 
 def test_provider_router_does_not_fallback_on_config_error():

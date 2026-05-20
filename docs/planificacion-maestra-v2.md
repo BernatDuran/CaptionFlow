@@ -510,3 +510,5 @@ Estado de esta primera accion:
   router real.
 - `ProviderRouter` ya existe con fallback controlado mediante
   `ProviderRuntimeError` y tests con providers falsos.
+- El router ya acepta preflight de disponibilidad/credenciales como dependencia
+  inyectable antes de ejecutar providers.

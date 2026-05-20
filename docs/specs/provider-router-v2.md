@@ -122,6 +122,7 @@ Implemented now:
 - fallback only on `ProviderRuntimeError`;
 - no fallback on `ConfigError`;
 - route task validation;
+- optional provider availability preflight before execution;
 - routed metadata enrichment;
 - fallback progress events;
 - unit tests with fake providers and no network calls.
@@ -129,7 +130,6 @@ Implemented now:
 Not implemented yet:
 
 - runtime integration with the main pipeline;
-- provider dependency/key preflight inside the router;
 - API cache;
 - real nano-gpt/OpenAI adapters;
 - cost calculation.
