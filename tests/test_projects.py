@@ -30,6 +30,8 @@ def test_add_job_creates_pending_job_from_config(tmp_path):
 
     assert job.status == "pending"
     assert job.input_path == "video.mp4"
+    assert job.source_lang == "en"
+    assert job.target_lang == "es"
     assert project.jobs == [job]
 
 

@@ -28,6 +28,8 @@ def validate_config(config: SubtitleConfig) -> None:
         )
 
     _validate_provider_name(config.transcription_provider, "transcription")
+    if config.transcription_fallback_provider is not None:
+        _validate_provider_name(config.transcription_fallback_provider, "transcription")
     _validate_provider_name(config.translation_provider, "translation")
     if config.translation_fallback_provider is not None:
         _validate_provider_name(config.translation_fallback_provider, "translation")

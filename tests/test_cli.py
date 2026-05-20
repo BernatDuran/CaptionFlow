@@ -52,6 +52,10 @@ def test_project_create_add_job_and_list(tmp_path, capsys):
             "video.mp4",
             "--output-dir",
             "out",
+            "--source-lang",
+            "en",
+            "--target-lang",
+            "es",
         ]
     )
     project = load_project(project_path)
@@ -219,6 +223,10 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
             "faster-whisper",
             "--transcription-model",
             "base",
+            "--transcription-fallback-provider",
+            "openai-whisper",
+            "--transcription-fallback-model",
+            "whisper-1",
             "--export-profile",
             "youtube",
             "--translation-provider",
@@ -244,6 +252,8 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
     config = captured["config"]
     assert config.transcription_provider == "faster-whisper"
     assert config.transcription_model == "base"
+    assert config.transcription_fallback_provider == "openai-whisper"
+    assert config.transcription_fallback_model == "whisper-1"
     assert config.export_profile == "youtube"
     assert config.translation_provider == "nllb"
     assert config.translation_model == "custom-nllb"

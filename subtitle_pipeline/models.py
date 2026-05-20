@@ -23,6 +23,8 @@ class SubtitleConfig:
     target_lang: str = "es"
     transcription_provider: str = "faster-whisper"
     transcription_model: str | None = None
+    transcription_fallback_provider: str | None = None
+    transcription_fallback_model: str | None = None
     model_size: str = "large-v3"
     device: str = "auto"
     formats: list[str] = field(default_factory=lambda: ["srt"])

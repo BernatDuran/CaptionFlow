@@ -481,6 +481,8 @@ Entregables:
 | `docs/specs/project-flow-v1.md` | Spec activa | Contrato del flujo proyecto-job-draft-export |
 | `docs/specs/translation-glossary-v1.md` | Spec activa | Contrato del glosario de traduccion |
 | `docs/specs/api-transcription-v1.md` | Spec activa | Contrato de transcripcion API OpenAI-compatible |
+| `docs/guia-uso-personal.md` | Guia activa | Flujo de uso personal end-to-end |
+| `docs/ux-ui-plan.md` | Plan activo | Propuesta UX/UI para app local completa |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
@@ -546,3 +548,7 @@ Estado de esta primera accion:
 - La transcripcion API base ya existe para `openai-whisper` y
   `nano-gpt-whisper` mediante provider OpenAI-compatible con segmentos
   temporizados.
+- La guia de uso personal documenta el flujo sin UI: proyecto, job, draft,
+  edicion y exportacion.
+- La planificacion UX/UI define una app local completa centrada en dashboard,
+  proyecto, editor y exportacion.

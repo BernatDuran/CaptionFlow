@@ -15,12 +15,14 @@ from .providers import (
     ProviderRouter,
     ProviderConfig,
     ProviderResultMetadata,
+    TranscriptionResult,
     TranscriptionProvider,
     TranslationResult,
     TranslationProvider,
+    build_transcription_provider_config,
     build_translation_provider_config,
     check_provider_availability,
-    create_transcription_provider,
+    create_transcription_provider_from_config,
     create_translation_provider_from_config,
     create_tts_provider,
     get_provider_capabilities,
@@ -65,7 +67,6 @@ def run_subtitle_pipeline_detailed(
     event_sink: EventSink | None = None,
 ) -> PipelineResult:
     validate_config(config)
-    transcription_provider = transcription_provider or create_transcription_provider(config)
     provider_metadata = []
 
     base_name = os.path.splitext(os.path.basename(config.input_path))[0]
@@ -93,7 +94,7 @@ def run_subtitle_pipeline_detailed(
         )
 
         # 2. Transcribe
-        provider_config = transcription_provider.config
+        provider_config = _transcription_provider_config(config, transcription_provider)
         emit_event(
             event_sink,
             "transcribe",
@@ -104,7 +105,7 @@ def run_subtitle_pipeline_detailed(
                 "model": provider_config.model,
             },
         )
-        transcription = transcription_provider.transcribe(audio_path, config.source_lang)
+        transcription = _transcribe_audio(config, audio_path, transcription_provider, event_sink)
         provider_metadata.append(transcription.metadata)
         segments = transcription.segments
         emit_event(
@@ -231,6 +232,57 @@ def _translation_provider_config(
     )
 
 
+def _transcription_provider_config(
+    config: SubtitleConfig,
+    transcription_provider: TranscriptionProvider | None,
+):
+    if transcription_provider is not None:
+        return transcription_provider.config
+    return build_transcription_provider_config(
+        config.transcription_provider,
+        config.transcription_model,
+        device=config.device,
+    )
+
+
+def _transcribe_audio(
+    config: SubtitleConfig,
+    audio_path: str,
+    transcription_provider: TranscriptionProvider | None,
+    event_sink: EventSink | None,
+) -> TranscriptionResult:
+    if transcription_provider is not None:
+        return transcription_provider.transcribe(audio_path, config.source_lang)
+
+    primary = build_transcription_provider_config(
+        config.transcription_provider,
+        config.transcription_model,
+        device=config.device,
+    )
+    fallback = None
+    if config.transcription_fallback_provider is not None:
+        fallback = build_transcription_provider_config(
+            config.transcription_fallback_provider,
+            config.transcription_fallback_model,
+            device=config.device,
+        )
+    router = ProviderRouter(
+        lambda provider_config: create_transcription_provider_from_config(
+            provider_config,
+            api_key=config.api_key,
+        ),
+        availability_checker=lambda provider_config: _check_provider_availability(
+            config,
+            provider_config.name,
+        ),
+        event_sink=event_sink,
+    )
+    return router.execute(
+        ProviderRoute(task="transcription", primary=primary, fallback=fallback),
+        lambda provider: provider.transcribe(audio_path, config.source_lang),
+    )
+
+
 def _translate_segments(
     config: SubtitleConfig,
     segments: list[Segment],
@@ -270,7 +322,7 @@ def _translate_segments(
             api_key=config.api_key,
             glossary=glossary,
         ),
-        availability_checker=lambda provider_config: _check_translation_availability(
+        availability_checker=lambda provider_config: _check_provider_availability(
             config,
             provider_config.name,
         ),
@@ -352,7 +404,7 @@ def _translation_options(config: SubtitleConfig) -> dict:
     return {"glossary": glossary} if glossary else {}
 
 
-def _check_translation_availability(config: SubtitleConfig, provider_name: str):
+def _check_provider_availability(config: SubtitleConfig, provider_name: str):
     capabilities = get_provider_capabilities(provider_name)
     has_package = (
         importlib.util.find_spec(capabilities.package) is not None

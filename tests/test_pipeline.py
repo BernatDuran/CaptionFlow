@@ -23,6 +23,17 @@ class FakeTranscriptionProvider:
         )
 
 
+class FailingTranscriptionProvider:
+    config = ProviderConfig(name="faster-whisper", task="transcription", model="primary")
+
+    def transcribe(self, audio_path, language):
+        raise ProviderRuntimeError("local unavailable")
+
+
+class FallbackTranscriptionProvider(FakeTranscriptionProvider):
+    config = ProviderConfig(name="openai-whisper", task="transcription", model="fallback")
+
+
 class FakeTranslationProvider:
     config = ProviderConfig(name="fake-translator", task="translation", model="test")
 
@@ -287,3 +298,49 @@ def test_run_subtitle_pipeline_uses_translation_cache(tmp_path, monkeypatch):
     assert first.provider_metadata[1].cache_hit is False
     assert second.provider_metadata[1].cache_hit is True
     assert second.segments[0].translated == "hola-es"
+
+
+def test_run_subtitle_pipeline_uses_transcription_fallback(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    output_dir = tmp_path / "out"
+    created_providers = []
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.extract_audio",
+        lambda input_file, output_path: output_path,
+    )
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.importlib.util.find_spec",
+        lambda package: object(),
+    )
+
+    def fake_create_transcription_provider(provider_config, **kwargs):
+        created_providers.append(provider_config.name)
+        if provider_config.name == "faster-whisper":
+            return FailingTranscriptionProvider()
+        return FallbackTranscriptionProvider()
+
+    monkeypatch.setattr(
+        "subtitle_pipeline.pipeline.create_transcription_provider_from_config",
+        fake_create_transcription_provider,
+    )
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(output_dir),
+        source_lang="en",
+        target_lang="en",
+        transcription_provider="faster-whisper",
+        transcription_fallback_provider="openai-whisper",
+        transcription_fallback_model="fallback",
+        api_key="test-key",
+    )
+
+    result = run_subtitle_pipeline_detailed(config)
+
+    assert created_providers == ["faster-whisper", "openai-whisper"]
+    metadata = result.provider_metadata[0]
+    assert metadata.provider == "openai-whisper"
+    assert metadata.requested_provider == "faster-whisper"
+    assert metadata.fallback_used is True

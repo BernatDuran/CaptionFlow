@@ -14,8 +14,10 @@ from .contracts import (
     TranslationResult,
 )
 from .factories import (
+    build_transcription_provider_config,
     build_translation_provider_config,
     create_transcription_provider,
+    create_transcription_provider_from_config,
     create_translation_provider,
     create_translation_provider_from_config,
     create_tts_provider,
@@ -60,8 +62,10 @@ __all__ = [
     "TranslationResult",
     "TranslatorProviderAdapter",
     "check_provider_availability",
+    "build_transcription_provider_config",
     "build_translation_provider_config",
     "create_transcription_provider",
+    "create_transcription_provider_from_config",
     "create_translation_provider",
     "create_translation_provider_from_config",
     "create_tts_provider",

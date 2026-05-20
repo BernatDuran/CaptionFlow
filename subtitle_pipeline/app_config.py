@@ -22,6 +22,8 @@ class AppConfig:
     tts_rate: int = 0
     transcription_provider: str = "faster-whisper"
     transcription_model: str = "large-v3"
+    transcription_fallback_provider: str | None = None
+    transcription_fallback_model: str | None = None
     translation_provider: str = "claude"
     translation_model: str | None = None
     translation_fallback_provider: str | None = None

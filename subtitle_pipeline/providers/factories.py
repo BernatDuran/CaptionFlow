@@ -17,18 +17,62 @@ from ..glossary import load_translation_glossary
 
 
 def create_transcription_provider(config) -> TranscriptionProvider:
-    if config.transcription_provider == "faster-whisper":
-        return FasterWhisperProvider(config.transcription_model, config.device)
-    if config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"}:
-        model = None if config.transcription_model == "large-v3" else config.transcription_model
-        return OpenAICompatibleTranscriptionProvider(
-            provider_name=config.transcription_provider,
-            model=model,
-            api_key=config.api_key,
-        )
-    raise ProviderNotFoundError(
-        f"Unsupported transcription provider: {config.transcription_provider}"
+    model = config.transcription_model
+    if (
+        config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"}
+        and model == "large-v3"
+    ):
+        model = None
+    provider_config = build_transcription_provider_config(
+        config.transcription_provider,
+        model,
+        device=config.device,
     )
+    return create_transcription_provider_from_config(
+        provider_config,
+        api_key=config.api_key,
+    )
+
+
+def build_transcription_provider_config(
+    provider_name: str,
+    model: str | None = None,
+    *,
+    device: str = "auto",
+) -> ProviderConfig:
+    try:
+        capabilities = get_provider_capabilities(provider_name)
+    except ProviderNotFoundError as exc:
+        raise ProviderNotFoundError(
+            f"Unsupported transcription provider: {provider_name}"
+        ) from exc
+    return ProviderConfig(
+        name=provider_name,
+        task="transcription",
+        model=model or default_transcription_model(provider_name),
+        api_key_env_var=capabilities.api_key_env_var,
+        base_url=capabilities.base_url,
+        options={"device": device} if provider_name == "faster-whisper" else {},
+    )
+
+
+def create_transcription_provider_from_config(
+    provider_config: ProviderConfig,
+    *,
+    api_key: str | None = None,
+) -> TranscriptionProvider:
+    if provider_config.name == "faster-whisper":
+        return FasterWhisperProvider(
+            provider_config.model,
+            provider_config.options.get("device", "auto"),
+        )
+    if provider_config.name in {"nano-gpt-whisper", "openai-whisper"}:
+        return OpenAICompatibleTranscriptionProvider(
+            provider_name=provider_config.name,
+            model=provider_config.model,
+            api_key=api_key,
+        )
+    raise ProviderNotFoundError(f"Unsupported transcription provider: {provider_config.name}")
 
 
 def create_translation_provider(config) -> TranslationProvider:

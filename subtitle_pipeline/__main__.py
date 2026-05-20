@@ -74,6 +74,17 @@ def main(argv: list[str] | None = None):
     )
     parser.add_argument("--device", default="auto", help="Device: auto, cuda, cpu (default: auto)")
     parser.add_argument(
+        "--transcription-fallback-provider",
+        default=None,
+        choices=list_provider_names(task="transcription"),
+        help="Optional fallback transcription provider.",
+    )
+    parser.add_argument(
+        "--transcription-fallback-model",
+        default=None,
+        help="Transcription model override for the fallback provider.",
+    )
+    parser.add_argument(
         "--formats",
         nargs="+",
         default=["srt"],
@@ -177,6 +188,8 @@ def main(argv: list[str] | None = None):
         transcription_model=args.transcription_model or args.model_size,
         model_size=args.model_size,
         device=args.device,
+        transcription_fallback_provider=args.transcription_fallback_provider,
+        transcription_fallback_model=args.transcription_fallback_model,
         formats=args.formats,
         export_profile=args.export_profile,
         burn_in=args.burn_in,
@@ -244,6 +257,8 @@ def _handle_project_command(argv: list[str]) -> None:
     add_job_parser.add_argument("--project", required=True)
     add_job_parser.add_argument("--input", required=True)
     add_job_parser.add_argument("--output-dir", default="./output")
+    add_job_parser.add_argument("--source-lang", default="en")
+    add_job_parser.add_argument("--target-lang", default="es")
 
     list_parser = subparsers.add_parser("list", help="List project jobs.")
     list_parser.add_argument("--project", required=True)
@@ -252,8 +267,8 @@ def _handle_project_command(argv: list[str]) -> None:
     run_parser.add_argument("--project", required=True)
     run_parser.add_argument("--job-id", required=True)
     run_parser.add_argument("--output-dir", default=None)
-    run_parser.add_argument("--source-lang", default="en")
-    run_parser.add_argument("--target-lang", default="es")
+    run_parser.add_argument("--source-lang", default=None)
+    run_parser.add_argument("--target-lang", default=None)
     run_parser.add_argument(
         "--transcription-provider",
         default="faster-whisper",
@@ -261,6 +276,12 @@ def _handle_project_command(argv: list[str]) -> None:
     )
     run_parser.add_argument("--transcription-model", default=None)
     run_parser.add_argument("--device", default="auto")
+    run_parser.add_argument(
+        "--transcription-fallback-provider",
+        default=None,
+        choices=list_provider_names(task="transcription"),
+    )
+    run_parser.add_argument("--transcription-fallback-model", default=None)
     run_parser.add_argument(
         "--translation-provider",
         default="nllb",
@@ -292,8 +313,8 @@ def _handle_project_command(argv: list[str]) -> None:
     export_parser.add_argument("--project", required=True)
     export_parser.add_argument("--job-id", required=True)
     export_parser.add_argument("--output-dir", default=None)
-    export_parser.add_argument("--source-lang", default="en")
-    export_parser.add_argument("--target-lang", default="es")
+    export_parser.add_argument("--source-lang", default=None)
+    export_parser.add_argument("--target-lang", default=None)
     export_parser.add_argument(
         "--formats",
         nargs="+",
@@ -316,7 +337,12 @@ def _handle_project_command(argv: list[str]) -> None:
         project = load_project(args.project)
         job = add_job(
             project,
-            SubtitleConfig(input_path=args.input, output_dir=args.output_dir),
+            SubtitleConfig(
+                input_path=args.input,
+                output_dir=args.output_dir,
+                source_lang=args.source_lang,
+                target_lang=args.target_lang,
+            ),
         )
         save_project(project, args.project)
         print(f"Added job: {job.id}")
@@ -330,14 +356,18 @@ def _handle_project_command(argv: list[str]) -> None:
         project = load_project(args.project)
         job = get_job(project, args.job_id)
         output_dir = args.output_dir or str(Path(project.root_dir) / "output")
+        source_lang = args.source_lang or job.source_lang
+        target_lang = args.target_lang or job.target_lang
         config = SubtitleConfig(
             input_path=job.input_path,
             output_dir=output_dir,
-            source_lang=args.source_lang,
-            target_lang=args.target_lang,
+            source_lang=source_lang,
+            target_lang=target_lang,
             transcription_provider=args.transcription_provider,
             transcription_model=args.transcription_model,
             device=args.device,
+            transcription_fallback_provider=args.transcription_fallback_provider,
+            transcription_fallback_model=args.transcription_fallback_model,
             formats=args.formats,
             export_profile=args.export_profile,
             translation_provider=args.translation_provider,
@@ -369,15 +399,17 @@ def _handle_project_command(argv: list[str]) -> None:
         segments = load_job_subtitle_draft(project, job.id)
         output_dir = args.output_dir or str(Path(project.root_dir) / "exports")
         base_name = Path(job.input_path).stem
+        source_lang = args.source_lang or job.source_lang
+        target_lang = args.target_lang or job.target_lang
         export_result = export_subtitles(
             segments,
             output_dir,
             base_name,
             profile=args.export_profile,
             formats=args.formats,
-            source_lang=args.source_lang,
-            target_lang=args.target_lang,
-            use_translated=args.source_lang != args.target_lang,
+            source_lang=source_lang,
+            target_lang=target_lang,
+            use_translated=source_lang != target_lang,
             provider_metadata=[
                 ProviderResultMetadata(**metadata) for metadata in job.provider_metadata
             ],

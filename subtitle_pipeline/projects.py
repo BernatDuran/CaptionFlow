@@ -17,6 +17,8 @@ JobStatus = Literal["pending", "running", "completed", "failed", "cancelled"]
 class JobRecord:
     id: str
     input_path: str
+    source_lang: str = "en"
+    target_lang: str = "es"
     status: JobStatus = "pending"
     output_files: list[str] = field(default_factory=list)
     provider_metadata: list[dict[str, Any]] = field(default_factory=list)
@@ -42,7 +44,12 @@ def create_project(name: str, root_dir: str | Path) -> Project:
 
 
 def add_job(project: Project, config: SubtitleConfig) -> JobRecord:
-    job = JobRecord(id=str(uuid4()), input_path=config.input_path)
+    job = JobRecord(
+        id=str(uuid4()),
+        input_path=config.input_path,
+        source_lang=config.source_lang,
+        target_lang=config.target_lang,
+    )
     project.jobs.append(job)
     touch_project(project)
     return job
