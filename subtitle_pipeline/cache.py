@@ -67,6 +67,7 @@ def build_translation_cache_key(
         "provider": provider_config.name,
         "model": provider_config.model,
         "base_url": provider_config.base_url,
+        "options": provider_config.options,
         "source_lang": source_lang,
         "target_lang": target_lang,
         "segments": [

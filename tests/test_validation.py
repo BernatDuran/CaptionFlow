@@ -62,6 +62,19 @@ def test_validate_config_rejects_unsupported_export_profile(tmp_path):
         validate_config(config)
 
 
+def test_validate_config_rejects_missing_translation_glossary(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        translation_glossary_path=str(tmp_path / "missing.json"),
+    )
+
+    with pytest.raises(ConfigError, match="Translation glossary not found"):
+        validate_config(config)
+
+
 def test_validate_config_requires_claude_key_when_translation_needed(tmp_path, monkeypatch):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

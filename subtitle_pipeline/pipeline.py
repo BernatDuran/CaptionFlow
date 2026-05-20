@@ -8,6 +8,7 @@ from .models import PipelineResult, Segment, SubtitleConfig
 from .audio_extractor import extract_audio
 from .export_profiles import export_subtitles
 from .formatter import to_srt
+from .glossary import load_translation_glossary
 from .progress import EventSink, emit_event
 from .providers import (
     ProviderRoute,
@@ -226,6 +227,7 @@ def _translation_provider_config(
     return build_translation_provider_config(
         config.translation_provider,
         config.translation_model,
+        options=_translation_options(config),
     )
 
 
@@ -245,13 +247,16 @@ def _translate_segments(
     primary = build_translation_provider_config(
         config.translation_provider,
         config.translation_model,
+        options=_translation_options(config),
     )
     fallback = None
     if config.translation_fallback_provider is not None:
         fallback = build_translation_provider_config(
             config.translation_fallback_provider,
             config.translation_fallback_model,
+            options=_translation_options(config),
         )
+    glossary = load_translation_glossary(config.translation_glossary_path)
     cached = _get_cached_translation(config, segments, primary, fallback)
     if cached is not None:
         return cached
@@ -263,6 +268,7 @@ def _translate_segments(
             source_lang=config.source_lang,
             target_lang=config.target_lang,
             api_key=config.api_key,
+            glossary=glossary,
         ),
         availability_checker=lambda provider_config: _check_translation_availability(
             config,
@@ -330,6 +336,7 @@ def _store_cached_translation(
     provider_config = build_translation_provider_config(
         translation.metadata.provider,
         translation.metadata.model,
+        options=_translation_options(config),
     )
     key = build_translation_cache_key(
         provider_config,
@@ -338,6 +345,11 @@ def _store_cached_translation(
         segments=source_segments,
     )
     TranslationCache(config.translation_cache_dir).set(key, translation.segments)
+
+
+def _translation_options(config: SubtitleConfig) -> dict:
+    glossary = load_translation_glossary(config.translation_glossary_path)
+    return {"glossary": glossary} if glossary else {}
 
 
 def _check_translation_availability(config: SubtitleConfig, provider_name: str):

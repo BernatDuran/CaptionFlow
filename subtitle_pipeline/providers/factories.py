@@ -11,6 +11,7 @@ from .openai_compatible import (
 )
 from .registry import get_provider_capabilities
 from ..errors import ProviderNotFoundError
+from ..glossary import load_translation_glossary
 
 
 def create_transcription_provider(config) -> TranscriptionProvider:
@@ -25,18 +26,21 @@ def create_translation_provider(config) -> TranslationProvider:
     provider_config = build_translation_provider_config(
         config.translation_provider,
         config.translation_model,
+        options=_translation_options(config),
     )
     return create_translation_provider_from_config(
         provider_config,
         source_lang=config.source_lang,
         target_lang=config.target_lang,
         api_key=config.api_key,
+        glossary=load_translation_glossary(config.translation_glossary_path),
     )
 
 
 def build_translation_provider_config(
     provider_name: str,
     model: str | None = None,
+    options: dict | None = None,
 ) -> ProviderConfig:
     capabilities = get_provider_capabilities(provider_name)
     default_model = _default_translation_model(provider_name)
@@ -46,6 +50,7 @@ def build_translation_provider_config(
         model=model or default_model,
         api_key_env_var=capabilities.api_key_env_var,
         base_url=capabilities.base_url,
+        options=options or {},
     )
 
 
@@ -55,6 +60,7 @@ def create_translation_provider_from_config(
     source_lang: str,
     target_lang: str,
     api_key: str | None = None,
+    glossary: dict[str, str] | None = None,
 ) -> TranslationProvider:
     if provider_config.name in {"nano-gpt", "openai"}:
         return OpenAICompatibleTranslationProvider(
@@ -63,6 +69,7 @@ def create_translation_provider_from_config(
             target_lang=target_lang,
             api_key=api_key,
             model=provider_config.model,
+            glossary=glossary,
         )
     if provider_config.name in {"claude", "nllb"}:
         return TranslatorProviderAdapter(
@@ -88,3 +95,8 @@ def _default_translation_model(provider_name: str) -> str:
     if provider_name in {"nano-gpt", "openai"}:
         return default_openai_compatible_translation_model(provider_name)
     return default_translation_model(provider_name)
+
+
+def _translation_options(config) -> dict:
+    glossary = load_translation_glossary(config.translation_glossary_path)
+    return {"glossary": glossary} if glossary else {}

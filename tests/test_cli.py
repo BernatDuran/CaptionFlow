@@ -221,6 +221,8 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
             "--translation-cache",
             "--translation-cache-dir",
             str(tmp_path / "cache"),
+            "--translation-glossary",
+            str(tmp_path / "glossary.json"),
             "--tts-provider",
             "edge-tts",
             "--tts-model",
@@ -238,6 +240,7 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
     assert config.translation_fallback_model == "fallback-model"
     assert config.translation_cache_enabled is True
     assert config.translation_cache_dir == str(tmp_path / "cache")
+    assert config.translation_glossary_path == str(tmp_path / "glossary.json")
     assert config.tts_provider == "edge-tts"
     assert config.tts_model == "edge-custom"
     assert captured["event_sink"] is not None

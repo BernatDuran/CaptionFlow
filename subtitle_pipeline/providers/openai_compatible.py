@@ -88,6 +88,7 @@ class OpenAICompatibleTranslationProvider:
         model: str | None = None,
         api_key: str | None = None,
         client: ChatCompletionClient | None = None,
+        glossary: dict[str, str] | None = None,
         temperature: float = 0.3,
         max_tokens: int = 4096,
     ):
@@ -104,6 +105,7 @@ class OpenAICompatibleTranslationProvider:
         self._target_lang = target_lang
         self._api_key = api_key
         self._client = client
+        self._glossary = glossary or {}
         self._capabilities = capabilities
 
     def capabilities(self) -> ProviderCapabilities:
@@ -138,7 +140,12 @@ class OpenAICompatibleTranslationProvider:
                 },
                 {
                     "role": "user",
-                    "content": _build_translation_prompt(segments, source_lang, target_lang),
+                    "content": _build_translation_prompt(
+                        segments,
+                        source_lang,
+                        target_lang,
+                        glossary=self._glossary,
+                    ),
                 },
             ],
             max_tokens=int(self.config.options["max_tokens"]),
@@ -192,14 +199,21 @@ def _build_translation_prompt(
     segments: list[Segment],
     source_lang: str,
     target_lang: str,
+    *,
+    glossary: dict[str, str] | None = None,
 ) -> str:
     numbered = "\n".join(
         f"{index}. {segment.text.strip()}" for index, segment in enumerate(segments, start=1)
     )
+    glossary_block = ""
+    if glossary:
+        terms = "\n".join(f"- {source} => {target}" for source, target in glossary.items())
+        glossary_block = f"\nGlossary terms to preserve:\n{terms}\n"
     return (
         f"Translate from {source_lang} to {target_lang}.\n"
         "Return exactly the same number of numbered lines.\n"
         "Output only numbered translations in the form '1. translated text'.\n\n"
+        f"{glossary_block}"
         f"{numbered}"
     )
 

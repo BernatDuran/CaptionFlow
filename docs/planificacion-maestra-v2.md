@@ -445,7 +445,7 @@ Entregables:
 | Proyectos/jobs | 68% | Flujo create/add/run/export y drafts integrado; falta ergonomia avanzada/logs |
 | Editor subtitulos | 72% | Dominio, drafts y CLI basico hechos; falta flujo proyecto/revision completo |
 | Exportacion profesional | 35% | Perfiles legacy/basic/youtube/review/archive base, manifiesto y review bilingue |
-| Traduccion robusta | 55% | nano-gpt/OpenAI, fallback y cache base hechos; faltan glosarios y controles de calidad |
+| Traduccion robusta | 65% | nano-gpt/OpenAI, fallback, cache y glosario base hechos; faltan controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
 | API interna/UI | 0% | Pendiente |
 | Distribucion | 25% | Extras/docs y doctor accionable inicial; falta release/CI/instalador |
@@ -479,6 +479,7 @@ Entregables:
 | `docs/specs/export-profiles-v1.md` | Spec activa | Contrato de perfiles de exportacion basicos |
 | `docs/specs/subtitle-cli-v1.md` | Spec activa | Contrato del CLI de edicion de drafts |
 | `docs/specs/project-flow-v1.md` | Spec activa | Contrato del flujo proyecto-job-draft-export |
+| `docs/specs/translation-glossary-v1.md` | Spec activa | Contrato del glosario de traduccion |
 
 ## 13. Reglas Antes de Implementar Cada Fase
 
@@ -537,3 +538,5 @@ Estado de esta primera accion:
   exportar resultados finales desde el draft revisado.
 - `doctor` ya devuelve pistas accionables para dependencias, claves API y
   providers no disponibles, orientado a uso personal.
+- La traduccion OpenAI-compatible ya acepta glosario JSON para terminos
+  personales, y la cache considera el glosario dentro de la clave.

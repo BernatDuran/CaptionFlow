@@ -69,6 +69,21 @@ def test_openai_compatible_translation_provider_supports_openai_model_override()
     assert client.calls[0]["model"] == "custom-model"
 
 
+def test_openai_compatible_translation_provider_adds_glossary_to_prompt():
+    client = FakeChatClient("1. CaptionFlow")
+    provider = OpenAICompatibleTranslationProvider(
+        "openai",
+        "en",
+        "es",
+        client=client,
+        glossary={"CaptionFlow": "CaptionFlow"},
+    )
+
+    provider.translate_segments([Segment(start=0.0, end=1.0, text="CaptionFlow")], "en", "es")
+
+    assert "- CaptionFlow => CaptionFlow" in client.calls[0]["messages"][1]["content"]
+
+
 def test_openai_compatible_translation_provider_rejects_misaligned_response():
     client = FakeChatClient("1. Hola")
     provider = OpenAICompatibleTranslationProvider(

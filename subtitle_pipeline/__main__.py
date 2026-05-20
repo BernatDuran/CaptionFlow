@@ -128,6 +128,11 @@ def main(argv: list[str] | None = None):
         help="Directory for local translation cache entries.",
     )
     parser.add_argument(
+        "--translation-glossary",
+        default=None,
+        help="JSON glossary path for translation providers that support prompt guidance.",
+    )
+    parser.add_argument(
         "--api-key",
         default=None,
         help="Anthropic API key (or set ANTHROPIC_API_KEY env var)",
@@ -176,6 +181,7 @@ def main(argv: list[str] | None = None):
         translation_fallback_model=args.translation_fallback_model,
         translation_cache_enabled=args.translation_cache,
         translation_cache_dir=args.translation_cache_dir,
+        translation_glossary_path=args.translation_glossary,
         translator=args.translator,
         api_key=args.api_key,
         dub=args.dub,
@@ -257,6 +263,7 @@ def _handle_project_command(argv: list[str]) -> None:
     )
     run_parser.add_argument("--translation-fallback-model", default=None)
     run_parser.add_argument("--translation-cache", action="store_true")
+    run_parser.add_argument("--translation-glossary", default=None)
     run_parser.add_argument("--api-key", default=None)
     run_parser.add_argument(
         "--formats",
@@ -327,6 +334,7 @@ def _handle_project_command(argv: list[str]) -> None:
             translation_fallback_provider=args.translation_fallback_provider,
             translation_fallback_model=args.translation_fallback_model,
             translation_cache_enabled=args.translation_cache,
+            translation_glossary_path=args.translation_glossary,
             api_key=args.api_key,
         )
 

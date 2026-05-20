@@ -1,6 +1,7 @@
 import os
 
 from .errors import ConfigError
+from .glossary import load_translation_glossary
 from .models import SubtitleConfig
 from .providers import (
     get_provider_capabilities,
@@ -53,6 +54,8 @@ def validate_config(config: SubtitleConfig) -> None:
             f"tts_rate must be between {MIN_TTS_RATE} and {MAX_TTS_RATE}; "
             f"got {config.tts_rate}"
         )
+
+    load_translation_glossary(config.translation_glossary_path)
 
     _validate_translation_provider(config)
     _validate_translation_fallback_provider(config)

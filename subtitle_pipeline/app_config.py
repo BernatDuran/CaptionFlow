@@ -27,6 +27,7 @@ class AppConfig:
     translation_fallback_model: str | None = None
     translation_cache_enabled: bool = False
     translation_cache_dir: str | None = None
+    translation_glossary_path: str | None = None
     tts_provider: str = "edge-tts"
     tts_model: str = "edge-tts"
 
