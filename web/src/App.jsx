@@ -110,22 +110,39 @@ export default function App() {
     await runAction("refresh", async () => {
       await api.health();
       setBackendStatus("online");
-      const [configPayload, providersPayload, doctorPayload, secretsPayload] = await Promise.all([
+      const [configResult, providersResult, doctorResult, secretsResult] = await Promise.allSettled([
         api.getConfig(),
         api.providers(),
         api.doctor(),
         api.secrets(),
       ]);
-      setConfig(configPayload);
-      setProviders(providersPayload.providers || []);
-      setDoctor(doctorPayload);
-      setSecrets(secretsPayload);
+      const configPayload = valueOrNull(configResult);
+      const providersPayload = valueOrNull(providersResult);
+      const doctorPayload = valueOrNull(doctorResult);
+      const secretsPayload = valueOrNull(secretsResult);
+      if (configPayload) {
+        setConfig(configPayload);
+      }
+      setProviders(providersPayload?.providers || []);
+      if (doctorPayload) {
+        setDoctor(doctorPayload);
+      }
+      if (secretsPayload) {
+        setSecrets(secretsPayload);
+      }
       setJobForm((form) => ({
         ...form,
-        sourceLang: form.sourceLang || configPayload.source_lang || "en",
-        targetLang: form.targetLang || configPayload.target_lang || "es",
+        sourceLang: form.sourceLang || configPayload?.source_lang || "en",
+        targetLang: form.targetLang || configPayload?.target_lang || "es",
       }));
-      setNotice({ type: "success", text: "Sistema actualizado." });
+      const failures = [configResult, providersResult, doctorResult, secretsResult]
+        .filter((result) => result.status === "rejected")
+        .map((result) => result.reason.message);
+      setNotice(
+        failures.length
+          ? { type: "warning", text: `Sistema online, pero ${failures.length} paneles no han cargado.` }
+          : { type: "success", text: "Sistema actualizado." },
+      );
     }, { rethrow: true }).catch(() => {
       setBackendStatus("offline");
     });
@@ -1076,6 +1093,10 @@ function groupProvidersByTask(providers) {
     },
     { transcription: [], translation: [], tts: [] },
   );
+}
+
+function valueOrNull(result) {
+  return result.status === "fulfilled" ? result.value : null;
 }
 
 function summarizeDoctor(doctor) {

@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_CAPTIONFLOW_API || "http://127.0.0.1:8765";
+const API_BASE = import.meta.env.VITE_CAPTIONFLOW_API || window.location.origin;
 
 async function request(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
