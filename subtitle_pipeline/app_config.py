@@ -15,6 +15,7 @@ class AppConfig:
     model_size: str = "large-v3"
     device: str = "auto"
     formats: list[str] = field(default_factory=lambda: ["srt"])
+    export_profile: str = "legacy"
     translator: str = "claude"
     tts_voice: str = "es-ES-AlvaroNeural"
     tts_rate: int = 0

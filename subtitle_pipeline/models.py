@@ -26,6 +26,7 @@ class SubtitleConfig:
     model_size: str = "large-v3"
     device: str = "auto"
     formats: list[str] = field(default_factory=lambda: ["srt"])
+    export_profile: str = "legacy"
     burn_in: bool = False
     translation_provider: str = "claude"
     translation_model: str | None = None

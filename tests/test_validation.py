@@ -52,6 +52,16 @@ def test_validate_config_rejects_unsupported_format(tmp_path):
         validate_config(config)
 
 
+def test_validate_config_rejects_unsupported_export_profile(tmp_path):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    config = SubtitleConfig(input_path=str(input_path), output_dir=str(tmp_path / "out"))
+    config.export_profile = "unknown"
+
+    with pytest.raises(ConfigError, match="Unsupported export profile"):
+        validate_config(config)
+
+
 def test_validate_config_requires_claude_key_when_translation_needed(tmp_path, monkeypatch):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

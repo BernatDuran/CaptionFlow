@@ -22,6 +22,8 @@ Configuration inputs:
 - `model_size`: faster-whisper model size. Defaults to `large-v3`.
 - `device`: `auto`, `cuda` or `cpu`.
 - `formats`: one or more subtitle formats: `srt`, `vtt`, `txt`.
+- `export_profile`: export layout. Defaults to `legacy`. Supported profiles:
+  `legacy`, `basic`, `youtube`, `review`, `archive`.
 - `translation_provider`: translation provider. Defaults to `claude`.
 - `translation_model`: optional translation model override.
 - `translation_fallback_provider`: optional fallback translation provider used

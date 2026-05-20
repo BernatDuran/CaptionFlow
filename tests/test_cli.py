@@ -81,6 +81,8 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
             "faster-whisper",
             "--transcription-model",
             "base",
+            "--export-profile",
+            "youtube",
             "--translation-provider",
             "nllb",
             "--translation-model",
@@ -102,6 +104,7 @@ def test_pipeline_cli_accepts_provider_flags(tmp_path, monkeypatch):
     config = captured["config"]
     assert config.transcription_provider == "faster-whisper"
     assert config.transcription_model == "base"
+    assert config.export_profile == "youtube"
     assert config.translation_provider == "nllb"
     assert config.translation_model == "custom-nllb"
     assert config.translation_fallback_provider == "openai"

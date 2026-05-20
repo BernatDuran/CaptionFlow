@@ -6,6 +6,7 @@ from dataclasses import asdict
 from .app_config import load_app_config, save_app_config
 from .doctor import doctor_exit_code, format_doctor_report, run_doctor
 from .errors import ConfigError
+from .export_profiles import SUPPORTED_EXPORT_PROFILES
 from .models import SubtitleConfig
 from .progress import console_event_sink
 from .providers import list_provider_names
@@ -59,6 +60,12 @@ def main(argv: list[str] | None = None):
         default=["srt"],
         choices=["srt", "vtt", "txt"],
         help="Output formats (default: srt)",
+    )
+    parser.add_argument(
+        "--export-profile",
+        default="legacy",
+        choices=sorted(SUPPORTED_EXPORT_PROFILES),
+        help="Export profile: legacy, basic, youtube, review or archive.",
     )
     parser.add_argument(
         "--burn-in",
@@ -147,6 +154,7 @@ def main(argv: list[str] | None = None):
         model_size=args.model_size,
         device=args.device,
         formats=args.formats,
+        export_profile=args.export_profile,
         burn_in=args.burn_in,
         translation_provider=args.translation_provider or args.translator,
         translation_model=args.translation_model,

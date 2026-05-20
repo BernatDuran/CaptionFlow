@@ -6,6 +6,7 @@ from .providers import (
     get_provider_capabilities,
     list_provider_names,
 )
+from .export_profiles import SUPPORTED_EXPORT_PROFILES
 
 SUPPORTED_DEVICES = {"auto", "cuda", "cpu"}
 SUPPORTED_FORMATS = {"srt", "vtt", "txt"}
@@ -40,6 +41,12 @@ def validate_config(config: SubtitleConfig) -> None:
 
     if not config.formats:
         raise ConfigError("At least one subtitle format is required.")
+
+    if config.export_profile not in SUPPORTED_EXPORT_PROFILES:
+        raise ConfigError(
+            f"Unsupported export profile '{config.export_profile}'. "
+            f"Supported: {sorted(SUPPORTED_EXPORT_PROFILES)}"
+        )
 
     if not MIN_TTS_RATE <= config.tts_rate <= MAX_TTS_RATE:
         raise ConfigError(

@@ -6,7 +6,8 @@ import tempfile
 from .cache import TranslationCache, build_translation_cache_key
 from .models import PipelineResult, Segment, SubtitleConfig
 from .audio_extractor import extract_audio
-from .formatter import write_subtitles
+from .export_profiles import export_subtitles
+from .formatter import to_srt
 from .progress import EventSink, emit_event
 from .providers import (
     ProviderRoute,
@@ -145,9 +146,18 @@ def run_subtitle_pipeline_detailed(
             )
 
         # 4. Write subtitle files
-        output_files = write_subtitles(
-            segments, config.output_dir, base_name, config.formats, use_translated
+        export_result = export_subtitles(
+            segments,
+            config.output_dir,
+            base_name,
+            profile=config.export_profile,
+            formats=config.formats,
+            source_lang=config.source_lang,
+            target_lang=config.target_lang,
+            use_translated=use_translated,
+            provider_metadata=provider_metadata,
         )
+        output_files = export_result.files
         for output_file in output_files:
             emit_event(
                 event_sink,
@@ -175,7 +185,6 @@ def run_subtitle_pipeline_detailed(
         if config.burn_in:
             srt_path = os.path.join(config.output_dir, f"{base_name}.srt")
             if not os.path.isfile(srt_path):
-                from .formatter import to_srt
                 content = to_srt(segments, use_translated)
                 with open(srt_path, "w", encoding="utf-8") as f:
                     f.write(content)
