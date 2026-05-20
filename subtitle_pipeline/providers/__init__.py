@@ -18,6 +18,11 @@ from .factories import (
     create_translation_provider,
     create_tts_provider,
 )
+from .openai_compatible import (
+    ChatCompletionResult,
+    OpenAICompatibleClient,
+    OpenAICompatibleTranslationProvider,
+)
 from .registry import (
     check_provider_availability,
     get_provider_capabilities,
@@ -37,6 +42,9 @@ __all__ = [
     "ProviderResultMetadata",
     "ProviderRoute",
     "ProviderRouter",
+    "ChatCompletionResult",
+    "OpenAICompatibleClient",
+    "OpenAICompatibleTranslationProvider",
     "ProviderTask",
     "TTSProvider",
     "TTSResult",

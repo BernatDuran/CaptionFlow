@@ -136,6 +136,39 @@ def test_validate_config_rejects_unsupported_translation_provider_from_registry(
         validate_config(config)
 
 
+def test_validate_config_requires_nano_gpt_key_when_selected(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    monkeypatch.delenv("NANO_GPT_API_KEY", raising=False)
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="en",
+        target_lang="es",
+        translation_provider="nano-gpt",
+    )
+
+    with pytest.raises(ConfigError, match="NANO_GPT_API_KEY"):
+        validate_config(config)
+
+
+def test_validate_config_accepts_nano_gpt_key_from_environment(tmp_path, monkeypatch):
+    input_path = tmp_path / "video.mp4"
+    input_path.write_bytes(b"fake")
+    monkeypatch.setenv("NANO_GPT_API_KEY", "test-key")
+
+    config = SubtitleConfig(
+        input_path=str(input_path),
+        output_dir=str(tmp_path / "out"),
+        source_lang="en",
+        target_lang="es",
+        translation_provider="nano-gpt",
+    )
+
+    validate_config(config)
+
+
 def test_validate_config_rejects_source_language_unsupported_by_provider(tmp_path):
     input_path = tmp_path / "video.mp4"
     input_path.write_bytes(b"fake")

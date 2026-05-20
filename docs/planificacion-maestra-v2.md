@@ -512,3 +512,5 @@ Estado de esta primera accion:
   `ProviderRuntimeError` y tests con providers falsos.
 - El router ya acepta preflight de disponibilidad/credenciales como dependencia
   inyectable antes de ejecutar providers.
+- Ya existe un primer adapter de traduccion OpenAI-compatible para `nano-gpt`
+  y `openai`, con cliente inyectable y validacion estricta de cardinalidad.

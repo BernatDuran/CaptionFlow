@@ -80,6 +80,13 @@ set ANTHROPIC_API_KEY=<clave_anthropic>
 python -m subtitle_pipeline --input "video.mp4" --translator claude --source-lang en --target-lang es --output-dir "./out"
 ```
 
+Usar nano-gpt/Qwen:
+
+```bash
+set NANO_GPT_API_KEY=<clave_nano_gpt>
+python -m subtitle_pipeline --input "video.mp4" --translation-provider nano-gpt --source-lang en --target-lang es --output-dir "./out"
+```
+
 ## Subtitulos incrustados
 
 Para crear un video final con los subtitulos quemados en la imagen:

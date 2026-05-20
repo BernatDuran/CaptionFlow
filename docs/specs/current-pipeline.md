@@ -122,12 +122,16 @@ Each segment contains:
 
 If `source_lang` and `target_lang` are equal, translation is skipped.
 
-If languages differ:
+If languages differ, supported translation providers include:
 
-- `translator=claude` uses the Anthropic API.
-- `translator=nllb` uses the local NLLB model.
+- `claude`: legacy Anthropic API adapter.
+- `nllb`: optional local NLLB adapter.
+- `nano-gpt`: OpenAI-compatible API adapter for nano-gpt/Qwen.
+- `openai`: OpenAI-compatible API adapter for OpenAI chat models.
 
 Translation is routed through a `TranslationProvider`.
+OpenAI-compatible translation providers validate that the response preserves
+the same number of segments.
 
 The translated text is stored in each segment's `translated` field.
 

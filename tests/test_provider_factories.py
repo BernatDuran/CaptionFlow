@@ -5,6 +5,7 @@ from subtitle_pipeline.errors import ProviderNotFoundError
 from subtitle_pipeline.providers import (
     EdgeTTSProvider,
     FasterWhisperProvider,
+    OpenAICompatibleTranslationProvider,
     TranslatorProviderAdapter,
     create_transcription_provider,
     create_translation_provider,
@@ -71,17 +72,22 @@ def test_create_translation_provider_uses_model_override():
     assert provider.config.model == "custom-claude"
 
 
-def test_create_translation_provider_rejects_registered_provider_without_adapter():
+def test_create_translation_provider_returns_openai_compatible_provider():
     config = SubtitleConfig(
         input_path="video.mp4",
         output_dir="out",
         source_lang="en",
         target_lang="es",
         translation_provider="nano-gpt",
+        api_key="test-key",
     )
 
-    with pytest.raises(ProviderNotFoundError, match="does not have a runtime adapter yet"):
-        create_translation_provider(config)
+    provider = create_translation_provider(config)
+
+    assert isinstance(provider, OpenAICompatibleTranslationProvider)
+    assert provider.config.name == "nano-gpt"
+    assert provider.config.model == "qwen/qwen3.5-397b-a17b"
+    assert provider.config.api_key_env_var == "NANO_GPT_API_KEY"
 
 
 def test_create_tts_provider_returns_edge_tts_provider():

@@ -126,10 +126,12 @@ Implemented now:
 - routed metadata enrichment;
 - fallback progress events;
 - unit tests with fake providers and no network calls.
+- OpenAI-compatible translation adapter for `nano-gpt` and `openai`, with
+  injected client support and strict segment cardinality validation.
 
 Not implemented yet:
 
 - runtime integration with the main pipeline;
 - API cache;
-- real nano-gpt/OpenAI adapters;
+- real network tests for nano-gpt/OpenAI adapters;
 - cost calculation.

@@ -1,5 +1,6 @@
 from .adapters import EdgeTTSProvider, FasterWhisperProvider, TranslatorProviderAdapter
 from .contracts import TTSProvider, TranscriptionProvider, TranslationProvider
+from .openai_compatible import OpenAICompatibleTranslationProvider
 from ..errors import ProviderNotFoundError
 
 
@@ -12,17 +13,25 @@ def create_transcription_provider(config) -> TranscriptionProvider:
 
 
 def create_translation_provider(config) -> TranslationProvider:
-    if config.translation_provider not in {"claude", "nllb"}:
-        raise ProviderNotFoundError(
-            f"Translation provider '{config.translation_provider}' is registered "
-            "but does not have a runtime adapter yet."
+    if config.translation_provider in {"nano-gpt", "openai"}:
+        return OpenAICompatibleTranslationProvider(
+            provider_name=config.translation_provider,
+            source_lang=config.source_lang,
+            target_lang=config.target_lang,
+            api_key=config.api_key,
+            model=config.translation_model,
         )
-    return TranslatorProviderAdapter(
-        provider_name=config.translation_provider,
-        source_lang=config.source_lang,
-        target_lang=config.target_lang,
-        api_key=config.api_key,
-        model=config.translation_model,
+    if config.translation_provider in {"claude", "nllb"}:
+        return TranslatorProviderAdapter(
+            provider_name=config.translation_provider,
+            source_lang=config.source_lang,
+            target_lang=config.target_lang,
+            api_key=config.api_key,
+            model=config.translation_model,
+        )
+    raise ProviderNotFoundError(
+        f"Translation provider '{config.translation_provider}' is registered "
+        "but does not have a runtime adapter yet."
     )
 
 
