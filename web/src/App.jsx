@@ -715,60 +715,64 @@ function SettingsView({
     <section className="settings-grid">
       <div className="panel">
         <PanelHeader title="Presets" meta="Inicio rapido" />
-        {CONFIG_PRESETS.map((preset) => (
-          <button key={preset} onClick={() => applyPreset(preset)}>
-            {preset}
-          </button>
-        ))}
+        <div className="preset-list">
+          {CONFIG_PRESETS.map((preset) => (
+            <button className="soft-button" key={preset} onClick={() => applyPreset(preset)}>
+              {preset}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="panel">
         <PanelHeader title="Providers" meta="Model provider-ready" />
-        <ProviderSelect
-          label="Transcripcion"
-          value={config.transcription_provider}
-          providers={providersByTask.transcription}
-          onChange={(value) => setConfig({ ...config, transcription_provider: value })}
-        />
-        <ConfigInput
-          label="Modelo transcripcion"
-          value={config.transcription_model || ""}
-          onChange={(value) => setConfig({ ...config, transcription_model: value || null })}
-        />
-        <ProviderSelect
-          label="Fallback transcripcion"
-          value={config.transcription_fallback_provider || ""}
-          providers={providersByTask.transcription}
-          includeNone
-          onChange={(value) => setConfig({ ...config, transcription_fallback_provider: value || null })}
-        />
-        <ProviderSelect
-          label="Traduccion"
-          value={config.translation_provider}
-          providers={providersByTask.translation}
-          onChange={(value) => setConfig({ ...config, translation_provider: value })}
-        />
-        <ConfigInput
-          label="Modelo traduccion"
-          value={config.translation_model || ""}
-          onChange={(value) => setConfig({ ...config, translation_model: value || null })}
-        />
-        <ProviderSelect
-          label="Fallback traduccion"
-          value={config.translation_fallback_provider || ""}
-          providers={providersByTask.translation}
-          includeNone
-          onChange={(value) => setConfig({ ...config, translation_fallback_provider: value || null })}
-        />
-        <SelectInput
-          label="Perfil exportacion"
-          value={config.export_profile}
-          options={EXPORT_PROFILES}
-          onChange={(value) => setConfig({ ...config, export_profile: value })}
-        />
-        <FormatSelector
-          formats={config.formats || ["srt"]}
-          onChange={(formats) => setConfig({ ...config, formats })}
-        />
+        <div className="settings-form-grid">
+          <ProviderSelect
+            label="Transcripcion"
+            value={config.transcription_provider}
+            providers={providersByTask.transcription}
+            onChange={(value) => setConfig({ ...config, transcription_provider: value })}
+          />
+          <ConfigInput
+            label="Modelo transcripcion"
+            value={config.transcription_model || ""}
+            onChange={(value) => setConfig({ ...config, transcription_model: value || null })}
+          />
+          <ProviderSelect
+            label="Fallback transcripcion"
+            value={config.transcription_fallback_provider || ""}
+            providers={providersByTask.transcription}
+            includeNone
+            onChange={(value) => setConfig({ ...config, transcription_fallback_provider: value || null })}
+          />
+          <ProviderSelect
+            label="Traduccion"
+            value={config.translation_provider}
+            providers={providersByTask.translation}
+            onChange={(value) => setConfig({ ...config, translation_provider: value })}
+          />
+          <ConfigInput
+            label="Modelo traduccion"
+            value={config.translation_model || ""}
+            onChange={(value) => setConfig({ ...config, translation_model: value || null })}
+          />
+          <ProviderSelect
+            label="Fallback traduccion"
+            value={config.translation_fallback_provider || ""}
+            providers={providersByTask.translation}
+            includeNone
+            onChange={(value) => setConfig({ ...config, translation_fallback_provider: value || null })}
+          />
+          <SelectInput
+            label="Perfil exportacion"
+            value={config.export_profile}
+            options={EXPORT_PROFILES}
+            onChange={(value) => setConfig({ ...config, export_profile: value })}
+          />
+          <FormatSelector
+            formats={config.formats || ["srt"]}
+            onChange={(formats) => setConfig({ ...config, formats })}
+          />
+        </div>
         <label className="checkbox-row">
           <input
             type="checkbox"
@@ -785,7 +789,7 @@ function SettingsView({
           onChange={(value) => setConfig({ ...config, translation_glossary_path: value || null })}
           onBrowse={() => openBrowser("glossaryPath", "json", "Seleccionar glosario JSON", config.translation_glossary_path)}
         />
-        <button onClick={saveConfig}>Guardar configuracion</button>
+        <button className="primary-action" onClick={saveConfig}>Guardar configuracion</button>
       </div>
       <div className="panel">
         <PanelHeader title="API keys" meta="Solo proceso local" />
