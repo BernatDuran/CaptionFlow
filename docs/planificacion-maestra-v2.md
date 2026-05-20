@@ -442,12 +442,12 @@ Entregables:
 | Base tecnica y tests | 80% | Hecho inicial, falta CI/type check |
 | Dependencias opcionales | 55% | Extras creados, falta reorientar a OpenAI SDK v2 |
 | Provider-ready | 82% | Contratos, router, fallback, cache y providers API base integrados; falta coste/privacy UI |
-| Proyectos/jobs | 68% | Flujo create/add/run/export y drafts integrado; falta ergonomia avanzada/logs |
-| Editor subtitulos | 72% | Dominio, drafts y CLI basico hechos; falta flujo proyecto/revision completo |
+| Proyectos/jobs | 75% | Flujo create/add/run/export y drafts integrado tambien en UI; falta streaming en vivo |
+| Editor subtitulos | 76% | Dominio, drafts, CLI y editor web con busqueda/validacion; faltan split/merge/shift |
 | Exportacion profesional | 35% | Perfiles legacy/basic/youtube/review/archive base, manifiesto y review bilingue |
 | Traduccion robusta | 65% | nano-gpt/OpenAI, fallback, cache y glosario base hechos; faltan controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
-| API interna/UI | 28% | API local inicial y frontend React/Vite scaffold con ajustes/proyectos/editor |
+| API interna/UI | 58% | App web local con Flow guiado, settings, editor, export, historial y explorador de rutas |
 | Distribucion | 30% | Extras/docs, presets personales y doctor accionable; falta release/CI/instalador |
 
 ## 11. Backlog Priorizado v2
@@ -553,3 +553,7 @@ Estado de esta primera accion:
   edicion y exportacion.
 - La planificacion UX/UI define una app local completa centrada en dashboard,
   proyecto, editor y exportacion.
+- La UI ya incorpora un flujo guiado `Flow`, explorador local de rutas servido
+  por el backend, historial de proyectos recientes, settings provider-ready y
+  criterios visuales adaptados de `taste-skill` sin introducir dependencias
+  nuevas de diseño.

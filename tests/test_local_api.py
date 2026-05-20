@@ -90,3 +90,22 @@ def test_local_api_put_draft_reports_validation_issues(tmp_path):
     )
 
     assert result["issues"][0]["code"] == "invalid_timing"
+
+
+def test_local_api_filesystem_marks_selectable_paths(tmp_path):
+    service = LocalApiService()
+    media = tmp_path / "clip.mp4"
+    project = tmp_path / "captionflow_project.json"
+    notes = tmp_path / "notes.txt"
+    media.write_text("demo", encoding="utf-8")
+    project.write_text("{}", encoding="utf-8")
+    notes.write_text("demo", encoding="utf-8")
+
+    media_browser = service.filesystem(str(tmp_path), mode="media")
+    project_browser = service.filesystem(str(tmp_path), mode="project")
+
+    media_entries = {entry["name"]: entry for entry in media_browser["entries"]}
+    project_entries = {entry["name"]: entry for entry in project_browser["entries"]}
+    assert media_entries["clip.mp4"]["selectable"] is True
+    assert media_entries["notes.txt"]["selectable"] is False
+    assert project_entries["captionflow_project.json"]["selectable"] is True

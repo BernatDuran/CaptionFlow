@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import string
 from dataclasses import asdict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -59,6 +60,18 @@ class LocalApiService:
         providers = [asdict(provider) for provider in list_provider_capabilities()]
         return {"providers": providers}
 
+    def filesystem(self, path: str | None = None, mode: str = "any") -> dict[str, Any]:
+        base = _safe_browser_path(path)
+        entries = [_path_entry(child, mode) for child in _iter_browser_children(base)]
+        return {
+            "path": str(base),
+            "parent": str(base.parent) if base.parent != base else None,
+            "home": str(Path.home()),
+            "cwd": str(Path.cwd()),
+            "roots": _filesystem_roots(),
+            "entries": entries,
+        }
+
     def doctor(self) -> dict[str, Any]:
         checks = run_doctor()
         return {
@@ -115,6 +128,11 @@ class LocalApiService:
         job_id = str(payload["job_id"])
         project = load_project(project_path)
         job = get_job(project, job_id)
+        events: list[dict[str, Any]] = []
+
+        def collect_event(event) -> None:
+            events.append(asdict(event))
+
         config_payload = payload.get("config", {})
         config = SubtitleConfig(
             input_path=job.input_path,
@@ -142,10 +160,17 @@ class LocalApiService:
             project,
             job_id,
             config,
-            runner=run_subtitle_pipeline_detailed,
+            runner=lambda job_config: run_subtitle_pipeline_detailed(
+                job_config,
+                event_sink=collect_event,
+            ),
             project_path=project_path,
         )
-        return {"result": _pipeline_result_to_dict(result), "project": asdict(project)}
+        return {
+            "result": _pipeline_result_to_dict(result),
+            "project": asdict(project),
+            "events": events,
+        }
 
     def get_draft(self, project_path: str, job_id: str) -> dict[str, Any]:
         project = load_project(project_path)
@@ -262,6 +287,8 @@ def _dispatch_http(
         return service.create_config(payload)
     if method == "GET" and path == "/providers":
         return service.providers()
+    if method == "GET" and path == "/filesystem":
+        return service.filesystem(_first(query, "path"), _first(query, "mode") or "any")
     if method == "GET" and path == "/doctor":
         return service.doctor()
     if method == "GET" and path == "/secrets":
@@ -317,3 +344,71 @@ def _mask_secret(value: str | None) -> str | None:
     if len(value) <= 8:
         return "***"
     return f"{value[:4]}...{value[-4:]}"
+
+
+def _safe_browser_path(path: str | None) -> Path:
+    if not path:
+        return Path.home()
+    candidate = Path(path).expanduser()
+    if candidate.is_file():
+        return candidate.parent
+    return candidate
+
+
+def _iter_browser_children(base: Path) -> list[Path]:
+    if not base.exists():
+        raise ValueError(f"Path does not exist: {base}")
+    if not base.is_dir():
+        raise ValueError(f"Path is not a directory: {base}")
+    try:
+        children = list(base.iterdir())
+    except PermissionError:
+        return []
+    return sorted(children, key=lambda path: (not path.is_dir(), path.name.lower()))[:250]
+
+
+def _path_entry(path: Path, mode: str) -> dict[str, Any]:
+    is_dir = path.is_dir()
+    suffix = path.suffix.lower()
+    return {
+        "name": path.name,
+        "path": str(path),
+        "is_dir": is_dir,
+        "kind": "directory" if is_dir else "file",
+        "selectable": _is_selectable_path(path, mode),
+        "extension": suffix,
+    }
+
+
+def _is_selectable_path(path: Path, mode: str) -> bool:
+    if mode == "directory":
+        return path.is_dir()
+    if mode == "project":
+        return path.is_file() and path.name == "captionflow_project.json"
+    if mode == "media":
+        return path.is_file() and path.suffix.lower() in {
+            ".aac",
+            ".flac",
+            ".m4a",
+            ".mkv",
+            ".mov",
+            ".mp3",
+            ".mp4",
+            ".ogg",
+            ".wav",
+            ".webm",
+        }
+    if mode == "json":
+        return path.is_file() and path.suffix.lower() == ".json"
+    return True
+
+
+def _filesystem_roots() -> list[str]:
+    if os.name != "nt":
+        return ["/"]
+    roots = []
+    for letter in string.ascii_uppercase:
+        root = Path(f"{letter}:\\")
+        if root.exists():
+            roots.append(str(root))
+    return roots

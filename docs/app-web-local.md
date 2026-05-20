@@ -32,16 +32,35 @@ npm run dev
 
 ## Funciones Cubiertas
 
-- dashboard local;
+- flujo guiado `Flow`;
 - crear/abrir proyecto;
+- seleccionar rutas con explorador local del backend;
 - anadir jobs;
 - ejecutar jobs;
 - editar drafts;
 - exportar;
+- ver historial de proyectos recientes;
 - ver providers;
 - configurar presets;
 - configurar API keys en el backend local;
 - ejecutar diagnostico visual.
+
+## Flujo Recomendado
+
+1. Abrir `Flow`.
+2. Crear proyecto o abrir `captionflow_project.json` con `Buscar`.
+3. Seleccionar video/audio con el explorador local.
+4. Confirmar idiomas origen/destino.
+5. Anadir job.
+6. Ejecutar pipeline.
+7. Revisar draft en `Editor`.
+8. Exportar desde `Export`.
+
+## Diseno UX
+
+La UI sigue una adaptacion practica de `taste-skill`: app local sobria,
+responsive, con grid claro, estados visibles, foco accesible y microinteracciones
+CSS ligeras. No se han anadido librerias visuales extra.
 
 ## Seguridad de API Keys
 

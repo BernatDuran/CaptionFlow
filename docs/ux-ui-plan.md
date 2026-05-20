@@ -18,6 +18,26 @@ escritorio/local clara, robusta y rapida de usar.
 - Configuracion avanzada escondida hasta que haga falta.
 - Salidas orientadas a uso real: YouTube, revision y archivo.
 
+## 2.1 Criterio Visual Taste-Skill
+
+Referencia aplicada: `Leonxlnx/taste-skill`, usando los principios de
+`design-taste-frontend` y `redesign-existing-projects` adaptados a una app
+local de productividad.
+
+Decisiones para CaptionFlow:
+
+- trabajar con el stack existente: React/Vite y CSS plano;
+- no anadir Tailwind, Framer Motion ni librerias de iconos hasta que aporten
+  valor claro;
+- priorizar interfaz de herramienta, no landing ni marketing;
+- usar grid responsive, contenedor maximo y composicion ligeramente asimetrica;
+- mantener una sola familia cromatica con acento verde sobrio;
+- incluir estados de carga, vacio, error, foco y pulsacion;
+- evitar texto generico y controles sin accion real;
+- reservar animaciones para microinteracciones CSS ligeras.
+
+Esto evita una UI generica sin convertir CaptionFlow en una demo visual pesada.
+
 ## 3. Arquitectura Recomendada
 
 | Capa | Recomendacion |
@@ -88,6 +108,8 @@ Funciones clave:
 | 5 | Exportar desde draft |
 | 6 | Pantalla ajustes/providers |
 | 7 | Integrar doctor visual |
+| 8 | Explorador local de rutas desde backend |
+| 9 | Historial de proyectos recientes |
 
 ## 8. Diseño Visual
 
@@ -127,11 +149,12 @@ Estado: implementacion inicial disponible en `subtitle_pipeline/local_api.py`.
 ### Fase UI-2: App Base
 
 - layout principal;
-- dashboard;
-- vista proyecto;
+- flujo guiado;
+- vista proyecto/job integrada;
 - crear job.
 
-Estado: scaffold inicial React/Vite disponible en `web/`.
+Estado: app React/Vite disponible en `web/`, con flujo guiado `Flow`,
+historial local, explorador de rutas y diagnostico visual.
 
 ### Fase UI-3: Editor
 
@@ -149,3 +172,16 @@ Estado: scaffold inicial React/Vite disponible en `web/`.
 - doctor visual.
 
 Estado: pantalla inicial de ajustes incluida en el frontend.
+
+## 11. Estado UX/UI Actual
+
+| Bloque | Estado | Comentario |
+| --- | ---: | --- |
+| Flujo guiado end-to-end | 70% | `Flow` agrupa proyecto, job, ejecucion, revision y exportacion |
+| Seleccion de rutas | 65% | Explorador backend para carpetas, proyectos, media y JSON |
+| Settings sin CLI | 70% | Providers, modelos, fallbacks, API keys, cache, glosario y formatos |
+| Feedback de ejecucion | 55% | Eventos de pipeline devueltos al terminar; falta streaming en vivo |
+| Editor subtitulos | 55% | Busqueda, edicion y validacion local; faltan split/merge/shift |
+| Exportacion | 65% | Perfil, formatos y carpeta de salida desde UI |
+| Historial | 60% | Proyectos recientes en localStorage |
+| Taste-skill aplicado | 60% | Tipografia, foco, estados, grid, microinteracciones y densidad ajustados |
