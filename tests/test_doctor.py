@@ -88,6 +88,7 @@ def test_format_doctor_report_is_human_readable():
     assert report.startswith("CaptionFlow environment check")
     assert "[PASS] ffmpeg executable:" in report
     assert "[WARN] ANTHROPIC_API_KEY:" in report
+    assert "-> Set ANTHROPIC_API_KEY only if you plan to use providers" in report
 
 
 def test_run_doctor_provider_key_check_uses_provider_capabilities():
@@ -120,3 +121,17 @@ def test_run_doctor_warns_for_missing_optional_python_packages():
 
     assert statuses["package:api:openai"] == "warn"
     assert statuses["package:dubbing:numpy"] == "warn"
+
+
+def test_run_doctor_includes_actionable_hints():
+    checks = run_doctor(
+        which=lambda command: None,
+        find_spec=lambda name: object() if name == "anthropic" else None,
+        environ={},
+    )
+
+    by_name = {check.name: check for check in checks}
+
+    assert by_name["ffmpeg executable"].action_hint.startswith("Install ffmpeg")
+    assert "optional profile" in by_name["package:api:openai"].action_hint
+    assert "choose a local/offline provider" in by_name["provider:translation:claude"].action_hint

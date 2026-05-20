@@ -16,6 +16,7 @@ class DoctorCheck:
     name: str
     status: CheckStatus
     message: str
+    action_hint: str | None = None
 
 
 PACKAGE_CHECKS = {
@@ -54,6 +55,8 @@ def format_doctor_report(checks: list[DoctorCheck]) -> str:
     lines = ["CaptionFlow environment check", ""]
     for check in checks:
         lines.append(f"[{check.status.upper()}] {check.name}: {check.message}")
+        if check.action_hint:
+            lines.append(f"  -> {check.action_hint}")
     return "\n".join(lines)
 
 
@@ -73,7 +76,12 @@ def _check_ffmpeg_binary(which: Callable[[str], str | None]) -> DoctorCheck:
     path = which("ffmpeg")
     if path:
         return DoctorCheck("ffmpeg executable", "pass", f"found at {path}")
-    return DoctorCheck("ffmpeg executable", "fail", "not found in PATH")
+    return DoctorCheck(
+        "ffmpeg executable",
+        "fail",
+        "not found in PATH",
+        "Install ffmpeg and make sure the executable is available in PATH.",
+    )
 
 
 def _check_python_packages(
@@ -88,6 +96,7 @@ def _check_python_packages(
                     f"package:{profile}:{display_name}",
                     "warn",
                     f"optional Python package '{import_name}' is not importable",
+                    f"Install the optional profile for '{profile}' if you need this feature.",
                 )
             )
         else:
@@ -101,7 +110,14 @@ def _check_api_keys(environ: dict[str, str]) -> list[DoctorCheck]:
         if environ.get(env_var):
             checks.append(DoctorCheck(env_var, "pass", "configured"))
         else:
-            checks.append(DoctorCheck(env_var, "warn", "not configured for API providers"))
+            checks.append(
+                DoctorCheck(
+                    env_var,
+                    "warn",
+                    "not configured for API providers",
+                    f"Set {env_var} only if you plan to use providers that require it.",
+                )
+            )
     return checks
 
 
@@ -121,6 +137,7 @@ def _check_ai_providers(
                 name=f"provider:{availability.task}:{availability.name}",
                 status=_provider_status_to_doctor_status(availability.status),
                 message=availability.message,
+                action_hint=_provider_action_hint(availability.status),
             )
         )
     return checks
@@ -158,3 +175,13 @@ def _provider_status_to_doctor_status(status: str) -> CheckStatus:
     if status == "missing_api_key":
         return "warn"
     return "fail"
+
+
+def _provider_action_hint(status: str) -> str | None:
+    if status == "available":
+        return None
+    if status == "missing_api_key":
+        return "Configure the provider API key or choose a local/offline provider."
+    if status == "missing_dependency":
+        return "Install the provider dependency or choose another configured provider."
+    return "Review provider configuration."

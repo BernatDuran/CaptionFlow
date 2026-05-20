@@ -448,7 +448,7 @@ Entregables:
 | Traduccion robusta | 55% | nano-gpt/OpenAI, fallback y cache base hechos; faltan glosarios y controles de calidad |
 | Doblaje TTS | 30% | Base Edge-TTS, falta OpenAI TTS y controles avanzados |
 | API interna/UI | 0% | Pendiente |
-| Distribucion | 20% | Extras/docs iniciales, falta release/CI/instalador |
+| Distribucion | 25% | Extras/docs y doctor accionable inicial; falta release/CI/instalador |
 
 ## 11. Backlog Priorizado v2
 
@@ -535,3 +535,5 @@ Estado de esta primera accion:
   ediciones sobre drafts JSON con indices 1-based.
 - El flujo de proyecto ya permite ejecutar jobs, guardar drafts editables y
   exportar resultados finales desde el draft revisado.
+- `doctor` ya devuelve pistas accionables para dependencias, claves API y
+  providers no disponibles, orientado a uso personal.
