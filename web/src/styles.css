@@ -92,6 +92,25 @@ textarea {
   min-height: 100vh;
 }
 
+.startup-error {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  padding: 24px;
+  color: #182026;
+}
+
+.startup-error h1,
+.startup-error p {
+  margin: 0;
+}
+
+.startup-error p {
+  max-width: 68ch;
+  color: #8d3126;
+}
+
 .skip-link {
   position: fixed;
   left: 16px;

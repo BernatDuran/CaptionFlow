@@ -32,7 +32,10 @@ const initialBrowser = {
 };
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("captionflow.activeTab") || "Flow");
+  const [activeTab, setActiveTab] = useState(() => {
+    const savedTab = localStorage.getItem("captionflow.activeTab");
+    return TABS.includes(savedTab) ? savedTab : "Flow";
+  });
   const [backendStatus, setBackendStatus] = useState("checking");
   const [busyAction, setBusyAction] = useState("");
   const [notice, setNotice] = useState({ type: "info", text: "" });

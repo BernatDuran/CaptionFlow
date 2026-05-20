@@ -55,6 +55,25 @@ Perfiles disponibles:
 
 ## Uso rapido
 
+### App local con doble clic
+
+En Windows, la forma mas facil de probar la interfaz es hacer doble clic en:
+
+```text
+CaptionFlow.cmd
+```
+
+El lanzador prepara el frontend, arranca el backend local y abre:
+
+```text
+http://127.0.0.1:8765
+```
+
+Deja la ventana del lanzador abierta mientras uses la app. Para cerrar
+CaptionFlow, pulsa `Ctrl+C` en esa ventana.
+
+Guia detallada: `docs/app-web-local.md`.
+
 Generar subtitulos traducidos de ingles a espanol:
 
 ```bash

@@ -1,4 +1,4 @@
-from subtitle_pipeline.local_api import LocalApiService
+from subtitle_pipeline.local_api import LocalApiService, _is_api_path, _static_target
 
 
 def test_local_api_config_and_providers(tmp_path):
@@ -109,3 +109,21 @@ def test_local_api_filesystem_marks_selectable_paths(tmp_path):
     assert media_entries["clip.mp4"]["selectable"] is True
     assert media_entries["notes.txt"]["selectable"] is False
     assert project_entries["captionflow_project.json"]["selectable"] is True
+
+
+def test_local_api_static_target_serves_spa_and_blocks_traversal(tmp_path):
+    dist = tmp_path / "dist"
+    assets = dist / "assets"
+    assets.mkdir(parents=True)
+    index = dist / "index.html"
+    bundle = assets / "index.js"
+    index.write_text("<div>CaptionFlow</div>", encoding="utf-8")
+    bundle.write_text("console.log('ok')", encoding="utf-8")
+
+    assert _static_target(dist.resolve(), "/") == index
+    assert _static_target(dist.resolve(), "/flow") == index
+    assert _static_target(dist.resolve(), "/assets/index.js") == bundle
+    assert _static_target(dist.resolve(), "/assets/missing.js") is None
+    assert _static_target(dist.resolve(), "/../secret.txt") is None
+    assert _is_api_path("/health")
+    assert not _is_api_path("/assets/index.js")

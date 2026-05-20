@@ -255,12 +255,17 @@ def _handle_app_command(argv: list[str]) -> None:
     serve_parser = subparsers.add_parser("serve", help="Start the local HTTP API.")
     serve_parser.add_argument("--host", default="127.0.0.1")
     serve_parser.add_argument("--port", type=int, default=8765)
+    serve_parser.add_argument(
+        "--static-dir",
+        default=None,
+        help="Optional frontend build directory to serve from the same local app URL.",
+    )
 
     args = parser.parse_args(argv)
     if args.command == "serve":
         from .local_api import run_local_api_server
 
-        run_local_api_server(args.host, args.port)
+        run_local_api_server(args.host, args.port, static_dir=args.static_dir)
         return
 
 

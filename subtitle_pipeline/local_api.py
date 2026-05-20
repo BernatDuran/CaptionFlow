@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import mimetypes
 import os
 import string
 from dataclasses import asdict
@@ -34,6 +35,19 @@ from .providers import ProviderResultMetadata, list_provider_capabilities
 from .subtitle_editor import validate_segments
 
 API_KEY_ENV_VARS = ("OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY")
+API_PATHS = {
+    "/health",
+    "/config",
+    "/providers",
+    "/filesystem",
+    "/doctor",
+    "/secrets",
+    "/projects",
+    "/projects/jobs",
+    "/projects/jobs/run",
+    "/projects/jobs/draft",
+    "/projects/jobs/export",
+}
 
 
 class LocalApiService:
@@ -216,17 +230,27 @@ class LocalApiService:
         return {"files": result.files, "project": asdict(project)}
 
 
-def run_local_api_server(host: str = "127.0.0.1", port: int = 8765) -> None:
+def run_local_api_server(
+    host: str = "127.0.0.1",
+    port: int = 8765,
+    static_dir: str | Path | None = None,
+) -> None:
     service = LocalApiService()
-    handler = _make_handler(service)
+    static_path = _static_dir(static_dir)
+    handler = _make_handler(service, static_path)
     server = ThreadingHTTPServer((host, port), handler)
-    print(f"CaptionFlow local API running at http://{host}:{port}")
+    print(f"CaptionFlow local app running at http://{host}:{port}")
+    if static_path is None:
+        print("Frontend static files not found. Run `npm run build` inside web/.")
     server.serve_forever()
 
 
-def _make_handler(service: LocalApiService):
+def _make_handler(service: LocalApiService, static_dir: Path | None = None):
     class LocalApiHandler(BaseHTTPRequestHandler):
         def do_GET(self) -> None:
+            if static_dir is not None and not _is_api_path(self.path):
+                self._send_static(static_dir)
+                return
             self._handle("GET")
 
         def do_POST(self) -> None:
@@ -255,6 +279,20 @@ def _make_handler(service: LocalApiService):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Access-Control-Allow-Headers", "Content-Type")
             self.send_header("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def _send_static(self, static_root: Path) -> None:
+            target = _static_target(static_root, self.path)
+            if target is None:
+                self._send_json(404, {"error": "Static file not found"})
+                return
+            body = target.read_bytes()
+            content_type = mimetypes.guess_type(str(target))[0] or "application/octet-stream"
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Cache-Control", "no-cache")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
@@ -310,6 +348,39 @@ def _dispatch_http(
     if method == "POST" and path == "/projects/jobs/export":
         return service.export_project_job(payload)
     raise ValueError(f"Unsupported endpoint: {method} {path}")
+
+
+def _is_api_path(raw_path: str) -> bool:
+    parsed = urlparse(raw_path)
+    path = parsed.path.rstrip("/") or "/"
+    return path in API_PATHS
+
+
+def _static_dir(static_dir: str | Path | None) -> Path | None:
+    candidate = Path(static_dir) if static_dir is not None else _default_static_dir()
+    if not candidate.exists() or not candidate.is_dir():
+        return None
+    return candidate.resolve()
+
+
+def _default_static_dir() -> Path:
+    return Path(__file__).resolve().parents[1] / "web" / "dist"
+
+
+def _static_target(static_root: Path, raw_path: str) -> Path | None:
+    parsed = urlparse(raw_path)
+    request_path = parsed.path.lstrip("/") or "index.html"
+    candidate = (static_root / request_path).resolve()
+    try:
+        candidate.relative_to(static_root)
+    except ValueError:
+        return None
+    if candidate.exists() and candidate.is_file():
+        return candidate
+    if request_path.startswith("assets/"):
+        return None
+    fallback = static_root / "index.html"
+    return fallback if fallback.exists() else None
 
 
 def _first(query: dict[str, list[str]], key: str) -> str | None:

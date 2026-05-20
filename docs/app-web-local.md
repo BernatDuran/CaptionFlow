@@ -5,23 +5,48 @@
 Usar CaptionFlow desde una interfaz web local sin depender del CLI para el flujo
 normal.
 
+## Arranque Facil
+
+La forma recomendada para probar la app en Windows es hacer doble clic en:
+
+```text
+CaptionFlow.cmd
+```
+
+El lanzador:
+
+1. entra en el repositorio;
+2. instala dependencias frontend si falta `web/node_modules`;
+3. compila la web con Vite;
+4. arranca el backend Python;
+5. abre el navegador en `http://127.0.0.1:8765`.
+
+Deja la ventana abierta mientras uses CaptionFlow. Para cerrar la app, pulsa
+`Ctrl+C` en esa ventana.
+
 ## Arquitectura
 
 ```text
-Backend Python local: http://127.0.0.1:8765
-Frontend React/Vite:  http://127.0.0.1:5173
+App local completa: http://127.0.0.1:8765
+Backend Python API:  http://127.0.0.1:8765
+Frontend compilado:  servido desde web/dist por el backend
 ```
 
 El frontend no llama directamente a OpenAI ni guarda claves. Las claves se
 configuran en el backend local y se usan desde Python.
 
-## Arrancar Backend
+## Arranque Manual Para Desarrollo
+
+Si quieres trabajar en modo desarrollo con Vite, puedes seguir usando dos
+procesos.
+
+### Backend
 
 ```bash
 python -m subtitle_pipeline app serve --host 127.0.0.1 --port 8765
 ```
 
-## Arrancar Frontend
+### Frontend
 
 Desde la carpeta `web`:
 
@@ -29,6 +54,8 @@ Desde la carpeta `web`:
 npm install
 npm run dev
 ```
+
+En este modo de desarrollo la URL del frontend es `http://127.0.0.1:5173`.
 
 ## Funciones Cubiertas
 
