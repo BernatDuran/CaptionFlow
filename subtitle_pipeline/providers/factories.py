@@ -6,6 +6,10 @@ from .adapters import (
 )
 from .contracts import ProviderConfig, TTSProvider, TranscriptionProvider, TranslationProvider
 from .openai_compatible import (
+    DEFAULT_GEMINI_TRANSLATION_MODEL,
+    DEFAULT_NANOGPT_WHISPER_MODEL,
+    GeminiTranslationProvider,
+    NanoGPTWhisperTranscriptionProvider,
     OpenAICompatibleTranscriptionProvider,
     OpenAICompatibleTranslationProvider,
     default_openai_compatible_transcription_model,
@@ -18,10 +22,10 @@ from ..glossary import load_translation_glossary
 
 def create_transcription_provider(config) -> TranscriptionProvider:
     model = config.transcription_model
-    if (
-        config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"}
-        and model == "large-v3"
-    ):
+    # "large-v3" is faster-whisper's default; it is not a valid NanoGPT or
+    # OpenAI Whisper model name.  Reset to None so each provider falls back to
+    # its own sensible default.
+    if config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"} and model == "large-v3":
         model = None
     provider_config = build_transcription_provider_config(
         config.transcription_provider,
@@ -66,7 +70,12 @@ def create_transcription_provider_from_config(
             provider_config.model,
             provider_config.options.get("device", "auto"),
         )
-    if provider_config.name in {"nano-gpt-whisper", "openai-whisper"}:
+    if provider_config.name == "nano-gpt-whisper":
+        return NanoGPTWhisperTranscriptionProvider(
+            model=provider_config.model,
+            api_key=api_key,
+        )
+    if provider_config.name == "openai-whisper":
         return OpenAICompatibleTranscriptionProvider(
             provider_name=provider_config.name,
             model=provider_config.model,
@@ -132,6 +141,14 @@ def create_translation_provider_from_config(
             api_key=api_key,
             model=provider_config.model,
         )
+    if provider_config.name == "gemini":
+        return GeminiTranslationProvider(
+            source_lang=source_lang,
+            target_lang=target_lang,
+            api_key=api_key,
+            model=provider_config.model,
+            glossary=glossary,
+        )
     raise ProviderNotFoundError(
         f"Translation provider '{provider_config.name}' is registered "
         "but does not have a runtime adapter yet."
@@ -147,13 +164,17 @@ def create_tts_provider(config) -> TTSProvider:
 def _default_translation_model(provider_name: str) -> str:
     if provider_name in {"nano-gpt", "openai"}:
         return default_openai_compatible_translation_model(provider_name)
+    if provider_name == "gemini":
+        return DEFAULT_GEMINI_TRANSLATION_MODEL
     return default_translation_model(provider_name)
 
 
 def default_transcription_model(provider_name: str) -> str:
     if provider_name == "faster-whisper":
         return "large-v3"
-    if provider_name in {"nano-gpt-whisper", "openai-whisper"}:
+    if provider_name == "nano-gpt-whisper":
+        return DEFAULT_NANOGPT_WHISPER_MODEL
+    if provider_name == "openai-whisper":
         return default_openai_compatible_transcription_model(provider_name)
     raise ProviderNotFoundError(f"Unsupported transcription provider: {provider_name}")
 

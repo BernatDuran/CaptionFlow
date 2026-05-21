@@ -6,7 +6,7 @@ const EXPORT_PROFILES = ["legacy", "basic", "youtube", "review", "archive"];
 const CONFIG_PRESETS = ["personal-youtube", "local-review"];
 const FORMATS = ["srt", "vtt", "txt"];
 const RECENT_PROJECTS_KEY = "captionflow.recentProjects";
-const API_KEY_ENV_VARS = ["OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY"];
+const API_KEY_ENV_VARS = ["OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY"];
 
 const initialProjectForm = {
   name: "CaptionFlow Project",
@@ -542,18 +542,20 @@ function FlowView(props) {
             onBrowse={() => openBrowser("mediaFile", "media", "Seleccionar video o audio", jobForm.inputPath)}
           />
           <div className="two-columns">
-            <ConfigInput
+            <LanguageSelect
               label="Origen"
               value={jobForm.sourceLang}
+              includeAuto={true}
               onChange={(value) => setJobForm({ ...jobForm, sourceLang: value })}
             />
-            <ConfigInput
+            <LanguageSelect
               label="Destino"
               value={jobForm.targetLang}
+              includeAuto={false}
               onChange={(value) => setJobForm({ ...jobForm, targetLang: value })}
             />
           </div>
-          <button disabled={!projectPath || !jobForm.inputPath || Boolean(busyAction)} onClick={addJob}>
+          <button disabled={!projectPath || !jobForm.inputPath || !jobForm.targetLang || Boolean(busyAction)} onClick={addJob}>
             Añadir job
           </button>
           <JobList
@@ -730,10 +732,15 @@ function SettingsView({
             label="Transcripcion"
             value={config.transcription_provider}
             providers={providersByTask.transcription}
-            onChange={(value) => setConfig({ ...config, transcription_provider: value })}
+            onChange={(value) => setConfig({
+              ...config,
+              transcription_provider: value,
+              transcription_model: null,
+            })}
           />
-          <ConfigInput
+          <ModelSelect
             label="Modelo transcripcion"
+            provider={config.transcription_provider}
             value={config.transcription_model || ""}
             onChange={(value) => setConfig({ ...config, transcription_model: value || null })}
           />
@@ -748,10 +755,15 @@ function SettingsView({
             label="Traduccion"
             value={config.translation_provider}
             providers={providersByTask.translation}
-            onChange={(value) => setConfig({ ...config, translation_provider: value })}
+            onChange={(value) => setConfig({
+              ...config,
+              translation_provider: value,
+              translation_model: null,
+            })}
           />
-          <ConfigInput
+          <ModelSelect
             label="Modelo traduccion"
+            provider={config.translation_provider}
             value={config.translation_model || ""}
             onChange={(value) => setConfig({ ...config, translation_model: value || null })}
           />
@@ -801,7 +813,7 @@ function SettingsView({
           </div>
         ))}
         <small className="hint-text">
-          Usa OPENAI_API_KEY para OpenAI, NANO_GPT_API_KEY para nano-gpt y ANTHROPIC_API_KEY solo para Claude legacy.
+          Usa OPENAI_API_KEY para OpenAI, NANO_GPT_API_KEY para nano-gpt, ANTHROPIC_API_KEY para Claude y GEMINI_API_KEY para Gemini.
         </small>
       </div>
       <div className="panel">
@@ -1059,6 +1071,108 @@ function ProviderSelect({ label, value, providers, includeNone = false, onChange
       options={[...(includeNone ? [""] : []), ...providers.map((provider) => provider.name)]}
       onChange={onChange}
     />
+  );
+}
+
+/**
+ * ModelSelect — dynamic dropdown whose options are fetched from the backend
+ * whenever `provider` changes. Falls back to a free-text <input> when the
+ * provider has no known model list (e.g. API key missing, network error).
+ */
+function ModelSelect({ label, provider, value, onChange }) {
+  const [models, setModels] = React.useState(null); // null = loading
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!provider) {
+      setModels([]);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    setModels(null);
+    api.providerModels(provider)
+      .then((data) => {
+        if (!cancelled) {
+          setModels(data.models || []);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setModels([]);
+          setLoading(false);
+        }
+      });
+    return () => { cancelled = true; };
+  }, [provider]);
+
+  if (loading || models === null) {
+    return (
+      <label className="config-input">
+        <span>{label}</span>
+        <select disabled><option>Cargando modelos…</option></select>
+      </label>
+    );
+  }
+
+  // No model list available → free-text fallback
+  if (!models.length) {
+    return (
+      <ConfigInput
+        label={label}
+        value={value || ""}
+        onChange={onChange}
+      />
+    );
+  }
+
+  return (
+    <label className="config-input">
+      <span>{label}</span>
+      <select
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value || null)}
+      >
+        <option value="">Default (auto)</option>
+        {models.map((model) => (
+          <option key={model} value={model}>{model}</option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+const COMMON_LANGUAGES = [
+  { code: "es", name: "Español (es)" },
+  { code: "en", name: "Inglés (en)" },
+  { code: "ca", name: "Catalán (ca)" },
+  { code: "fr", name: "Francés (fr)" },
+  { code: "de", name: "Alemán (de)" },
+  { code: "it", name: "Italiano (it)" },
+  { code: "pt", name: "Portugués (pt)" },
+  { code: "nl", name: "Neerlandés (nl)" },
+  { code: "ru", name: "Ruso (ru)" },
+  { code: "zh", name: "Chino (zh)" },
+  { code: "ja", name: "Japonés (ja)" },
+  { code: "ko", name: "Coreano (ko)" },
+  { code: "ar", name: "Árabe (ar)" },
+];
+
+function LanguageSelect({ label, value, includeAuto, onChange }) {
+  return (
+    <label className="config-input">
+      <span>{label}</span>
+      <select value={value || ""} onChange={(e) => onChange(e.target.value)}>
+        {includeAuto && <option value="auto">Detectar (auto)</option>}
+        {!includeAuto && <option value="">Seleccionar idioma...</option>}
+        {COMMON_LANGUAGES.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.name}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 

@@ -18,6 +18,8 @@ export const api = {
   saveConfig: (config) => request("/config", { method: "PUT", body: JSON.stringify({ config }) }),
   initConfig: (preset) => request("/config", { method: "POST", body: JSON.stringify({ preset }) }),
   providers: () => request("/providers"),
+  providerModels: (providerName) =>
+    request(`/providers/models?provider=${encodeURIComponent(providerName)}`),
   filesystem: (path, mode) =>
     request(`/filesystem?path=${encodeURIComponent(path || "")}&mode=${encodeURIComponent(mode || "any")}`),
   doctor: () => request("/doctor"),

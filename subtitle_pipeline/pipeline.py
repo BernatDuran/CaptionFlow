@@ -254,9 +254,18 @@ def _transcribe_audio(
     if transcription_provider is not None:
         return transcription_provider.transcribe(audio_path, config.source_lang)
 
+    # "large-v3" is faster-whisper's default sentinel; cloud Whisper providers
+    # do not accept it as a model name — reset to None so each provider falls
+    # back to its own sensible default.
+    _transcription_model = config.transcription_model
+    if (
+        config.transcription_provider in {"nano-gpt-whisper", "openai-whisper"}
+        and _transcription_model == "large-v3"
+    ):
+        _transcription_model = None
     primary = build_transcription_provider_config(
         config.transcription_provider,
-        config.transcription_model,
+        _transcription_model,
         device=config.device,
     )
     fallback = None

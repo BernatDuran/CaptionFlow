@@ -25,6 +25,7 @@ from .factories import (
 from .openai_compatible import (
     AudioTranscriptionClient,
     ChatCompletionResult,
+    NanoGPTWhisperTranscriptionProvider,
     OpenAICompatibleClient,
     OpenAICompatibleTranscriptionProvider,
     OpenAICompatibleTranslationProvider,
@@ -50,6 +51,7 @@ __all__ = [
     "ProviderRouter",
     "ChatCompletionResult",
     "AudioTranscriptionClient",
+    "NanoGPTWhisperTranscriptionProvider",
     "OpenAICompatibleClient",
     "OpenAICompatibleTranscriptionProvider",
     "OpenAICompatibleTranslationProvider",

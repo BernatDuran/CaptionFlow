@@ -58,6 +58,7 @@ def test_list_provider_capabilities_can_filter_by_task():
 
     assert {provider.name for provider in translation_providers} == {
         "claude",
+        "gemini",
         "nano-gpt",
         "nllb",
         "openai",
@@ -67,6 +68,7 @@ def test_list_provider_capabilities_can_filter_by_task():
 def test_list_provider_names_can_filter_by_task():
     assert list_provider_names(task="translation") == [
         "claude",
+        "gemini",
         "nano-gpt",
         "nllb",
         "openai",

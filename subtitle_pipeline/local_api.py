@@ -34,11 +34,12 @@ from .projects import (
 from .providers import ProviderResultMetadata, list_provider_capabilities
 from .subtitle_editor import validate_segments
 
-API_KEY_ENV_VARS = ("OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY")
+API_KEY_ENV_VARS = ("OPENAI_API_KEY", "NANO_GPT_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY")
 API_PATHS = {
     "/health",
     "/config",
     "/providers",
+    "/providers/models",
     "/filesystem",
     "/doctor",
     "/secrets",
@@ -48,6 +49,61 @@ API_PATHS = {
     "/projects/jobs/draft",
     "/projects/jobs/export",
 }
+
+# Static model lists for providers whose models don't change dynamically.
+# nano-gpt and nano-gpt-whisper are intentionally absent: their lists are
+# fetched live from the NanoGPT API so new/removed models are
+# reflected automatically.
+_STATIC_PROVIDER_MODELS: dict[str, list[str]] = {
+    "faster-whisper": ["large-v3", "medium", "small", "base", "tiny"],
+    "openai-whisper": ["whisper-1"],
+    "openai": ["gpt-4o-mini", "gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"],
+    "claude": [
+        "claude-opus-4-5",
+        "claude-sonnet-4-5",
+        "claude-haiku-3-5",
+        "claude-3-opus-20240229",
+        "claude-3-5-sonnet-20241022",
+    ],
+    "nllb": [
+        "facebook/nllb-200-distilled-600M",
+        "facebook/nllb-200-1.3B",
+    ],
+}
+
+def _get_env_path() -> Path:
+    return Path(__file__).resolve().parents[1] / ".env"
+
+def _load_dotenv() -> None:
+    env_path = _get_env_path()
+    if not env_path.exists():
+        return
+    for line in env_path.read_text("utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" in line:
+            k, v = line.split("=", 1)
+            os.environ[k.strip()] = v.strip()
+
+def _save_dotenv(key: str, value: str | None) -> None:
+    env_path = _get_env_path()
+    lines = env_path.read_text("utf-8").splitlines() if env_path.exists() else []
+    new_lines = []
+    found = False
+    for line in lines:
+        if line.strip().startswith(f"{key}="):
+            if value:
+                new_lines.append(f"{key}={value}")
+            found = True
+        else:
+            new_lines.append(line)
+    if not found and value:
+        new_lines.append(f"{key}={value}")
+    env_path.write_text("\n".join(new_lines) + "\n", "utf-8")
+
+# Load environment variables on module import
+_load_dotenv()
 
 
 class LocalApiService:
@@ -73,6 +129,21 @@ class LocalApiService:
     def providers(self) -> dict[str, Any]:
         providers = [_json_ready(asdict(provider)) for provider in list_provider_capabilities()]
         return {"providers": providers}
+
+    def provider_models(self, provider_name: str) -> dict[str, Any]:
+        """Return the list of models available for a given provider.
+
+        For ``nano-gpt`` and ``nano-gpt-whisper`` the list is fetched live from NanoGPT's
+        API so that any model the provider adds or removes is reflected immediately.
+        For all other providers a curated static list is returned.
+        """
+        if provider_name in {"nano-gpt", "nano-gpt-whisper"}:
+            models = _fetch_nanogpt_models(provider_name)
+        elif provider_name == "gemini":
+            models = _fetch_gemini_models()
+        else:
+            models = _STATIC_PROVIDER_MODELS.get(provider_name, [])
+        return {"models": models, "provider": provider_name}
 
     def filesystem(self, path: str | None = None, mode: str = "any") -> dict[str, Any]:
         base = _safe_browser_path(path)
@@ -111,8 +182,10 @@ class LocalApiService:
         value = str(payload.get("value", "")).strip()
         if not value:
             os.environ.pop(env_var, None)
+            _save_dotenv(env_var, None)
         else:
             os.environ[env_var] = value
+            _save_dotenv(env_var, value)
         return self.secrets_status()
 
     def create_project(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -130,8 +203,8 @@ class LocalApiService:
         config = SubtitleConfig(
             input_path=str(payload["input_path"]),
             output_dir=str(payload.get("output_dir") or Path(project.root_dir) / "output"),
-            source_lang=str(payload.get("source_lang", "en")),
-            target_lang=str(payload.get("target_lang", "es")),
+            source_lang=str(payload.get("source_lang") or "auto"),
+            target_lang=str(payload.get("target_lang") or "es"),
         )
         job = add_job(project, config)
         save_project(project, project_path)
@@ -151,8 +224,8 @@ class LocalApiService:
         config = SubtitleConfig(
             input_path=job.input_path,
             output_dir=str(config_payload.get("output_dir") or Path(project.root_dir) / "output"),
-            source_lang=str(config_payload.get("source_lang") or job.source_lang),
-            target_lang=str(config_payload.get("target_lang") or job.target_lang),
+            source_lang=job.source_lang,
+            target_lang=job.target_lang,
             transcription_provider=str(
                 config_payload.get("transcription_provider", "faster-whisper")
             ),
@@ -337,6 +410,8 @@ def _dispatch_http(
         return service.create_config(payload)
     if method == "GET" and path == "/providers":
         return service.providers()
+    if method == "GET" and path == "/providers/models":
+        return service.provider_models(_first(query, "provider") or "")
     if method == "GET" and path == "/filesystem":
         return service.filesystem(_first(query, "path"), _first(query, "mode") or "any")
     if method == "GET" and path == "/doctor":
@@ -551,3 +626,80 @@ def _filesystem_roots() -> list[str]:
         if root.exists():
             roots.append(str(root))
     return roots
+
+
+def _fetch_nanogpt_models(provider_name: str) -> list[str]:
+    """Call NanoGPT's live models endpoints.
+
+    - ``nano-gpt`` calls ``/models`` and excludes audio models (returns LLMs).
+    - ``nano-gpt-whisper`` calls ``/audio-models?type=stt`` to get transcription models.
+
+    Uses a raw urllib GET request instead of the openai SDK so that any
+    SDK-level quirks with pagination formats do not silently fail.
+    Returns an empty list if the API key is absent or the request fails so
+    the UI gracefully falls back to a free-text input.
+    """
+    import json
+    import sys
+    import urllib.request
+
+    api_key = os.environ.get("NANO_GPT_API_KEY", "")
+    if not api_key:
+        return []
+    try:
+        url = "https://nano-gpt.com/api/v1/models"
+        if provider_name == "nano-gpt-whisper":
+            url = "https://nano-gpt.com/api/v1/audio-models?detailed=true&type=stt"
+
+        req = urllib.request.Request(url, headers={"Authorization": f"Bearer {api_key}"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        all_ids = [model["id"] for model in data.get("data", [])]
+
+        if provider_name == "nano-gpt-whisper":
+            return sorted(all_ids)
+        # nano-gpt (translation LLMs): exclude Whisper models
+        return sorted(m for m in all_ids if "whisper" not in m.lower())
+    except Exception as exc:
+        print(f"[CaptionFlow] Could not fetch NanoGPT models: {exc}", file=sys.stderr)
+        return []
+
+
+_GEMINI_STATIC_FALLBACK = [
+    "gemini-2.0-flash",
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+]
+
+
+def _fetch_gemini_models() -> list[str]:
+    """Fetch available Gemini models via the google-genai SDK.
+
+    Filters to models whose name contains 'gemini' and that support
+    text generation (``generateContent``).  Falls back to a curated
+    static list when the SDK is not installed, the API key is missing,
+    or the request fails.
+    """
+    import sys
+
+    api_key = os.environ.get("GEMINI_API_KEY", "")
+    if not api_key:
+        return _GEMINI_STATIC_FALLBACK
+
+    try:
+        from google import genai
+
+        client = genai.Client(api_key=api_key)
+        models: list[str] = []
+        for model in client.models.list():
+            name = model.name or ""
+            # Only include Gemini models that support content generation.
+            methods = getattr(model, "supported_actions", None) or getattr(model, "supported_generation_methods", None) or []
+            if "gemini" in name.lower():
+                # Strip the "models/" prefix that the API sometimes returns.
+                clean = name.replace("models/", "")
+                models.append(clean)
+        return sorted(set(models)) if models else _GEMINI_STATIC_FALLBACK
+    except Exception as exc:
+        print(f"[CaptionFlow] Could not fetch Gemini models: {exc}", file=sys.stderr)
+        return _GEMINI_STATIC_FALLBACK
