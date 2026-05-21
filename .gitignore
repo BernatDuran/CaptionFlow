@@ -6,8 +6,12 @@ out/
 *.mp4
 *.wav
 *.mp3
+*.ogg
 .env
 .codex_pydeps/
 .pytest_cache/
 web/dist/
 web/node_modules/
+AGENTS.md
+captionflow-project/
+output/
