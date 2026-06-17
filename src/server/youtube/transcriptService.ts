@@ -4,7 +4,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { AppError, type OperationRun, type RunOperation, type VideoTranscript } from "../types";
-import { getRootDir } from "../config/configService";
+import { getCachedSettings, getRootDir } from "../config/configService";
 
 const youtubeUrlPattern =
   /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtube\.com\/shorts\/|youtu\.be\/)[A-Za-z0-9_-]{6,}/;
@@ -27,7 +27,10 @@ type TranscriptCacheFile = {
   video: VideoTranscript;
 };
 
-const TRANSCRIPT_CACHE_DIR = path.join(getRootDir(), "output", "transcripts", "cache");
+function getTranscriptCacheDir() {
+  const settings = getCachedSettings();
+  return path.join(settings.outputRootDir || path.join(getRootDir(), "output"), "transcripts", "cache");
+}
 
 async function getYtDlpExecutable() {
   const localBinary = path.join(getRootDir(), "bin", process.platform === "win32" ? "yt-dlp.exe" : "yt-dlp");
@@ -139,7 +142,7 @@ export function getYoutubeVideoId(rawUrl: string) {
 }
 
 function getCachePath(videoId: string) {
-  return path.join(TRANSCRIPT_CACHE_DIR, `${videoId}.json`);
+  return path.join(getTranscriptCacheDir(), `${videoId}.json`);
 }
 
 async function readTranscriptCache(videoId: string): Promise<VideoTranscript | undefined> {
@@ -154,7 +157,7 @@ async function readTranscriptCache(videoId: string): Promise<VideoTranscript | u
 }
 
 async function writeTranscriptCache(videoId: string, video: VideoTranscript) {
-  await fs.mkdir(TRANSCRIPT_CACHE_DIR, { recursive: true });
+  await fs.mkdir(getTranscriptCacheDir(), { recursive: true });
   const payload: TranscriptCacheFile = {
     cachedAt: new Date().toISOString(),
     video: { ...video, cached: false }

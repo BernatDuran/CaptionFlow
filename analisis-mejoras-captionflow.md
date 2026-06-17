@@ -468,7 +468,7 @@ Impacto:
 
 #### 11. Consistencia visual y de idioma
 
-Se observan textos con problemas de codificación en algunos componentes, por ejemplo caracteres acentuados renderizados como `ConfiguraciÃ³n`.
+Se observan textos con problemas de codificación en algunos componentes, por ejemplo caracteres acentuados renderizados incorrectamente.
 
 Mejora propuesta:
 

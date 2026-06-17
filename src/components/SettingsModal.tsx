@@ -369,19 +369,19 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
                         </h3>
                         <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", color: "#64748b" }}>
                           <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>📁 Transcripciones originales:</span>
+                            <span>Transcripciones originales:</span>
                             <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
                               {settings.outputRootDir ? `${settings.outputRootDir}\\transcripts` : "output/transcripts"}
                             </code>
                           </div>
                           <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>📄 Resultados finales (.md):</span>
+                            <span>Resultados finales (.md):</span>
                             <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
                               {settings.outputRootDir ? `${settings.outputRootDir}\\results` : "output/results"}
                             </code>
                           </div>
                           <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>📊 Diagramas (Mermaid):</span>
+                            <span>Diagramas (Mermaid):</span>
                             <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
                               {settings.outputRootDir ? `${settings.outputRootDir}\\diagrams` : "output/diagrams"}
                             </code>
