@@ -1,193 +1,195 @@
-# Subtitle Pipeline
+# CaptionFlow
 
-Herramienta local para generar subtitulos traducidos desde archivos de video o audio. Tambien puede incrustar los subtitulos en el video y crear una version doblada usando TTS.
+CaptionFlow es una app web local para pegar una URL de YouTube, elegir un prompt Markdown y generar un documento Markdown con IA a partir de la transcripción del vídeo.
 
-## Utilidad
-
-Este proyecto sirve para automatizar un flujo completo de localizacion audiovisual:
-
-- Extraer el audio de un video o archivo multimedia.
-- Transcribir el contenido hablado con `faster-whisper`.
-- Traducir la transcripcion a otro idioma usando Claude o NLLB local.
-- Exportar subtitulos en formatos `srt`, `vtt` o `txt`.
-- Generar un video con subtitulos incrustados.
-- Generar un video doblado con Edge-TTS.
-
-Es util para traducir videos, preparar subtitulos para edicion y crear versiones dobladas de contenido audiovisual.
+La V1 está pensada para ser simple: React + Vite en frontend, Express en backend, `yt-dlp` para captions y sistema de ficheros local para transcripciones/resultados.
 
 ## Requisitos
 
-- Python 3.10 o superior.
-- `ffmpeg` instalado y disponible en el `PATH`.
-- Clave de Anthropic si se usa el traductor `claude`.
+- Node.js 20 o superior.
+- npm.
+- `yt-dlp` instalado y disponible en el `PATH`.
+- Una API key del proveedor IA que quieras usar.
 
-Instalacion ligera para usar CLI, configuracion, proyectos y editor:
-
-```bash
-pip install -e .
-```
-
-Instalacion por perfiles:
+## Instalación
 
 ```bash
-pip install -e ".[media,transcription,translation-api]"
-pip install -e ".[media,transcription,translation-local]"
-pip install -e ".[media,transcription,translation-api,tts,dubbing]"
+npm install
 ```
 
-Instalacion completa equivalente al flujo actual:
+## Configuración
 
-```bash
-pip install -r requirements.txt
+Copia `.env.example` a `.env` y rellena la clave del proveedor que vayas a usar:
+
+```env
+ACTIVE_PROVIDER=openai
+OPENAI_API_KEY=
+GOOGLE_API_KEY=
+NANOGPT_API_KEY=
+
+# Alias tambien soportados:
+# GEMINI_API_KEY=
+# NANO_GPT_API_KEY=
+PORT=8787
+MAX_TRANSCRIPT_CHARS=60000
+CHUNK_SIZE_CHARS=22000
 ```
 
-Perfiles disponibles:
+Las claves nunca se envían al frontend. El modal de configuración solo muestra proveedor, modelo y si el backend detecta una clave.
 
-| Extra | Incluye |
-| --- | --- |
-| `media` | Extraccion y procesamiento con `ffmpeg-python` |
-| `transcription` | `faster-whisper` y `torch` |
-| `translation-api` | Traduccion remota con Anthropic |
-| `translation-local` | Traduccion local con NLLB, Transformers y SentencePiece |
-| `tts` | Sintesis con Edge-TTS |
-| `dubbing` | Mezcla de audio con NumPy, SoundFile y Librosa |
-| `all` | Todas las dependencias anteriores |
-
-## Uso rapido
-
-### App local con doble clic
-
-En Windows, la forma mas facil de probar la interfaz es hacer doble clic en:
+La app puede guardar preferencias no sensibles en:
 
 ```text
-CaptionFlow.cmd
+config/local.settings.json
 ```
 
-El lanzador prepara el frontend, arranca el backend local y abre:
+Este archivo está ignorado por Git.
+
+## Instalar yt-dlp
+
+Opciones habituales:
+
+```bash
+pip install -U yt-dlp
+```
+
+O con Windows:
+
+```bash
+winget install yt-dlp.yt-dlp
+```
+
+Comprueba que funciona:
+
+```bash
+yt-dlp --version
+```
+
+Si no tienes Python ni winget, CaptionFlow tambien puede usar un binario local en:
 
 ```text
-http://127.0.0.1:8765
+bin/yt-dlp.exe
 ```
 
-Si ese puerto esta ocupado, el lanzador usara el siguiente puerto libre y abrira
-esa URL automaticamente.
+El backend lo buscara antes de intentar usar `yt-dlp` desde el `PATH`.
 
-Si al entrar manualmente en `127.0.0.1:8765` ves
-`{"error": "Unsupported endpoint: GET /"}`, tienes un backend antiguo abierto.
-Cierra esa ventana o usa la URL que abra `CaptionFlow.cmd`.
-
-Deja la ventana del lanzador abierta mientras uses la app. Para cerrar
-CaptionFlow, pulsa `Ctrl+C` en esa ventana.
-
-Guia detallada: `docs/app-web-local.md`.
-
-Generar subtitulos traducidos de ingles a espanol:
+## Ejecutar en local
 
 ```bash
-python -m subtitle_pipeline --input "video.mp4" --source-lang en --target-lang es --output-dir "./out"
+npm run dev
 ```
 
-Generar varios formatos:
-
-```bash
-python -m subtitle_pipeline --input "video.mp4" --formats srt vtt txt --output-dir "./out"
-```
-
-Usar traduccion local con NLLB:
-
-```bash
-python -m subtitle_pipeline --input "video.mp4" --translator nllb --source-lang en --target-lang es --output-dir "./out"
-```
-
-Usar Claude:
-
-```bash
-set ANTHROPIC_API_KEY=<clave_anthropic>
-python -m subtitle_pipeline --input "video.mp4" --translator claude --source-lang en --target-lang es --output-dir "./out"
-```
-
-Usar nano-gpt/Qwen:
-
-```bash
-set NANO_GPT_API_KEY=<clave_nano_gpt>
-python -m subtitle_pipeline --input "video.mp4" --translation-provider nano-gpt --source-lang en --target-lang es --output-dir "./out"
-```
-
-## Subtitulos incrustados
-
-Para crear un video final con los subtitulos quemados en la imagen:
-
-```bash
-python -m subtitle_pipeline --input "video.mp4" --source-lang en --target-lang es --burn-in --output-dir "./out"
-```
-
-Salida esperada:
+La UI se abrirá en:
 
 ```text
-out/video.srt
-out/video_subtitled.mp4
+http://localhost:5174
 ```
 
-## Doblaje
-
-Para generar un video doblado con Edge-TTS:
-
-```bash
-python -m subtitle_pipeline --input "video.mp4" --source-lang en --target-lang es --dub --output-dir "./out"
-```
-
-Para usar una voz concreta:
-
-```bash
-python -m subtitle_pipeline --input "video.mp4" --dub --tts-voice "es-ES-AlvaroNeural" --tts-rate 0 --output-dir "./out"
-```
-
-Salida esperada:
+La API escucha por defecto en:
 
 ```text
-out/video.srt
-out/video_dubbed.mp4
+http://localhost:8787
 ```
 
-## Opciones principales
+## Crear nuevos prompts
 
-| Opcion | Descripcion | Valor por defecto |
-| --- | --- | --- |
-| `--input` | Archivo de video o audio de entrada | Requerido |
-| `--source-lang` | Idioma original | `en` |
-| `--target-lang` | Idioma de salida | `es` |
-| `--output-dir` | Carpeta de salida | `./output` |
-| `--model-size` | Modelo de Whisper | `large-v3` |
-| `--transcription-provider` | Proveedor de transcripcion | `faster-whisper` |
-| `--transcription-model` | Modelo de transcripcion | Valor de `--model-size` |
-| `--device` | `auto`, `cuda` o `cpu` | `auto` |
-| `--formats` | Formatos de subtitulos: `srt`, `vtt`, `txt` | `srt` |
-| `--translator` | Motor de traduccion: `claude` o `nllb` | `claude` |
-| `--translation-provider` | Proveedor de traduccion, reemplaza `--translator` | `claude` |
-| `--translation-model` | Modelo de traduccion opcional | Modelo por defecto del proveedor |
-| `--api-key` | Clave API de Anthropic | Variable `ANTHROPIC_API_KEY` |
-| `--burn-in` | Incrusta subtitulos en el video | Desactivado |
-| `--dub` | Genera video doblado | Desactivado |
-| `--tts-provider` | Proveedor TTS | `edge-tts` |
-| `--tts-model` | Modelo TTS | `edge-tts` |
-| `--tts-voice` | Voz de Edge-TTS | `es-ES-AlvaroNeural` |
-| `--tts-rate` | Velocidad TTS de `-100` a `100` | `0` |
+Añade ficheros `.md` dentro de `/prompts`. Cada prompt debe tener frontmatter YAML simple:
 
-## Estructura
+```md
+---
+name: "Resumen ejecutivo"
+description: "Genera un resumen claro y estructurado del vídeo"
+output_filename_prefix: "resumen"
+temperature: 0.3
+---
+
+Contenido del prompt aquí...
+```
+
+La app carga los prompts dinámicamente. Si falta `name`, usa el nombre del fichero como fallback.
+
+## Prompts de diagramas
+
+Los diagramas Mermaid usan prompts editables en:
 
 ```text
-subtitle_pipeline/
-  audio_extractor.py   # Extraccion de audio con ffmpeg
-  transcriber.py       # Transcripcion con faster-whisper
-  translator.py        # Traduccion con Claude o NLLB
-  formatter.py         # Exportacion SRT, VTT y TXT
-  pipeline.py          # Orquestacion principal
-  tts.py               # Sintesis de voz con Edge-TTS
-  audio_mixer.py       # Mezcla y reemplazo de audio
-  dubbing.py           # Pipeline de doblaje
+prompts/diagrams
 ```
 
-## Notas
+La V1.1 incluye:
 
-- El traductor por defecto es Claude, por lo que necesita una API key si el idioma origen y destino son distintos.
-- Si `source-lang` y `target-lang` son iguales, el pipeline no traduce y exporta la transcripcion original.
+```text
+flowchart.md
+mindmap.md
+timeline.md
+sequence.md
+```
+
+Cada prompt puede declarar frontmatter:
+
+```md
+---
+name: "Diagrama de flujo"
+description: "Genera un flowchart Mermaid claro y robusto"
+output_filename_prefix: "flowchart"
+diagram_type: "flowchart TD"
+temperature: 0.2
+---
+
+Genera solo codigo Mermaid valido...
+```
+
+La UI muestra estos prompts en el menu Diagrama para elegir el tipo antes de generar el Mermaid. El endpoint `GET /api/diagram-prompts` expone el catalogo desde backend.
+
+## Flujo
+
+1. El usuario pega una URL de YouTube.
+2. Elige un prompt.
+3. El backend valida URL, prompt, proveedor, modelo y API key.
+4. `yt-dlp` intenta obtener subtítulos oficiales y luego autogenerados.
+5. La transcripción se reutiliza desde cache si ese video ya se proceso antes.
+6. La transcripción se guarda en `/output/transcripts`.
+7. La app combina prompt, metadatos y transcripción.
+8. Se llama únicamente al proveedor/modelo activos.
+9. El resultado se guarda en `/output/results`.
+10. El frontend muestra la vista previa renderizada y permite copiar o descargar `.md`.
+
+## Estado y cache
+
+`POST /api/process` inicia un trabajo y devuelve un `jobId`. El frontend consulta `GET /api/process/:jobId` para mostrar estados reales del backend, como validacion, obtencion de subtitulos, envio a IA y guardado del resultado.
+
+La cache de transcripciones vive en:
+
+```text
+output/transcripts/cache
+```
+
+Se guarda por ID de video de YouTube y evita repetir `yt-dlp` cuando vuelves a procesar el mismo video con otro prompt.
+
+## Proveedores y modelos
+
+Los proveedores disponibles son:
+
+- OpenAI.
+- Google Gemini.
+- Nano-GPT.
+
+Los modelos se exponen desde backend. `src/server/config/modelCatalog.ts` contiene fallbacks curados, y `src/server/config/modelService.ts` intenta listar modelos dinamicamente para Nano-GPT y Gemini cuando existe API key. El frontend no tiene modelos hardcodeados.
+
+Nano-GPT se trata como API compatible con OpenAI usando `https://nano-gpt.com/api/v1` como base. Gemini mantiene adaptador propio porque su API no comparte el mismo formato de chat completions.
+
+## Seguridad
+
+- `.env`, `output`, transcripciones, resultados y `config/local.settings.json` están en `.gitignore`.
+- Las API keys solo se leen en backend.
+- No se devuelven secretos en ninguna respuesta API.
+- `yt-dlp` se ejecuta con `spawn` y argumentos separados, sin concatenar comandos.
+- Los nombres de archivo generados se sanitizan.
+
+## Limitaciones conocidas
+
+- No hay login, base de datos ni cola de trabajos.
+- Los trabajos de proceso viven en memoria; si reinicias el backend, los jobs activos se pierden, pero los archivos ya guardados se conservan.
+- Los modelos se gestionan con catálogo backend configurable.
+- El chunking de transcripciones largas es básico: resume partes y luego genera una síntesis final.
+- Depende de que YouTube exponga captions oficiales o autogeneradas para el vídeo.
