@@ -14,8 +14,23 @@ import { getApiKey, readLocalSettings, reloadEnvironment, writeLocalSettings } f
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
+const host = process.env.HOST || "127.0.0.1";
+const allowedOrigins = new Set([
+  "http://127.0.0.1:5174",
+  "http://localhost:5174",
+  "http://[::1]:5174"
+]);
 
-app.use(cors());
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.has(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new AppError("VALIDATION_ERROR", "Origen no permitido.", 403));
+  }
+}));
 app.use(express.json({ limit: "1mb" }));
 
 function isProvider(value: unknown): value is ProviderId {
@@ -97,6 +112,7 @@ app.get("/api/settings", async (_req, res) => {
 
 app.post("/api/settings", async (req, res) => {
   const body = req.body as Partial<LocalSettings>;
+  const outputRootDir = typeof body.outputRootDir === "string" ? body.outputRootDir.trim() : undefined;
   if (!isProvider(body.activeProvider)) {
     throw new AppError("PROVIDER_NOT_CONFIGURED", "Proveedor no válido.", 400);
   }
@@ -107,9 +123,9 @@ app.post("/api/settings", async (req, res) => {
     throw new AppError("MODEL_MISSING", "Selecciona un modelo para el proveedor activo.", 400);
   }
 
-  if (body.outputRootDir) {
+  if (outputRootDir) {
     try {
-      await fs.mkdir(body.outputRootDir, { recursive: true });
+      await fs.mkdir(outputRootDir, { recursive: true });
     } catch (err) {
       throw new AppError("VALIDATION_ERROR", "La ruta de almacenamiento no es válida o no se tienen permisos de escritura.", 400);
     }
@@ -120,7 +136,7 @@ app.post("/api/settings", async (req, res) => {
     selectedModels,
     adaptiveChunkingEnabled: body.adaptiveChunkingEnabled,
     minimumModelContextTokens: body.minimumModelContextTokens,
-    outputRootDir: body.outputRootDir
+    outputRootDir
   });
 
   res.json(saved);
@@ -248,6 +264,6 @@ app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`CaptionFlow API escuchando en http://localhost:${port}`);
+app.listen(port, host, () => {
+  console.log(`CaptionFlow API escuchando en http://${host}:${port}`);
 });

@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\"",
-    "dev:client": "vite --host 0.0.0.0 --port 5174 --strictPort",
+    "dev": "node scripts/dev.mjs",
+    "dev:client": "vite --host 127.0.0.1 --port 5174 --strictPort",
     "dev:server": "tsx watch src/server/index.ts",
     "build": "tsc && vite build",
     "start": "node dist/server/index.js",
@@ -16,7 +16,6 @@
     "@types/marked": "^5.0.2",
     "@types/pdfkit": "^0.17.6",
     "@vitejs/plugin-react": "^5.0.0",
-    "concurrently": "^9.2.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",

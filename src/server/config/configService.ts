@@ -20,6 +20,12 @@ const providerKeys: Record<ProviderId, string[]> = {
 const isProvider = (value: string | undefined): value is ProviderId =>
   value === "openai" || value === "google" || value === "nanogpt";
 
+function normalizeOutputRootDir(value: unknown) {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  return trimmed ? path.resolve(trimmed) : undefined;
+}
+
 export function getRootDir() {
   return ROOT_DIR;
 }
@@ -122,7 +128,7 @@ export function getCachedSettings(): LocalSettings {
         selectedModels,
         adaptiveChunkingEnabled: parsed.adaptiveChunkingEnabled ?? defaults.adaptiveChunkingEnabled,
         minimumModelContextTokens: parsed.minimumModelContextTokens ?? defaults.minimumModelContextTokens,
-        outputRootDir: parsed.outputRootDir
+        outputRootDir: normalizeOutputRootDir(parsed.outputRootDir)
       };
       return cachedSettings;
     }
@@ -157,7 +163,7 @@ export async function readLocalSettings(): Promise<LocalSettings> {
       selectedModels,
       adaptiveChunkingEnabled: parsed.adaptiveChunkingEnabled ?? defaults.adaptiveChunkingEnabled,
       minimumModelContextTokens: parsed.minimumModelContextTokens ?? defaults.minimumModelContextTokens,
-      outputRootDir: parsed.outputRootDir
+      outputRootDir: normalizeOutputRootDir(parsed.outputRootDir)
     };
     cachedSettings = settings;
     return settings;
@@ -178,7 +184,7 @@ export async function writeLocalSettings(settings: LocalSettings) {
     selectedModels: settings.selectedModels,
     adaptiveChunkingEnabled: settings.adaptiveChunkingEnabled ?? false,
     minimumModelContextTokens: settings.minimumModelContextTokens ?? 4000,
-    outputRootDir: settings.outputRootDir
+    outputRootDir: normalizeOutputRootDir(settings.outputRootDir)
   };
 
   await fs.writeFile(SETTINGS_PATH, `${JSON.stringify(safeSettings, null, 2)}\n`, "utf8");

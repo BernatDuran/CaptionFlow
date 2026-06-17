@@ -181,6 +181,16 @@ function getMetadataPath(filename: string) {
   return path.join(paths.RESULTS_DIR, `${safe}.meta.json`);
 }
 
+function assertPathInside(baseDir: string, targetPath: string) {
+  const resolvedBase = path.resolve(baseDir);
+  const resolvedTarget = path.resolve(targetPath);
+  if (resolvedTarget !== resolvedBase && !resolvedTarget.startsWith(`${resolvedBase}${path.sep}`)) {
+    throw new AppError("FILE_NOT_FOUND", "Archivo no encontrado.", 404);
+  }
+
+  return resolvedTarget;
+}
+
 export async function saveResultMetadata(filename: string, metadata: ResultMetadata) {
   await ensureOutputDirs();
   const fullPath = getMetadataPath(filename);
@@ -211,12 +221,7 @@ export async function appendResultRuns(filename: string, runs: OperationRun[]) {
 
 export function getDownloadPath(filename: string) {
   const safe = path.basename(filename);
-  const fullPath = path.join(paths.RESULTS_DIR, safe);
-  if (!fullPath.startsWith(paths.RESULTS_DIR)) {
-    throw new AppError("FILE_NOT_FOUND", "Archivo no encontrado.", 404);
-  }
-
-  return fullPath;
+  return assertPathInside(paths.RESULTS_DIR, path.join(paths.RESULTS_DIR, safe));
 }
 
 export async function readResultFile(filename: string) {
@@ -242,7 +247,7 @@ export async function readTranscriptMetadataForResult(filename: string) {
   const transcriptRef = savedMetadata.transcriptRef;
   if (!transcriptRef) return {};
   
-  const fullPath = path.join(paths.TRANSCRIPTS_DIR, transcriptRef);
+  const fullPath = assertPathInside(paths.TRANSCRIPTS_DIR, path.join(paths.TRANSCRIPTS_DIR, transcriptRef));
 
   try {
     const transcript = await fs.readFile(fullPath, "utf8");
@@ -263,7 +268,7 @@ export async function readTranscriptTextForResult(filename: string) {
     throw new AppError("FILE_NOT_FOUND", "No se encontro la referencia de la transcripcion.", 404);
   }
   
-  const fullPath = path.join(paths.TRANSCRIPTS_DIR, transcriptRef);
+  const fullPath = assertPathInside(paths.TRANSCRIPTS_DIR, path.join(paths.TRANSCRIPTS_DIR, transcriptRef));
   try {
     const content = await fs.readFile(fullPath, "utf8");
     const text = content

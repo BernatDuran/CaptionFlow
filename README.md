@@ -327,8 +327,11 @@ Los trabajos de procesamiento viven en memoria. Si reinicias el backend, se pier
 
 - `.env`, `config/local.settings.json`, `output`, `dist`, `node_modules` y binarios locales están en `.gitignore`.
 - Las API keys nunca se envían al frontend.
+- El frontend de desarrollo y la API escuchan por defecto en `127.0.0.1`, no en toda la red local.
+- CORS solo permite orígenes locales de desarrollo.
 - `yt-dlp` se ejecuta con `spawn` y argumentos separados, sin concatenar comandos.
 - Las rutas de descarga se restringen a archivos generados.
+- Las rutas internas de transcripciones se resuelven dentro de la carpeta de almacenamiento configurada.
 - Los nombres de archivo se sanitizan.
 - El backend no necesita login porque está pensado para uso local.
 
@@ -348,13 +351,3 @@ npm run build
 - Depende de que YouTube exponga subtítulos oficiales o automáticos.
 - La calidad del resultado depende del prompt y del modelo activo.
 - Los PDF son exportaciones generadas desde Markdown; no son documentos maquetados a mano.
-
-## Documentación Adicional
-
-Material de contexto del proyecto:
-
-```text
-docs/info_app/
-```
-
-Incluye resumen ejecutivo, infografías y documentación funcional.

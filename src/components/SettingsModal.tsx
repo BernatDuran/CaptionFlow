@@ -362,32 +362,6 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
                           }
                         />
                       </label>
-                      
-                      <div style={{ gridColumn: "1 / -1", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "16px", marginTop: "8px" }}>
-                        <h3 style={{ fontSize: "14px", fontWeight: 700, margin: "0 0 12px 0", color: "#334155" }}>
-                          Estructura de directorios generada:
-                        </h3>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", color: "#64748b" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>Transcripciones originales:</span>
-                            <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
-                              {settings.outputRootDir ? `${settings.outputRootDir}\\transcripts` : "output/transcripts"}
-                            </code>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>Resultados finales (.md):</span>
-                            <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
-                              {settings.outputRootDir ? `${settings.outputRootDir}\\results` : "output/results"}
-                            </code>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                            <span>Diagramas (Mermaid):</span>
-                            <code style={{ background: "#edf2f7", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", wordBreak: "break-all" }}>
-                              {settings.outputRootDir ? `${settings.outputRootDir}\\diagrams` : "output/diagrams"}
-                            </code>
-                          </div>
-                        </div>
-                      </div>
 
                       <div style={{ gridColumn: "1 / -1", fontSize: "13px", color: "#64748b", lineHeight: "1.5", marginTop: "8px" }}>
                         <strong>Nota:</strong> Si cambias la ruta raíz, CaptionFlow creará automáticamente las subcarpetas necesarias en el nuevo destino al procesar un video. Los resultados anteriores permanecerán en su ubicación original.
