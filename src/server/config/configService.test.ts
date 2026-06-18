@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getAdaptiveChunkSizeChars, getChunkSizeChars, getDynamicMaxTranscriptChars } from "./configService";
+import { getAdaptiveChunkSizeChars, getChunkSizeChars, getDynamicMaxTranscriptChars, normalizeLocalSettings } from "./configService";
 import type { LocalSettings } from "../types";
 
 function settings(patch: Partial<LocalSettings> = {}): LocalSettings {
@@ -27,4 +27,16 @@ test("calculates smaller adaptive chunks for small-context models", () => {
 
 test("caps adaptive chunks for large-context models", () => {
   assert.equal(getAdaptiveChunkSizeChars(settings({ adaptiveChunkingEnabled: true }), "openai", "gpt-test", 128000), 80000);
+});
+
+test("preserves analytics setting while normalizing local settings", () => {
+  const normalized = normalizeLocalSettings(
+    { activeProvider: "nanogpt", selectedModels: { nanogpt: "model-a" }, analyticsEnabled: true },
+    settings(),
+    "openai"
+  );
+
+  assert.equal(normalized.activeProvider, "nanogpt");
+  assert.equal(normalized.selectedModels.nanogpt, "model-a");
+  assert.equal(normalized.analyticsEnabled, true);
 });

@@ -1,0 +1,113 @@
+{
+  "provider": "nanogpt",
+  "model": "qwen/qwen3.5-397b-a17b",
+  "promptId": "03_paso_a_paso_profundo",
+  "promptName": "Paso a paso profundo",
+  "promptContent": "Eres un asistente experto en análisis didáctico, documentación técnica y explicación paso a paso.\n\nGenera un documento Markdown bien formateado completo y estructurado a partir de la transcripción del vídeo.\n\nEl objetivo es transformar el contenido del vídeo en una guía profunda que permita entender no solo qué se explica, sino también el orden lógico, el porqué de cada bloque y cómo aplicarlo.\n\nIncluye:\n\n1. Un título claro.\n2. Un resumen inicial de 5 a 8 líneas.\n3. Una explicación por fases o bloques lógicos.\n4. Dentro de cada fase, detalla:\n   - Qué se explica.\n   - Por qué es importante.\n   - Qué pasos concretos se mencionan.\n   - Qué errores, riesgos o dependencias aparecen.\n5. Una sección de \"Procedimiento paso a paso\".\n6. Una sección de \"Puntos críticos a recordar\".\n7. Una conclusión final.\n\nCriterios:\n\n- Mantén el máximo detalle útil de la transcripción.\n- No inventes pasos que no aparezcan.\n- Si el vídeo menciona herramientas, pantallas, entidades, menús o configuraciones, indícalos explícitamente.\n- Si hay ambigüedades, señálalas como \"pendiente de validar\".",
+  "resultFilename": "paso_a_paso_profundo-2026-05-25t11-38-12-175z.md",
+  "transcriptRef": "by-video/byuz0w9uuei.es-orig.automatic.txt",
+  "transcriptHash": "bdae53fe001cacd26f03306700c6ae3b7a8a281dbbea33eca68c80bf152a3a46",
+  "processedAt": "2026-05-25T11:38:11.503Z",
+  "title": "Por qué el problema de la vivienda no se resuelve: al 70% de españoles le conviene que no baje",
+  "videoTitle": "Por qué el problema de la vivienda no se resuelve: al 70% de españoles le conviene que no baje",
+  "videoUrl": "https://www.youtube.com/watch?v=ByUz0W9UUEI",
+  "videoId": "ByUz0W9UUEI",
+  "channelName": "Juan Ramón Rallo",
+  "durationSeconds": 2387,
+  "durationText": "39:47",
+  "uploadDate": "20260524",
+  "transcriptLanguage": "es-orig",
+  "transcriptSource": "automatic",
+  "transcriptCached": false,
+  "transcriptWords": 7066,
+  "transcriptChars": 40315,
+  "outputWords": 1540,
+  "chunked": false,
+  "chunks": 1,
+  "aiRuns": [
+    {
+      "runId": "c5668544-7041-4e71-a1ec-2bb80b82ad9b",
+      "operation": "yt_dlp_info",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:38:02.681Z",
+      "finishedAt": "2026-05-25T11:38:07.111Z",
+      "durationMs": 4429,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "5c0c944e-a729-4714-9478-ebc89a888ffd",
+      "operation": "yt_dlp_captions",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:38:07.111Z",
+      "finishedAt": "2026-05-25T11:38:11.438Z",
+      "durationMs": 4327,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "177dbaaa-bdff-4c8e-91f5-254462933b68",
+      "operation": "document_generation",
+      "scope": "document",
+      "provider": "nanogpt",
+      "model": "qwen/qwen3.5-397b-a17b",
+      "promptId": "03_paso_a_paso_profundo",
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:38:12.182Z",
+      "finishedAt": "2026-05-25T11:39:50.907Z",
+      "durationMs": 98725,
+      "inputTokens": 11161,
+      "outputTokens": 4626,
+      "totalTokens": 15787,
+      "cachedInputTokens": 0,
+      "reasoningTokens": 0,
+      "usageSource": "provider_reported"
+    }
+  ],
+  "usageTotals": {
+    "document": {
+      "inputTokens": 11161,
+      "outputTokens": 4626,
+      "totalTokens": 15787,
+      "durationMs": 98725,
+      "unavailableUsageRuns": 0
+    },
+    "diagrams": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 0,
+      "unavailableUsageRuns": 0
+    },
+    "transcript": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 8756,
+      "unavailableUsageRuns": 0
+    },
+    "all": {
+      "inputTokens": 11161,
+      "outputTokens": 4626,
+      "totalTokens": 15787,
+      "durationMs": 107481,
+      "unavailableUsageRuns": 0
+    }
+  },
+  "latestDiagramRuns": {}
+}

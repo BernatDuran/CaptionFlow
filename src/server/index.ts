@@ -11,6 +11,13 @@ import { generateDiagramFromResult } from "./processing/diagramService";
 import { getProcessJob, startProcessJob } from "./processing/jobService";
 import { AppError, type LocalSettings, type ProviderId } from "./types";
 import { getApiKey, readLocalSettings, reloadEnvironment, writeLocalSettings } from "./config/configService";
+import {
+  createAnalyticsDashboard,
+  deleteAnalyticsDashboard,
+  listAnalyticsDataset,
+  readAnalyticsDashboards,
+  updateAnalyticsDashboard
+} from "./analytics/analyticsService";
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
@@ -48,7 +55,8 @@ app.get("/api/providers", async (_req, res) => {
     selectedModels: settings.selectedModels,
     adaptiveChunkingEnabled: settings.adaptiveChunkingEnabled,
     minimumModelContextTokens: settings.minimumModelContextTokens,
-    outputRootDir: settings.outputRootDir
+    outputRootDir: settings.outputRootDir,
+    analyticsEnabled: settings.analyticsEnabled
   });
 });
 
@@ -136,7 +144,8 @@ app.post("/api/settings", async (req, res) => {
     selectedModels,
     adaptiveChunkingEnabled: body.adaptiveChunkingEnabled,
     minimumModelContextTokens: body.minimumModelContextTokens,
-    outputRootDir
+    outputRootDir,
+    analyticsEnabled: body.analyticsEnabled
   });
 
   res.json(saved);
@@ -157,8 +166,46 @@ app.post("/api/restart", async (_req, res) => {
     selectedModels: settings.selectedModels,
     adaptiveChunkingEnabled: settings.adaptiveChunkingEnabled,
     minimumModelContextTokens: settings.minimumModelContextTokens,
-    outputRootDir: settings.outputRootDir
+    outputRootDir: settings.outputRootDir,
+    analyticsEnabled: settings.analyticsEnabled
   });
+});
+
+app.get("/api/analytics/settings", async (_req, res) => {
+  const settings = await readLocalSettings();
+  res.json({
+    analyticsEnabled: Boolean(settings.analyticsEnabled),
+    dashboards: await readAnalyticsDashboards()
+  });
+});
+
+app.get("/api/analytics/dataset", async (_req, res) => {
+  res.json(await listAnalyticsDataset());
+});
+
+app.post("/api/analytics/dashboards", async (req, res) => {
+  try {
+    res.status(201).json({ dashboard: await createAnalyticsDashboard(req.body) });
+  } catch (err) {
+    throw new AppError("VALIDATION_ERROR", err instanceof Error ? err.message : "No se pudo guardar el dashboard.", 400);
+  }
+});
+
+app.put("/api/analytics/dashboards/:id", async (req, res) => {
+  try {
+    res.json({ dashboard: await updateAnalyticsDashboard(req.params.id, req.body) });
+  } catch (err) {
+    throw new AppError("VALIDATION_ERROR", err instanceof Error ? err.message : "No se pudo actualizar el dashboard.", 400);
+  }
+});
+
+app.delete("/api/analytics/dashboards/:id", async (req, res) => {
+  try {
+    await deleteAnalyticsDashboard(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    throw new AppError("VALIDATION_ERROR", err instanceof Error ? err.message : "No se pudo eliminar el dashboard.", 400);
+  }
 });
 
 app.post("/api/process", async (req, res) => {

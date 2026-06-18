@@ -8,6 +8,7 @@ bin/yt-dlp
 .env.*
 !.env.example
 config/local.settings.json
+config/analytics.dashboards.json
 output
 transcripts
 results

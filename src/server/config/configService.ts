@@ -102,11 +102,8 @@ export function getAdaptiveChunkSizeChars(settings: LocalSettings, provider: Pro
 
 let cachedSettings: LocalSettings | null = null;
 
-export function getCachedSettings(): LocalSettings {
-  if (cachedSettings) return cachedSettings;
-
-  const activeProvider = getConfiguredProvider();
-  const defaults: LocalSettings = {
+function defaultLocalSettings(activeProvider = getConfiguredProvider()): LocalSettings {
+  return {
     activeProvider,
     selectedModels: {
       openai: MODEL_CATALOG.openai[0]?.id,
@@ -114,22 +111,39 @@ export function getCachedSettings(): LocalSettings {
       nanogpt: MODEL_CATALOG.nanogpt[0]?.id
     },
     adaptiveChunkingEnabled: true,
-    minimumModelContextTokens: 4000
+    minimumModelContextTokens: 4000,
+    analyticsEnabled: false
   };
+}
+
+export function normalizeLocalSettings(
+  parsed: Partial<LocalSettings> = {},
+  defaults = defaultLocalSettings(),
+  activeProvider = getConfiguredProvider()
+): LocalSettings {
+  const selectedModels = { ...defaults.selectedModels, ...parsed.selectedModels };
+
+  return {
+    activeProvider: parsed.activeProvider && isProvider(parsed.activeProvider) ? parsed.activeProvider : activeProvider,
+    selectedModels,
+    adaptiveChunkingEnabled: parsed.adaptiveChunkingEnabled ?? defaults.adaptiveChunkingEnabled,
+    minimumModelContextTokens: parsed.minimumModelContextTokens ?? defaults.minimumModelContextTokens,
+    outputRootDir: normalizeOutputRootDir(parsed.outputRootDir),
+    analyticsEnabled: parsed.analyticsEnabled ?? defaults.analyticsEnabled
+  };
+}
+
+export function getCachedSettings(): LocalSettings {
+  if (cachedSettings) return cachedSettings;
+
+  const activeProvider = getConfiguredProvider();
+  const defaults = defaultLocalSettings(activeProvider);
 
   try {
     if (fsSync.existsSync(SETTINGS_PATH)) {
       const raw = fsSync.readFileSync(SETTINGS_PATH, "utf8");
       const parsed = JSON.parse(raw) as Partial<LocalSettings>;
-      const selectedModels = { ...defaults.selectedModels, ...parsed.selectedModels };
-
-      cachedSettings = {
-        activeProvider: parsed.activeProvider && isProvider(parsed.activeProvider) ? parsed.activeProvider : activeProvider,
-        selectedModels,
-        adaptiveChunkingEnabled: parsed.adaptiveChunkingEnabled ?? defaults.adaptiveChunkingEnabled,
-        minimumModelContextTokens: parsed.minimumModelContextTokens ?? defaults.minimumModelContextTokens,
-        outputRootDir: normalizeOutputRootDir(parsed.outputRootDir)
-      };
+      cachedSettings = normalizeLocalSettings(parsed, defaults, activeProvider);
       return cachedSettings;
     }
   } catch (err) {
@@ -142,29 +156,12 @@ export function getCachedSettings(): LocalSettings {
 
 export async function readLocalSettings(): Promise<LocalSettings> {
   const activeProvider = getConfiguredProvider();
-  const defaults: LocalSettings = {
-    activeProvider,
-    selectedModels: {
-      openai: MODEL_CATALOG.openai[0]?.id,
-      google: MODEL_CATALOG.google[0]?.id,
-      nanogpt: MODEL_CATALOG.nanogpt[0]?.id
-    },
-    adaptiveChunkingEnabled: true,
-    minimumModelContextTokens: 4000
-  };
+  const defaults = defaultLocalSettings(activeProvider);
 
   try {
     const raw = await fs.readFile(SETTINGS_PATH, "utf8");
     const parsed = JSON.parse(raw) as Partial<LocalSettings>;
-    const selectedModels = { ...defaults.selectedModels, ...parsed.selectedModels };
-
-    const settings: LocalSettings = {
-      activeProvider: parsed.activeProvider && isProvider(parsed.activeProvider) ? parsed.activeProvider : activeProvider,
-      selectedModels,
-      adaptiveChunkingEnabled: parsed.adaptiveChunkingEnabled ?? defaults.adaptiveChunkingEnabled,
-      minimumModelContextTokens: parsed.minimumModelContextTokens ?? defaults.minimumModelContextTokens,
-      outputRootDir: normalizeOutputRootDir(parsed.outputRootDir)
-    };
+    const settings = normalizeLocalSettings(parsed, defaults, activeProvider);
     cachedSettings = settings;
     return settings;
   } catch {
@@ -184,7 +181,8 @@ export async function writeLocalSettings(settings: LocalSettings) {
     selectedModels: settings.selectedModels,
     adaptiveChunkingEnabled: settings.adaptiveChunkingEnabled ?? false,
     minimumModelContextTokens: settings.minimumModelContextTokens ?? 4000,
-    outputRootDir: normalizeOutputRootDir(settings.outputRootDir)
+    outputRootDir: normalizeOutputRootDir(settings.outputRootDir),
+    analyticsEnabled: settings.analyticsEnabled ?? false
   };
 
   await fs.writeFile(SETTINGS_PATH, `${JSON.stringify(safeSettings, null, 2)}\n`, "utf8");

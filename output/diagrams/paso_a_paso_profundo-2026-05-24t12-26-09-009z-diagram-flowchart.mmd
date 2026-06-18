@@ -1,0 +1,69 @@
+flowchart TD
+    Legend["Leyenda"]
+    Legend --> L1["Rectángulo: Hecho/Entidad"]
+    Legend --> L2["Rombo: Decisión/Contraste"]
+    Legend --> L3["Círculo: Inicio/Fin"]
+
+    Start(["Inicio Análisis"]) --> Context["Contexto Político"]
+    Context --> GovNarr["Narrativa Gov: Origen Manos Limpias"]
+    Context --> FactChron["Hecho: Registros en Nov"]
+    Context --> FactComplaint["Hecho: Querella Manos Limpias Dic 2025"]
+
+    FactChron --> Verify{"Verificación Cronológica"}
+    FactComplaint --> Verify
+    GovNarr --> Verify
+
+    Verify -->|Nov antes que Dic| Refute["Refutación: Narrativa Gov Falsa"]
+    Refute --> IndepInv["Investigación Judicial Independiente"]
+    IndepInv --> Auto["Auto Judicial 88 págs"]
+
+    Auto --> Denial{"Declaración Zapatero"}
+    Denial -->|Niega contacto| Contrast["Contraste con Evidencia"]
+    Contrast -->|Auto tiene pruebas| Structure["Estructura Criminal"]
+
+    Structure --> Nexo["Nexo: Julio Martínez"]
+    Nexo --> Favores["Solicitud de Favores"]
+    Favores --> Zapatero["José Luis Rodríguez Zapatero"]
+
+    Structure --> Companies["39 Sociedades Mercantiles"]
+    Companies --> Countries["7 Países"]
+
+    Nexo --> MoneyFlow["Flujo de Dinero"]
+    MoneyFlow --> AnalysisRel["Análisis Relevante"]
+    AnalysisRel -->|Administrado por Martínez| Wash["Lavado de Dinero"]
+    Wash --> Testaferro["Uso de Testaferros"]
+
+    MoneyFlow --> ThinkingH["Thinking Heads"]
+    ThinkingH --> TH1["Américas: 31.000 €"]
+    ThinkingH --> TH2["Group: 649.000 €"]
+
+    MoneyFlow --> GateC["Gate Center Lobby Chino"]
+    GateC --> ChinaEntry["Entrada Empresas Chinas"]
+    ChinaEntry --> Constr["Constructora: 95M € Contratos"]
+
+    Wash --> PayZap["Pago Zapatero"]
+    PayZap --> AmtZap["490.780 € Directos"]
+    PayZap --> AmtChina["352.980 € Vía China"]
+    AmtZap --> TotalZap["Total Est. Zapatero: 1.5M €"]
+
+    Wash --> PayDaughters["Pago Hijas"]
+    PayDaughters --> Whatav["Empresa Whatav"]
+    Whatav --> AmtDaughters["~500.000 € Directos"]
+    AmtDaughters --> TotalDaughters["Total Est. Hijas: 1M €"]
+
+    Auto --> Imputation["Imputación Formal"]
+    Imputation --> LegalChange["Cambio Estatus Legal"]
+    LegalChange --> Access["Acceso a Dispositivos"]
+    Access --> Phones["Móviles y Ordenadores"]
+    Access --> Banks["Cuentas Bancarias"]
+
+    Access --> Future["Fase Investigación Inicial"]
+    Future --> End(["Fin Análisis"])
+
+    style Start fill:#f9f,stroke:#333,stroke-width:2px
+    style End fill:#f9f,stroke:#333,stroke-width:2px
+    style Verify fill:#ff9,stroke:#333,stroke-width:2px
+    style Denial fill:#ff9,stroke:#333,stroke-width:2px
+    style Refute fill:#f96,stroke:#333,stroke-width:2px
+    style Auto fill:#ccf,stroke:#333,stroke-width:2px
+    style Imputation fill:#ccf,stroke:#333,stroke-width:2px

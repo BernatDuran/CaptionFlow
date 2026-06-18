@@ -1,0 +1,52 @@
+{
+  "cachedAt": "2026-06-17T22:51:13.526Z",
+  "video": {
+    "videoId": "pDRSXOK6fq0",
+    "title": "We tested the New Power BI Report Skills: The Future of AI-Powered Reporting? [Steb by step demo]",
+    "url": "https://www.youtube.com/watch?v=pDRSXOK6fq0",
+    "channelName": "Guy in a Cube",
+    "durationSeconds": 498,
+    "durationText": "8:18",
+    "uploadDate": "20260617",
+    "transcript": "Kind: captions\nLanguage: en\nYooo!\nWhat's up?\nWhat if I told you that you never have\nto build a Power BI report ever again?\nI know, I know.\nNow you're thinking, Marthe,\nthat's an incredibly clickbaity\nthing to say, but it's true.\nIn this video, we are gonna dive\ninto one of the coolest announcements\nfrom Build, and that is the new\nreporting and authoring skill.\nI will take you through everything, the\nstep-by-step installation, how to get\nstarted, and then we're gonna really put\nit to the test and see if it's actually\nsolving all our Power BI stuff on the\ndesign and report creation front forever.\nIs that a sad thing, or\nare we happy about that?\nEnough of all this talking.\nYou know what we like\nto do at Guy in a Cube.\nWe're gonna head over to my laptop.\nThe thing I wanna test out today is\nto see if we can create some beautiful\nthings with this report right here,\nwhich is just a semantic model.\nThe report itself is just empty.\nNow, a key thing here is that\nI've saved this as a PBIP, a Power\nBI project file, skills demo.\nThat's the name of the report,\nand I saved it to this folder.\nNow, to use the new Power BI\nreport skills, we need to use a\nCLI, a command line interface.\nSo that is some sort of terminal\nthat you want to use, and then I'm\ngonna change my directory to the\nfolder where I saved my PBIP file.\nBut before we can even begin, we need to\ninstall the skills that we want to use.\nSo let's take a look at them.\nHere you see inside of the Microsoft\ndocumentation, we are gonna\nuse the Power BI report skills.\nWe're gonna take advantage of the Power\nBI report authoring skill, Power BI\nreport design skill, and also the Power\nBI report planner and management skill.\nThese you can find inside of GitHub.\nYou see them here.\nThey are part of the skills for Fabric.\nSo actually what exists is a skill set\nfor not only Power BI and these report\nstuff but for a lot of different things\nthat you might wanna take advantage of.\nIf you have, you know, listened to\nany of the other videos that we have\ncreated, skills are something that\nyou provide to an agent, so we need\nan agent to, you know, execute on the\nskill set that we're giving this agent.\nNow, the agent that we're gonna use\nis going to be the GitHub Copilot CLI.\nBefore you do anything, you have to\ninstall Copilot in your terminal.\nYou can do that by just copying this\nline right here and then entering\nthat inside of your PowerShell window.\nCool.\nSo now Copilot is installed, but\nthen we need to actually run it.\nThe next thing we have to do is\nto now install the Fabric skills\nto make sure that Copilot here got\nthe skills that we need it to have.\nSo we do that by going back into\nskills-for-fabric, and let's copy this\nline here, public marketplace, Microsoft\nSkills for Fabric, and paste it.\nNow it's gonna install this, if\nyou haven't done that already.\nI already did.\nIf you wanna check that you actually\nhave the skills that you need,\nyou can now write skills list.\nAnd here is your bunch of skills.\nAnd somewhere here we are gonna\nfind the reporting skills.\nAnd you see, I mean, there's\nstuff for event houses, SQL Data\nWarehouse, Semantic Model, Fabric IQ.\nAnd here, well, at the end\nactually, you see that we have\nthe Power BI report planning.\nWe have Power BI report design.\nWe have Power BI report authoring,\nand Power BI report management.\nThat's what we want to add.\nAnd now we're ready to test this.\nOkay, let's do it.\nLet's put up the Power BI project file\nand the Copilot command interface side\nby side so that we can follow along on\nthis journey in real time, 'cause we\nhave to, we have to see it to believe it.\nSo we're gonna start from nothing.\nSo I'm just gonna ask it to, for the\nPower BI file skills demo, create an\noverview page for my sales analytics,\nand one page with store details.\nAnd enter.\nLet's just see what it does.\nOkay.\nSo we see the skill Power BI\nreport authoring activated.\nNice.\nAs a good agent, it's gonna ask me\nif I am allowing it to do stuff.\nIf you haven't saved your report, if\nyou haven't, you know, committed it\nto Git or saved it so that you have a\nversion of that, you're gonna lose that.\nBut I, I mean, I have nothing, so\nI'm gonna just allow it to do stuff.\nOkay, so what did it do?\nIt created a sales overview page.\nI mean, okay, that, that\nlooks not too shabby.\nI mean, I didn't really give\nit a lot of instructions.\nBut what it did for my store details\nis… Okay, so it gave me a store filter.\nThat's good.\nAnd then revenue table view, and\nalso total revenue by category.\nI mean, the two pages were quite similar.\nThey-- I guess they kind\nof solved the, the problem.\nBut it did do a lot better than the\ncopilot chat thing inside of Power BI\nDesktop, I think, because it actually\ndid create, you know, something decent.\nThis is, this is not too bad.\nBut for transparency,\nthat took ten minutes.\nBut, you know, visually, I'm\nnot that impressed, am I?\nIt's not, like, the coolest thing ever.\nI've always, you know, dreamed\nof being in Injae Park.\nSo what if I just asked it to\ncreate a report that visually looked\nlike something he has created?\nLet's see if we can find something\nto be, you know, inspired by.\nSo if we go to LinkedIn, I\nfound this HR overview report.\nBut let's see if we can use this as\na sketch that I'm, you know, giving\nPower BI and I want it to create this.\nSo I'm just gonna add that to\nthe folder that I'm working with\nwith my Power BI project file,\nand let's call it design inspo.\nOkay, let's head back to copilot and our\nPower BI report, and then please visually\nmake it super pretty and look like the\ndesign inspo file I added to the folder.\nNow let's see what it\ndoes with this command.\nOh my goodness.\nDid it work?\nOkay, wait.\nLet's look at the original.\nYes.\nOkay, Injae, yours is still better.\nBut it did totally just take, like,\nthe rounded corners and the colors,\nand it looks like it even did\nsomething with, like, font sizes.\nBut that was cool.\nI am impressed.\nI'm impressed.\nOkay, let's try one, one more.\nLet's try one more.\nLet's just go to Google and search\nfor Power BI design to- tips.\nOkay, so this one looks striking.\nIt's coming from zoomcharts.com.\nOkay, I'm gonna prompt it to create a\nnew report for me on sales performance\nand use this as the visual inspiration.\nOkay, so let's create a new sales\nperformance command center report\nusing the report inspo file.\nOkay, let's see how it performs.\nOkay, this looks pretty similar.\nLet's see what they look\nlike next to each other.\nOh my God\nNever have to create a report again.\nI mean, I gave it the worst prompts\nin history, and it still did that.\nOkay, let me just make this clear.\nI'm not saying that you\nshould steal anyone's work.\nI'm just wanting to test it and see\nif it was able to actually work off of\nsomething that was already sketched,\nbecause that's the key point here.\nNow you could sit down with your report\nconsumers and draw stuff, I don't know,\nplay around in PowerPoint, uh, or maybe\nyou have an existing report and you\nwant it to look something like that.\nYou can just prompt away\nand have it look like that.\nAlso, if you have organizational patterns\nand rules that people have to follow\nwith colors and all these things, if\nthat's described somewhere, just add\nit to the folder and have your agent\nuse that as the context and the prompt\non how to visually design the report.\nOkay, what do you guys think?\nHow do we feel about this?\nAre you excited or are\nyou like, \"Oh my gosh\"?\nLet me know in the comments below.\nIf you haven't already, make sure\nto hit that subscribe button because\nthis was just the first build\nannouncement that we dived into.\nI mean, we're probably gonna dive into a\nlot more, and I will see you in the CUBE.\nBye.",
+    "language": "en",
+    "source": "official",
+    "runs": [
+      {
+        "runId": "4d8af45b-8d8b-4480-b716-6d4460bb9418",
+        "operation": "yt_dlp_info",
+        "scope": "transcript",
+        "provider": null,
+        "model": null,
+        "promptId": null,
+        "diagramPromptId": null,
+        "diagramType": null,
+        "startedAt": "2026-06-17T22:50:53.226Z",
+        "finishedAt": "2026-06-17T22:51:07.743Z",
+        "durationMs": 14517,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "totalTokens": 0,
+        "usageSource": "provider_reported"
+      },
+      {
+        "runId": "45ea328a-93f9-4822-bb6e-445d58608848",
+        "operation": "yt_dlp_captions",
+        "scope": "transcript",
+        "provider": null,
+        "model": null,
+        "promptId": null,
+        "diagramPromptId": null,
+        "diagramType": null,
+        "startedAt": "2026-06-17T22:51:07.743Z",
+        "finishedAt": "2026-06-17T22:51:13.523Z",
+        "durationMs": 5780,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "totalTokens": 0,
+        "usageSource": "provider_reported"
+      }
+    ],
+    "cached": false
+  }
+}

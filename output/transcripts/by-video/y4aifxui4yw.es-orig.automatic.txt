@@ -1,0 +1,678 @@
+# Transcripcion
+
+- Titulo: CLAUDE OPUS 4.8, El modelo de... [❌ SORRY, NO TOKENS!]
+- URL: https://www.youtube.com/watch?v=Y4AifxUi4yw
+- ID video: Y4AifxUi4yw
+- Canal: Dot CSV Lab
+- Duracion: 23:17
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 4393
+- Provider IA: nanogpt
+- Modelo IA: qwen/qwen3.5-397b-a17b
+- Prompt: Resumen claro
+- Fecha de procesamiento: 2026-05-29T17:16:51.831Z
+
+Kind: captions
+Language: es
+Nuevo modelo Cloud Opus 4.8.
+Sí, ya estamos con la 4.8 y es que esta
+cadencia de salida de modelos hace que
+cada mes, mes y medio, pues tengamos una
+versión nueva que tengamos que evaluar.
+y lo decimos tras la salida del Opus
+4.7, que salió por mediados de abril y
+que lejos de entusiasmar a la gente,
+pues decepcionó por ser un modelo que no
+mejoraba su predecesor a la versión 4.6
+y sin embargo ser más lento y más
+costoso. Y ahora Antropic se quiere
+redimir con esta nueva versión 4.8 que
+nos ponen sobre la mesa y que ahora
+tenemos que evaluar para saber si es un
+mejor modelo y si es un modelo
+importante, más barato y eficiente. Y no
+solo eso, sino que Antropic también ha
+aprovechado la oportunidad para lanzar
+una nueva funcionalidad todavía en fase
+de investigación, pero que les aproxima
+poco a poco a este futuro, que sabemos
+que va a acabar llegando donde los
+agentes trabajen en sistemas
+multiagénticos con cientos y cientos de
+agentes gastando tu cuota mensual, digo,
+eh, trabajando para ti. Y para empezar
+entendiendo si Cloud Opus 4.8 es un
+mejor modelo, pues con solo 24 horas de
+salida no podemos tener análisis muy
+rigurosos. Todavía estamos todos
+trabajando con este modelo para entender
+si mejora lo anterior, pero sí podemos
+echar un vistazo como siempre a los
+benchmarks. Evaluciones que ya sabéis,
+cada vez nos emocionan menos porque las
+ganancias marginales con releases tan
+rápidas pues hacen que estas mejoras
+sean marginales y que no siempre tienen
+una traslación real de cómo luego se
+siente trabajar con el modelo en
+nuestros flujos agénticos. Y de hecho
+creo que hay un error por parte de
+Antropic a la hora de presentar al nuevo
+Opus 4.8, al lado de su modelo Opus 4.7,
+al lado de GPT 5.5.
+Porque fijaos como esta columna, la de
+Opus 4.7, en la mayoría de benchmarks
+que ellos han seleccionado, supera a GPT
+5.5. Vemos que gana, por ejemplo, en eh
+programación agéntica con SW Bench Pro.
+Vemos que también en terminal bench, en
+diferentes eh benchmarks de
+conocimiento, pues vemos que sí,
+marginalmente Opus 4.7 se presentó como
+un mejor modelo que GPT 5.5, pero la
+realidad es que a día de hoy quien haya
+probado ambos modelos sabe que GPT5.5 es
+mucho más funcional para trabajar en
+nuestro día a día. Podría decir que
+hasta más inteligente, pero no solo eso,
+sino más eficiente, más rápido y por
+tanto un mejor modelo a la hora de
+trabajar. Y eso visto en esta tabla,
+pues ya te hace plantear que no existe
+una correlación directa, como estábamos
+comentando, entre los numeritos mágicos
+que me pones aquí y lo que luego pues se
+siente trabajar con el modelo. Ahora
+llega Opus 4.8 y sí, sobre el papel, un
+modelo muy interesante donde vemos
+mejoras importantes también en
+programación agéntica. Sabemos que estos
+modelos son de uso general, tanto para
+programación como para creación de
+documentos, para conversaciones
+profundas, pero realmente el gran valor
+que estas compañías están encontrando es
+justamente en esto, en programación
+agéntica. Por eso ahora el protagonismo
+se la lleva este tipo de benchmarks.
+Terminal bench 2.1. Vemos un salto
+importante, aunque no superando GPT 5.5.
+Muy interesante. Humanity last exam.
+Vemos que ya estamos rozando la mitad de
+preguntas correctas sin usar ningún tipo
+de herramienta. Este es un benchmark muy
+exigente a nivel de razonamiento
+multidisciplinar. Y bueno, luego vemos
+que el resto de evaluaciones que nos
+presentan, pues también eh parece que
+presentan a Opus 4.8 como un mejor
+modelo. Pero si quisiéramos hacer un
+análisis más riguroso del rendimiento
+del modelo, pues lo mejor que podemos
+hacer es irnos a benchmarks agregados
+que recojan muchas métricas en común de
+diferentes evaluaciones, como podría
+ser, por ejemplo, el Artificial Analysis
+Intelligence Index, que nos muestra como
+Opus 4.8 8 en su configuración Max se
+coloca en primera posición con una
+diferencia muy pequeñita con el
+siguiente modelo que es GPT 5.5 en su
+configuración extra high. Y aquí sí
+estamos viendo el agregado de diferentes
+evaluaciones, con lo cual esto sí nos
+puede empezar a indicar que
+efectivamente OPPO 4.8 pues sí es un
+buen modelo. Sin embargo, ya sabéis que
+en el paradigma del test compute no solo
+nos interesa saber cuánto rinde un
+modelo, sino a qué coste, a qué precio o
+a qué equivale este esfuerzo de
+razonamiento que hace que los modelos
+tengan más rendimiento. Entonces, para
+ello vamos a irnos aquí a la gráfica de
+coste y vamos a encontrarnos con una
+primera sorpresa que nos puede hacer
+decantar la toma de decisiones si
+trabajar con Clodopus o con GPT 5.5 y la
+encontramos aquí, que es el coste de
+ejecutar este benchmark, el artificial
+analisis y vemos que el coste de este
+nuevo modelo se sitúa en los $4,686
+el coste de los tokens, mientras que GPT
+5.5 se encuentra en el orden de los
+$3,300. significando esto que el coste
+de ejecutar el modelo de Open AI pues
+sería un 25% más bajo. Y esto visto en
+la gráfica de coordenadas que nos
+vincula pues el coste de ejecutar el
+benchmark con el desempeño de este
+índice, pues nos muestra que los modelos
+de Antropic siguen estando trasladados
+hacia la derecha con respecto a la
+frontera trai,
+significando esto que todavía estamos
+trabajando con una tipología de modelos
+más cara. Y esto es algo que vamos a ver
+también muy definido dentro del system
+card de Cloud Opus 4.8, un documento de
+244 páginas como nos acostumbran
+habitualmente, donde tenemos detallado
+pues muchas evaluaciones de este modelo.
+Pues por ejemplo, aquí vais a encontrar
+la tabla de evaluaciones completa con
+benchmarks inclusos que no estaban en el
+artículo original. Algunos de ellos muy
+interesantes, por ejemplo, los que
+tenemos por aquí, los graph workks, que
+son benchmarks que miden la capacidad
+del modelo de trabajar con contextos
+mucho más grandes. Y fijaos que ha
+habido una evolución bastante drástica
+que podemos ver mejor en esta tabla en
+trabajo de contexto largo, donde
+trabajando con contextos de 256,000
+tokens o 1 millón de tokens, hemos visto
+una progresión desde los modelos 4.6,
+4.7 y 4.8 bastante drástica. Hemos
+pasado del 16 a un 40, ahora un 68%. Y
+lo mismo aquí con 61 76 85, es decir,
+los modelos de Antropic pues con cada
+nueva generación van trabajando mejor
+con la información de estos contextos
+tan grandes que, por ejemplo, para
+código, para programación son
+fundamentales. Sin embargo, mejor que
+estar viendo numeritos estáticos en una
+tabla es este tipo de gráficos de aquí.
+Y es algo que me ha gustado muchísimo de
+esta System Card y es que la mayoría de
+evaluaciones vienen acompañadas de este
+tipo de tablas que, como decía antes,
+son fundamentales para entender no
+solamente el rendimiento del modelo en
+cuánto son sus capacidades, sino también
+al coste al que incurren, porque de este
+tipo de gráficas podemos extraer muy
+relevante. Fijaos, para el benchmark de
+SW Bench Pro tenemos trazadas las
+fronteras de coste por tarea frente al
+eh pass rate que han conseguido en cada
+caso. no nos dejemos engañar por esta
+este eje que viene truncado, es decir,
+vamos de 50 a 70, no estamos desde 0
+hasta 100, pero bueno. Y de aquí dos
+conclusiones muy interesantes que
+podemos sacar es que el modelo en su
+configuración, por ejemplo, más baja, en
+su forma low, el 4.8, fijaos que tiene
+un coste mayor ya no solo a la versión
+low, sino a la versión medium de la 4.7,
+7, que en este caso achaco a que el
+modelo estará generando más tokens de
+salida, porque no creo que estemos
+trabajando con un modelo más grande, un
+checkpoint más costoso de ejecutar por
+token. Así que en este caso cuando
+trabajéis con la configuración low,
+realmente estaréis trabajando a un coste
+y a una velocidad semejante o incluso
+superior a lo que era la medium de la
+4.7. Esa sería la mala noticia. La buena
+noticia es que, fijaos, en este caso la
+configuración low consigue un desempeño
+semejante a lo que podíamos lograr con
+la configuración máxima de la 4.7, lo
+que significa que a igualdad de
+rendimiento, entonces sí, aquí estaremos
+viendo un coste y una ventaja enorme en
+utilizar pues la 4.8 frente a la 4.7,
+que sería toda esta diferencia
+horizontal que vemos aquí. Si aún así
+queremos conseguir más desempeño, pues
+podemos seguir forzando el test time
+compute y subir escalar la frontera de
+costes hasta un punto en el que fijaos
+que el tiping point pues sería el extra
+high. No hace falta irse a la
+configuración máxima que han
+desbloqueado ahora porque parece que
+aquí pues este rendimiento extra una
+traslación en un mejor desempeño por
+parte del modelo. Y esto es para el SW
+Bench Pro. Pero como digo, la System
+Card está muy bien dibujada con muchas
+de estas gráficas que nos cuentan la
+misma historia, que hay un
+desplazamiento hacia arriba que
+significa que el modelo pues desempeña
+mejor para un mismo coste. Pues lo vemos
+también aquí en Humanity Last Exam, este
+benchmark multidisciplinar tan exigente.
+Y fijaos como pues efectivamente Cloud
+Opus 4.8 tras una frontera superior
+donde de nuevo fijaos como la
+configuración low cae justo en el punto
+de esfuerzo a medio del modelo anterior.
+Esperéis que el low sea una
+configuración tan barata, entre muchas
+comillas, como lo era antes, porque en
+este caso el modelo consume más. Pero
+sí, sobre el papel, sobre la frontera de
+coste, tenemos un mejor modelo que va
+creciendo, va subiendo hacia arriba y
+que se va aproximando poco a poco a esta
+línea de aquí. ¿Que quién es? Pues
+nuestro amigo Cloud Mos Preview, este
+modelo que Antropic presentó hace 2 tr
+meses y que todavía sigue sin salir,
+pero que Antropic seguramente esté
+utilizando para destilar gran parte de
+ese rendimiento, ese conocimiento para
+cada nueva iteración de los modelos Opus
+que vamos recibiendo. De hecho, fijaos,
+última gráfica que os enseño en el
+Antropic EI, que es este índice agregado
+que nos permite pues agregar múltiples
+evaluaciones y hacer comparaciones entre
+modelos de diferentes épocas como el
+modelo Cloud Opus 4.8 en este caso se
+coloca perfectamente en la línea de
+tendencia esperable, pues por sus
+capacidades. Es decir, es un modelo que
+en mayo de 2026 cumple pues con lo que
+uno esperaría que fuera un modelo de
+mayo de 2026. Y fijaos como el modelo
+Cloth Mythos preview, como ya vimos en
+el vídeo cuando hablamos de mitos, pues
+rompe por completo esta tendencia, ¿no?
+Lo que está haciendo Antropica ahora es
+destilar parte de este conocimiento y
+poco a poco pues yo creo que ya para
+cuando saquen el modelo mitos, pues
+vamos a estar casi a la altura de lo que
+sería el modelo mitos preview, con lo
+cual lo van a sacar ya en un momento en
+el que ya no va a ser sorprendente. Pero
+bueno, nos dicen que esto estaría a
+punto de ocurrir, que estamos a semanas
+de poder ver un modelo tipo Mitos, que
+no va a ser el Mitos preview,
+seguramente sea una versión incluso
+mejorada porque, bueno, con el paso de
+los meses han podido seguir entrenando
+este modelo y que esto podría estar
+llegando a todos nuestros clientes en
+las próximas semanas. Así que preparad
+las carteras. Y aunque parece que
+estamos de broma con esto de preparad
+las carteras, el meme ciertamente es
+real. Antropic tiene un problema serio
+con el consumo de sus modelos y cómo a
+los usuarios nos acaban llegando pues
+versiones o cuotas que se gastan muy
+rápido. De hecho, es algo que reconocen
+aquí que están trabajando en desarrollar
+modelos que eh permitan ofrecer
+capacidades como Opus a un coste más
+bajo. Pero la realidad es esta. Antropic
+se ha olvidado por completo de que ellos
+tienen también otra saga de modelos,
+otra familia, Sonet, Haiku, que
+pretenden ser más baratos y más
+eficientes. Se están centrando mucho en
+esta liga de modelos fronteras que nos
+parecen muy bien, pero esto hace que
+utilizar sus modelos, si no tienes una
+de las cuotas más altas, pues realmente
+sea algo bastante incómodo. Y esto es
+algo que de verdad me ha molestado. Ha
+ocurrido antes de empezar a grabar el
+vídeo. Estaba haciendo algunas pruebas y
+una de las pruebas que quería hacer era
+simplemente, oye, vamos a ver cómo este
+modelo para el público general rinde a
+la hora de crear documentos. Un PDF
+tonto. Y yo en mi caso, durante el
+último mes, la suscripción que tengo de
+Antropic es la de $ que es la que un
+usuario average pues tendría. No soy un
+power user de Antropic porque ahora
+mismo pues uso la cuota más alta del
+modelo de Codex de GPT 5.5 que es la que
+mejor me está funcionando. Pero bueno,
+oye, $20 me tiene que dar para hacer
+unas pruebitas que os quiero enseñar
+aquí. Y esta ha sido mi experiencia. He
+cogido un prompt que ya usé en el pasado
+y he intentado generar primero con opus
+4.7 este prompt. Luego me he ido a otra
+conversación y he puesto 4.8 también a
+trabajar con el mismo prompt. Me he
+levantado, me he dado una vueltita por
+casa, he vuelto y qué me he encontrado?
+Pues que las dos conversaciones estaban
+completamente paradas. el modelo no
+había empezado a trabajar y se había
+quedado bugueado, entonces yo le he
+vuelto a escribir y entonces ha
+glitcheado, ha aparecido la
+conversación, pero luego se ha
+interrumpido con la respuesta que yo le
+había escrito a continuación. Es decir,
+me he encontrado un bug en la propia
+interfaz de Cloud que ha hecho que estos
+prompts pues no hayan funcionado. Aún
+así, yo sospecho que aunque no hayan
+funcionado en segundo plano, aunque a mí
+no me hayan mostrado el resultado, ha
+seguido trabajando. porque si no no me
+explico por qué a la tercera vez que
+pongo el mismo prompt, siendo esa la
+única interacción que había tenido yo
+con el modelo de Antropic, es decir,
+pedirle tres veces que me hiciera un
+PDF, a mitad de camino me salta que mi
+uso de 5 horas, es decir, la ventana de
+tiempo de uso que te ponen cada 5 horas
+se había agotado solo por pedirle que me
+maquetara tres PDFs, de los cuales dos
+ha sido error de la propia interfaz de
+Antropic. ¡Uf! Visto así pierde todo el
+sentido las evaluaciones que vemos al
+principio. ¿Para qué? Voy a empezar a
+contaros que este modelo es un poco
+mejor que otro para trabajo de oficina,
+eh para hacer documentos, para
+programar. Si la realidad es que cuando
+luego vas a trabajar con estos modelos y
+no tienes una suscripción de $100 o
+incluso de $200, realmente no vas a
+poder hacer un flujo de trabajo que sea
+satisfactorio. Esto es algo que por
+ahora con los modelos de Open AI no me
+estoy encontrando y eso es lo que hace
+que cuando tenga que recomendar un
+modelo a un usuario que no es power
+user, que no se gasta en tokens pues
+miles y miles de euros en suscripciones,
+pues que acabe recomendando un modelo
+que sea igual de bueno, pero mucho más
+eficiente. Aún así, no pasa nada porque
+parecería que Antropic ya está saliendo
+de su travesía por el desierto. Ya ha
+cerrado durante los últimos meses, pues
+acuerdos con SpaceX, por ejemplo, para
+conseguir acceso a esa computación que
+le estaba faltando. Y además, noticia
+del día de ayer, pues también ha cerrado
+una nueva ronda de financiación que
+coloca la evaluación de la compañía por
+encima, ojito, de Open AI. A mí estas
+cifras, estos números se me escapan, no
+consigo eh ni siquiera cuantificarlos,
+pero es una locura. Y esta es una
+apuesta a futuro del mercado que
+considera que Antropic pues va a ser
+capaz de seguir consiguiendo estos
+enormes ingresos que durante el último
+quarter ha ido logrando por parte de
+usuarios y compañías que compramos sus
+tokens. Y por ello, el trabajo de
+Antropic no es solamente servirnos los
+mejores modelos, sino también aquellas
+funcionalidades que maximicen nuestro
+uso de tokens. Y en ese sentido es donde
+aparece esta nueva funcionalidad de
+sistemas multiagentes que presentaron
+también el día de ayer llamado Dynamic
+Workflows. Y esta es una idea que
+profundiza sobre el concepto de sistemas
+multiagentes. Ya sabéis que cuando
+trabajamos con cloud Code, por ejemplo,
+no trabajamos con un único modelo del
+lenguaje que trabaja por turno, sino que
+en muchas ocasiones se disparan agentes
+con diferentes tipos de roles,
+diferentes tipos de tareas que en
+conjunto colaboran para conseguir el
+objetivo que nosotros hemos planificado.
+Pero esto todavía es una versión muy
+primitiva de lo que estos sistemas
+multiagentes podrían llegar a ser. Ya en
+los pasados meses, compañías como Kimi
+introdujo conceptos como el Agent Swarm,
+que permitía, por ejemplo, tener 100
+subagentes trabajando en paralelo para
+ti. Y esta idea de tener múltiples
+agentes trabajando para ti, pues tiene
+también múltiples beneficios. Uno de
+ellos viene del propio paradigma del
+test en compute, que por el simple hecho
+de colocar a múltiples agentes razonando
+y pensando sobre una misma tarea en
+paralelo, te permite, por tanto, llegar
+a mejores soluciones, que es la forma de
+trabajar del Chat GPT Pro o el deeph de
+Google. Pero aparte de esto, también hay
+casos de uso que son muy interesantes,
+como podría ser la propia paralelización
+del trabajo. Pensad una tarea donde no
+haya un contexto compartido, sino
+simplemente es de forma repetitiva hacer
+siempre la misma tarea. Pues por
+ejemplo, en este caso lo ilustraban muy
+bien con una tarea en la que para
+diferentes nichos de mercado querías
+encontrar cuáles eran los tres youtubers
+más importantes de ese nicho. Claro, si
+tú esto lo quieres hacer para 100 nichos
+diferentes, pues un agente trabajando en
+serie tendría que pasar por cada nicho y
+hacer esa búsqueda secuencialmente. Pero
+sin embargo esta tarea permite una
+paralelización clara y es que al final
+pues cada nicho no tiene ninguna
+conexión, ninguna dependencia con otros
+nichos, con lo cual tú realmente podrías
+invocar a 100 agentes en paralelo que
+resuelvan para cada nicho esta tarea
+simultáneamente, haciendo por tanto que
+el resultado no solo sea más rápido, eso
+es obvio, vamos a llegar a un resultado
+mucho más rápido, sino que también el
+desempeño logrado por el modelo sea
+mejor. Y esto ocurre porque si lo
+pensáis, si trabajáramos con el modelo
+en versión secuencial, lo que estaríamos
+haciendo durante cada iteración, para
+cada nicho nuevo, sería ejecutar esta
+tarea de búsqueda, pero con el contexto
+de la búsqueda del nicho anterior,
+haciendo por tanto que para cada nicho
+nuevo que vayamos investigando, pues la
+ventana de contexto se vaya llenando con
+los resultados de las investigaciones
+anteriores y haciendo que por tanto por
+los deterioros que sabemos que tienen
+las ventanas de contexto que van
+creciendo, pues su desempeño cada vez
+vaya empeorando.
+Cuando conceptualmente entendemos esto,
+ahora podemos entender qué es esto de
+los dynamic workflows que nos propone
+Antropic, que básicamente podemos ver
+bien comparados en esta tabla. La
+diferencia entre invocar un subagente,
+que esto es una cosa que Cloud ya podía
+hacer actualmente, frente a hacer estos
+workflows dinámicos y donde la
+diferencia radica en que cuando tú
+invocas a un subagente, eso es
+simplemente cloud llamando a una
+herramienta interna y por tanto con su
+ventana de contexto viéndose afectada
+por esta orquestación que está haciendo
+y que se diferencia de estos workflows
+dinámicos en que cuando tú lanzas la
+instrucción de lo que quieres hacer y
+estamos pensando para tareas muy
+grandes, tareas muy repetitivas, tareas
+que pueden ser muy modulares. Cloud, en
+una primera instancia lo que va a
+programar es un script. Va a ser una
+versión programática de lo que tiene que
+ser la orquestación para resolver esta
+tarea. Y a partir de ese momento, ese
+script, ese código de programación que
+va a ir invocando a subentes y donde
+todo el contexto va a quedar encapsulado
+en cada ejecución que se haga, va a
+llevarse a cabo de forma programática. Y
+los resultados que vaya devolviendo,
+pues de nuevo también se van a evaluar
+de forma programática por parte del
+script que Cloud haya programado. Y esto
+hará, por tanto, que la ejecución de
+subente sea mucho más coordinada y mucho
+más escalable. por esto que decíamos de
+que los contextos no se van a
+deteriorar, no vamos a saturar esta
+ventana de trabajo, esta ventana
+operativa, la ventana de contexto. Y
+esto, pues como vemos aquí en tema de
+escalabilidad va a ser que pasemos de
+tener pues unos pocos subagentes por
+cada tarea a que de repente estos
+workflows dinámicos nos permitan
+trabajar con decenas, sino cientos de
+agentes en paralelo. Es una
+funcionalidad que creo que todavía a día
+de hoy pues no va a ser excelente, pero
+que ya está empezando a situar pues la
+infraestructura para lo que Antropic nos
+querrá ir vendiendo en los próximos
+meses. Y es que está clarísimo que la
+evolución de estos sistemas van a ser
+sistemas multiagénticos con cientos y
+cientos de agentes trabajando en
+paralelo y que aparte del modelo de
+negocio de Antropic, pues va a ir por
+ahí, que las grandes compañías
+desplieguen estos múltiples agentes y
+que estén gastando múltiples cuotas,
+pero que esto pues tenga una traslación
+en valor real. Pero a día de hoy esta es
+una funcionalidad muy muy pero muy, o
+sea, antrópicas mucho hincapié en esto,
+muy costosa, tan costosa que os tengo
+que decir que tengáis mucho cuidado
+porque los malditos, yo creo que esto lo
+acabarán cambiando, han puesto, han
+sobrecargado la palabra eh workflow
+cuando tú estás escribiendo con eh la
+activación de esta funcionalidad, porque
+como se llama dynamic workflow, ellos
+han pensado, "Qué buena palabra workflow
+que casi nadie utiliza en un contexto
+profesional, Pues seguramente nadie
+Amateur dirá, "Oye, Cloud, mejórame el
+siguiente workflow de Conf UI, ¿no?" Y
+le pasas ahí el Jason. Seguro que nadie
+va a hacer esto y por tanto nadie le va
+a dar a enter y por tanto nadie va a
+gastar pues múltiples y múltiples tokens
+en esta funcionalidad, ¿no? La verdad
+que esto es eh un peligro, un desastre,
+así que tenedlo en cuenta. Y esto es
+algo que también se puede acceder de
+esta forma de aquí, que es el modo de
+esfuerzo. Fijaos como ahora tenemos el
+selector de eh cantidad de esfuerzo del
+modelo, de cuánto queremos que razones.
+Tenemos el high, el extra high, el
+máximo que hemos dicho que no vamos a
+tocar porque realmente pues no justifica
+eh las mejoras de rendimiento, eh lo que
+nos puede costar. Pero luego hay una
+frontera, una zona muy interesante que
+pone ultra code, que es el extra high
+con este workflow activado. Y cuando le
+damos Dios, se abren las puertas del
+Nether, se activa el modo balatros y la
+verdad que tengo que pagar por ello.
+Vamos a pagar. Vamos, Anopiqueres, mi
+mayor relación tóxica. Vamos allá.
+Okay, acabo de pagar la suscripción de
+$100. Tenemos reseteada la ventana de 5
+horas, con lo cual vamos a hacer el
+experimento de ver cuánto consume el
+dynamic workflow para una tarea que
+podamos ofrecerle. Quiero decir, cómo no
+iba a pagar con semejante animación. y
+me voy a ir al proyecto de mi editor de
+vídeo, que creo que no lo tengo
+actualizado justamente en este equipo,
+pero bueno, vamos a hacer la prueba y
+vamos a activar el modo esfuerzo al
+máximo. Le damos a Oh, Dios mío, siento
+el poder. Vale, y voy a hacer esta
+prueba que recuerdo vi ayer recomendada
+por gente de Antropic como una forma de
+de empezar a probarlo y es simplemente
+que me busque los bugs críticos en mi
+proyecto. Le damos a enter.
+O sea, esto no debería pasar, ¿vale?
+Esto ha sido que ya ha pagado Tropic.
+Vale, voy a darle de nuevo a ver si
+Por Dios, voy a cerrar la terminal.
+Vamos a probar de nuevo a ver si ha sido
+un problema de caché. Probamos de nuevo.
+No entiendo nada. No entiendo nada. Qué
+mejor forma de representar lo que es
+trabajar con los modelos Danthropic que
+lo que está pasando. Es que es mi
+realidad de siempre. siempre intento
+pagar para llegar a probar alguna nueva
+funcionalidad y o me encuentro algún bug
+que acaba agotándome el uso que tengo o
+directamente no me dejan utilizarlo por
+algún bug que no me permita utilizarlo
+aún cuando he pagado.
+Pero lo estáis viendo, chicos. Plan max
+lo vemos aquí. Me voy a usage.
+Me sale que tengo sesión disponible. Le
+damos al prompt.
+No tengo límites. Hasta aquí el vídeo,
+chicos, chicas. Eh, interesante
+experimento, la verdad. Eh, sacad
+vosotros vuestras propias conclusiones.
+He empezado el vídeo un poquito enfadado
+por Antropic por lo que he comentado
+antes, y acabo el vídeo un poquito
+enfadado con Antropic por haber pagado
+algo que no puedo usar ni os puedo
+enseñar en el vídeo, que al final era la
+finalidad de lo que buscaba. Buenas, por
+aquí Carlos del futuro informando que
+tras un rato peleándome con la terminal,
+he conseguido arrancar el comando
+Dynamic Workflow y os lo estaré
+enseñando en un extra que subiré los
+próximos días para contaros mis
+impresiones de su funcionamiento. Cambio
+corto. En cualquier caso, estos son
+books, lo importante son los modelos.
+¿Cómo encontráis vosotros que trabajáis
+con este nuevo OPPO 4.8? Dejámelo abajo
+en comentarios vuestra experiencia. que
+al final ya sabéis que con 24 horas, 48
+horas, hasta que no pasen los días, no
+podemos sacar conclusiones en claro de
+qué tan bueno es este modelo. Pero
+bueno, estos son las conclusiones que yo
+os puedo trasladar. Tenéis por aquí un
+par de vídeos que podéis ojear, chicos y
+chicas, y nos vemos con más inteligencia
+artificial en el próximo vídeo.

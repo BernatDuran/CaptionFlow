@@ -1,31 +1,35 @@
 # CaptionFlow
 
-CaptionFlow es una webapp local para convertir vídeos de YouTube en documentos Markdown útiles: resúmenes, análisis, guías paso a paso, diagramas Mermaid y exportaciones en PDF.
+CaptionFlow es una webapp local para convertir videos de YouTube en documentos Markdown utiles: resumenes, analisis, guias paso a paso, transcripciones cacheadas, diagramas Mermaid, exportaciones PDF y analitica de uso.
 
-La aplicación combina React + Vite en el frontend, Express en el backend, `yt-dlp` para obtener subtítulos/transcripciones y proveedores de IA configurables para generar el documento final. Todo se guarda en el sistema de archivos local, sin base de datos.
+La aplicacion funciona sin base de datos. Guarda resultados, metadatos, transcripciones y diagramas en disco, dentro de una ruta configurable.
 
-## Qué Hace
+## Caracteristicas
 
-- Procesa URLs de YouTube normales, `youtu.be` y Shorts.
-- Extrae metadatos del vídeo: título, canal, duración, fecha e ID.
-- Descarga subtítulos oficiales si existen y usa subtítulos automáticos como fallback.
-- Cachea transcripciones por vídeo para no repetir llamadas a `yt-dlp`.
-- Genera documentos Markdown con prompts editables.
-- Permite usar un prompt personalizado desde la UI sin modificar archivos.
-- Genera diagramas Mermaid desde documentos ya creados.
-- Muestra historial agrupado por vídeo, con filtros por canal, mes, modelo y diagramas.
-- Permite abrir resultados antiguos, ver la transcripción original y ver el prompt usado.
+- Procesa URLs de YouTube, enlaces `youtu.be` y Shorts.
+- Extrae metadatos del video: titulo, canal, duracion, fecha e ID.
+- Usa `yt-dlp` para descargar subtitulos oficiales o automaticos.
+- Cachea transcripciones por video para no repetir descargas.
+- Genera documentos Markdown mediante prompts configurables.
+- Permite editar prompts desde la UI y usar prompts personalizados puntuales.
+- Soporta OpenAI, Google Gemini y Nano-GPT.
+- Gestiona modelos por proveedor y limites de contexto.
+- Usa troceado adaptativo para videos largos.
 - Exporta resultados como Markdown y PDF.
-- Registra métricas de uso: tokens, duración, proveedor/modelo, chunking y runs de diagramas.
+- Genera diagramas Mermaid desde documentos ya creados.
+- Muestra historial con busqueda, filtros y agrupacion por video.
+- Incluye un dashboard analitico con KPIs, filtros, graficos configurables, leyendas, agrupacion del scatterplot y metricas de tokens/tiempo.
+- Permite elegir la ruta raiz de almacenamiento desde configuracion.
 
 ## Stack
 
 - Frontend: React 19, Vite 6, TypeScript.
 - Backend: Express 5, TypeScript, `tsx`.
 - IA: OpenAI, Google Gemini y Nano-GPT.
-- Extracción YouTube: `yt-dlp`.
+- YouTube/transcripciones: `yt-dlp`.
 - Markdown: `react-markdown`, `remark-gfm`, `marked`.
 - PDF: `pdfkit`.
+- Graficos: ECharts.
 - Diagramas: Mermaid.
 
 ## Requisitos
@@ -33,23 +37,23 @@ La aplicación combina React + Vite en el frontend, Express en el backend, `yt-d
 - Node.js 20 o superior.
 - npm.
 - `yt-dlp` instalado en el `PATH` o disponible como binario local en `bin/yt-dlp.exe`.
-- Una API key del proveedor de IA que quieras usar.
+- Una API key para al menos un proveedor de IA.
 
-## Instalación
+## Instalacion
 
 ```bash
 npm ci
 ```
 
-Si no tienes `package-lock.json` actualizado o prefieres instalación flexible:
+Si necesitas una instalacion flexible:
 
 ```bash
 npm install
 ```
 
-## Configuración
+## Configuracion de entorno
 
-Copia `.env.example` a `.env` y rellena las claves que necesites:
+Copia `.env.example` a `.env` y rellena las claves que vayas a usar:
 
 ```env
 ACTIVE_PROVIDER=openai
@@ -57,7 +61,7 @@ OPENAI_API_KEY=
 GOOGLE_API_KEY=
 NANOGPT_API_KEY=
 
-# Alias también soportados:
+# Alias tambien soportados:
 # GEMINI_API_KEY=
 # NANO_GPT_API_KEY=
 
@@ -73,15 +77,7 @@ CHUNK_SIZE_CHARS=22000
 - `google`
 - `nanogpt`
 
-Las API keys solo se leen en backend. El frontend únicamente recibe si un proveedor está configurado o no.
-
-La app guarda preferencias no sensibles en:
-
-```text
-config/local.settings.json
-```
-
-Ahí se guardan el proveedor activo, modelos seleccionados, filtros de contexto, chunking adaptativo y ruta local de almacenamiento. Este archivo está ignorado por Git.
+Las API keys solo se leen en backend. El frontend recibe un estado de configuracion, pero no las claves.
 
 ## Instalar yt-dlp
 
@@ -97,21 +93,21 @@ Con Windows:
 winget install yt-dlp.yt-dlp
 ```
 
-Comprueba la instalación:
+Comprueba que esta disponible:
 
 ```bash
 yt-dlp --version
 ```
 
-CaptionFlow también busca primero un binario local:
+CaptionFlow tambien busca un binario local en:
 
 ```text
 bin/yt-dlp.exe
 ```
 
-Ese binario está ignorado por Git.
+Ese binario esta ignorado por Git.
 
-## Ejecutar en Local
+## Ejecutar en local
 
 ```bash
 npm run dev
@@ -129,7 +125,7 @@ La API escucha por defecto en:
 http://localhost:8787
 ```
 
-También hay un lanzador Windows:
+Tambien hay un lanzador Windows:
 
 ```text
 iniciar_captionflow.bat
@@ -138,27 +134,67 @@ iniciar_captionflow.bat
 ## Scripts
 
 ```bash
-npm run dev        # Frontend Vite + backend Express en modo desarrollo
+npm run dev        # Frontend Vite + backend Express
 npm run dev:client # Solo frontend
 npm run dev:server # Solo backend con watch
 npm run typecheck  # TypeScript sin emitir build
-npm test           # Tests Node/tsx
+npm test           # Tests
 npm run build      # TypeScript + build Vite
-npm start          # Arranca el servidor compilado
+npm start          # Ejecuta el servidor compilado
 ```
 
-## Flujo de Uso
+## Ruta de almacenamiento
+
+Por defecto, si no configuras nada, CaptionFlow usa:
+
+```text
+output/
+```
+
+Desde la UI puedes abrir Configuracion y definir la **Ruta raiz de almacenamiento**. Esa ruta es la carpeta base donde la app lee y escribe:
+
+```text
+output/
+  results/      # Markdown generado y .meta.json
+  transcripts/  # cache y transcripciones por video
+  diagrams/     # diagramas Mermaid .mmd
+  analysis/     # archivos de analisis/exportaciones auxiliares
+```
+
+El archivo local de preferencias se guarda en:
+
+```text
+config/local.settings.json
+```
+
+Ese archivo esta ignorado por Git porque contiene preferencias de maquina, como proveedor activo, modelo elegido, ruta local y si la analitica esta activada.
+
+## Ejemplos incluidos
+
+Este repositorio incluye documentacion de ejemplo en `output/`: resultados Markdown, metadatos, transcripciones cacheadas, diagramas Mermaid y archivos de analisis.
+
+Para ver esos ejemplos al clonar:
+
+1. Arranca la app con `npm run dev`.
+2. Abre Configuracion.
+3. En **Ruta raiz de almacenamiento**, indica la ruta absoluta a la carpeta `output` del repositorio clonado.
+4. Activa la analitica si quieres ver el dashboard.
+5. Vuelve a la pantalla principal: el historial y la analitica leeran los ejemplos ya calculados.
+
+Si ejecutas la app desde la raiz del repo y no tienes otra ruta guardada en `config/local.settings.json`, la ruta por defecto ya apunta a `output/`.
+
+## Flujo de uso
 
 1. Pega una URL de YouTube.
 2. Elige un prompt de procesamiento.
-3. Opcionalmente edita el prompt para esa ejecución.
-4. CaptionFlow valida URL, proveedor, modelo y API key.
-5. `yt-dlp` obtiene metadatos y subtítulos.
-6. Si ya existe cache para ese vídeo, reutiliza la transcripción.
-7. Si el vídeo es largo, la app puede trocear la transcripción y resumir partes.
+3. Opcionalmente personaliza el prompt para esa ejecucion.
+4. La app valida URL, proveedor, modelo, API key y limites de contexto.
+5. `yt-dlp` obtiene metadatos y subtitulos.
+6. Si existe cache de transcripcion para ese video, la reutiliza.
+7. Si el video es largo, se aplica troceado fijo o adaptativo.
 8. El backend llama al proveedor/modelo activo.
-9. El resultado se guarda como Markdown junto con metadatos `.meta.json`.
-10. Desde la UI puedes copiar, descargar Markdown/PDF, ver prompt, ver transcripción o generar diagramas.
+9. El resultado se guarda como Markdown y `.meta.json`.
+10. Desde la UI puedes abrir, copiar, descargar Markdown/PDF, ver prompt, ver transcripcion o generar diagramas.
 
 ## Prompts
 
@@ -173,22 +209,22 @@ Cada prompt es un Markdown con frontmatter:
 ```md
 ---
 name: "Resumen ejecutivo"
-description: "Genera un resumen claro y estructurado del vídeo"
+description: "Genera un resumen claro y estructurado del video"
 output_filename_prefix: "resumen"
 temperature: 0.3
 ---
 
-Contenido del prompt aquí...
+Contenido del prompt...
 ```
 
-Campos:
+Campos principales:
 
 - `name`: nombre visible en la UI.
-- `description`: ayuda contextual.
-- `output_filename_prefix`: prefijo usado para el archivo generado.
+- `description`: descripcion breve.
+- `output_filename_prefix`: prefijo del archivo generado.
 - `temperature`: temperatura enviada al proveedor IA.
 
-Los prompts se pueden crear, editar y eliminar desde la pestaña `Prompts` del modal de configuración. La app también admite un prompt personalizado puntual desde la pantalla principal.
+Los prompts se pueden crear, editar y eliminar desde la pestana **Prompts** del modal de configuracion.
 
 ## Diagramas Mermaid
 
@@ -198,144 +234,71 @@ Los prompts de diagramas viven en:
 prompts/diagrams/
 ```
 
-Incluye plantillas para:
+Incluyen plantillas para:
 
-- `flowchart.md`
-- `mindmap.md`
-- `timeline.md`
-- `sequence.md`
+- Flowchart.
+- Mindmap.
+- Timeline.
+- Sequence diagram.
 
-Ejemplo:
+Los diagramas generados se guardan como `.mmd` en `output/diagrams/`. Si ya existe un diagrama para un documento, la UI permite abrir el existente o generar uno nuevo.
 
-```md
----
-name: "Diagrama de flujo"
-description: "Genera un flowchart Mermaid claro y robusto"
-output_filename_prefix: "flowchart"
-diagram_type: "flowchart TD"
-temperature: 0.2
----
+## Historial
 
-Genera solo código Mermaid válido...
-```
+El historial se reconstruye leyendo los archivos guardados en disco. Permite:
 
-Los diagramas se guardan como `.mmd` en la carpeta de salida. Si intentas generar un diagrama de un tipo ya existente, la UI permite abrir el existente o regenerarlo.
-
-## Historial y Exportación
-
-El historial se construye leyendo los archivos guardados en disco. Permite:
-
-- Agrupar documentos por vídeo.
-- Filtrar por canal, mes, modelo y existencia de diagrama.
-- Buscar por título.
+- Agrupar documentos por video.
+- Filtrar por canal, mes, modelo y diagramas.
+- Buscar por titulo.
 - Abrir resultados antiguos.
-- Descargar Markdown.
-- Descargar PDF.
-- Ver la transcripción original.
-- Ver el prompt usado para generar el documento.
-- Consultar métricas de tokens y duración.
+- Descargar Markdown o PDF.
+- Ver la transcripcion original.
+- Ver el prompt usado.
+- Ver metadatos de proveedor, modelo, tokens, duracion y chunking.
 
-## Almacenamiento
+## Analitica
 
-Por defecto, CaptionFlow escribe en:
+La vista analitica se activa desde Configuracion. Lee los metadatos de `output/results/*.meta.json` y genera un dataset local.
 
-```text
-output/
-  transcripts/
-    cache/
-    by-video/
-  results/
-  diagrams/
-```
+Incluye:
 
-Contenido:
+- KPIs compactos: tokens, tiempo total, tiempo medio de proceso, duracion media, palabras input/output, documentos y diagramas.
+- Filtros por tipo, canal, proveedor, modelo, prompt, video/documento y mes.
+- Barras verticales y horizontales con dimension, metrica, leyenda y agregacion configurables.
+- Scatterplot con eje X, eje Y, agrupacion de puntos, leyenda y agregacion.
+- Heatmap con doble dimension y escala de intensidad.
+- Pie chart para distribuciones.
+- Click en graficos para filtrar.
+- Modelos mostrados sin prefijo de proveedor, por ejemplo `alibaba/qwen3.6-27b` se muestra como `qwen3.6-27b`.
 
-- `output/transcripts/cache`: cache JSON por ID de vídeo.
-- `output/transcripts/by-video`: transcripciones canónicas con metadatos.
-- `output/results`: documentos `.md` y metadatos `.meta.json`.
-- `output/diagrams`: diagramas Mermaid `.mmd`.
+Notas sobre conteos:
 
-Desde configuración puedes cambiar la ruta raíz de almacenamiento. Si defines `outputRootDir`, todas esas subcarpetas se crean en el nuevo destino.
-
-`output/` está ignorado por Git.
-
-## Proveedores y Modelos
-
-Proveedores soportados:
-
-- OpenAI.
-- Google Gemini.
-- Nano-GPT.
-
-Los modelos se listan desde backend:
-
-- OpenAI: intenta consultar `/v1/models` si hay API key y filtra modelos de texto.
-- Gemini: consulta la API de modelos compatibles con `generateContent`.
-- Nano-GPT: consulta el catálogo detallado de modelos si hay API key.
-- Si una consulta falla o falta API key, usa fallbacks de `src/server/config/modelCatalog.ts`.
-
-El frontend no mantiene modelos hardcodeados. El modal de configuración permite:
-
-- Cambiar proveedor activo.
-- Elegir modelo por proveedor.
-- Filtrar por contexto mínimo.
-- Activar/desactivar chunking adaptativo.
-- Recargar `.env` sin reiniciar manualmente el proceso.
-
-## Transcripciones Largas y Chunking
-
-CaptionFlow estima límites usando tokens de contexto conocidos del modelo. Si el documento cabe, envía la transcripción completa al prompt final.
-
-Si la transcripción es demasiado larga:
-
-- Con chunking adaptativo activado, calcula el tamaño de cada parte según el contexto real del modelo.
-- Resume partes en paralelo con un límite de concurrencia interno.
-- Genera el documento final a partir de los resúmenes intermedios.
-- Guarda en metadatos si hubo chunking, cuántas partes se usaron y qué estrategia se aplicó.
-
-Si un modelo no tiene límites conocidos, la UI pide confirmación antes de continuar.
-
-## API Local
-
-Endpoints principales:
-
-```text
-GET    /api/providers
-GET    /api/models?provider=openai|google|nanogpt
-GET    /api/prompts
-POST   /api/prompts
-DELETE /api/prompts/:id
-GET    /api/diagram-prompts
-GET    /api/settings
-POST   /api/settings
-POST   /api/restart
-POST   /api/process
-GET    /api/process/:jobId
-GET    /api/history
-GET    /api/results/:filename
-GET    /api/results/:filename/prompt
-GET    /api/results/:filename/transcript
-GET    /api/download/:filename
-GET    /api/pdf/:filename
-POST   /api/diagram
-GET    /api/diagram/:filename
-```
-
-Los trabajos de procesamiento viven en memoria. Si reinicias el backend, se pierden los jobs activos, pero los resultados ya escritos en disco siguen disponibles.
+- Un elemento del historial puede generar varias filas analiticas internas: total del proceso, documento y, si aplica, diagrama.
+- Por defecto la vista muestra el total del proceso.
 
 ## Seguridad
 
-- `.env`, `config/local.settings.json`, `output`, `dist`, `node_modules` y binarios locales están en `.gitignore`.
-- Las API keys nunca se envían al frontend.
-- El frontend de desarrollo y la API escuchan por defecto en `127.0.0.1`, no en toda la red local.
-- CORS solo permite orígenes locales de desarrollo.
-- `yt-dlp` se ejecuta con `spawn` y argumentos separados, sin concatenar comandos.
-- Las rutas de descarga se restringen a archivos generados.
-- Las rutas internas de transcripciones se resuelven dentro de la carpeta de almacenamiento configurada.
-- Los nombres de archivo se sanitizan.
-- El backend no necesita login porque está pensado para uso local.
+- No subas `.env`; esta ignorado por Git.
+- No subas `config/local.settings.json`; contiene preferencias locales.
+- Las API keys no se exponen al frontend.
+- `yt-dlp.exe`, `dist/`, `node_modules/` y caches locales estan ignorados.
+- El contenido de `output/` incluido en este repo son ejemplos ya calculados. Si generas contenido privado, revisalo antes de publicarlo.
 
-## Tests
+## Estructura principal
+
+```text
+src/
+  analytics/        # utilidades y tests de analitica
+  components/       # UI React
+  server/           # API Express, procesamiento, IA, archivos
+  shared/           # tipos compartidos
+prompts/            # prompts de documento
+prompts/diagrams/   # prompts de diagramas
+output/             # ejemplos generados incluidos en el repo
+config/             # configuracion local ignorada
+```
+
+## Validacion antes de publicar
 
 ```bash
 npm run typecheck
@@ -343,11 +306,4 @@ npm test
 npm run build
 ```
 
-## Limitaciones
-
-- No hay autenticación ni multiusuario.
-- No hay base de datos.
-- Los jobs activos son volátiles.
-- Depende de que YouTube exponga subtítulos oficiales o automáticos.
-- La calidad del resultado depende del prompt y del modelo activo.
-- Los PDF son exportaciones generadas desde Markdown; no son documentos maquetados a mano.
+`npm run build` puede mostrar avisos de chunks grandes por Mermaid/ECharts. No bloquean el build.

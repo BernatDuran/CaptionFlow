@@ -1,0 +1,70 @@
+flowchart TD
+    subgraph Inicio ["Inicio: Estrategias Productividad"]
+        A["Inicio: Estrategias Productividad"]
+    end
+
+    subgraph Mentalidad ["Mentalidad de Trabajo"]
+        B["Accion sobre motivacion"]
+        C["No existen atajos"]
+        D["Trabajo no es dolor"]
+        E["Grandes volumenes de trabajo"]
+    end
+
+    subgraph Tacticas ["Tacticas de Ejecucion"]
+        F["Iniciar tareas inmediatamente"]
+        G["Usar bucles abiertos"]
+        H["Consistencia diaria"]
+        I["Efecto Zeigarnik"]
+    end
+
+    subgraph Blueprint ["Blueprint Dia Bueno"]
+        J["Trabajo valioso"]
+        K["Ejercicio fisico"]
+        L["Personas agradables"]
+    end
+
+    subgraph Referencias ["Referencias Clave"]
+        M["David Goggins"]
+        N["Tim Ferriss"]
+        O["Efecto Zeigarnik"]
+        P["Modern Wisdom"]
+    end
+
+    subgraph Resultados ["Resultados Esperados"]
+        Q["Exito y Satisfaccion"]
+        R["Felicidad: Dias buenos"]
+        S["Martes promedio ideal"]
+    end
+
+    subgraph Leyenda ["Leyenda"]
+        T["Rectangulo: Concepto"]
+        U["Subgrafo: Tema"]
+    end
+
+    A --> B
+    A --> F
+    A --> H
+    A --> J
+
+    B --> F
+    C --> M
+    D --> Q
+    E --> Q
+
+    F --> H
+    G --> I
+    H --> S
+    S --> Q
+
+    J --> R
+    K --> R
+    L --> R
+    R --> Q
+
+    M --> C
+    N --> S
+    O --> G
+    P --> A
+
+    T -.-> A
+    U -.-> Mentalidad

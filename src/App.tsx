@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { AlertCircle, AlertTriangle, Loader2, Settings } from "lucide-react";
+import { AlertCircle, AlertTriangle, BarChart3, Loader2, Settings } from "lucide-react";
 import { ProcessingStatus, type StatusStep } from "./components/ProcessingStatus";
 import { PromptSelector, type PromptSummary } from "./components/PromptSelector";
 import { ResultPreview, type ProcessResult } from "./components/ResultPreview";
 import { SettingsModal } from "./components/SettingsModal";
+import { AnalyticsDashboard } from "./components/AnalyticsDashboard";
 import { formatModelDisplayId, type ProviderId } from "./components/ModelCombobox";
 import { HistoryPanel, type HistoryItem } from "./components/HistoryPanel";
 import { DiagramModal } from "./components/DiagramModal";
@@ -85,6 +86,8 @@ export function App() {
   const [prompts, setPrompts] = useState<PromptSummary[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState("");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [activeView, setActiveView] = useState<"main" | "analytics">("main");
+  const [isAnalyticsEnabled, setIsAnalyticsEnabled] = useState(false);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<StatusStep | "Completado" | "Error" | "">("");
@@ -117,7 +120,8 @@ export function App() {
   useEffect(() => {
     async function loadActiveProvider() {
       try {
-        const data = await apiFetch<{ providers: {id: ProviderId, name: string}[], activeProvider: ProviderId, selectedModels: Record<string, string> }>("/api/providers");
+        const data = await apiFetch<{ providers: {id: ProviderId, name: string}[], activeProvider: ProviderId, selectedModels: Record<string, string>, analyticsEnabled?: boolean }>("/api/providers");
+        setIsAnalyticsEnabled(Boolean(data.analyticsEnabled));
         const provider = data.providers.find((p) => p.id === data.activeProvider);
         const modelId = data.selectedModels[data.activeProvider];
         if (provider && modelId) {
@@ -135,6 +139,12 @@ export function App() {
     }
     void loadActiveProvider();
   }, [isSettingsOpen]);
+
+  useEffect(() => {
+    if (!isAnalyticsEnabled && activeView === "analytics") {
+      setActiveView("main");
+    }
+  }, [activeView, isAnalyticsEnabled]);
 
   function loadPrompts() {
     setIsLoadingPrompts(true);
@@ -427,10 +437,27 @@ export function App() {
 
   return (
     <main className="app-shell">
-      <button className="icon-button settings-button" type="button" aria-label="Abrir configuracion" onClick={() => setIsSettingsOpen(true)}>
-        <Settings size={20} />
-      </button>
+      {activeView !== "analytics" ? (
+        <div className="top-action-buttons">
+          {isAnalyticsEnabled ? (
+            <button
+              className="icon-button"
+              type="button"
+              aria-label="Abrir analitica"
+              onClick={() => setActiveView("analytics")}
+            >
+              <BarChart3 size={20} />
+            </button>
+          ) : null}
+          <button className="icon-button" type="button" aria-label="Abrir configuracion" onClick={() => setIsSettingsOpen(true)}>
+            <Settings size={20} />
+          </button>
+        </div>
+      ) : null}
 
+      {activeView === "analytics" && isAnalyticsEnabled ? (
+        <AnalyticsDashboard onBack={() => setActiveView("main")} />
+      ) : (
       <section className="workspace">
         <div className="title-block">
           <h1>CaptionFlow</h1>
@@ -501,6 +528,7 @@ export function App() {
           diagramFilename={diagramFilename}
         />
       </section>
+      )}
 
       {result ? (
         <ResultPreview
@@ -594,6 +622,7 @@ export function App() {
         <SettingsModal 
           onClose={() => setIsSettingsOpen(false)} 
           onPromptsChanged={loadPrompts}
+          onSettingsChanged={(settings) => setIsAnalyticsEnabled(Boolean(settings.analyticsEnabled))}
         />
       ) : null}
       {diagramFilename ? (

@@ -1,0 +1,112 @@
+{
+  "provider": "nanogpt",
+  "model": "alibaba/qwen3.6-27b",
+  "promptId": "03_paso_a_paso_profundo",
+  "promptName": "Paso a paso profundo",
+  "resultFilename": "paso_a_paso_profundo-2026-05-24t11-05-12-675z.md",
+  "transcriptRef": "by-video/cxsr69rkplk.en-orig.automatic.txt",
+  "transcriptHash": "df272f8025bdf40f463eacbd065aace448e287142df2aab4d22ef4c2aea954c5",
+  "processedAt": "2026-05-24T11:05:12.675Z",
+  "title": "You can have everything you want in 90 days",
+  "videoTitle": "You can have everything you want in 90 days",
+  "videoUrl": "https://www.youtube.com/watch?v=cxsr69rkPLk",
+  "videoId": "cxsr69rkPLk",
+  "channelName": "MoreMozi",
+  "durationSeconds": 599,
+  "durationText": "9:59",
+  "uploadDate": "20250926",
+  "transcriptLanguage": "en-orig",
+  "transcriptSource": "automatic",
+  "transcriptCached": true,
+  "transcriptWords": 2069,
+  "transcriptChars": 10629,
+  "outputWords": 1802,
+  "chunked": false,
+  "chunks": 1,
+  "aiRuns": [
+    {
+      "runId": "e54241ac-3c29-4502-bc5b-a6b086aeb53a",
+      "operation": "yt_dlp_info",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-23T20:33:05.198Z",
+      "finishedAt": "2026-05-23T20:33:10.753Z",
+      "durationMs": 5555,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "33e5fa3a-9c67-4d6e-97e1-4b5b76bc6094",
+      "operation": "yt_dlp_captions",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-23T20:33:10.753Z",
+      "finishedAt": "2026-05-23T20:33:17.308Z",
+      "durationMs": 6555,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "0ac5a730-0002-49f6-95db-dd14523d25fe",
+      "operation": "document_generation",
+      "scope": "document",
+      "provider": "nanogpt",
+      "model": "alibaba/qwen3.6-27b",
+      "promptId": "03_paso_a_paso_profundo",
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-24T11:05:12.678Z",
+      "finishedAt": "2026-05-24T11:06:13.333Z",
+      "durationMs": 60655,
+      "inputTokens": 3188,
+      "outputTokens": 3075,
+      "totalTokens": 6263,
+      "cachedInputTokens": 0,
+      "reasoningTokens": 0,
+      "usageSource": "provider_reported"
+    }
+  ],
+  "usageTotals": {
+    "document": {
+      "inputTokens": 3188,
+      "outputTokens": 3075,
+      "totalTokens": 6263,
+      "durationMs": 60655,
+      "unavailableUsageRuns": 0
+    },
+    "diagrams": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 0,
+      "unavailableUsageRuns": 0
+    },
+    "transcript": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 12110,
+      "unavailableUsageRuns": 0
+    },
+    "all": {
+      "inputTokens": 3188,
+      "outputTokens": 3075,
+      "totalTokens": 6263,
+      "durationMs": 72765,
+      "unavailableUsageRuns": 0
+    }
+  },
+  "latestDiagramRuns": {}
+}

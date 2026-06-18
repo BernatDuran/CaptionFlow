@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AlertCircle, Check, ChevronDown, Info, KeyRound, RefreshCw, X, Settings2, FileText, Sliders, FolderOpen } from "lucide-react";
+import { AlertCircle, BarChart3, Check, ChevronDown, Info, KeyRound, RefreshCw, X, Settings2, FileText, Sliders, FolderOpen } from "lucide-react";
 import { ModelCombobox, type ModelOption } from "./ModelCombobox";
 import { PromptsSettings } from "./PromptsSettings";
 import { useModalClose } from "./useModalClose";
@@ -18,11 +18,13 @@ type Settings = {
   adaptiveChunkingEnabled?: boolean;
   minimumModelContextTokens?: number;
   outputRootDir?: string;
+  analyticsEnabled?: boolean;
 };
 
 type SettingsModalProps = {
   onClose: () => void;
   onPromptsChanged?: () => void;
+  onSettingsChanged?: (settings: Settings) => void;
 };
 
 type ProvidersResponse = {
@@ -32,6 +34,7 @@ type ProvidersResponse = {
   adaptiveChunkingEnabled?: boolean;
   minimumModelContextTokens?: number;
   outputRootDir?: string;
+  analyticsEnabled?: boolean;
 };
 
 const CONTEXT_PRESETS = [4000, 8000, 16000, 32000, 64000, 128000, 256000];
@@ -130,7 +133,7 @@ async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
   return payload as T;
 }
 
-export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps) {
+export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: SettingsModalProps) {
   const [activeTab, setActiveTab] = useState<"models" | "prompts" | "general" | "storage">("models");
   const [providers, setProviders] = useState<Provider[]>([]);
   const [models, setModels] = useState<ModelOption[]>([]);
@@ -140,9 +143,11 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
   const [restarted, setRestarted] = useState(false);
   const [isRestarting, setIsRestarting] = useState(false);
   const [isChunkingInfoOpen, setIsChunkingInfoOpen] = useState(false);
+  const [isAnalyticsConfirmOpen, setIsAnalyticsConfirmOpen] = useState(false);
 
   const { handleBackdropClick } = useModalClose(onClose);
   const { handleBackdropClick: handleChunkingInfoBackdropClick } = useModalClose(() => setIsChunkingInfoOpen(false), isChunkingInfoOpen);
+  const { handleBackdropClick: handleAnalyticsConfirmBackdropClick } = useModalClose(() => setIsAnalyticsConfirmOpen(false), isAnalyticsConfirmOpen);
 
   function applyProvidersResponse(data: ProvidersResponse) {
     setProviders(data.providers);
@@ -151,7 +156,8 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
       selectedModels: data.selectedModels,
       adaptiveChunkingEnabled: data.adaptiveChunkingEnabled ?? true,
       minimumModelContextTokens: data.minimumModelContextTokens ?? 4000,
-      outputRootDir: data.outputRootDir ?? ""
+      outputRootDir: data.outputRootDir ?? "",
+      analyticsEnabled: data.analyticsEnabled ?? false
     });
   }
 
@@ -227,8 +233,7 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
     );
   }, [filteredModels, settings]);
 
-  async function handleSave() {
-    if (!settings) return;
+  async function saveSettings(nextSettings: Settings) {
     setError("");
     setSaved(false);
     setRestarted(false);
@@ -237,14 +242,38 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
       const data = await apiFetch<Settings>("/api/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings)
+        body: JSON.stringify(nextSettings)
       });
       setSettings(data);
+      onSettingsChanged?.(data);
       setSaved(true);
       window.setTimeout(() => setSaved(false), 1800);
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo guardar la configuracion.");
     }
+  }
+
+  async function handleSave() {
+    if (!settings) return;
+    await saveSettings(settings);
+  }
+
+  function handleAnalyticsToggle(checked: boolean) {
+    if (!settings) return;
+    if (checked && !settings.analyticsEnabled) {
+      setIsAnalyticsConfirmOpen(true);
+      return;
+    }
+
+    setSettings((current) => (current ? { ...current, analyticsEnabled: checked } : current));
+  }
+
+  async function confirmAnalyticsEnabled() {
+    if (!settings) return;
+    const nextSettings = { ...settings, analyticsEnabled: true };
+    setIsAnalyticsConfirmOpen(false);
+    setSettings(nextSettings);
+    await saveSettings(nextSettings);
   }
 
   async function handleRestart() {
@@ -336,6 +365,21 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
                 <div className="settings-grid">
                   {activeTab === "general" ? (
                     <>
+                      <div className="settings-option-card" style={{ marginTop: "24px" }}>
+                        <div>
+                          <strong>Analitica de datos</strong>
+                          <span>Activa el dashboard local con filtros, metricas y graficos personalizados.</span>
+                        </div>
+                        <label className="settings-switch">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(settings.analyticsEnabled)}
+                            onChange={(event) => handleAnalyticsToggle(event.target.checked)}
+                          />
+                          <span>Habilitar analitica de datos</span>
+                        </label>
+                      </div>
+
                       <div className="restart-card" style={{ marginTop: "24px" }}>
                         <div>
                           <strong>Reiniciar configuracion</strong>
@@ -499,6 +543,29 @@ export function SettingsModal({ onClose, onPromptsChanged }: SettingsModalProps)
             <div className="confirm-actions">
               <button className="primary-button subtle-primary-button compact-button" type="button" onClick={() => setIsChunkingInfoOpen(false)}>
                 Entendido
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
+      {isAnalyticsConfirmOpen ? (
+        <div className="modal-backdrop nested-backdrop" role="dialog" aria-modal="true" aria-label="Habilitar analitica de datos" onClick={handleAnalyticsConfirmBackdropClick}>
+          <section className="confirm-modal analytics-confirm-modal">
+            <h2>
+              <span className="process-confirm-icon" aria-hidden="true">
+                <BarChart3 size={18} />
+              </span>
+              Habilitar analitica
+            </h2>
+            <p>
+              CaptionFlow usara los metadatos locales de resultados, documentos y diagramas para construir dashboards. No se enviaran datos a servicios externos.
+            </p>
+            <div className="confirm-actions">
+              <button className="secondary-button" type="button" onClick={() => setIsAnalyticsConfirmOpen(false)}>
+                Cancelar
+              </button>
+              <button className="primary-button subtle-primary-button compact-button" type="button" onClick={() => void confirmAnalyticsEnabled()}>
+                Habilitar
               </button>
             </div>
           </section>

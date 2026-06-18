@@ -36,6 +36,7 @@ export type LocalSettings = {
   adaptiveChunkingEnabled?: boolean;
   minimumModelContextTokens?: number;
   outputRootDir?: string;
+  analyticsEnabled?: boolean;
 };
 
 export type GenerateTextInput = {

@@ -1,0 +1,48 @@
+flowchart TD
+A["Traducción en Tiempo Real"]
+subgraph S1["Método Google"]
+B["OS: Android e iPhone"]
+C["Auriculares: Cualquier inalámbrico"]
+D["Idiomas: Más de 70"]
+E["Requisito: Internet y País"]
+F["Modos: Escucha y Conversación"]
+G["Futuro: Modo Offline"]
+end
+subgraph S2["Método Apple"]
+H["OS: iOS 26"]
+I["Auriculares: AirPods Específicos"]
+J["iPhone: 15 Pro o superior"]
+K["Idiomas: Aproximadamente 12"]
+L["Activación: Pulsar ambos auriculares"]
+end
+subgraph S3["Casos de Uso"]
+M["Viajes y Turismo"]
+N["Familia y Social"]
+O["Trabajo y Networking"]
+P["Consumo de Contenido"]
+end
+subgraph S4["Conclusión"]
+Q["Google: Más accesible"]
+R["Apple: Integración Hardware"]
+S["Dependencia: Internet actual"]
+end
+T["Leyenda: Izq Google, Der Apple"]
+A --> B
+A --> H
+A --> M
+A --> Q
+B --> C
+B --> D
+B --> E
+B --> F
+B --> G
+H --> I
+H --> J
+H --> K
+H --> L
+M --> N
+M --> O
+M --> P
+Q --> R
+Q --> S
+A -.-> T

@@ -1,0 +1,66 @@
+flowchart TD
+    Legend["Leyenda"]
+    Legend --> L1["Nivel: Herramienta"]
+    Legend --> L2["Concepto / Dato"]
+    Legend --> L3["Resultado / Acción"]
+
+    Start["Inicio: Sistema de Productividad IA"] --> Problem["Problema: IA sin sistema"]
+    Problem --> MIT["Estudio MIT Media Lab"]
+    MIT --> Effect["Pérdida capacidad cognitiva"]
+
+    Start --> L1_N1["Nivel 1: Cimientos"]
+    L1_N1 --> Tool1["Notebook LM"]
+    Tool1 --> Concept1["Anclar conocimiento"]
+    Concept1 --> Data1["Fuentes verificables"]
+    Data1 --> Result1["Evitar alucinaciones"]
+
+    Start --> L1_N2["Nivel 2: Profundidad"]
+    L1_N2 --> Tool2["Gemini"]
+    Tool2 --> Concept2["Gran ventana contexto"]
+    Concept2 --> Data2["2 millones tokens"]
+    Data2 --> Result2["Analizar patrones complejos"]
+
+    Start --> L1_N3["Nivel 3: Especialización"]
+    L1_N3 --> Tool3["GEMs"]
+    Tool3 --> Concept3["Asistentes especializados"]
+    Concept3 --> Data3["Retención de contexto"]
+    Data3 --> Result3["Tareas recurrentes"]
+
+    Start --> L1_N4["Nivel 4: Ejecución"]
+    L1_N4 --> Tool4["Google Workspace"]
+    Tool4 --> Concept4["Integración nativa"]
+    Concept4 --> Data4["Docs, Slides, Sheets"]
+    Data4 --> Result4["Entregables editables"]
+
+    Result1 --> Integration["Flujo Integrado"]
+    Result2 --> Integration
+    Result3 --> Integration
+    Result4 --> Integration
+
+    Integration --> Example["Ejemplo Práctico"]
+    Example --> Task["Auditoría Atención al Cliente"]
+    Task --> Input1["10.000 registros incidencias"]
+    Task --> Input2["200 transcripciones"]
+    Input1 --> Output["Procesado < 15 min"]
+    Input2 --> Output
+    Output --> Source["Fuente: Paper Derekchain"]
+
+    Integration --> Sponsor["Sección Patrocinada"]
+    Sponsor --> Brand["Internex"]
+    Brand --> Feature1["Almacenamiento nube"]
+    Brand --> Feature2["Cifrado extremo a extremo"]
+    Brand --> Feature3["Servidores Europa"]
+    Brand --> Feature4["Plan Lifetime 5TB"]
+    Feature4 --> Offer["87% descuento"]
+
+    classDef level fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef tool fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    classDef concept fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef result fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef sponsor fill:#ffebee,stroke:#c62828,stroke-width:2px
+
+    class L1_N1,L1_N2,L1_N3,L1_N4 level
+    class Tool1,Tool2,Tool3,Tool4,Brand tool
+    class Concept1,Concept2,Concept3,Concept4,Data1,Data2,Data3,Data4,Feature1,Feature2,Feature3,Feature4 concept
+    class Result1,Result2,Result3,Result4,Output,Offer result
+    class Sponsor,Brand sponsor
