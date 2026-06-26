@@ -1,0 +1,1172 @@
+# Transcripcion
+
+- Titulo: Cómo Crear 3 SAAS de $100.000/mes: Ideas, Clientes e IA
+- URL: https://www.youtube.com/watch?v=t3aImWWIBaM
+- ID video: t3aImWWIBaM
+- Canal: iosonomauri
+- Duracion: 43:51
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 8036
+- Provider IA: nanogpt
+- Modelo IA: qwen/qwen3.5-397b-a17b
+- Prompt: Paso a paso profundo
+- Fecha de procesamiento: 2026-05-25T12:01:40.686Z
+
+Kind: captions
+Language: es
+En este episodio vamos a hablar con
+Miguel Pieras, un programador que creó
+tres negocios de software haciéndolos
+escalar hasta $100,000 mensuales. En
+esta charla vamos a preguntarle desde
+cómo utiliza inteligencia artificial
+para programar, cuál es el futuro del
+software ASA Service en el contexto
+actual y cómo consiguió sus primeros
+clientes. Sí, es la primera vez que
+estás por acá. Soy Maui y esto es Modo
+Funder. Eh, veo que tenés varios e
+software a service. ¿Querés comentar un
+poco cuáles son y y de qué va cada uno?
+Eh, todo han sido un poco en base a
+necesidades que que he ido teniendo,
+¿no? Eh, al empezar a trabajar en Hassel
+Gotrire, eh nos dimos cuenta de que
+había ciertas partes del sistema que a
+lo mejor nos servían a nosotros, pero
+que también podrían ayudar a otras
+empresas o a otros emprendedores eh con
+algún problema en concreto, ¿no? Porque
+al final nosotros antes de ponernos a
+implementar algo, miramos si hay si ya
+había algo en el mercado que nos pudiese
+ayudar y al no encontrar exactamente lo
+que necesitábamos pues acabamos
+desarrollando el nuestro propio.
+Entonces tenemos un otro SAS que se
+llama Cloud Browser, que es básicamente
+poder desplegar navegadores en la nube
+para que hagan ciertas tareas
+automáticas. Por ejemplo, nosotros
+tenemos varios servicios que los
+utilizan para pues crear comprar en
+diferentes proveedores en Amazon. Bueno,
+pues básicamente hacer automatizaciones
+que requieren de un navegador, ¿no?
+Entonces eh también eh pues bueno, está
+funcionando y es una cosa que nosotros
+mismos utilizamos. Lo que pasa es que
+ahora también dijésemos que le ofrecemos
+como un servicio eh por separado. Y
+luego el último que que desarrollé eh se
+llama Autocent API y está pensado un
+poco eh para tomar como base Notebook
+LM, que es pues una de las plataformas
+de Google que para aprendizaje y tal
+pues es una pasada. la primera vez que
+lo escuché eh, un podcast, es decir, tú
+le das un documento a lo mejor y genera
+un podcast y ahora mismo pues muchas
+otras eh muchos otros tipos de archivos.
+Pero en su momento, hace ya 2 años, la
+primera vez que lo escuché dije, "Madre
+mía, esto es increíble." la primera vez
+que estoy escuchando un podcast de IA
+que tiene sentido y lo que lo que hablan
+pues parece interesante. Entonces
+decidí hacer una API para poder dijés
+utilizar toda la capacidad que en ese
+momento tenía Notebook LM, pues pues a
+nivel un poco todavía más para hacer
+automatizaciones, ¿no? Entonces, eh
+Autocent API lo que te permite es ahora
+mismo a lo mejor pues crearte un podcast
+en Spotify, eh, pues generado con IA a
+partir de documentos tuyos. también lo
+hemos utilizado pues en Hassel Real para
+hacer un curso de onboarding que tiene a
+lo mejor vídeos de 30 o 40 vídeos que
+están hechos con IA igualmente a través
+de Autocent que eh pues al final ayuda
+mucho y puede generar un montón de
+contenido que antes eh hubiese resultado
+imposible hacer de manera manual o muy
+costoso. Entonces, como que nos permite
+mucho eh toda la generación de
+contenido, documentación y tal, pues eh
+nos ayuda muchísimo, ¿no? Entonces, este
+es el último SAS que que bueno también
+lo están utilizando
+pues empresas bastante grandes también
+porque les permite a lo mejor hay
+empresas que hacen a lo mejor 1000
+podcast cada día o infografías,
+presentaciones, porque al final puedes
+hacer cosas como por ejemplo si le
+quieres vender una tu plataforma o tu
+sistema a alguien, pues antes pues
+bueno, como mucho le envías un email
+pues un poco conía generado, pero bueno,
+esto como que ya es un poco no es
+sorprendente, ¿no? Pero ahora lo que
+puedes hacer, dijésemos general, por
+ejemplo, si yo le digo que yo te quiero
+vender a ti, Mauricio, un producto, pues
+la IA primero hace una investigación
+pues de quién eres tú, cuál es tu
+empresa y cómo
+mi producto puede ayudarte. Entonces, a
+lo mejor te hace un un deck específico
+para ti o te hace un audio o te hace un
+vídeo una infografía y entonces te
+permites eh pues como que automatizar
+muchas cosas y personalizar muchísimo el
+contenido eh básicamente con una llamada
+a una API, ¿no? Entonces, bueno, esto la
+verdad es que está está creciendo
+también mucho y estoy muy contento
+también con eso. Sí, me parece una
+locura. Todas las cosas que estamos
+hablando que se pueden hacer ahora
+[risas]
+con IA parecen bastante surreales. Eh,
+ve veo que que hay buenas oportunidades
+así como con software como este que vos
+eh tenés que son de distribución
+también, ¿no? De de marketing, de de
+básicamente eso, ¿no? De distribución.
+Sí.
+en realidad, porque vuelvo a lo mismo,
+muchas veces son son cosas que yo iba
+necesitando y bueno, al final yo creo
+que ahora con todo lo de la guía, pues
+mucha gente puede crear muchas cosas,
+pero al final la clave es un poco saber
+distribuirlas y que la gente las conozca
+y las utilice y para eso pues al final
+es que tienes que llegar a a todos los
+clientes. verdad que bueno, en Hasel
+Tutorial, que es el software de comercio
+electrónico, tenemos muchos más
+clientes, que son B2C,
+eh, entonces pues claro, hay que bueno,
+funciona de una manera. En cambio, en
+este último eh que he comentado, pues
+son más clientes B2B, a lo mejor
+claro
+casi, o sea, el nivel de soporte y de
+atención que requiere, pues oye, el del
+B2B, si la cosa funciona, eh, para hacer
+un ticket más alto y casi como que no te
+dicen nada en todo el mes ni nada. En
+cambio, en el otro, pues claro, eh
+necesitan un poco de un poco más de guía
+y un poco más de atención, sobre todo al
+principio. En el caso del dropshipping,
+por ejemplo, lo que pasa es que la
+gente, tú miras en YouTube y pone
+dropshipping y te sale un niño de 15
+años que tiene un Ferrari y te dice,
+"¿Cómo gano 15,000 € al mes?" Entonces,
+hay mucha gente que viene con esta idea
+y claro, luego cuando el primer mes eh
+pues no ganan los 15,000, pues no ganan
+o no ganan directamente, pues entonces
+se frustran y bueno, como que a lo mejor
+ven un poco la realidad y ya no les
+parece tan interesante, ¿no? Obviamente
+se puede ganar dinero, mucha gente que
+le va muy bien, pero te lo tienes que,
+es decir, tienes que dedicarle tiempo y
+tienes que trabajar, ¿no? No, si yo
+tuviese una máquina que tú te das de
+alta no haces nada y empiezas a ganar
+dinero, pues sería genial, ¿no? Y ojalá
+lo consigamos, pero de momento tienes
+que hacer cosas todavía.
+Claro, claro. Y cómo haces eso, porque
+vos me comentabas esto de que, bueno,
+todas todos estos productos van saliendo
+de necesidades propias, ¿no? Necesidades
+internas que van teniendo. Me imagino
+primero que no haces cualquier necesidad
+que tenés no te pones a construirlo.
+¿Cómo cómo decidís en cuáles? CL cuál
+cómo decidís en qué cosas vas a
+convertirlas en un producto para
+venderlo
+por ejemplo, en el caso de cuando cuando
+empezaba, ¿no?, que estaba tenía un
+trabajo, estaba trabajando como
+programador en en una empresa en Londres
+y por las tardes, pues me dedicaba un
+poco a empezar como mi aventura del del
+dropshipping, ¿no? Eh, entonces al final
+son eso, siempre necesidades que a lo
+mejor yo tenía en su momento cuando
+estaba empezando. Por ejemplo, eh yo
+tenía un bestseller que era eh pues una
+una carpa de estas para el jardín, ¿no?
+Y cada día vendía una cada día, cada día
+y era genial.
+¿Qué pasa? que un día dejé de vender y
+ya no vendía nunca y dije, "A ver, eh,
+aquí está pasando algo, ¿no?" Entonces,
+bueno, al final pues investigando un
+poco, resulta que había otro vendedor
+que me había copiado todo el listing y
+toda la información y lo había puesto
+pues una libra más barato,
+le compraba el otro. Pero yo dije,
+"Hombre, pues entonces tengo que hacer
+algo porque esto realmente eh me está
+perjudicando." Entonces dije, "Vale,
+pues voy a voy a meterle al software que
+me estoy haciendo pues un sistema que
+mire si me están copiando, lo detecte y
+luego pues como que haga un poco de
+guerra de precios lo mínimo, pero pero
+al final automatizado, ¿no? Y así pues
+si alguien quiere ganar pues dije,
+tendrá que estar manualmente haciendo eh
+un poco de trabajo." Entonces, es un
+poco cosas que necesitamos porque ahora
+eh es verdad que es tan fácil meter
+cosas nuevas que puedes caer un poco en
+que quieres hacer todo y al final no no
+hay te despegas un poco de de lo que es
+la realidad, de lo que quiere el
+cliente,
+pero pero bueno, intentamos siempre eso,
+que sean cosas que que la gente nos
+pide, intentar pues eso, estar cerca
+de los clientes y intentar ver un poco
+también pues por dónde puede ir el
+mercado, puedes hacer alguna apuesta un
+poco decir, "Oy, yo creo que tal pues me
+puedo adelantar un poco por ahí, pero
+bueno, es verdad que hay que tener un
+poco de orden porque si no acabas h
+construyendo sin parar cosas que luego
+no la gente o no utiliza o no. Y ahí es
+cuando yo creo que empieza a complicarse
+el asunto.
+Tal cual. Sí, sí, sí. Y cómo crean el
+producto? Me imagino que ahora tenés un
+equipo, por supuesto, pero eh a lo
+primero que creaste, que fue, entiendo,
+para esta herramienta para dropshipping,
+¿la creaste vos desde cero? ¿Cómo fue
+eso? Antes de continuar, si sos
+programador y querés crear y lanzar tu
+propio software, ASA service, en la
+comunidad de modo Funder vas a encontrar
+todos los recursos necesarios para
+hacerlo realidad desde la idea hasta
+ponerlo online. Además, vas a encontrar
+una comunidad de otras personas haciendo
+lo mismo que vos y vas a poder compartir
+y sacarte todas las dudas. Así que si
+este es tu caso de que querés crear y
+lanzar tu propio software service, te
+dejo el enlace en la descripción.
+Sí, sí. Pues bueno, me acuerdo estaba un
+poco como seguro que hay mucha gente,
+¿no?, que a lo mejor está en su trabajo
+y son las 4 un viernes y tiene que estar
+ahí una hora más esperando a que sean
+las 5 para irse, ¿no? Pues eso era yo
+eh en su momento y en esa hora que yo
+estaba ahí dije, "Bueno, pues oye, eh,
+típica búsqueda en Google, oye, ¿cómo
+gano dinero yo por internet?" Entonces
+me encontré un, bueno, vi un curso de
+uno que decía, "No, ¿cómo gano 100,000
+en no sé qué haciendo dropship?
+vendiendo cosas que no tengo. Yo no
+conocía en ese momento lo que era el
+dropshipping
+y me pareció interesante. Dije, "Hombre,
+esto pues lo puedo probar y si va bien,
+bien y si no, pues nada." Entonces lo
+probé, estuve todo el fin de semana ahí
+haciendo el curso y luego empecé a hacer
+lo que decían en el curso. ¿Qué pasa?
+Que a lo mejor yo luego vendía alguna
+cosa y veía que dije, "Hombre, pues si
+vendo una cosa, pues si le pongo más
+productos a la venta, pues a lo mejor
+venderé más." Entonces como que lo iba
+probando. ¿Qué pasa? que en ese proceso
+yo ya iba viendo que que iba vendiendo
+poco a poco, iba vendiendo más, pero que
+perdía mucho tiempo delante del
+ordenador haciendo tareas que eran como
+muy manuales, ¿no? Entonces,
+eh, claro, empecé primero haciendo,
+dijésemos, una
+un una creo que lo primero que hice fue
+un proceso que porque yo me apuntaba en
+un Excel, cada cosa que yo ponía a la
+venta me apuntaba cuál era el proveedor,
+que no eran otro, sino páginas web de
+otras tiendas y yo simplemente cogía el
+producto, lo ponía en eBay o en Amazon
+más caro y si me lo compraban, pues
+bueno, el dropshipping lo que no, el
+[carraspeo] dropshipping un poco es
+Retail arbitrah, pero pero bueno,
+funcionaba la cuestión. ¿Qué pasa? Que a
+lo mejor yo vendía algo y yo a lo mejor
+estaba en el trabajo y me llegaba la
+notificación de PED para decir, "Oye, te
+han pagado 50 libras."
+Claro, yo estaba contento por una parte
+porque podía ganar dinero, pero por otra
+decía, "Ostras, a ver si luego voy a ir
+al proveedor y no va a estar disponible
+o el precio habrá cambiado." Entonces,
+eh,
+claro, era como un poco de estrés, ¿no?
+Entonces dije, "Vale, me voy a hacer un
+programita, lo dejaré puesto en el de mi
+casa, eh, que esté todo el tiempo pues
+funcionando." Y hice un una aplicación
+de consola en el escritorio, la hice en
+punto net.
+que era lo que utilizaba en ese momento
+y eh que básicamente recorría la lista
+de de productos que tenía, miraba el
+proveedor dónde era, hice las
+integraciones así muy sencillas con cada
+uno de los proveedores de los que yo
+sacaba los productos y luego con la
+appay, pues si no estaba disponible o si
+había que cambiarle el precio o lo que
+sea, pues se actualizaba. Empecé con eso
+y bueno, era una cosa que era para mi
+tienda. Después lo siguiente que hice
+fue a la hora de poner productos, tenía
+que hacerlo al principio con mucho copy
+paste y mucho trabajo manual. Pues dije,
+"Jo, pues a mí cómo me gustaría que
+fuese a la hora de elegir productos,
+pues que yo le doy a un botón y se
+copia." Pues entonces hice una extensión
+de Chrome, yo me iba a la página del
+producto, le daba al botón y se me
+copiaba todo y se me ponía a la venta.
+Entonces, un poco estas cosas que yo
+decía, "Jod, esto está chulísimo porque
+me ahorrado muchísimo tiempo a lo que yo
+estaba haciendo manualmente, he visto
+que que funciona y ahora pues lo puedo
+hacer de manera como mucho más
+eficiente, ¿no? Entonces empecé empecé
+un poco con eso y mientras la tienda
+pues continuaba creciendo hasta que
+llegó un momento que dije, "Vale, ahora
+con esto que yo tengo creo que puede
+ayudar a otra gente a utilizar también
+el pues su su a a a vender por internet
+dijésemos utilizando esto, no tener que
+hacer todo esto manual
+que que yo he estado haciendo, ¿no?" Hm
+hmm.
+Entonces, eh bueno, empecé a montarla
+así, la gente pues se empezó a empezó
+empecé a tener usuarios, empezó a
+registrar gente hasta que llegó un
+momento en el que pues ya tenía más
+sentido eh pues eh estar por mi cuenta
+que seguir trabajando ahí haciendo eso
+por las tardes, ¿no? Entonces, en ese
+momento dejé lo que estaba haciendo en
+dejé el trabajo en Londres, me vine otra
+vez a Palma y y bueno, mi ilusión era un
+poco pues montar una empresa eh pues y
+hacer este proyecto con alguien, ¿no? Yo
+solo, ¿no? Que al final pues si
+compartes un poco lo que te gusta pues
+con un equipo pues era algo que me hacía
+mucha ilusión y que bueno pues al final
+es lo que lo que hice, ¿no?
+Y entonces a partir de ahí, pues bueno,
+esto fue en 2019 que ya hace y bueno, a
+partir de entonces pues sí que hemos
+estado en varios procesos, ¿no? Y y
+bueno, pues ahora es verdad que que la
+guía pues nos ha ayudado mucho, pero yo
+creo que lo hemos nos ha aprovechado
+bastante y sí que ahora mejor que nunca,
+¿eh? Y y bueno, al final pues vamos
+desarrollando el producto cada vez más,
+un producto que ha crecido mucho, cada
+vez lo utiliza más gente, eh, se utiliza
+en un montón de países,
+pero pero bueno, la mayor parte de los
+clientes a lo mejor están en Reino
+Unido, en Reino Unido, Estados Unidos,
+Alemania, Turquía, se utiliza se utiliza
+bastante y nada, pues intentamos
+continuar creciendo.
+Muy bueno. Me me encantó cómo fuiste
+creándolo realmente desde tu necesidad.
+Yo defiendo mucho esto, viste que hay
+muchas teorías de no resuelvas tus
+propios problemas, otros que sí, bueno,
+siempre hay alguien que tiene un librito
+distinto, ¿no? Pero defiendo mucho esto
+porque al final si vos sos usuario de la
+herramienta y a vos te resuelve un paint
+que realmente, che, esto me está
+ahorrando, no sé, 5 horas, 6 horas, te
+está resolviendo un dolor y quién mejor
+que vos para saber exactamente cuáles
+son las funcionalidades que vale la pena
+crear.
+Sí, sí, totalmente. O sea, eh yo de
+hecho la muchas veces eh a todo el mundo
+dice, "Ah, yo tengo esta idea que quiero
+tal, no sé qué, no son ideas que tú no
+sabes si van a funcionar porque a lo
+mejor tú no eres el cliente, no serías
+el cliente de esa plataforma tal."
+Entonces, hombre, yo intento que las eh
+que voy montando pues que sean cosas
+que a lo mejor que yo necesite, ¿no?
+Porque así oye, yo la hago y si luego
+pues le sirve a más gente y tal, pues
+mejor. Pero normalmente si tú tienes una
+necesidad seguramente y y te haces algo
+que te la resuelve, seguramente esa
+necesidad la tiene más gente. Entonces,
+bueno, yo prefiero ir por ahí. Es verdad
+que como tú dices, hay gente que lo
+mejor no porque tienes que ir a por las
+que tienen dinero o a por los que tal si
+haces te lo compran y tal, pero claro,
+si tú no conoces muy bien el pues a la
+persona y el cliente, ¿no? Pues difícil.
+Por eso mucha gente dice, "No, para
+vender algo tienes que decirle, tienes
+que ponerle nombre y apellidos a la
+persona que te lo va a comprar, ¿sabes?
+Sí, sí, sí. Tal cual. el avatar y me me
+gustaría hacer un poco de zoom ahí en la
+en lo que contabas un poco antes de ese
+paso, ¿no? En el que te volvés para
+montar una empresa y demás. Ahí en el
+medio y bueno, ahora lo están lo están
+usando muchos usuarios, pero ahí en el
+medio, ¿cómo fue ese proceso de
+conseguir esos primeros clientes que
+dejó de ser algo que usabas vos acer
+algo que eh bueno, lo compartiste con el
+mundo y cómo empezaste a captar esos
+primeros clientes? Sí, pues lo que nos
+funcionó bien en su momento, esto era a
+lo mejor 2018 o así, fueron los grupos
+de Facebook. Es decir, eh yo
+no conocía nada de eBay en España
+tampoco es tan popular, eh, y tampoco
+estaba en grupos de Facebook para mis
+cosas, no sé, pero al final cuando te
+metes mucho en un poco en en lo que era
+pues el dropshipping, vender por
+internet, vas viendo un poco por dónde
+está la gente. Pues me gustaba leer
+mucho pues lo que se comentaba y es
+verdad que había muchos grupos de
+Facebook en los que se hablaba de esto.
+Entonces, pues yo lo que dicen siempre
+pues intenté empezar a participar en
+esos grupos y cuando alguien pedía
+alguna recomendación de software pues
+ahí estaba yo, que yo le decía, "Ah,
+pues mira, pues prueba esto, tal, y me
+dices." Luego también es verdad que hice
+pues tuve alguna de las ideas que son
+menos escalables del mundo que se me
+ocurrió al principio, pero bueno, creo
+que ayudó mucho que es poner un chat en
+vivo en en la web que claro que al
+principio eh claro eh solo estaba yo.
+Entonces pues si yo ponía eso, pues
+tenía que responder en seguentes. A lo
+mejor la gente escribía y salía ahí,
+"No, Miguel, yo le decía, bueno, dime
+tal." Y me dice, "No, me gustaría." Y me
+pedían una funcionalidad. Y a lo mejor
+yo les enviaba un email más tarde el
+mismo día, le decía, "Mira que esto ya
+está hecho." Y luego escribían por la
+noche y volví a estar yo otra vez
+conectado allí. Decía, "Jor trabajas eh
+eres el agente de soporte que más pero
+bueno, al final es lo que a lo mejor te
+hace estar más cerca y que eso. A lo
+mejor otros proveedores eh más grandes
+no pueden ofrecer este nivel de
+servicio. A lo mejor cuando creces
+también es más difícil, pero al
+principio yo creo que eso es una de las
+bazas. que que tú puedes ofrecer y a lo
+mejor la competencia que tiene 200
+clientes no puede. Entonces yo miraba
+todo lo que podía de los clientes que
+que me pedían, que necesitaban, que
+estaban usando la plataforma y un poco
+las necesidades propias
+eh para que todo funcionase, ¿no? Es
+verdad que en ese proceso pues bueno, es
+un cambio porque tú estás estás
+acostumbrado a pues a trabajar un poco a
+mi a mi bola, digésemos yo solo. Pues al
+tener un equipo pues no es solamente lo
+que tú hagas, hay que pues repartir las
+tareas, gestionar personas, eh, y es
+bueno, fue un cambio muy grande porque
+también yo nunca, es decir, siempre
+había estado trabajando en una empresa
+que y entonces, bueno, pues pasar a
+estar por tu cuenta en algo nuevo y tal,
+pues pues bueno, eh tiene su su fue un
+momento que recuerdo tengo muy buen
+recuerdo, pero es verdad que fue un fue
+un cambio grande, pero bueno, que yo
+debería hacer y vamos, lo recomiendo que
+que si alguien está ahí dudando porque
+es algo que tienen que experimentar y
+tienen que probarlo.
+Te te gusta, veo más esto de no ser solo
+prener, sino eh montar un equipo y
+trabajar con gente. Bueno, eh sí, lo que
+pasa es que, a ver, yo creo que son
+etapas, ¿no? Mm. Okay. Eh, al principio
+sí que yo lo que quería era pues eh
+trabajar con gente, montar un equipo eh
+tal, pero bueno, es verdad que ahora
+durante estos años lo hemos tenido y
+ahora como que prefiero eh mucho más eh
+un equipo muy pequeño
+y que o o o incluso un proyecto que si
+yo lo puedo hacer tal, pues la verdad es
+que ahora mismo lo prefiero eh hacerlo
+solo dijésimos, porque bueno, es verdad
+que te aporta unas cosas, te aporta
+otras, pero bueno. Ahora es verdad que
+con las herramientas que hay, pues h no
+sé, como que veo que a lo mejor tengo la
+capacidad de hacer las diferentes cosas
+que se requieren y a lo mejor luego
+también me encuentro bien pues eh en
+momentos en los que a lo mejor no
+funciona algo o hay algún problema, pues
+claro, hay gente que a lo mejor por su
+manera de ser sí que necesitan eh
+comentarlo con alguien o tener esa ayuda
+del de un cofundador o de alguien que le
+diga, "Oye,
+tal, pues venga, no pasa nada, pues lo
+hacemos así, lo dejamos adelante,
+¿sabes? Eh, pero bueno, yo habiendo
+probado un poco todo, pues ahora mismo
+eh, si, bueno, ahora estoy en un momento
+en el que sí si si tuviese que hacer
+algo, pues prefiero intentarlo yo y
+luego pues si luego surge por el camino,
+obviamente, pues también puede estar
+abierto a a posibilidades, ¿no? Pero sí
+que en principio ahora sobre todo con
+con todo lo que te puede aportar la IA,
+pues no sé, yo eh sí que ahora prefiero
+Sí, sí, ir primero solo y bueno, después
+si lo requiere el proyecto, tal vez
+contratar.
+Sí, sí, sí.
+¿Cómo ves cómo ves vos el panorama ahora
+con esto, no? de que cualquier persona
+eh o prácticamente cualquier persona
+puede sentarse con la IA y y crear
+software. ¿Vos lo lo harías de esta
+manera hoy si empezaras de cero?
+A ver, es verdad que yo creo que a pesar
+de que hoy pues con herramientas como
+Codex, Cloud Code o muchas de las
+herramientas que hay disponibles o
+incluso las que te crean las landing
+pages como Logoball o Bolt, por ejemplo,
+claro, todo el mundo puede crear algo
+que ah, mira, lo tengo. ¿Qué pasa? que
+es verdad que el hecho de tener
+conocimientos en programación pues sí
+que te ayuda mucho a saber un poco qué
+decirle o cómo cómo marcarle un poco la
+estructura, porque ya sabes un poco pues
+lo que puede ser un problema y lo que
+no. una persona que no tiene ese
+conocimiento, pues a lo mejor no sabe
+muy bien cómo funciona la base de actos,
+no sabe que a lo mejor en un en algún
+momento no será necesario, no lo sé,
+pero ahora mismo yo creo que sí que hay
+mucha diferencia entre que estas
+herramientas las maneje alguien que
+tiene un conocimiento a que a que no. Es
+verdad que tengo amigos que que yo estoy
+encantado siempre de decirle, "Oye,
+prueba esto, mira, puedes hacer esto,
+puedes hacer esto otro y tal." Pero
+claro, para hacer alguna prueba, para
+hacer alguna algo así muy sencillo, sí
+que puede funcionar, pero es verdad que
+si quieres hacer algo un poco serio,
+pues necesitas necesitas organizarlo un
+poco bien, porque si no sabes un poco lo
+que estás haciendo, pues como que se te
+puede ir eh se te puede ir mucho de las
+manos, pero para mí son herramientas,
+vamos, imprescindibles a día de hoy
+y no sé, yo es que a lo mejor incluso me
+he encontrado en situaciones en las que
+veo el código a un lado que a lo mejor
+tengo que quitar una línea o tengo que
+borrar algo, pero en vez de borrarla le
+digo, "Oye, esto esto tienes que
+quitarlo, esto no puedes [risas]
+total." Sí, sí, sí. Bueno, vos sabes que
+a mí lo que me pasa es que eh antes
+programaba así, iba eh le iba, bueno,
+programaba eh trabajaba con Cloud y
+trabajaba así, le iba pidiendo las cosas
+y iba viendo lo que iba haciendo. Ahora
+ya directamente no abro el editor hasta
+eh trabajo con Cloud Code en la terminal
+y no lo abro hasta ver la pool review. O
+sea, hasta ese momento no sé qué hizo.
+Bueno, sé qué hizo, digamos, pero no sé
+cómo lo hizo. No estoy porque me pasaba
+que estaba constantemente viendo lo que
+hacía y perdía tiempo. Cambial
+dejo que haga algo y me voy a hacer
+otras cosas y después voy y veo la pool
+review y bueno, veo si está bien, si hay
+que cambiar algo, si no y si no aceptar
+y listo.
+Exacto.
+Es una locura. es un poco eh parecido
+cuando empezó todo esto. Eh, empecé a
+utilizar CloudC, luego codex, Clot
+Codex, poco voy jugando un poco todo.
+Eh, sí que
+encontré al principio cuando empezaba a
+lo mejor en agosto del año pasado que
+que yo antes utilizaba a lo mejor
+cursor, que sí que todavía era un poco
+como manual, pero luego dije, "Va, pero
+es que ahora mismo eh yo lo que necesito
+es tener pues no sé cuántas instancias
+de cloud que hagan cosas
+y luego yo ya revisaré." Entonces,
+claro, no tenía ninguna interfaz eh en
+la que que estuviese orientada,
+dijésemos, a tener muchas de esas
+instancias y el código como que no me
+importaba. Yo lo que quería era eso, ver
+pues tener mis proyectos y ver que
+estaba trabajando. Me hice me hice una
+aplicación como un IDE básicamente que
+era pues las consolas un poco eh
+organizadas y tal que luego ya ya lo
+enseñaré ahora lo lo he hecho código
+abierto porque
+el mundo tiene eh gente utiliza la app
+de code y tal, pero esta que yo me hice
+en su momento la hice otra vez porque a
+mí me porque yo es lo que quería y y
+realmente tú sabes esto que estás
+utilizando una aplicación que había
+hecho yo para programar en vez de usar
+Visual Studio. video code o bueno, o
+cursor, pues
+utilizaba esta que había hecho y cuando
+no la tenía o tenía que cambiar algo que
+no se me abría o lo que sea, me sentía
+como uf, eh, me falta algo. O sea,
+realmente creo que encontré me iba,
+encontré justo lo pude hacer justo con
+como
+como yo había pensado, justo para la
+necesidad que yo tenía y yo nunca había
+hecho una app de escritorio para Mac ni
+nada, pero pues lo mismo, pues con Codel
+dije, oye, mira, yo necesito esto,
+quiero funcionar así, tal, tal, tal,
+tal, y al final pues probando creas algo
+que aunque fueses la única persona en el
+mundo que utilizase eso, pero
+pero era lo que yo necesitaba.
+Es increíble. Sí,
+poder hacer esta genial.
+¿Cómo lo ves vos? Porque sí veo esto que
+por lo menos las personas que tenemos
+conocimientos técnicos veo que cada vez
+más la gente se se programa herramientas
+propias. Eh, no lo veo en gente no
+técnica, ¿no? ¿Cómo lo ves vos a esto?
+¿Ves realmente la muerte del SAS o no?
+Bueno, a ver, yo creo que la gente
+siempre va a necesitar herramientas eh
+para hacer lo que necesita, ¿no? Aunque
+sean herramientas para ellos o enseñarle
+a los agentes aí.
+Veremos cómo evoluciona, pero lo cierto
+es que ahora mismo, por ponerte nuestro
+caso, nosotros utilizamos antes un CRM y
+ahora pues en vez de utilizar eh un CRM
+para pues de una empresa externa y tener
+que adaptarnos un poco a como tal, pues
+hemos hecho el nuestro, que es pues será
+más sencillo, no entiende, pero la
+necesidad que nosotros tenemos pues está
+cubierta y si mañana le queremos añadir
+otra cosa, pues se le puede añadir.
+Lo podemos hacer con todos los SAS que
+tenem, pues a lo mejor no, porque hay
+otros que a lo mejor pues yo sé, pues
+aunque queramos, por ejemplo, a lo mejor
+no podemos quitarnos stripe, por
+ejemplo, porque a lo mejor nos va a
+costar mucho hacerlo y tiene mucho.
+Entonces eso es muy complicado, pero un
+SAS que te di para según qué cosas tú
+pues dice, hombre, esfuerzo contra el
+beneficio que lo te vas a ahorrar, pues
+dices, hombre, pues me conviene o no. Lo
+mismo con la web, por ejemplo. Nosotros
+la web antes la teníamos en WordPress
+porque, bueno, así el responsable de
+marketing pues podía cambiar cosas y
+gente sin conocimientos técnicos podía
+hacer cambios. ¿Qué pasa? Que si luego
+yo quería hacer un cambio, yo tenía una
+idea en la cabeza, pues me costaba a mí
+decir, "No, es que quiero que la web sea
+esta y para editarla es que es que era
+imposible." Era sí, sí, sí, sí.
+Entonces, eh, claro, y luego que si
+actualizar, que si no sé qué, todo un
+poco eh complicado. Entonces, pues lo
+mismo pues ahora hacemos la web
+nosotros, eh, y claro, cualquier persona
+así, pues también hay gente que no sabe
+programar un poco, pero para esa parte,
+oye, pues si está si ya está bien
+montada, pues a lo mejor para meter una
+entrada de blog o para tal se puede
+hacer perfectamente. es mucho más fácil
+e que no utilizar tener que usar
+WordPress, utilizar sistemas externos
+para cosas que que realmente te cuestan
+muy poco. Entonces, yo creo que los
+softwares que que son a lo mejor
+simplemente como una capa y no tienen
+distribución y son muy fáciles de
+replicar, pues lo van a tener más
+complicado que los software que a lo
+mejor pues tienes que hacer como muchas
+integraciones o tienes como eh muchas
+cosas que a lo mejor son más
+complicadas. A lo mejor no técnicamente,
+sino el tiempo de esfuerzo que tú dices,
+[carraspeo]
+por ejemplo, nosotros usamos a lo mejor
+herramientas que que podríamos hacer
+nosotros
+pues de analytics, de lo que sea, pero
+digo, mira, pago esto, prefiero pagarlo,
+sé que está bien, se va mejorando y no
+me tengo que preocupar de esto ahora,
+¿no?
+Entonces, pues también depende un poco
+de de lo importante que sea o del del
+dolor que te quitas reemplazándolo.
+Claro, claro. No, al final yo creo que
+todo es e que la gente paga muchas
+veces, bueno, paga por distintos motivos
+y uno de ellos es el ahorro de tiempo,
+¿no? Es todos sabemos hacernos una
+hamburguesa, sin embargo entramos a
+globo y la pedimos igual. Entonces, eh
+eso porque no te querés tomar el tiempo
+de ir a comprar eh los ingredientes y
+hacértelo. Con esto es un poco lo mismo,
+¿no? Cuanto más importante es el
+proyecto, más tiempo más tiempo te
+ahorre, menos ganas. Si más que yo sí
+creo que eh el el que se haga tan
+económico hacer software ahora va a
+bajar los precios también del software
+service.
+Si yo te cobro $10 por mes por eh por
+hacer algo que a vos te llevaría 5
+horas, tal vez decís, "Pago los $ por
+mes por 5 horas si mi hora cuesta más,
+¿entendés?" Claro, por eso he comentado
+lo del lo de los CRMs, por ejemplo, o
+alguno que que a lo mejor son muy caros
+y claro, ahora tú dices, "Hombre, CR no
+es tan complicado con lo comparas con lo
+que te puedes ahorrar y tal, pues dices,
+hombre, pues pues lo monto y así no
+dependo de que si más licencias y tal y
+yo que sé. Ahora, por ejemplo, lo de lo
+de autocontent que he comentado antes
+para generar podcast, vídeos,
+infografías y tal, pues o sea, no todo,
+pero la API principalmente la hice en un
+fin de semana, obviamente con con
+inteligencia artificial y porque ya
+también tenía experiencia un poco en
+este tipo de automatizaciones
+y y al principio era yo no sabía si iba
+a funcionar realmente. Porque yo la
+quería utilizar para algunas cosas, pues
+me era más cómodo que fuese una API, no
+tener que estar haciéndolo yo, pero es
+verdad que que es decir, tú pagabas, se
+te enviaba un email con tu API kit y ya
+está, o sea, no había ni plataforma, sea
+una [carraspeo] L que cuando pagabas te
+envía un API, luego estaba la API en un
+sitio,
+pero pero bueno, que era algo como super
+eh sers sencillo para ver si la gente eh
+pues estaría dispuesta a a pues eso, a
+utilizarlo si era algo que realmente
+pues podía interesar, ¿no? Y ahora es
+verdad que lo utilizan muchas empresas
+también de Estados Unidos que que pues
+al final dice, pues está es una cosa que
+realmente está funcionando, les gusta,
+van pidiendo más cosas y y claro, es un
+es muy diferente a otros AS que a lo
+mejor pues mira con Jes llevamos 8 años
+eh un poco eh mejorando. Es verdad que
+que en el último año hemos crecido
+muchísimo. De hecho, el mes pasado, el
+mes pasado fue el primero que pasamos
+los 100000 de MR de dólares
+increíble
+y eso me parece al me dicen hace unos
+años y digo, madre mía,
+una locura
+que dices, cómo y todo esto ha sido por
+por la, o sea, gran parte de este
+crecimiento ha sido posible por la guía
+porque antes tú puedes tener muchas
+ideas, quieres llevar tu producto a un
+pero si no si no si no tienes eh pues el
+tiempo, tal, hay cosas que llevan mucho
+trabajo. Entonces, ahora con la IA, pues
+si tú le das una dirección y empujas ahí
+sí que puedes conseguir cosas.
+Sí, total, ¿no? Bueno, felicidades. La
+verdad es una locura porque aparte un un
+equipo muy pequeño, ¿no?
+No, sí. O sea, ahora mismo somos eh hay
+dos dos personas empleadas, dijésemos,
+yo. Luego sí que eh durante este tiempo
+pues he ido conociendo a gente super
+guay. eh que bueno que tien son unas
+máquinas, ¿no? Entonces, aunque no estén
+conmigo, eh dijés, sean parte del equipo
+de empleados, dijésemos, pues yo sí que
+mantengo mucho contacto con ellos para
+algunas cosas, esto pues tú cómo lo
+harías o tú encárgate de esto, ¿no? Es
+lo que creo que era Steve Jobs, ¿no? Que
+decía algo de tienes que que rodearte de
+gente buena, pero que que si contratas a
+alguien que te digan ellos lo que tienen
+que hacer, que no tengas que estar tú
+al revés,
+al revés. dice, "No te contrato, pero
+haz esto, esto otro, en esto otro, ¿no?"
+Pues yo a lo mejor pues durante todo
+este tiempo va emprendedores y a mí me
+encanta pues eso, ir a eventos y conocer
+a gente que hace cosas, ¿no? y poder
+decir, "Ostra, pues yo hago esto así,
+pues yo así y un poco eh aprender de
+todos y al final pues habrá cosas que te
+irán mejor o peor, pero pero no sé, yo
+creo que aprendes mucho y al final si
+estás vivo el suficiente tiempo pues
+como que oportunidades hay.
+Total, total. Sí, sí, sí. Y que como vos
+decís también más fácil llevar a cabo
+hoy por hoy un MVP de más que antes
+tenías que estar meses hasta que tenías
+algo más o menos potable. Ahora puedes
+probar en un fin de semana y decís,
+"Bueno, voy a darle a esto a fondo o lo
+descartás y seguís con otra cosa." CL.
+Sí, sí. O sea, eh poder ir haciendo
+pruebas o de cualquier cosa. Antes era
+mucho más costoso y ahora eh es verdad
+que luego pues también es un proceso,
+¿no?, que la gente dentro del equipo
+pues quiera utilizar y realmente utilice
+las herramientas.
+E bien, porque bueno, siempre hay gente
+que a lo mejor te dice, "Utiliza la IA y
+te dicen, bueno, eh, utilizo eh chat
+GPT. CL
+yo quiero alguien que programe pues
+hombre GPT igual se nos queda un poco
+corto, ¿sabes? Entonces puse una oferta,
+me pasó algo muy curioso, puse una
+oferta en LinkedIn para contratar a una
+persona, pero claro, yo quería alguien
+que fuese como un mago de cloud code,
+por ejemplo, ¿no? No quería poner
+programador porque un programador a lo
+mejor hay programadores que
+prefieren hacerlo ellos o que dicen,
+"Bueno, la IA lo hace mal o la IA tal".
+Pero yo da igual, yo quería alguien que
+diese lo que es Clot, que lo utilizase
+y y ya está, ¿no? Entonces puse una de
+estas típicas preguntas de de screening.
+Dice, "Oye, [carraspeo]
+puse, oye, ¿utilizas herramientas de
+para programar?" Sí. Eh, y en caso
+afirmativo, ¿cuáles? Entonces la gente
+me respondía, yo creo que como si fuese
+una pregunta del colegio. Todos me
+decían, "No, bueno, yo lo hago
+manualmente y la solo la utilizo para
+revisar lo que yo no es que no es que no
+lo que yo quiero. Yo quiero al revés. Yo
+creo que me digas utilizo la para todo."
+Le pregunto a Codex eh todo a Cloud
+Code. Estoy todo el día preguntándole
+cosas, he montado esto, he probado esto
+y no hago otra cosa que no sea tal,
+¿sabes?
+Total, total, total.
+Como como mucho más conservadora. Yo no
+sé si es porque a lo mejor
+piensan, a lo mejor que está mal visto
+que se utilice la IA
+o o no sé, pero me pareció me pareció
+curioso, ¿sabes?
+Sí, sí, total. Sí, lo que se me ocurre
+justo lo que lo que estás diciendo, tal
+vez lo ven como que están haciendo
+trampa y y es un problema porque se van
+a quedar atrás, o sea, el que no esté
+haciendo todo con hoy se quedó atrás.
+Es que yo no sé si es por porque que
+realmente no lo hacen así, pero lo ponen
+para para que parezca la respuesta
+correcta, pero es que justo es lo que yo
+no quería, ¿sabes? Yo quiero alguien que
+me di, "Sí, sí, utilizo Cloud Code para
+todo, o sea, eh ha cambiado la manera en
+que tal. Yo solo reviso, yo solo reviso,
+pero tal sí, sí, sí. Tenía ganas de
+preguntarte también eh bueno, un poco
+sobre el futuro, ¿no?, de de estos
+productos que tenés ahora. ¿Qué qué qué
+es lo que se viene? Me imagino que la
+idea es seguir creciendo como siempre.
+¿Qué qué tenés en mente para los
+próximos años? Pues mira, te te cuento
+un poco así separado por proyecto con
+con Haselgriel lo que queremos ahora
+estamos trabajando en una gente como
+muchas otras empresas, ¿no? Pero
+aprovechando un poco toda la
+infraestructura y el conocimiento y la
+información y datos que tenemos sobre
+los productos que que se venden, los que
+no se venden, los precios y tal, ¿no?
+porque ahora pues también podemos hacer
+mucho tema de análisis, utilizamos
+varios eh varios modelos locales en
+servidores nuestros. No sé, creo que se
+pueden hacer cosas muy chulas que antes
+mejor necesitabas a a bueno, necesitabas
+contratar para hacer eso pues a alguien
+especialista en datos o en pero ahora
+mismo pues ya pues no te digo que que no
+nos ayudaría a tener alguien así, pero
+que ahora mismo sin tenerlo pues ya
+podemos eh hacer bastantes cosas que son
+que nos aportan ya mucho valor.
+Entonces, queremos hacer un agente que
+así como cuando tú te registras, tú casi
+no tengas que ir ni a nuestra web, que
+directamente hables con con tu agente y
+te diga, "Mira, yo te voy a te monto la
+tienda y que la tienda y que básicamente
+por WhatsApp tú puedas
+gestionar tu tienda tanto en TikTok,
+Shopify, en Wallapop, en eBay, en
+Amazon, donde sea, y que cualquier cosa,
+no solamente tu agente te responda a ti,
+sino que sea proactivo y te, oye, he
+visto que esto no está vendiendo, le
+cambi el precio, he buscado otro
+proveedor para esto, para esto otro.
+Entonces, poco estamos trabajando
+en esta línea, eh, una línea un poco
+parecida a la de Cloud Browser, que al
+final son como es como el hijo de
+al final un poco que es un poco
+aprovechar toda la parte de que hay
+mucha necesidad ahora de que los agentes
+pues sean capaces de navegar la web, de
+hacer tareas, pues un poco eh darles
+skills a esos agentes para que utilicen
+Cloud Browser para pues todas estas
+automatizaciones que sean sean un poco
+que requieran un poco de una
+interacción, ¿no? Tanto en tanto en la
+nube dijese, o sea, tanto en la web a
+través del navegador como en un
+escritorio virtual que tú le puedas
+mandar una tarea y se ponga a hacerlo,
+¿no? Y luego, por último con lo de
+Autocent API, que también está creciendo
+mucho, sobre todo con clientes más eh
+empresariales, ¿no? pues un poco
+continuar con la adopción que está
+teniendo porque verdaderamente, no sé si
+has probado eh pues las slides que hace
+pues Notebook LM, eh hace verdaderas
+barbaridades para sobre todo para
+empresas, un montón de contenido y
+nosotros lo que hacemos
+es que bueno, este último proyecto sí
+que lo hago yo solo, no no tengo equipo,
+eh, y está funcionando también muy bien
+porque llega a las empresas y
+puede generar muchísima, muchísima,
+muchísimos activos, digésemos, pues eso,
+lo que te digo, de imágenes, PowerPoint
+y luego además le añado como una capa
+por encima para que te ponga pues todo
+el branding de tu empresa en lo que
+genera, que le puedas cambiar las voces
+a los que están hablando por el podcast,
+que te haga shorts también tú le das a
+lo mejor un texto de un documento
+y te hace como shorts con avatars
+hablando un poco del documento que tú le
+has puesto, ¿no? Y bueno, un poco
+continuar con eso, que es un enfoque
+como mucho más B2B, pero yo creo que a
+las empresas,
+por ejemplo, en Hemos creado, nosotros
+teníamos antes la web eh solamente en
+inglés y ahora no solamente tenemos la
+web, yo que sé, cuatro o cinco idiomas,
+sino que además tenemos todos los cursos
+de formación eh de cómo utilizar la
+plataforma, que son un montón de vídeos,
+están generados con IA, está cada uno en
+turco con infografías, con presentación,
+ya tienen un montón de documentación,
+que eso antes necesitabas a alguien full
+time ahí explicando las cosas, pero o
+para solo para crearlo y ahora mismo tú
+di, oye, quiero un curso de esto. Y
+aunque no le des documentación, la busca
+y si tú se la das, lo haces en base a lo
+que tú le has pasado. Es increíble.
+No, no es una locura. Es es No, no, no.
+Sí, estamos viviendo tiempos realmente y
+nos acostumbramos nos acostumbramos muy
+rápido. Esto me parece una locura. Me me
+estaba pensando cuando me decías lo de
+Hassle, que la idea es que vos puedas
+desde WhatsApp eh hablarle, ¿viste? Por
+ejemplo, ahora con Cloud Code también
+vos le ponés remote y le hablás desde la
+aplicación, le mandas un audio y bueno,
+va programando. Nada, es una locura y es
+un poco también hacia dónde va el
+software, ¿no? Porque justamente es el
+cambio que el o el cambio o las mejoras
+que que queres hacer es algo más
+agéntico. También veo que está yendo
+todo un poco para ahí, así que bueno,
+vas por buen camino también ahí. Bueno,
+sí, yo espero que sea el bueno.
+Esperemos,
+pero sí, sí hay, yo creo que hay muchas
+posibilidades y además yo creo que esto
+también a a la gente como que la gente
+cuando ve que realmente eres capaz de
+hacer tantas cosas, pues como más ideas
+se le ocurren y más caso de uso pues le
+pueden encontrar, salen más
+oportunidades también creo que todo va
+muy rápido y bueno, no sé, tú habrás
+escuchado también en todos estos podcast
+las negocias [carraspeo] chulísimas que
+a ti sí que se te deben ocurrir
+constantement
+paraar seguro
+Sí, fue uno de los problemas que tuve
+siempre. Ahora, ahora no, porque estoy
+mucho más tranquilo y de hecho intento
+no hacer cosas justamente por eso, pero
+sí, ideas entre, bueno, Twitter, lo que
+algunos podcast que yo también veo, eh,
+y bueno, la gente con la que hablo acá,
+sí, sin dudas todo el tiempo se te están
+ocurriendo cosas y no te da el tiempo.
+Yo no podría seguro porque yo a veces me
+pongo a leer o me pongo a ver algún
+podcast y lo tengo que dejar a medias
+porque se me ha ocurrido algo y digo,
+"Ah, oye, esto, ostras, tengo que
+toal total, total. Dios mío, estoy yo
+cada día. No puede ser.
+Sí, sí. El autocontrol y el foco son
+reimportantes y cuando hay olas como
+ahora esto que está pasando con la AA,
+tipo golpes tecnológicos muy grandes,
+eh, sí, sí se siente mucho, la verdad.
+Bueno, nada, Miguel, te super agradezco,
+superinesante
+todo lo que nos contaste, los tips y
+demás. Creo que, mira, yo ahí siempre
+pregunto a la comunidad que qué te
+preguntarían y cosas así y respondiste
+todo. Este, la gente le interesa mucho
+cómo pueden conseguir los primeros
+clientes, cómo ves la el futuro, ¿viste?
+también la gente está preocupada por
+eso. Así que bueno, nos diste un
+pantallazo de todo. Te agradezco mucho
+por la gentileza, aparte totalmente
+desinteresado.
+Nada, muchas gracias, Mauricio, y de
+nuevo, enhorabuena por por el podcast y
+nada, nos veremos por aquí seguro que yo
+un seguidor. [risas]
+Qué grande. Bueno, a ver si después
+hacemos otro hablando de ella solo, eh,
+porque quedan cosas para hablar, pero
+muchísimo.
+Genial, genial. Bueno, muchas gracias.
+Gracias a todos ahí que nos están
+escuchando. Un abrazo grande para todos
+y un abrazo para vos también.

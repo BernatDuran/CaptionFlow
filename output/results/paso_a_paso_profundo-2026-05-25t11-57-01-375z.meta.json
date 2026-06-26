@@ -1,0 +1,113 @@
+{
+  "provider": "nanogpt",
+  "model": "moonshotai/kimi-k2.5",
+  "promptId": "03_paso_a_paso_profundo",
+  "promptName": "Paso a paso profundo",
+  "promptContent": "Eres un asistente experto en análisis didáctico, documentación técnica y explicación paso a paso.\n\nGenera un documento Markdown bien formateado completo y estructurado a partir de la transcripción del vídeo.\n\nEl objetivo es transformar el contenido del vídeo en una guía profunda que permita entender no solo qué se explica, sino también el orden lógico, el porqué de cada bloque y cómo aplicarlo.\n\nIncluye:\n\n1. Un título claro.\n2. Un resumen inicial de 5 a 8 líneas.\n3. Una explicación por fases o bloques lógicos.\n4. Dentro de cada fase, detalla:\n   - Qué se explica.\n   - Por qué es importante.\n   - Qué pasos concretos se mencionan.\n   - Qué errores, riesgos o dependencias aparecen.\n5. Una sección de \"Procedimiento paso a paso\".\n6. Una sección de \"Puntos críticos a recordar\".\n7. Una conclusión final.\n\nCriterios:\n\n- Mantén el máximo detalle útil de la transcripción.\n- No inventes pasos que no aparezcan.\n- Si el vídeo menciona herramientas, pantallas, entidades, menús o configuraciones, indícalos explícitamente.\n- Si hay ambigüedades, señálalas como \"pendiente de validar\".",
+  "resultFilename": "paso_a_paso_profundo-2026-05-25t11-57-01-375z.md",
+  "transcriptRef": "by-video/n3aogqdp_kw.es-orig.automatic.txt",
+  "transcriptHash": "ca99cf95c38b03de1d0404226ff927ab91b74c2c5605adfbad2e6c2f6a7b789e",
+  "processedAt": "2026-05-25T11:57:00.438Z",
+  "title": "El SECRETO para Ganar Resistencia Corriendo Fácilmente",
+  "videoTitle": "El SECRETO para Ganar Resistencia Corriendo Fácilmente",
+  "videoUrl": "https://www.youtube.com/watch?v=N3AogqDP_kw",
+  "videoId": "N3AogqDP_kw",
+  "channelName": "Carlos Rojo Running",
+  "durationSeconds": 2417,
+  "durationText": "40:17",
+  "uploadDate": "20260521",
+  "transcriptLanguage": "es-orig",
+  "transcriptSource": "automatic",
+  "transcriptCached": true,
+  "transcriptWords": 8353,
+  "transcriptChars": 47763,
+  "outputWords": 2039,
+  "chunked": false,
+  "chunks": 1,
+  "aiRuns": [
+    {
+      "runId": "163b3068-f523-4eed-bbad-c1452e24a1d2",
+      "operation": "yt_dlp_info",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:55:14.313Z",
+      "finishedAt": "2026-05-25T11:55:19.514Z",
+      "durationMs": 5202,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "2f4cde8a-7ae2-44d7-9fcc-39690a60cda6",
+      "operation": "yt_dlp_captions",
+      "scope": "transcript",
+      "provider": null,
+      "model": null,
+      "promptId": null,
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:55:19.515Z",
+      "finishedAt": "2026-05-25T11:55:24.258Z",
+      "durationMs": 4743,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "usageSource": "provider_reported"
+    },
+    {
+      "runId": "ee4ef55c-de42-4baf-8db1-5c0fb77c6a8a",
+      "operation": "document_generation",
+      "scope": "document",
+      "provider": "nanogpt",
+      "model": "moonshotai/kimi-k2.5",
+      "promptId": "03_paso_a_paso_profundo",
+      "diagramPromptId": null,
+      "diagramType": null,
+      "startedAt": "2026-05-25T11:57:01.376Z",
+      "finishedAt": "2026-05-25T11:58:18.867Z",
+      "durationMs": 77491,
+      "inputTokens": 16401,
+      "outputTokens": 4196,
+      "totalTokens": 20597,
+      "cachedInputTokens": 0,
+      "reasoningTokens": 0,
+      "usageSource": "provider_reported"
+    }
+  ],
+  "usageTotals": {
+    "document": {
+      "inputTokens": 16401,
+      "outputTokens": 4196,
+      "totalTokens": 20597,
+      "durationMs": 77491,
+      "unavailableUsageRuns": 0
+    },
+    "diagrams": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 0,
+      "unavailableUsageRuns": 0
+    },
+    "transcript": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "durationMs": 9945,
+      "unavailableUsageRuns": 0
+    },
+    "all": {
+      "inputTokens": 16401,
+      "outputTokens": 4196,
+      "totalTokens": 20597,
+      "durationMs": 87436,
+      "unavailableUsageRuns": 0
+    }
+  },
+  "latestDiagramRuns": {}
+}

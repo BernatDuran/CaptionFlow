@@ -1,0 +1,221 @@
+# Transcripcion
+
+- Titulo: TRADUCCIÓN en TIEMPO REAL con cualquier AURICULAR 🎧 ¡Ya es posible!
+- URL: https://www.youtube.com/watch?v=TOqC5BdNqUk
+- ID video: TOqC5BdNqUk
+- Canal: Genius Manu
+- Duracion: 8:08
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 1339
+- Provider IA: nanogpt
+- Modelo IA: qwen/qwen3.5-397b-a17b
+- Prompt: Resumen claro
+- Fecha de procesamiento: 2026-05-27T12:57:17.121Z
+
+Kind: captions
+Language: es
+Ya puedes traducir a más de 70 idiomas
+una conversación con cualquier persona
+del mundo utilizando cualquier
+auricular. En este vídeo te voy a
+explicar los dos métodos que existen,
+tanto de Google como de Apple. Y como
+siempre, hay diferencias.
+Y es que el método más universal se
+trata del de Google, que actualmente
+está desplegando la actualización en
+Google Traductor, que suele ser la más
+extendida. Y ojo porque los requisitos
+son sersencillos, aunque también tenemos
+el método de Apple, que sí necesitamos
+unos AirPods compatibles, pero también
+funciona bastante bien. Así que
+empezamos por el principio, como no, con
+la opción de Google, que funciona tanto
+en Android como en iPhone, y lo que nos
+va a permitir es traducir lo que dice la
+otra persona en tiempo real, manteniendo
+el tono, el ritmo y el énfasis de la
+conversación. Así que, ¿cuáles son los
+requisitos? Pues básicamente tener una
+conexión a internet, un Android o un
+iPhone, la aplicación Google Translate
+actualizada. Es importante también que
+estéis en los países donde actualmente
+está compatible, que son España, México,
+Estados Unidos y muchos países más,
+aunque estos son los hispanohablantes de
+momento. Soporta unos más de 70 idiomas
+y vamos a saber cómo utilizarla. Y es
+que es sumamente sencillo. Vamos a
+empezar abriendo la aplicación. Y aquí
+abajo ya tenéis la opción de traducción
+instantánea. Si pulsamos sobre ella, la
+primera opción de escucha es la que
+queremos, que sería la traducción en
+vivo y solo es posible si tenemos unos
+auriculares conectados. Da igual que
+auriculares, siempre que sean
+inalámbricos y bueno, pues sean
+mínimamente potentes para que escuche
+del exterior y ya nos lo traduzca
+directamente. También tenemos la opción
+de conversación, es decir, que las
+traducciones se reproducirán en voz alta
+a través de los altavoces del
+dispositivo y también de solo texto.
+Pero en este caso, arriba de todo,
+también ponemos poner cuál es el idioma
+de la otra persona y de nosotros. El
+nuestro, en mi caso, es el español y el
+otro será el inglés. Vamos luego a hacer
+una prueba. Así que una vez con esto, si
+alguien nos habla hablando inglés,
+obviamente, pues nosotros con los
+auriculares puestos vamos a escuchar en
+español todo lo que esa persona esté
+hablando. De verdad que esto es muy útil
+en muchas ocasiones, pero vamos a hacer
+esa prueba para que veáis que realmente
+funciona. Vais a escuchar un vídeo en
+inglés en bajito y yo os lo iré diciendo
+en español, que es la traducción que a
+mí me está llegando. Por aquí tengo el
+discurso de Steve Jobs en Stanford y
+vamos a ver qué tal funciona la
+traducción. Empezamos. Ya pongo sobre
+escucha, iniciar. Vamos allá. Empezó
+antes de que yo naciera. Mi madre
+biológica era una joven soltera y
+estudiante de posgrado y decidió darme
+en adopción. Ella se sentía muy
+convencida de que yo debía ser adoptado
+por graduados universitarios. Así que
+todo estaba listo para que yo fuera
+adoptado al nacer por un abogado y su
+esposa, excepto que cuando yo salí
+decidieron en el último momento que en
+realidad querían una niña. Así que mis
+padres, que estaban en una lista de
+espera, recibieron una llamada en medio
+de la noche preguntando, "Tenemos un
+bebé varón inesperado. ¿Lo quieren?" Y
+ellos dijeron, "Por supuesto,
+mi madre biológica se enteró después que
+mi madre nunca se había graduado de la
+universidad y que mi padre nunca se
+había graduado de la preparatoria. Ella
+se negó a firmar los papeles de adopción
+finales. Ella solo se dio unos meses
+después cuando mis padres prometieron
+que yo iría a la universidad. Esta fue
+el comienzo de mi vida y y
+17 años después sí fui a la universidad,
+pero ingenuamente elegí una universidad
+que era casi tan cara como Stanford y
+todos mis padres de clase trabajadora
+estaban gastando sus ahorros en mi
+colegiatura universitaria. Después de 6
+meses no le vi el valor. No tenía idea
+de qué quería hacer con mi vida y no
+tenía idea de cómo la universidad me iba
+a ayudar a resolverlo.
+Lo he entendido todo perfectamente, así
+que no sé si lo habéis podido ver en la
+pantalla, pero funciona bastante bien. Y
+por otro lado tenemos la opción de
+Apple. En este caso sí que tiene unos
+requisitos un poquito más complicados.
+La aplicación es la de Traductor que
+viene instalado en prácticamente todos
+los dispositivos de Apple, pero
+necesitamos iOS 26 y también los AirPods
+más recientes, los Pro, Pro 2 o también
+los AirPods 4 con cancelación de ruido o
+los AirPods Max de segunda generación.
+Además, nuestro iPhone debe ser
+compatible con Apple Intelligence, es
+decir, a partir del iPhone 15 Pro en
+adelante. Sí que no tiene tantos
+idiomas, por ejemplo, tiene como unos 12
+idiomas compatibles que están los más
+universales, por decirlo así, que es el
+español, el inglés, francés, alemán,
+portugués, italiano, chino, japonés y
+coreano. Eso sí, implementa un atajo muy
+chulo en los auriculares, que si
+pulsamos los dos a la vez, pues vamos a
+entrar en esa traducción en vivo, algo
+que, bueno, lo hace un poquito más
+compatible. Sinceramente, para mí me
+parece un poquito mejor la traducción de
+Google y además respeta un poquito más
+el tono y demás. Hay otras mejoras en
+Google Traductor. Por ejemplo, con esta
+función de la IA también han
+implementado que ahora mejora la
+traducción en los modismos, en la jerga
+y también en expresiones idiomáticas. Al
+fin y al cabo, mejora un poquito más la
+aplicación al traducir estas cosas. Y
+ojo, porque para un futuro prepara un
+modo offline, es decir, actualmente
+necesitamos conexión a internet. Google
+está preparando ese modo sin conexión
+que básicamente va a hacer lo mismo de
+forma pública aunque no tengas conexión,
+que de verdad esto sería superútil
+cuando estamos llegando y en el
+aeropuerto pues no tenemos aún esa SIM,
+no está conectada y necesitamos traducir
+algo o que alguien nos lo traduzca de
+manera inmediata. Pero ya os digo que de
+momento no está compatible. En el futuro
+seguro que lo está. ¿Y para qué sirve
+esta traducción en vivo? ¿Para qué casos
+yo la veo útil? Pues por ejemplo, para
+viajes, sobre todo para viajes, y es que
+vamos a poder entender conversaciones en
+restaurantes, que la otra persona esté
+hablando de forma natural y nosotros
+escucharlo perfectamente. Incluso
+anuncios en los aeropuertos. Ya sabéis
+que a veces lo dicen en inglés, en el
+idioma local, pero si no sabemos ninguno
+de los dos, esto nos puede ayudar
+bastante. Incluso hablar con familiares
+que no hablan nuestro idioma o entender
+a alguien sin necesidad de estar mirando
+el móvil de forma muchísimo más natural
+y de forma muchísimo más directa.
+Incluso ver películas o ver vídeos en
+otro idioma. Al fin y al cabo es una
+manera muy rápida, no es instantánea,
+pero sí bastante natural de escuchar una
+conversación y de entenderla al mismo
+tiempo, siempre que venga de un idioma
+compatible, que va a ser bastante fácil,
+incluso a nivel de trabajo en reuniones
+internacionales o para hacer networking
+con personas extranjeras, el hecho de
+que esa persona simplemente hable de
+manera natural y nosotros poder estar
+haciendo lo mismo, pues puede hacer que
+todo fluya mejor y que todo funcione. de
+una manera un poquito más natural. Así
+que chicos, espero os haya gustado este
+vídeo. Como siempre, si quieres conocer
+mucha más información, te voy a dejar en
+la descripción las fuentes del vídeo y
+también todas las noticias relacionadas
+con esto, que ya sabéis, tengo el canal
+de WhatsApp, por ahí os comparto todos
+los detalles, todas las últimas
+noticias. Así que seguidme por allí. Si
+te ha funcionado este vídeo, si te ha
+parecido interesante, puntúalo,
+suscríbete al canal para no perderte
+ninguna de estas actualizaciones y ahora
+sí, nos vemos en el siguiente. Gracias
+por estar ahí, como siempre.

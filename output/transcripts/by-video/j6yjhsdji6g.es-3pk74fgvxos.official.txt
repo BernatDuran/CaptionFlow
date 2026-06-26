@@ -1,0 +1,516 @@
+# Transcripcion
+
+- Titulo: MiniMax Code: El software de IA que se auto-corrige y testea su propio código
+- URL: https://www.youtube.com/watch?v=J6yjHsDJI6g
+- ID video: J6yjHsDJI6g
+- Canal: DevExpert - IA para Desarrolladores
+- Duracion: 25:47
+- Fuente: official
+- Idioma: es-3pK74FgVxOs
+- Palabras transcripcion: 5003
+- Provider IA: nanogpt
+- Modelo IA: xiaomi/mimo-v2.5-pro
+- Prompt: Resumen ejecutivo brutal: extrae lo esencial, elimina ruido y detecta implicaciones reales
+- Fecha de procesamiento: 2026-06-17T22:53:28.978Z
+
+Kind: captions
+Language: es
+En un momento en el que parece que cada vez la inteligencia de los
+modelos nos va a salir más cara.
+Hemos visto lanzamientos como recientemente el de Fable con unos costes
+muy altos.
+También GPT 5.5 que duplicaba su precio con respecto a 5.4.
+Parece que la única salida cada vez es pagar más.
+Pero la realidad es que existen modelos que son muy potentes y muy cercanos
+a los state of the art y que podemos utilizar por una fracción de
+su coste.
+Este es el caso de Minimax del que os vengo a hablar hoy, y
+que además de que es un modelo que me gusta mucho cómo funciona y
+de que su precio es muy inferior al de los modelos que hablábamos previamente,
+han decidido patrocinar este vídeo y me han dejado un descuento de un 12%
+de los planes que te voy a contar luego y que puedes encontrar tanto
+en el primer comentario como en la descripción.
+Pero ¿por qué es un momento tan importante para Minimax?
+Bueno, por dos motivos.
+El primero es porque han lanzado Minimax M3, en el que hoy no voy
+a profundizar demasiado, aunque lo estaremos usando.
+Tendremos otro vídeo destinado a ver exactamente cómo funciona Minimax M3, sus
+capacidades agénticas, su capacidad de desarrollo.
+Aquí nos vamos a centrar más en la segunda novedad, que es Minimax Code,
+un entorno de desarrollo basado en agentes que podríamos comparar, por ejemplo, a Codex
+en cuanto a su parecido o anti-gravity, en el sentido de que el centro
+de desarrollo es la conversación con los agentes y no tanto el código.
+Y quiero profundizar en esta herramienta porque nos trae algunas ventajas que no había
+visto en ningún otro ADE, e incluso unos planes que nos dan unas capacidades
+que tampoco tiene ninguno de la competencia.
+Y es que si entramos en su página web, veremos estas novedades que te
+comentaba por aquí.
+Por un lado, el nuevo modelo, del que ya he dicho que hablaremos más
+adelante, el Minimax Code, que luego nos lo bajaremos y trabajaremos con él, y
+el plan de tokens, que es el que te quiero comentar ahora mismo.
+Y sobre el que te comentaba que tenemos un 12% si lo haces a
+través del link que te he dejado en la descripción.
+En cuanto al plan de tokens, es muy interesante, tenemos un plan de 20
+dólares que nos da casi 2 billions de tokens al mes, con lo que
+prácticamente
+todo el mundo tendréis cubiertas vuestras necesidades en el día a día.
+Una de las ventajas que tiene este plan por tokens es que se puede
+usar tanto en su propio code desktop y en el code web, que lo
+veremos muy por encima también.
+Pero lo más interesante es que tiene una API Key, y si no te
+gustan sus herramientas, puedes utilizar las que quieras.
+También te permiten usarlo en OpenClaw, en Hermes y en cualquier otra herramienta que
+soporte una API Key.
+Pero la otra ventaja que tiene esto es que la API Key la puedes
+usar no solo
+para generar texto, sino que puedes generar imágenes, puedes generar voces, música,
+vídeos.
+El vídeo está bastante limitado en función del plan, así que no contaría con
+él, pero todos los demás sí que están incluidos por defecto en el mismo
+plan de token.
+Muy bien, pues vamos a centrarnos en este vídeo, como te comentaba, en su
+nueva herramienta Minimax Code, que han renombrado.
+Antes se llamaba Minimax Agent, por si la habías llegado a aprobar, y tenemos
+dos opciones: utilizarla desde la web o utilizarla desde nuestra propia máquina.
+Yo voy a hacer un vistazo muy rápido a web porque lo que quiero
+realmente es probarla con un agente de desarrollo real del día a día y
+por tanto necesito para ello ejecutarlo en mi máquina.
+Aquí de un primer vistazo podemos ya ver muchas cosas que vamos a ver
+posteriormente en la variante de escritorio, y es como crear una nueva tarea.
+Podemos hacer búsquedas sobre las conversaciones que ya tenemos hechas, podemos trabajar
+con skills.
+Existen un montón de skills ya subidas con la que podemos hacer un montón
+de cosas: generar presentaciones en HTML, landing pages, PDFs, trab
+ajar con documentos como DocX, Excel, PowerPoint, hay muchos temas
+relacionados con interfaz de usuario, un agente para hacer Deep Research.
+Bueno, hay un montón de skills que ya vienen incluidas por defecto, y luego
+nosotros podemos añadir las nuestras propias.
+Podemos subir una skill, podemos importarla desde GitHub o incluso construirla con
+Mavis, que
+es el nombre del agente principal que le dan aquí en Minimax Code.
+Luego podemos programar tareas, aquí no lo vamos a ver, lo veremos luego.
+Una sección de assets con todo lo que hemos ido creando y lo podemos
+conectar con nuestro móvil y conversar con él.
+Ya veremos luego cómo conectarlo en la aplicación de escritorio porque es exactamente
+igual.
+Y además, si te interesa, te puedes crear tu propio Hermes o tu propio
+OpenClaw, todo esto incluido en la suscripción y atacando al plan de tokens.
+Aquí te podrías crear el tuyo propio y utilizarlo totalmente alojado por ello
+.
+Tampoco es el objetivo de este vídeo.
+Si te interesa que profundicemos en cómo se funciona esto, déjamelo en los comentarios
+y podemos crear un vídeo aparte.
+Y aquí lo que te quería enseñar era cómo puedes crear distintos assets, distintos
+elementos con las diferentes capacidades que tenemos con todos los modelos que nos
+ofrece
+Minimax.
+Aquí le pedí una imagen de un gato cósmico y me cre
+Vamos a escucharlo unos segundos.
+ó esta imagen.
+Luego le pedí una canción que acompañara a la imagen y me creó esto.
+Bueno, pues como ves, una canción con una letra que se ha inventado sobre
+el gato cósmico.
+Y le pedí que me narrara una historia para el gato.
+Y también uso el modelo de Texto Speed y creó algo como esto.
+Había una vez en una galaxia muy lejana un gatito que no era como
+los demás.
+Su pelaje estaba tejido con nebulosas moradas y azules, y sus ojos brillaban como
+dos soles gemelos.
+Bueno, lo mismo.
+Podrías crearte tus propias aplicaciones para ti mismo, eso sí, ten en cuenta que
+la API que te dan para los tokens es para uso propio, no para
+crearte un software as a service ni nada por el estilo, pero podrías crearte
+sistemas con los que trabajes y que te respondan hablando gracias a este modelo.
+O incluso crearte músicas para fondos de vídeos o lo que necesites, gra
+cias a todos los modelos que te ofrece.
+Y finalmente aquí creé un vídeo.
+Esto recuerda que está muy limitado, pero bueno, creo un vídeo a partir de
+la imagen que le pasé, simplemente por curiosidad, por ver qué era capaz de
+hacerlo.
+Además, le pedí que me implementara una landing
+porque recuerda que esto se llama Minimax Code, por tanto, mi primera impresión es
+que tiene sentido llamarse así si se puede utilizar para programar.
+Así que dije qué pasa si intento programar algo
+directamente desde la web.
+Y la verdad es que
+, pues bastante bien, ¿no?
+Por tanto, para tareas muy sencillas de programación te puede servir para crearte
+landings
+y cosas así, perfecto.
+Y luego, si lo quieres compartir con alguien, te puede generar una URL para
+que la envíes, pero obviamente si queremos desarrollar de manera profesional y tener una
+mejor gestión del código de recursos, por supuesto, de herramientas instaladas, todo
+esto lo
+tenemos que hacer en nuestro escritorio.
+Y para ello, simplemente le tenemos que dar aquí para descargar y una vez
+descargado, arrastramos para que se instale.
+En el caso de que trabajes en Windows también la tienes disponible.
+Para Linux, según tengo entendido, todavía no está.
+Y una vez instalada, la abrimos, iniciamos sesión, aceptamos el login y ya estaríamos
+dentro.
+Aquí nos habla de Minimax M3 y fíjate que visualmente es muy parecido.
+Tenemos aquí también las skills.
+En este caso aparecen tanto las propias de Minimax como las que yo tengo
+instaladas.
+Podemos programar tareas, lo que para mí hoy en día es imprescindible en una
+herramienta de este estilo.
+Y como te comentaba, también lo podemos conectar al móvil.
+Por tanto, podríamos tener una especie de OpenClaw muy sencillo que básicamente trabaja
+en nuestra máquina.
+Una funcionalidad muy interesante que tiene Minimax Code es el de los agentes.
+Podemos crearnos agentes que se encar
+guen de tareas concretas.
+Luego nosotros durante las tareas o conversaciones podemos activamente llamarles o
+el propio Minimax tiene conciencia de ellos y puede crearse su propio equipo para
+solucionar la tarea concreta que le estemos identificando.
+Por defecto nos vienen estos, se le puede dar un nombre, una descripción y
+un espacio concreto de trabajo en el que trabaje por defecto cuando empezamos a
+hablar con él.
+Y aquí tiene vamos a seleccionar un nuevo proyecto, que en este caso vamos
+a elegir este, el de Minimax, para que trabaje sobre él.
+Y para crear una tarea avanzada, en vez de directamente tirarnos a trabajar por
+nosotros, le vamos a pedir que cree un equipo.
+Esta funcionalidad, la del team, nos permite definirle cuáles son las capacidades que
+quer
+emos implementar y que te cree
+un equipo para construir esa tarea.
+Y de hecho, antes de hacer esto, estoy pensando que mejor sí que vamos
+a crear un equipo de agentes un poco más profundo.
+Le voy a decir, quiero crear una app web llamada Minimas Voice Studio con
+el objetivo que sea un asistente de voz que permita conversar con Minimas M3.
+La conversación debe verse también como chat, debe permitir tener varias conversaciones,
+desde el
+chat se puede pedir generar una imagen o generar una canción.
+La idea es que podamos tener una conversación hablada con los propios modelos y
+APIs de Minimax.
+Entonces le voy a decir, antes de empezar a trabajar, dime qué agentes me
+recomendarías crear con su nombre y su descripción.
+Y ahora está procesando la pregunta que le hemos pedido.
+Me ha ofrecido aquí un montón de agentes.
+Y que bueno, después de hablar con él, me ha recomendado tener estos dos:
+el Architect, el Integrations Engineer y el coder y el
+coder y el verifier, que ya los teníamos previamente.
+Así que voy a iniciar una conversación.
+Así que voy a iniciar una nueva tarea y le voy a decir: ¿Te
+acuerdas de la aplicación que hemos estado hablando sobre Minimax Voice Studio?
+Y fíjate, me dice que sí que se acuerda antes de comprobar nada.
+En el Workspace Minimax que hemos estado trabajando en ella, no tiene contexto, pero
+es capaz de acceder a él.
+Dice
+que hemos hablado, pero no tengo continuidad real de lo que decidimos.
+Qué features tiene, etcétera.
+Una de las ventajas que tiene Minimax es que tienen implementado un sistema de
+memoria por tres capas.
+Es capaz de recordar muchas de las conversaciones que vamos teniendo sin necesidad de
+que estemos activamente encima de ello.
+Va generando una serie de ficheros, los va gestionando, actualizando, etcétera, para
+siempre
+poder tener en contexto y a una visión de pájaro las tareas en las
+que trabajamos.
+Aquí realmente ha acertado en ver un poco lo que estamos haciendo, que estamos
+trabajando con esa aplicación, pero realmente todavía no hemos tomado muchas decisiones
+al respecto.
+Así que ahora sí, voy a utilizar el team y le voy a decir
+todo esto.
+Quiero crear una web llamada Minimize Voice Studio, el objetivo, ya lo hemos leído
+antes, y vamos a ponerle a trabajar con el equipo.
+Cuando decidimos que queremos utilizar un equipo, no le especificamos exactamente qué
+agentes queremos
+usar, sino que basado en la tarea
+decide cuáles son los más relevantes en ese punto.
+Así que lo lanzamos.
+Esto al final, pues es una skill, como funciona por debajo.
+Mira que aquí ha hecho un listado de los agentes que tiene disponibles para
+saber cuáles le interesan ahora mismo utilizar en el proyecto.
+Ha terminado de tratar todo lo necesario, objetivo real, por qué team.
+Hay track paralelos reales, el track de arquitectura, de UI, backend, voz, seis t
+areas, empezando por arquitectura.
+Y mira que ha lanzado ahora el agente de arquitectura.
+Podemos ver este subagente trabajando y realizando las tareas.
+Va a empezar por comprender el workspace y arquitectura del proyecto.
+El espacio está vacío y empieza a trabajar sobre las distintas tareas.
+Está haciendo un to-do, implementando un to-do que le permita luego desarrollarlo.
+Y mientras tanto, tenemos aquí el plan en marcha, empezamos por la arquitectura y
+el scaffold.
+En cuanto esté listo, saldrán en paralelo el backend, la voz, la imagen, música
+y la UI.
+Como veis ahora mismo, el agente principal está trabajando como team lead
+decidiendo qué agentes van a hacer qué cosas y cuáles se pueden ejecutar en
+secuencial y cuáles en paralelo.
+Nos identifica que una vez que la arquitectura la tenga implementada, va a empezar
+a trabajar en el resto de tareas en paralelo.
+Ya ha terminado el arquitecto, ha finalizado y ahora está pasando el verificador para
+asegurarse de que todo lo que ha creado es correcto.
+Va a inspeccionar la estructura del workspace, instalar el cliente del servidor,
+recomprobar
+que funciona la API, hacer un build, las variables de entorno, etcétera.
+Muy bien, pues ya ha finalizado el verificador.
+Indica que pasa el veredicto, que pasará las comprobaciones, así que
+a partir de aquí tendríamos que empezar a trabajar.
+Le he pedido que pare precisamente para poder revisar un poco todo lo que
+ha hecho y enseguida le pedimos que siga.
+Y de momento no parece que haya clases que sean excesivamente grandes ni que
+esté creando código que tenga muy mala pinta.
+La verdad que en general todo tiene una apariencia muy buena, bien estructurado, con
+sus hooks, etcétera.
+Esperaremos a que acabe y luego haremos una revisión final, pero por el momento
+pinta bastante bien.
+Ya ha terminado de implementar la parte del backend y se ha lanzado otro
+subagente, verificador.
+Recordad que lo tenemos aquí abajo para comprobar que la parte del backend está
+bien implementada.
+Ya ha acabado la parte del backend
+y ha lanzado otro subagente verificador.
+Recordad que lo teníamos aquí debajo para comprobar qué tal ha quedado implementada esa
+parte.
+Está haciendo revisiones, por ejemplo, pasando los tests, comprobando posibles
+problemas.
+Tenemos por aquí ya 33 test implementados y que está pasando, que la verdad
+que muy bien todo esto.
+La parte de UI, sin embargo, sigue avanzando.
+Parece que ya está cargando la interfaz.
+El agente de UI ha finalizado, ahora está ejecutándose el verificador y ya vamos
+teniendo por aquí algo
+visual.
+De momento son todo pruebas de smoke, porque si te has fijado, daba un
+error de conexión con Minimax y esto es porque no le hemos puesto la
+API Key todavía.
+¿Y dónde se saca esto?
+Si vamos a nuestra consola, en los detalles del plan tenemos una clave de
+suscripción.
+Esta la tenemos que copiar y esta es la que usaríamos si por ejemplo
+queremos trabajar con Open Code, con OpenClaw o cualquier herramienta exter
+na a la que hemos estado utilizando ahora mismo.
+Minimax utiliza la misma API que OpenAI, que es medio estándar dentro del
+sector y por tanto cualquier sistema que soporte esa API podrá utilizar Minimax.
+Y entonces me voy a ir a Visual Studio Code y en el punto
+MP aquí es donde tendríamos que reemplazar con la API que hemos copiado.
+No te lo voy a enseñar para que quede la API oculta, pero sería
+pegarla aquí y guardar.
+Mientras tanto, ya ha acabado la verificación del backend, nos indica que ha fallado.
+El trabajo de seguridad es sólido.
+El único defecto real es que el error del middleware solo machea ZOT Error
+y API errors.
+Por ejemplo, si hay un sintax error de un JSON mal formado, pues falla
+con un 500 genérico.
+Y además, esto liquea la pila completa con la ruta del sistema de archiv
+os y por tanto esta parte hay que mejorarla.
+La verdad que esta parte de ver
+uno de los códigos que se generan.
+ificadora está funcionando súper bien porque le está dando una vuelta muy interesante a
+cada
+Por ejemplo, aquí ha pasado un montón de comprobaciones.
+Temas de que los test pasen, el chequeo de tipos, que no haya keys
+en las cabeceras o los headers, en los logs del servidor, que el cruz
+sea coherente en los distintos endpoints del backend, un rate limit para que no
+se abuse de él, la validación de ZOD para los cuerpos tipados, y aquí
+este par de errores, que entiendo que cuando el verificador de UI acabe, pues
+veremos cómo trata de solucionarlos.
+Ya ha terminado también el verificador de UI.
+En este caso, a ver qué nos comenta, indica que pasa.
+Dice que no ha podido probar porque faltaba la API key, el renderizado de
+imágenes, el playback de música, el del TTS.
+Y fíjate que aquí ha vuelto a activar dos agentes, el de arquitectura para
+que actualizara algunas partes y por otro lado, el del backend.
+Entiendo que para que solucione los problemas que hemos tenido.
+Sí, aquí fíjate.
+Got it, surgical fix on the error middleware plus a test.
+Así que va a solucionar el middleware y va a añadir test para que
+no vuelva a fallar.
+Aquí ya está terminando, va a almacenar en la memoria el nuevo modo fallo,
+que además lo ha hecho reutilizable a lo largo de todo el proyecto, lo
+cual es genial.
+Y aquí ya comenta lo que ha hecho.
+Cambios solo en el middleware error.
+Ha generado test de regresión cubriendo los problemas que había habido y ha lanzado
+los test, el type check, el smoke y ha actualizado el deliverable.
+Le voy a decir, alguna gente decía que no estaba la API Key definida
+y que por tanto no puede hacer algunas pruebas.
+Es solo para decirte que ya sí que está en el punto env, así
+que se puede utilizar.
+Y aquí me está avisando de que tengan mucho cuidado con no hacer commit
+de ese punto env para que obviamente no se pueda liguear esa API key.
+Esto es importante porque hay veces que nos pasa que si el modelo no
+es lo suficientemente potente o quiere ir muy rápido para acabar con las cosas,
+acaba publicando el .env donde no debe, no tiene cuidado con que se esté
+liqueando, por ejemplo, en los logs, como ha hecho el verifier previamente para
+comprobar.
+Y aquí podemos estar seguros de que una vez que acabemos con este código,
+el código va a ser seguro y no va a estar liqueando esas variables
+de entorno.
+Estupendo, pues ya ha acabado la revisión del backend.
+Aquí lo vemos.
+Esto desbloquea los tracks de imagen y música y lo que ha lanzado esta
+vez es el ingeniero de integraciones que creamos previamente, tanto para las imágenes
+como
+para la música.
+Aquí está haciendo la integración de voz y por aquí está por la generación
+de imágenes.
+Una vez ha finalizado el agente encargado de la parte de generación de imágenes,
+se ha lanzado el verificador.
+Y lo mismo hará una vez que acabe el de integración.
+Vamos a esperar a que acaben tanto estos agentes como los verificadores y comprobamos
+el resultado.
+Y ahora que ya ha terminado todo, está haciendo una última verificación en tu
+Así que vamos a dejarle que termine y a ver qué nos cuenta.
+end y auditoría de seguridad.
+Genial, pues parece que ya ha terminado la verificación en tu end.
+Tenemos aquí incluso una serie de pantallazos que ha hecho para comprobar que todo
+está en orden.
+Y finalmente aquí nos indica que Minimas Voice Studio está listo.
+Tenemos chat con burbujas, múltiples conversaciones, voz bidireccional, generación de
+imagen
+y música y micrófono en el input con estados visuales.
+Se centra mucho en la seguridad de aquí, cuantométicas, tenemos 146 test, 14 test
+en el cliente y ha hecho un end to end de navegador real con
+nueve pantallazos que verifican todos los flujos.
+Dice aquí hay un pequeño error de seguridad baja, donde en un error nos
+devuelve un 500 en vez de un 413.
+De momento no lo vamos a hacer, simplemente por probar que esto funciona.
+Dice que hay una cosa que quedó pendiente que sigue quiere hacer, dejar apuntado
+cómo levantar localmente lo que ya hay.
+Parece que ya lo ha hecho y que ahora abriendo esta URL podemos probarlo.
+Así que probamos una nueva conversación y le vuelvo a decir: Hola, esta es
+mi primera conversación contigo.
+Aquí le vemos generando la respuesta y nos dice hola, bienvenido a Minimax, soy
+tu asistente de texto, listo para ayudarte en lo que necesites.
+Aquí es la capa de thinking que la podríamos mejorar haciendo una parte de
+UI concreta para ello.
+No la vamos a hacer porque tampoco merece mucho la pena, pero ya estamos
+viendo que ha contestado bien y si le damos a escuchar.
+Es less than, think is greater than.
+Tenemos un problema porque también está leyendo la parte del thinking.
+Saying this is their first conversation with me.
+Aquí
+, bienvenido a Minimax Voice Studio.
+Soy tu asistente de texto, listo para ayudarte en lo que necesites.
+¿En qué puedo echarte una mano hoy?
+Así que bien, salvo por el hecho de que la capa de thinking la
+tendríamos que ajustar para que no la trate como parte de la conversación.
+Genera una imagen hiperrealista de un programador desarrollando una app con IA.
+Vale, y ahora sí, aquí tenemos la imagen.
+Muy bien, pues ya hemos visto la capacidad principal de Minimax Code, que es
+la generación de desarrollo guiado mediante este sistema de agentes.
+Y vamos a revisar rápidamente un poco cómo ha quedado el código.
+La verdad que el código que ha generado es bastante bueno, está muy bien
+estructurado, tiene una muy buena batería de test y por supuesto con tantas revisiones
+que ha ido haciendo, ha quedado sin ningún tipo de linter, de chequeo de
+tipos ni nada por el estilo.
+Me ha gustado mucho la funcionalidad de Team, donde a partir de esos agentes
+que ya tenemos creados, decide cuáles son los que mejor le pueden venir para
+realizar las tareas y se crea un plan para llamarlos con los prompts con
+los que deben llamarse, el orden cuáles se pueden ejecutar en paralelo y luego
+lanza ese proceso para desarrollarlo de principio a fin.
+Este uso de agentes hace que el resultado sea muy bueno.
+Lo que sí que he detectado es que es bastante lento en el proceso.
+No sé si es por las respuestas del propio modelo o porque está consumiendo
+muchos tokens en la realización de las tareas.
+Yo sospecho que es un poco más lo primero, pero bueno, para tareas que
+puedes lanzar y dejar ejecutándose a su ritmo, la verdad que está muy bien.
+Y vamos a ver algunas funcionalidades más que se nos habían quedado en el
+tintero, por ejemplo, la de conectarnos con un dispositivo móvil.
+Para ello, necesitamos crear un bot de Telegram.
+También existen otras redes, pero que yo creo que son más populares en China,
+pero por aquí no.
+Así que si me voy a Telegram y creo un nuevo bot, lo voy
+a llamar, por ejemplo, hacemos New Bot y lo vamos a llamar Mini Max
+Antonio Bot.
+Perdón, lo llamamos Mini Max, por ejemplo.
+El identificador sí que sería el de Mini Max Antonio Bot.
+Esto nos da una API key que tenemos que pegar aquí, es el bot
+token.
+Lo conectamos.
+Y ahora aquí teníamos la conversación.
+Esta es una conversación previa que tuve cuando hice otra prueba, pero si ahora
+me voy aquí, abro el bot y le digo, bueno, está pensando por el
+comando de start, y aquí nos responde.
+Hey Antonio, soy Mavis.
+Hace una semana me preguntaste que sabía de ti.
+Vale, recuerda
+toda la conversación que hemos tenido.
+Si te fijas, al final esto es una única conversación.
+No sé si existe la opción de crear varias conversaciones, creo que no.
+Eso sí, le podemos cambiar aquí el icono y vamos a ver, por ejemplo,
+si conoce las tareas en las que hemos estado trabajando.
+Conoces las tareas en las que hemos estado trabajando el día de hoy.
+Lo que está haciendo es utilizar su propio CLI para ver las sesiones que
+ha habido que se han realizado y comenta lo último que hemos hecho, ¿no?
+Lo del detector de índice en el backend y cómo lo ha solucionado.
+Así que, bueno, desde aquí tendrías acceso al Mavis de tu máquina, es decir,
+al minimax de tu máquina y podrías ejecutar lo que necesitaras, pedirle que haga
+Otro elemento muy interesante que tenemos aquí son las tareas programadas.
+Podemos crear una nueva tarea y aquí le podemos definir el nombre, el agente
+que queremos que lo ejecute, las instrucciones y cuándo se va a ejecutar.
+Lo podemos hacer desde aquí o si no, nos podemos ir a una conversación
+cualquiera y pedirle que nos cree una tarea programada.
+Yo, en este caso, le voy a pedir una que me mande un chiste
+por Telegram cada minuto.
+Para ello, tengo una skill que me he creado para que los agentes puedan
+utilizar para notificarme por Telegram cuando algo es muy relevante y, por ejemplo, vo
+y a estar lejos del ordenador o voy a estar a otras cosas y no
+quiero que se me pase.
+Así que aquí le puedo decir: crea una tarea programada para que cada
+minuto
+me mande por Telegram un chiste usando barra Teleg
+ram Notifier.
+Vale, lo primero va a revisar la skill, ahora ya sabe cómo hacerlo y
+con Maviscron se puede crear la tarea programada.
+Como ves, Minimax tira mucho de su propio CLI para interactuar
+con las herramientas que tiene disponibles.
+Es súper cómodo para no tener que estar tocando la UI para este tipo
+de cosas que la gente nos pueda ayudar a crearlas.
+En fin, voy a borrar la tarea para que no me siga enviando chistes
+tan buenos, pero la idea de tareas programadas, por supuesto, va muchísimo más allá.
+Ya he hablado en otros vídeos sobre este tema y sobre cómo uso yo
+tareas programadas, pero para que te hagas una idea, por ejemplo, tengo una tarea
+que me hace una revisión diaria de mi sistema, comprobando qué actualizaciones
+tengo de las herramientas que tengo instaladas.
+También hace una revisión del estado del sistema, por si hay algo que pueda
+mejorarse para el rendimiento, etcétera.
+Tengo otra que me hace un barrido del email, del Slack, el WhatsApp de
+la empresa.
+Y bueno, revisa un montón de cosas más.
+Es mi barrido para saber en qué punto tengo cada tarea y cuáles son
+las siguientes cosas que tengo que hacer, mira el calendar y cosas así.
+Tengo otra que me devuelve una serie de noticias diarias por la mañana, una
+semanal que me prepara el boceto de la newsletter para luego terminar de preparar
+lo para enviárselo a mis suscriptores.
+Es decir, que tengo un montón de tareas que esto hace que el agente
+sea proactivo y no tenga que estar yo siempre encima pidiéndole las cosas para
+que las haga.
+Para mí, esto de las tareas programadas es de lo que más ha cambiado
+mi forma de trabajar.
+Y una última cosa que te quería enseñar es el computer use.
+Computer use lo que te permite es que la gente pueda controlar la máquina
+por ti.
+Y yo, por ejemplo, le voy a decir: abre mi navegador Elium, visita Deve
+Expert.io y navega hasta la página de AI Exper
+t.
+Y allí cuéntame un poco de qué va la formación.
+Para activarlo, hay que hacerlo aquí abajo.
+Es decir, cuando le damos al más, habilitamos el Computer Use.
+Aquí vemos que nos lo ha abierto y ha ido hasta la página y
+ahora interpretará la página y navegará hasta la de AI Expert.
+Te estoy poniendo un ejemplo controlando la web, pero realmente podría controlar
+cualquier aplicación
+que tengas instalada en tu máquina.
+veis que hemos hecho una prueba muy exhaustiva de Minimax Code la verdad es
+que me ha sorprendido mucho esta herramienta especialmente toda esa parte de agentes lo
+fácil que lo hace crear y luego utilizar los agentes en un equipo me
+ha parecido que simplifica mucho el uso de agentes para las personas que están
+empezando con ellos y no saben muy bien cómo configurarlos y luego tiene todo
+lo que cabe esperar de una aplicación de este tipo conversaciones por proyectos mem
+oria que además es una memoria bastante buena y más avanzada que la de muchas
+otras herramientas tenemos tareas programadas tenemos la opción de conectarlo con
+Telegram de una
+forma muy sencilla y un montón de otros pequeños detalles que hace que esta
+aplicación se sienta muy trabajada y que le han dedicado el tiempo necesario en
+cuanto al modelo tampoco voy a entrar mucho en su rendimiento hoy porque lo
+veremos en un próximo vídeo pero en general me ha dado la sensación de
+que los resultados son muy buenos y que donde quizá tiene una pequeña pega
+es que me ha parecido que es un poco lento pero bueno ya tendremos
+tiempo de profundizar más en eso recuerda que tienes en el primer comentario y
+en la descripción un 12% de descuento en los planes por tokens por si
+lo quieres probar y que te salga un poco más barato y que si
+te ha gustado este vídeo como siempre le des like te suscribas les a
+la campanita y nos vemos en un próximo vídeo hasta pronto

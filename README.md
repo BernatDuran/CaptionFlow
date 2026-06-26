@@ -153,15 +153,16 @@ prompts/diagrams/   # prompts para diagramas Mermaid
 scripts/            # scripts de desarrollo local
 ```
 
-Carpetas locales no versionadas:
+Carpetas locales no versionadas o generadas:
 
 ```text
-output/             # resultados, metadatos, transcripciones y diagramas generados
 config/             # preferencias locales de la app
 bin/                # binarios locales opcionales, como yt-dlp
 dist/               # build Vite
 node_modules/       # dependencias instaladas
 ```
+
+El repositorio incluye una carpeta `output/` con ejemplos para que una instalacion nueva pueda mostrar historial, resultados, transcripciones, diagramas y datos de analitica. Los nuevos ficheros generados localmente siguen ignorados por defecto para evitar subir contenido accidental.
 
 ## Almacenamiento local
 
@@ -320,7 +321,7 @@ DELETE /api/analytics/dashboards/:id
 - No subas `.env`.
 - No subas `config/local.settings.json`.
 - No subas `config/analytics.dashboards.json`.
-- No subas `output/` si contiene resultados reales, transcripciones o metadatos.
+- Revisa `output/` antes de publicar cambios: el repositorio incluye ejemplos, pero no conviene subir resultados privados o transcripciones sensibles.
 - No subas binarios locales de `yt-dlp`.
 - Las API keys no se exponen al frontend.
 - El backend solo acepta origenes locales permitidos por CORS.
@@ -335,8 +336,8 @@ npm run build
 
 ## Notas de mantenimiento
 
-- `output/` es contenido generado y no debe versionarse.
+- `output/` contiene ejemplos versionados para demos locales; si quieres anadir ejemplos nuevos, revisa que no incluyan datos privados y fuerza su inclusion de forma consciente.
 - Los prompts incluidos en `prompts/` si son parte del producto.
 - Los cambios en modelos y proveedores viven en `src/server/config/`.
 - Los tests estan junto a los modulos que validan.
-- Si se anaden nuevos datos generados, revisa `.gitignore` antes de hacer commit.
+- Si se anaden nuevos datos generados, revisa `.gitignore` y usa `git add -f` solo para ejemplos que quieras mantener en el repo.

@@ -1,0 +1,1265 @@
+# Transcripcion
+
+- Titulo: NOTICIAS IA: Gemini 3.5 no vale, ¿Google nos la ha colado?
+- URL: https://www.youtube.com/watch?v=S4gsd1_f-Ng
+- ID video: S4gsd1_f-Ng
+- Canal: Inteligencia Artificial
+- Duracion: 40:42
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 8644
+- Provider IA: nanogpt
+- Modelo IA: qwen/qwen3.5-397b-a17b
+- Prompt: Prompt personalizado
+- Fecha de procesamiento: 2026-05-25T22:03:32.551Z
+
+Kind: captions
+Language: es
+Hola a todos, soy John Hernández y aquí
+me tenéis una semana más con el vídeo de
+noticias de inteligencia artificial.
+Esta semana no estoy en el estudio, ya
+que estoy de vacaciones con los peques
+en Disney y aunque parezca mentira, la
+conexión a internet de aquí es una
+auténtica [&nbsp;__&nbsp;] Así que para evitar
+dejaros sin noticias, he decidido enviar
+el audio al equipo de editores y lo que
+veréis en pantalla será mi avatar
+digital y no yo. Esta semana os voy a
+hablar de un descubrimiento científico
+que ha hecho la inteligencia artificial,
+que marca un antes y un después y creo
+que es muy importante que reflexionemos
+sobre ello. Pero también hay novedades
+sobre Mitos, el modelo de Antropic que
+parece que está a puntito de aparecer, a
+puntito de salir para el gran público.
+Vamos a ver lo que supone todo esto y
+analizar también un reporte que ha hecho
+Antropic sobre ese modelo, pero sin duda
+tenemos que hablar de la resaca de los
+lanzamientos de Google de esta semana
+pasada, que han sido pues lo que ha
+copado un poco la información durante
+estos últimos días. Y os diré que a
+Google parece que no le ha salido muy
+bien la jugada porque nos hemos dado
+cuenta de que el modelo, sobre todo
+Gemini 3.5 Flash, no es lo que nos han
+prometido o al menos lo que nos han
+vendido. La historia está en que a
+Google le ha salido muy bien la jugada
+con Omni, ese modelo que está haciendo
+birguerías en la edición de vídeo, pero
+el otro gran bloque de presentación que
+fue 3.5 flash parece que le está
+saliendo rana. Dejarme que os lo
+explique porque como os dije, yo tuve
+acceso anticipado a ese modelo unos días
+antes de su publicación y lo estuve
+probando, pero claro, en el acceso
+anticipado no siempre lo tienes con toda
+la información que tenemos después, es
+decir, no están todos los benchmarks,
+simplemente puedes probarlo por ti
+mismo. Ya he dicho un millón de veces
+este canal que cuando tú los pruebas los
+modelos, lo que haces son pruebas
+puntuales y no realmente estudios
+científicos, porque no puedes probar
+miles y miles de proms y con lo cual las
+sensaciones pueden ser muy distintas del
+rendimiento real del modelo después.
+Además que las versiones que publican no
+siempre son las mismas que nos dejan
+testear. Pero en este caso lo que nos
+faltaba para realmente ver la segunda
+cara de este modelo y la que es un poco
+más fea era saber un poco alguna
+información más allá que no podemos
+saber cuando lo probamos dentro de la
+aplicación de Gemini, como por ejemplo
+el consumo de tokens. Bien, dejadme que
+os lo explique porque es muy simple,
+pero la cosa, como os dije, el modelo
+básicamente viene con un triángulo que a
+día de hoy los LMs todos respetan, que
+es la cantidad de inteligencia, por un
+lado, luego por otro lado el coste y
+luego por otro lado la velocidad.
+Dijimos que este se posicionaba en ese
+punto en que realmente tenía un coste
+bastante interesante, pero sobre todo
+una velocidad y una inteligencia que no
+habíamos visto hasta ahora. Y es que el
+problema está en que los datos que nos
+dan se basan en una serie de mediciones
+y esas mediciones empiezan a no ser las
+más importantes. Fijaros, normalmente
+cuando nos miden el coste de un modelo
+nos lo dan por el precio de las APIs. En
+el caso de este modelo, si os fijáis en
+la web de Google, podéis ver que el
+modelo tiene un precio de $,5 por millón
+de tokens de entrada y $9 por millón de
+tokens de salida. Bien, esto hasta ahora
+era un precio bastante bastante
+interesante, pero teniendo en cuenta que
+lo anterior modelo Flash era mucho más
+barato, esto triplicaba los precios de
+esta gama de modelos. Hasta ahí todo
+bien, porque seguía siendo más barato
+que los modelos actuales. De hecho, es
+más barato que Yini 3.1 Pro y los
+resultados de los benchmarks parecían
+que eran superiores. Pero es que claro,
+había un factor que no se estaba
+teniendo en cuenta. En la velocidad pasa
+3es cuartos de lo mismo y es que nos dan
+un elemento en el que nos hablan de
+velocidad de tokens por segundo, pero
+nos faltaba un factor que no estábamos
+teniendo en cuenta y es el factor que
+está cambiando todo esto y que le ha
+causado un montón, un montón de críticas
+a Google y es la cantidad de tokens que
+utiliza Gemini 3.5 Flash para resolver
+una tarea resulta que son mucho mayores
+que los modelos anteriores. Fijaros en
+esta gráfica de la página web de
+Artificial Analisis, donde hemos
+filtrado la salida de tokens, es decir,
+la cantidad de tokens que ha necesitado
+cada modelo para hacer este esta prueba,
+este benchmark. Y lo hemos puesto con
+los cinco más interesantes, que en este
+caso serían GPT 5.5 en su versión
+medium, GPT 5.5 en su versión high, HIMG
+3.1 Pro, que sería la anterior versión
+de Google, eh Clotopus 4.5 porque no hay
+aún datos de 4.7 y Gemini 3.5 Flash. Si
+os fijáis, el coste en tokens de Gemini
+3.5 Flash es brutal 73,0000 de tokens,
+lo cual quiere decir que consume para
+resolver la misma tarea muchísimos más
+tokens que su versión anterior, 3.1 Pro,
+que consume tan solo 57,0000es, pero es
+que consume prácticamente el doble que
+GPT 5.5 en su versión high, que es una
+versión más inteligente, o incluso en la
+versión medium, que puntúa a nivel de
+inteligencia parecido a 3.5 cinco flash
+consume como tres veces y media más
+tokens. Es decir, lo que estamos viendo
+aquí es que para resolver una misma
+tarea, el modelo utiliza muchos más
+tokens y como nos están dando un precio
+por token y nos están dando una
+velocidad de token por segundo, al
+utilizar más efectivamente queda como
+que el modelo es más caro o es más lento
+de lo que nos habían vendido. Amigos,
+hemos sido engañados. Básicamente lo que
+Google nos dio es el dato del precio de
+la gasolina sin decirnos el dato del
+consumo del coche. Y de repente tenemos
+un consumo de coche brutal que consume
+mucho más que ningún otro coche que
+teníamos hasta ahora, a pesar de que en
+este caso la gasolina que utiliza sea un
+poco más barata que la que utilizan
+otros modelos. En definitiva, lo podéis
+entender muy claramente. Si tengo un
+modelo que me cuesta la mitad pero
+consume el doble de tokens, básicamente
+tiene el mismo precio que un modelo que
+cuesta el doble pero consume la mitad de
+tokens. es equivalente y en este caso en
+Gemini 3,5 Flash las cuentas no salen.
+Le he pedido a Clippy, mi agente de
+inteligencia artificial, que me montase
+un gráfico en que tuviésemos en el eje
+vertical la inteligencia, en el eje
+horizontal el total del coste de la
+tarea, no el coste por token, sino el
+total de coste para hacer ese benchmark
+concreto, que es una combinación de
+cosas. Eso que veíamos que utilizaba 70
+y pico millones. Y como veis, en este
+caso, Gemini 3,5 Flash queda en poca
+inteligencia por un coste que no es
+irrisorio. Evidentemente es mucho más
+barato que GPT 5.5 en su versión mayor o
+que Clotopus 4.7 que siempre ha sido de
+los más caros. Pero es que si os fijáis
+cuando hablamos de compararlo con Gemini
+3,1 Pro, que es su versión anterior, es
+más inteligente y más barato para
+resolver la tarea. La resuelve mejor y
+por menos dinero, bastante menos, casi
+la mitad. Incluso GPT 5.5 Medium, que
+también puntúa en una inteligencia
+parecida a Gemini 3.1 Pro, también nos
+cuesta bastante menos que 3,5 flash. En
+definitiva, esto supone que de la misma
+forma tengamos el mismo problema en la
+velocidad, porque a pesar de que estos
+modelos son más rápidos, ya viene 3.5 es
+más rápido, la cantidad de tokens que
+necesita son demasiados para compensar
+la velocidad que tiene. En esta gráfica
+de velocidad podéis ver que Gemy 3,5
+Flash saca 207 tokens por segundo,
+mientras que en cambio 3.1 solo saca 133
+tokens por segundo. Hoy si nos vamos a
+los modelos de Openi son aún más lentos,
+casi cuatro o tres veces y media más
+lentos que Gemini 3,5 Flash. Entonces,
+el problema está en que como estos de
+aquí solo necesitan sacar eh 22 millones
+de tokens para conseguir el resultado,
+con a una velocidad de 60 lo sacan más
+rápido que este que necesita 70, aunque
+vaya a una velocidad de 200, con lo cual
+volvemos a tener el mismo problema. Es
+decir, básicamente tenemos un modelo que
+es rápido en salida, que es barato en
+precio por token, aunque no tan barato
+como modelos anteriores, pero que es tan
+verboso que le llaman, es decir, que
+utiliza tantas, tantos tokens para
+razonar sobre la tarea, que acaba
+consumiendo más dinero y acaba siendo
+más lento que el resto de modelos,
+haciendo que el modelo sea absolutamente
+inútil para cualquier tarea que os
+podáis imaginar. Habrá que ver,
+evidentemente, tareas una a una, pero en
+general, e a lo gran bestia y si queréis
+generalizar de una forma muy radical,
+podemos encontrarnos con que no tiene
+sentido utilizar Gemini 3,5 Flash. En el
+estado actual no hay ningún caso de uso
+donde Gemini 3,5 Flash os aporte nada
+porque ni va a ser más rápido ni va a
+ser más barato que Yini 3,1 Pro, que era
+el modelo que ya teníamos hasta ahora.
+Con lo cual esto invalida este nuevo
+modelo de Google. Y como os digo, esto
+es algo que no podíamos ver probándolo
+directamente en el early release, es
+decir, cuando nos lo mandan antes de que
+lo saquen al mercado, porque para
+empezar la velocidad ahí pues no es algo
+que notes tantísimo en el chat. Y por
+otro lado, el precio no lo ves porque es
+invisible, ya que básicamente el early
+el early access este es completamente
+gratis, con lo cual no puedes ver ni la
+cantidad de tokens que está generando,
+ni cuánto cuestan, ni a qué velocidad
+están saliendo. En realidad, la
+percepción es que para la mayoría de
+tareas de usuario es más rápido, pero la
+realidad es que para cuando se pone a
+tener que razonar y se pone a tener que
+buscar cosas un poco más complejas,
+empieza a utilizar tantos tokens que al
+final la velocidad real, práctica, útil
+acaba siendo incluso menor. En
+definitiva, el modelo no sirve
+prácticamente para nada, al menos en las
+condiciones actuales. Y quiero que
+tengáis muy claro esto, porque aquí la
+solución, el modelo no es malo, el
+modelo es perfectamente válido, pero la
+solución es muy sencilla, lo han sacado
+demasiado caro. Si de repente tú alteras
+ese precio y mantienes, por ejemplo, el
+precio del anterior, que es lo que creo
+que Google probablemente acabe haciendo,
+es lo que consigues es que el precio de
+la tarea sí que sea más barato que con
+otros otros modelos. Y si encima para
+muchas otras tareas más simple, es más
+rápido, pues tienes un modelo que tiene
+cierto sentido, pero en general todo lo
+que nos han vendido sobre 3.5 flash no
+es así por el consumo de tokens que
+hace. Le falta muchísima eficiencia. Y
+ojo que esto es algo que estamos
+empezando a ver en la mayoría de modelos
+que están saliendo últimamente. Todos
+ellos utilizan más tokens para resolver
+las tareas que modelos anteriores, con
+lo cual parece que estamos yendo a que
+quizá, como nos van a cobrar por token,
+a que les dé un poquito igual, como si
+dijésemos, el consumo de gasolina del
+coche, la eficiencia que tiene y eso nos
+va a acabar costando más dinero a todos
+y cada uno de nosotros. Por si fuera
+poco, se han empezado a publicar más
+benchmarks y Gemini 3.5 flash no puntúa
+demasiado bien. En este benchmark, el
+ideal sería el modelo que puntúe aquí
+arriba en esta esquina, donde sería la
+mejor puntuación sobre el cursor bench y
+además el menor precio. Y como os
+fijáis, em flash ni puntúa muy arriba ni
+puntúa muy barato. Opciones como Kimi
+2.6 son mejores o Composer 2 es mejor o
+Composer 2,5, que es absolutamente
+brutal, el nuevo modelo que ha
+presentado Cursor y que la verdad es que
+está muy muy bien. Aquí tenéis otra
+forma de ver ese mismo gráfico y podéis
+ver como el resultado de Gemini 3 Flash
+no puntúa demasiado bien, sino que se
+pone en la puntuación en la posición
+número 10 de este ranking de modelos,
+porque su equilibrio entre capacidades y
+coste no son demasiado buenos y con lo
+cual para nada se convierte en un modelo
+relevante. Puedes utilizar cualquiera de
+todos estos de aquí arriba y algunos más
+que no están ni tan solo en la lista que
+podrías obtener mejores resultados con
+Gemini 3,5 Flash. Todo se ha dicho, hay
+algunos benchmark donde sí está
+puntuando bien, como por ejemplo este de
+aquí que es el Ransunscape Bench. Es un
+de uno de un videojuego en el que se
+prueba el modelo a ver qué es capaz de
+hacer. Y si os fijáis, Yemini 3,5 Flash
+barre al resto con una puntuación
+realmente interesante en hacer este
+videojuego, lo cual puede querer decir
+que Gemini 3,5 Flash responde bastante
+bien a la parte agéntica, pero con la
+cantidad de tokens que consume y el
+precio que le han puesto, sinceramente,
+no merece la pena ni ponerlo en Open
+Clone ni en ningún sitio, porque el
+coste va a ser más elevado que
+alternativas equivalentes que haya en el
+mercado y tampoco ganas ni tan siquiera
+en la velocidad que era su gran caballo
+de batalla. Así que en definitiva, un
+modelo que está bastante limitado y que
+no le beneficia a prácticamente nadie en
+nada. Si queréis más información sobre
+este benchmark, os voy a dejar el link
+en la descripción, pero la realidad es
+que es el único que he encontrado donde
+Gemini 3,5 Flash puntúa realmente bien.
+Por cierto, esta semana el patrocinador
+de este vídeo es Cybergos VPN. Cybergos
+se encarga de encriptar tus datos e
+información, lo que permite mantenerte
+anónimo y evitar que terceros, desde
+hackers hasta tu propio proveedor de
+internet accedan a tus datos. Esto es
+particularmente útil si frecuentas redes
+wifi públicas como las de las
+universidades, cafeterías, aeropuertos o
+centros comerciales. Cyberghost tiene
+más de 11,000 servidores en 100 países y
+funcionan más de 40 plataformas de
+streaming como Netflix, Prime Video,
+Hulo o Disney Plus. Eso quiere decir que
+básicamente con tres clicks en la
+aplicación puedo cambiar mi localización
+de España a otro país como por ejemplo
+Estados Unidos y acceder al catálogo de
+Netflix de las películas que hay, hay
+que pensar que son muchísimas más de las
+que tenemos aquí. Con una sola
+suscripción puedes conectar hasta siete
+dispositivos y además tienen un periodo
+de satisfacción de 45 días en el que te
+devuelven el dinero si no estás
+satisfecho. Atención al cliente en 24
+horas y todo lo que te puedas imaginar
+de una empresa muy seria como es
+Cyberghost VPN. Habrá muchas cosas de
+inteligencia artificial que no podrás
+utilizar por problemas de VPN y esto te
+garantiza la solución para que puedas
+usar cualquier aplicación de
+inteligencia artificial. Seguimos con el
+vídeo, bien, y seguimos con noticias
+porque esta semana, sin ninguna duda,
+Open ya ha pegado fuerte en la comunidad
+científica porque han resuelto un
+problema matemático que creíamos tener
+resuelto desde hace más de 80 años. Y en
+este caso, Open AI con un modelo que no
+ha salido al mercado aún, que se está
+rumoreando que podría ser eh GPT 5.6, ha
+conseguido resolver ese problema mejor
+de lo que habíamos podido hacer nadie y
+demostrar que la solución que habíamos
+aceptado los humanos no era la mejor
+opción para nada. 80 años llevamos con
+esto. Se trata de un problema matemático
+de geometría en el que hay que unir
+puntos con las figuras geométricas y lo
+que han demostrado es que hay mejor
+forma de hacer, una forma más óptima y
+la ha encontrado el modelo por sí misma.
+Esto lo han validado matemáticos de
+muchísimo nivel y se está definiendo
+como uno de los primeros descubrimientos
+científicos aportados por la
+inteligencia artificial en el campo de
+las matemáticas, que realmente va a
+marcar la diferencia. Y aquí tenemos que
+estar muy claros porque creo que es muy
+interesante como Sebastián Bube, que es
+el líder de este proyecto dentro de
+Upeni, ha definido que la IA ya está
+aportando nuevo conocimiento, pero no
+está haciendo grandísimos
+descubrimientos científicos. Yo no sé si
+esto va a pasar o no, pero la diferencia
+puede ser más relevante desde el punto
+de vista cultural que realmente desde el
+punto de vista práctico, porque lo que
+estamos viendo es que ya no solo la IA
+permite acelerar que los humanos
+obtengamos mayor conocimiento
+científico, sí que nos aporta cosas que
+nosotros no hemos conseguido descubrir
+por nosotros mismos, eso sí, utilizando
+los elementos que ya conocemos del
+mundo. Eh, ahí podría haber un montón de
+descubrimientos científicos que podrían
+cambiar completamente el rumbo de la
+humanidad. hablamos de descubrimientos
+en medicina, en ciencias, en todo tipo
+de materiales, etcétera, basados en lo
+que ya sabemos. Y es cierto que a día de
+hoy no parece que la inteligencia
+artificial sea capaz de descubrir pues
+un nueva teorema, un nuevo marco mental
+como podría ser la relatividad, pero no
+sabemos si eso va a ser algo que va a
+emerger con las capacidades a medida que
+mejoren o si realmente les falta algo
+tremendamente que les imposibilita para
+que puedan hacer esto. En cualquier
+caso, lo que ha hecho en matemáticas no
+es pequeño y se está hablando muchísimo
+de ello y sin duda va dejando sin
+argumentos aquellos que dicen que la IA
+no puede hacer descubrimientos
+científicos porque sin ninguna duda lo
+acaba de hacer y a lo grande, si os
+interesan las matemáticas, eh Open AI ha
+puesto un paper de 18 páginas a
+disposición para explicar la solución
+con la que ha encontrado este modelo,
+pues una mejora a la que ya teníamos
+hasta ahora. Tenéis aquí toda la
+explicación. años no soy de matemáticas,
+pero en cualquier caso, si os lo queréis
+mirar y si os interesa el tema, os
+enseñan esto y ya os digo que ha sido
+validado por matemáticos muy muy famosos
+del mundo que lo llaman como un punto de
+inflexión del que se hablará en la
+historia de las matemáticas. Bien, y
+tenemos cola con el tema de mitos, ese
+modelo de Antropic que no se supone que
+iba a salir al mercado público porque
+básicamente es demasiado potente y no
+tenemos la ciberseguridad preparada para
+gestionar esto. Pues bien, tras ya unas
+semanas de prueba con el modelo en
+diferentes clientes, en diferentes pues
+empresas que tienen infraestructura
+crítica para el mundo y que están
+parcheándola gracias a eso que descubre
+Mitos, Antropica ha publicado pues un
+seguimiento de cómo van las cosas. Lo
+tenéis aquí, se publicó hace unos pocos
+días y se llama pues un update inicial
+al proyecto Glasswink, que es como se ha
+llamado el hecho de sacar esto de forma
+privada solo para unas cuantas empresas.
+Dice que aproximadamente unas 50
+empresas han utilizado cloud mitos, tan
+solo 50 en todo el mundo y que el
+resultado es increíble y básicamente lo
+que nos vienen a contar es que está
+cambiando el campo de la ciberseguridad.
+Hasta ahora se trataba que el cuello de
+botella era cuando podíamos encontrar
+esos problemas de seguridad para poder
+parchearlos. Y está resultando que conos
+el problema no está en encontrarlos,
+sino que está en parchearlos, porque
+resulta que encontrarlos es muy fácil
+utilizando esa inteligencia artificial,
+pero parchearlos sigue llevando el mismo
+tiempo que antes, con lo cual el cuello
+de botella se ha movido y ahora el
+problema está en que encontramos todas
+esas vulnerabilidades, pero repararlas
+nos sigue llevando el tiempo que nos
+llevaba antes y con lo cual se
+encuentran con un problemón enorme donde
+las empresas de ciberseguridad y todas
+las empresas que tienen infraestructura
+crítica tienen que pivotar los recursos
+de dejar dejar de buscar esos problemas
+a parchearlos porque no les da la vida.
+Se encuentran tantísimos que no les da
+la vida a parchearlo todo. Hay una serie
+de declaraciones por parte de diferentes
+colaboradores. En este caso, por
+ejemplo, en Reino Unido, el Instituto de
+Seguridad de la Inteligencia Artificial
+dice que Mitos es el primer modelo que
+ha podido solucionar ambos sus eh
+benchmarks de cieber ranges, que le
+llaman, ¿no? Que serían básicamente
+diferentes ataques de punta a punta. el
+primer modelo de inteligencia artificial
+que lo ha conseguido. Mozilla, y esto ya
+lo comentamos en noticias, encontró 271
+vulnerabilidades gracias a esto y
+básicamente las consiguieron parchear,
+pero todas ellas las encontraron
+directamente con eh en este caso con
+Mitos. Y por otro lado, Xbow, una
+plataforma de seguridad eh
+independiente, dice que Mitus es un
+salto importante comparado con todos los
+modelos existentes en la en su benchmark
+de explotación de página web y que da
+una precisión increíble. incluso token a
+token. A partir de ahí hay más
+declaraciones, pero nos vienen a contar
+que han encontrado mogollón de problemas
+de que todo el mundo está flipando con
+lo que trae mitos a la mesa, que
+realmente es un cambio respecto a lo que
+había hasta ahora y que el problema,
+como digo, se ha convertido en intentar
+parchear todos y cada uno de esos
+agujeros que mitos encuentra. Creo que
+muy probablemente nos vamos a encontrar
+en esta situación durante los próximos
+años. El problema es que es mayor la
+situación porque hasta ahora estábamos
+pensando que oye si tienes mitos primero
+puedes parchear para que cuando haya un
+modelo público de esas características
+estés a salvo. Pero si no tenemos forma
+de parchear a tiempo, el modelo público
+va a llegar porque lo va a sacar Dipsic
+o quien sea y nos vamos a encontrar con
+que sabemos que tenemos esos agujeros,
+pero no hemos tenido tiempo de
+chaparlos, de de arreglarlos y con lo
+cual la persona que esté en el otro lado
+puede utilizarlo para hackearnos a pesar
+de que nosotros ya seamos conscientes de
+ello. con lo cual el problema es incluso
+mayor de lo que creíamos porque mito se
+encuentra tantísimos que nos pone un
+problema serio. Entiendo que podrán
+desarrollar algún tipo de herramienta
+basada en mitos para poder arreglar eso
+de forma más rápida y quizá corregir
+esta situación, pero de momento no
+parece que mitos vaya a salir a lo
+grande, al menos esas versiones tan
+potentes al mercado. Y digo al menos no
+esas sesiones tan potentes porque esta
+semana se ha filtrado que empieza a
+aparecer mitos en algunas APIs, en
+algunos proveedores, ¿vale? Eso se ha
+filtrado temporalmente, ha desaparecido
+ya, pero normalmente este tipo de cosas
+pasan cuando estamos a punto de ver que
+se va a lanzar un nuevo modelo y con lo
+cual es muy probable que en los próximos
+días, semanas como mucho, veamos alguna
+versión de mitos disponible para el gran
+consumo. probablemente sería una versión
+muy minimizada de lo que es mitos y no
+mitos en su full power y con lo cual
+tendríamos que ver de lo que es capaz y
+si aporta algo a la ecuación porque ya
+hemos visto que últimamente sacar nuevos
+modelos no siempre aporta valor, pero en
+cualquier caso parece que vamos a poder
+probar mitos de una forma u otra dentro
+de muy poquito. Por cierto, hablando
+también de mitos, he sacado este
+artículos CloudfareIR, que básicamente
+es una empresa muy importante del mundo
+de la ciberseguridad y que viene a decir
+lo mismo que han dicho los de Antropic,
+que el problema ahora pasa a intentar
+solucionar los problemas más que a
+detectarlos, que parece que ya tenemos
+al menos una nueva vara de medir para
+todo lo que se puede encontrar, que no
+es poco y que lo que tendremos que hacer
+ahora es ver cómo leches, arreglamos
+todos estos problemas lo más rápido
+posible y que básicamente esto cambia eh
+la forma en que se trabaja en
+ciberseguridad En definitiva, una prueba
+más de que mitos no es marketing y que
+realmente es un modelo diferente de todo
+lo demás. Así que seguro que vamos a ver
+mucho más sobre el tema y no creo que
+ningún modelos que tenemos actualmente
+esté a la altura de lo que es capaz de
+hacer mitos. Veremos si Gemini 3.5 Pro
+lo es, pero de momento no hay ningún
+modelo que pueda competir con lo que
+hablamos con mitos, por lo que está
+diciendo todo el mundo que lo ha
+probado, que no son muchos y que parece
+gente que estén teniendo un criterio
+bastante fiable y todo el mundo está
+volviendo ahora mismo, que Mitos está en
+otra liga. Lo veremos cuando empiecen a
+sacarlo, pero de momento lo que sabemos
+es que nos tenemos que empezar a fiar de
+cuando Darío Modei dice que tiene algo
+potente entre manos porque parece que no
+es marketing. Y hablando de Antropic,
+han hecho el fichaje del año, Andrés
+Carpaci se ha unido a Antropic. Andrés
+Carpci, para aquellos que no lo
+conozcáis, es uno de los semidioses de
+la inteligencia artificial, uno de los
+cracks, cofundador de Open AI, director
+de visión de Tesla durante muchos años y
+uno de los tíos una de las mentes más
+brillantes del mundo, la inteligencia
+artificial, que había decidido retirarse
+para dedicarse a la divulgación y a la
+educación. Tenía un canal de YouTube y
+publicaba vídeos de vez en cuando y
+había decidido pasar olímpicamente de la
+competitividad en las grandes
+laboratorias. Pues bien, algo le habrán
+ofrecido desde Antropic o algo habrá
+visto dentro de Antropic que le ha
+parecido que es el sitio donde quiere
+estar para empujar la inteligencia
+artificial en la dirección que él
+considera correcta y ha vuelto a las
+trincheras. Esto es muy buena noticia
+para todo el mundo de inteligencia
+artificial porque Carpaci es un puñetero
+genio y estoy seguro que va a ayudar
+muchísimo a que se desarrolle la
+inteligencia artificial. No sé si esto
+va a ser bueno por acelerar la
+inteligencia artificial o al menos para
+que ayude a encontrar cómo meter ciertos
+frenos un poco a que la IA pues haga lo
+que queremos que haga y no lo que le dé
+la gana. Pero en cualquier caso es una
+de las mentes más prodigiosas y es muy
+bueno tenerlo de nuevo trabajando en los
+laboratorios más importantes que van a
+sacar esto al mercado, porque sin
+ninguna duda nos hacen falta las mayores
+mentes de este mundo para poder hacer
+que esto nos salga lo mejor posible. En
+su post, Carpaci no explica
+absolutamente nada de qué es lo que va a
+hacer ahí. Simplemente dice que va a
+estar en desarrollo y vamos a ver qué es
+lo que es capaz de hacer. Y por si no le
+conocéis y queréis entender mejor de
+quién estamos hablando, hablamos del
+tipo que inventó la palabra vibe coding,
+¿vale? Con lo cual es un tío que cuando
+dice algo en cualquier red social se
+inunda el mundo de la inteligencia
+artificial con sus comentarios y tiene
+muchísima, muchísima influencia en lo
+que pasa. Además es amigo personal de
+Guilon Má, de Samman, etcétera, con lo
+cual es un tío muy bien relacionado y
+seguro que le va a venir muy bien a la
+gente de Antropic. Y más noticias de
+Antropic, porque resulta que os anuncié
+hace una semana que habían hecho un
+acuerdo con SpaceX para darle más
+cantidad de cómputo en el Colossus 1, el
+servidor antiguo de Elon Musk. Pues
+resulta que han ampliado el contrato
+para [&nbsp;__&nbsp;] también parte del Colossus 2,
+es decir, del servidor más nuevo, el
+centro de datos más nuevo de Ilon más
+donde está entrenando Grock 5. Pues
+parte de ese servidor parece que le
+sobra a Elon y se lo ha cedido Antropic
+a cambio de un alquiler que ojo, no sé
+si recordáis que habíamos hablado de que
+se estaba rumoreando que el contrato
+podía ser de unos 6,000 millones al año,
+pues resulta que es de 15,000 millones
+al año. Tropic está pagando más de 1000
+millones al mes por darle eh por [&nbsp;__&nbsp;]
+servicio de SpaceX de la empresa de Ilon
+Más para poder procesar toda la
+información que necesitan y tener
+suficiente cómputo para dar a sus
+clientes. Más de 1000 millones de
+dólares al mes. Y os digo una cosa, yo
+creo que cada vez más clara la razón por
+la que Elon ha hecho esto de unirse con
+uno de sus enemigos a los cuales había
+insultado hasta la médula en el pasado.
+Y es básicamente porque estamos a punto
+de tener la IPO de SpaceX, es decir, la
+salida a bolsa pública de SpaceX y un
+ingreso de 15000 millones al año, desde
+luego, le viene muy bien para justificar
+el precio de salida que está hablándose
+que puede estar por encima del trillón y
+medio, es decir, una puñetera locura
+sería la empresa de más valor que ha
+salido a la bolsa pública en la historia
+y con lo cual, desde luego, a Iron le
+hacen falta razones para justificar ese
+precio y este contrato podría ser una de
+ellas. Ya sabéis que en el caso de eh
+Elon tiene Grock, pero que prácticamente
+no utiliza ni Dios y con lo cual Grock
+está muy aparcado. Está entrenando Grock
+5, que probablemente ya empiece a ser
+más competitivo, empezar a ganar
+clientes, pero de momento tenía los
+servidores parados y con lo cual para
+tenerlos parados se los alquila a esta
+gente, saca una pasta y justifica mejor
+la evaluación en la IPO. Veremos en qué
+queda todo esto, eh, sobre todo de cara
+al año que viene, pero de momento
+Antropic esto ha sido un salvavidas que
+le ha permitido dominar. Pero es que
+cuidado, es que Antropic está petándolo
+porque acaban de salir los resultados
+del segundo trimestre y resulta que
+Antropic ha pasado a facturar 10,000
+millones de dólares en 3 meses, ¿vale?
+Es decir, un puñetero dineral que dobla
+incluso un poquito más la el resultado
+del primer trimestre. Y es cierto que
+ahora mismo en este trimestre está
+entrando todo el volumen del bombazo que
+pegaron en los primeros meses del año y
+con lo cual desde luego le está yendo
+muy bien, pero es que como siga así para
+2028 van a estar facturando más que
+Google y el resto de empresas del mundo
+juntas, ¿vale? Con lo cual no puede
+mantenerse este ritmo mucho más, pero
+Antropic lleva un ritmazo increíble que
+podría suponer que a día de hoy sea la
+primera empresa de inteligencia
+artificial que está generando
+beneficios. Ahí es nada. La primera
+empresa de inteligencia artificial
+generando beneficios parece ser que es
+antropic, con lo cual les da igual
+pagarle 1000 millones al mes a más si
+eso les permite seguir vendiendo
+servicios a más empresas. Así que vamos
+a ver cómo acaba ahora que el siguiente
+trimestre parece que están un poco de
+vacas flacas en Antropic y que Open AI
+vuelva a estar liderando. Vamos a ver si
+este trimestre se refleja y deja un
+poquito más bajito el crecimiento o
+siguen explotando, porque en empresa se
+está utilizando muchísimo, muchísimo
+Antropic. Open por su lado esta semana
+ha sacado una propuesta cuanto menos
+interesante, ¿vale? Esto os va a parecer
+segurísimo que esto es marketing, que no
+está vendiendo la moto, que es camalman,
+que todas estas cosas, ¿vale? Porque
+básicamente lo que ha dicho Samalman es,
+oye, mira, el cómputo va a estar
+limitado en un futuro, no vamos a tener
+para todos, no va a haber cómputo para
+todo el mundo y con lo cual te ofrezco
+la posibilidad de pagarme por adelantado
+y a cambio garantizarte el acceso a la
+inteligencia artificial. Esto obviamente
+va completamente enfocado al B2B, es
+decir, a empresas, no a los usuarios
+personales, pero la idea es que le
+puedes comprar hasta 3 años por
+adelantado de una piscina de dinero
+utilizable para inteligencia artificial.
+No estás comprando el precio de ahora,
+que es lo primero que pensé, porque
+probablemente se abaratará y con lo cual
+no tendría sentido, sino que estás
+comprando un compromiso de gasto con
+Openi AI y le estás pagando por
+adelantado ese compromiso. Luego tú lo
+usas a las tarifas que vayan habiendo en
+cada momento, con lo cual eso puede ser
+un winwin si realmente lo que está
+diciendo Sam Alman se produce. Y ojo que
+me parece algo para lo que tenemos que
+reflexionar. Es decir, Sam lo que dice
+es que vamos a ir a un punto en que la
+demanda va a ser mucho mayor que la
+oferta que tenemos por muchos centros de
+datos que construyamos. no vamos a tener
+suficiente inteligencia artificial para
+todos y a partir de ahí podemos entrar
+en una economía de la escasef donde
+básicamente no todo el mundo puede
+utilizar inteligencia artificial aunque
+la quiera. Aquí pueden pasar dos
+escenarios. Uno, que haya una especie de
+racionamiento de la inteligencia
+artificial, tengas x tokens al mes y te
+jodes si necesitas más o dos, que esto
+vaya por precio, como por ejemplo el
+agua donde tú en verano, en algunos
+sitios te permiten llenar tu piscina,
+pero te la cobran a precio de oro.
+Entonces, a partir de ahí, si tú quieres
+pues ese extra de agua, lo pagas a
+precio de lujo. Pues esto podía pasar
+también en los tokens. Cualquiera de las
+dos lo que crea es unas diferencias
+enormes entre ricos y no tan ricos y con
+lo cual nos vuelve a crear desigualdades
+brutales. Porque imaginaros vosotros que
+de repente le cogéis el gusanito a esto
+de la inteligencia artificial y lo
+querríais usar mucho más y de repente os
+dais cuenta de que ya no tenéis
+suficientes tokens. Esto es algo que ya
+estamos viviendo y de hecho esta semana
+lo habréis vivido con Gemini porque
+Google ha pasado su modelo de cobrar en
+plan ilimitado a meter límites cada 5
+horas y acumulativos semanalmente como
+Antropic y como Open AI, algo que ellos
+hacían antes, sobre todo en Antropic era
+un poco más agresivo, pues en Gemmin
+parece que lo han hecho y además se han
+pasado de Ferrara un de Ferrara de
+frenada un huevo porque resulta que en
+unos pocos promes os estáis quedando sin
+tokens los que sois usuarios más activos
+de Gemini. Veremos a dónde lleva esto.
+Gemini, tengo que decir que ya lo han
+arreglado en la parte de Antigravity de
+su software de agente de programación,
+pero que de momento en la cuenta de
+Gemini en la aplicación sigue estando
+muy limitada con los nuevos límites que
+han metido. En definitiva, lo que
+estamos viendo es que empieza a haber ya
+límites de tokens ahora, con lo cual,
+imaginaos lo que puede pasar en unos
+años, como dice Samalman. La teoría es
+muy simple, ¿vale? Y creo que tiene
+cierta lógica y os lo explico y seguro
+que entendéis conmigo que esto podría
+bien pasar. Resulta que nosotros estamos
+construyendo centros de datos a punta
+pala, pero a punta pala, como locos,
+¿vale? Pero aún y así el consumo de
+tokens que hacemos no para de crecer. Y
+es que fijaros cuál debe ser la media,
+cuál creéis que debe ser la media de
+consumo de un usuario medio en el mundo
+de inteligencia artificial. Tenemos en
+cuenta toda la gente. O sea, yo creo que
+no puede superar el millón de tokens.
+Tener en cuenta que hay gente que no lo
+utiliza, gente que le pide recetas de
+cocina y gente que utiliza pues
+muchísimo más agentes, etcétera, ¿no? En
+mi caso, si imaginos que sea 1 o 2
+millones de tokens por persona. En mi
+caso, en los últimos 4 meses solo con
+mis agentes de OpenCl he consumido 5000
+millones de tokens, con lo cual es
+básicamente unas 2500 veces más que el
+usuario medio. Y eso si el usuario medio
+no hemos sido demasiado generosos, pues
+con imaginaros que si en dentro de 4
+días, dentro de un año, dentro de 6
+meses, todo el mundo utiliza agentes
+como utilizo yo hoy, que probablemente
+es lo más probable o incluso más, nos
+encontraremos con que la demanda va a
+subir 2,500 veces por muchos centros de
+datos que hagamos, no vamos a ser
+capaces de multiplicar por 2,500 veces
+el cómputo que tenemos a día de hoy. Por
+mucha eficiencia que vengan los chips,
+por mucha eficiencia que vengan los
+modelos, no vamos a tener suficiente
+inteligencia artificial para dar de
+comer a todo el mundo. Y con lo cual
+creo que lo que dice Samman podría bien
+ser. Podríamos entrar en un límite de
+escasef donde si quieres tener un precio
+razonable estará racionado y tendrás un
+límite y vamos a empezar a ver qué hago
+con mis tokens más que qué hago con
+inteligencia artificial, que creo que es
+un tema profundo, interesante y sobre el
+que tendríamos que reflexionar. Una vez
+más os digo lo de siempre. Evidentemente
+empezar ahora a utilizar agentes
+experimentar porque ahora el token es
+prácticamente gratis y le puedes sacar
+mucho partido de ese proceso que después
+te costará una pasta poder utilizar para
+experimentar y ver qué pasa si hago
+esto, si hago lo otro, que son tokens
+consumidos que al precio que estarán
+probablemente no te interese
+experimentar tanto con ello. Y claro, no
+podía ser de otra forma, mientras en
+Occidente estamos empezando a limitar
+los tokens que hacen los chinos, pues
+vienen y le pegan una patada a la mesa.
+Dipsic V4, no sé si sabéis que tenía una
+oferta puntual de un descuento del 75%
+en su coste de la API. Pues bien, ahora
+es permanente. Han bajado el precio un
+75%.
+El precio de input ha pasado del 1,74
+a 0,4 y la salida de 348 a 087.
+El precio es tan tan bajo que es que da
+risa ni sin siquiera mencionarlo. Es
+absolutamente ridículo el coste de V4,
+básicamente demasiado barato, ni
+siquiera para medirlo. Le he pedido una
+vez más a mi agente a Clipy que nos haga
+una gráfica para enseñarnos esto y este
+es el resultado. Bueno, como podéis ver
+tenemos los diferentes modelos GPT 5.5,
+Opus 4.7, 3.1 de Gemini o 3,5 Flash. el
+nuevo modelo barato de de en este caso
+de Google. Pero fijaros cómo se
+posiciona Deepsic V4, que está
+literalmente 10 veces más barato que el
+modelo más barato. O sea, absolutamente
+irrisorio el coste, teniendo en cuenta
+que el modelo no está a la altura de
+estos modelos, pero no está muy lejos.
+Es decir, el modelo realmente está muy
+muy bien. Es extremadamente barato y
+habría que preguntarse cómo leches lo
+hacen. Aquí hay dos escenarios posibles.
+Uno, e la conspiración esta
+conspiranoica de la que se habla siempre
+de que esto esté subvencionado por
+China, es decir, que China le interese
+que utilices dipsic porque utiliza tus
+datos o por lo que sea y con lo cual lo
+hacen más barato. y dos que hayan
+conseguido que la inferencia les cueste
+prácticamente nada utilizando los chips
+de Huawei, que podría perfectamente ser
+y eso hiciese que tuviesen un montón de
+chips para utilizar muy baratos haciendo
+un modelo que esté optimizado para ellos
+y conseguir esos precios absolutamente
+reventados. La diferencia de precio es
+tan grande que esto puede ser un
+problema muy serio para las empresas
+occidentales de inteligencia artificial,
+porque el precio de Deepsic es
+absolutamente ridículo para un nivel muy
+bueno de inteligencia que, repito, no
+está a la altura de los mejores modelos,
+pero [&nbsp;__&nbsp;] a ese precio, qué chollazo
+que es. Bien, y seguimos con más
+noticias. No sé si recordáis que Elon
+Mos demandó a Open Ei en un juicio que
+estaba siendo épico. Llevábamos tres
+semanas con los CEO más importantes del
+mundo. Habían sacado a sus kever de su
+cueva para traerlo. El tío hacía tres o
+cuatro días que no veía la luz y de
+repente salió ahí, oh, la luz tal. Y de
+repente se puso a declarar. Sam Alman se
+subió al estrado. Bueno, fue el juicio
+del siglo y cuando tocó deliberar el
+jurado se encierra. Parecía que esto iba
+a llevar semanas para ponerse de acuerdo
+y salen a los 90 minutos. Y dices, "¿Qué
+qué ha pasado aquí?" No, algo algo ha
+pasado. Pues bien, resulta que el juicio
+ha prescrito, resulta que los delitos de
+los que Elon Musk acusaba a Open y a Sam
+Alman, a Greg Brgman resulta que están
+prescritos por la ley de donde se ha
+hecho el juicio, con lo cual no podían
+juzgarles por ello y con lo cual han
+salido impunes de todo esto. No han
+dicho que no sean culpables, pero han
+dicho que está prescrito y con lo cual
+no les pueden juzgar por ello. El juez
+que tenía que tomar la decisión sobre
+ese jurado público porque no era
+vinculante, ha tomado exactamente la
+misma y ha dicho, "Pues ahora todos para
+casa que esto no ha servido
+absolutamente para nada." A mí, o sea,
+puedo entender que Elon Mask haya
+querido, a sabiendas de que esto iba a
+ser inválido, que haya querido pues
+ridiculizar públicamente a Samman y Greg
+Brman. no ha servido mucho. Nadie se
+acuerda de esto ni se va a acordar
+dentro de una semana, pero en cualquier
+caso me parece ridículo que pongamos
+toda esta cantidad de carne en asador,
+todos estos medios, todos estos recursos
+para que después esto ya se sepa de
+antemano que no se podía juzgar. O sea,
+no entiendo como el juez admitió a
+trámite este esta denuncia si sabía
+perfectamente que estaba prescrita y no
+entiendo como los abogados de Ilon Máx,
+a menos que ha sido pues lo que digo,
+para que haya un jurado popular eh de
+cara al público, pues no entiendo muy
+bien por qué han hecho esto. Ha sido la
+mayor gilipolez y se ha quedado en un
+chascazo importante, pero Elon Musk ha
+perdido el juicio porque no va a pasar
+absolutamente nada. Se amenazaba con que
+esto podía acabar con Open y ya y tal.
+No va a pasar absolutamente nada. Como
+digo, en una semana nadie se va a
+acordar de esto. Bien, y seguimos con
+más cosas. Resulta que Granta le ha dado
+básicamente un premio a una historia
+literaria hecho por un jurado de gente
+muy válida, muy erudita y se lo han dado
+a una historia que está claramente hecha
+con inteligencia artificial. Obviamente
+no se ha podido demostrar, con lo cual
+han decidido mantener el premio, pero
+les han dado de hostias en internet a
+punta pala, porque básicamente es
+evidente. Si habéis utilizado
+inteligencia artificial más de dos veces
+en vuestra vida y os leéis el texto,
+vais a ver que el texto está hecho por
+una inteligencia artificial. Es que no
+se han ni molestado en sacar las
+coletillas, las muletillas típicas de la
+IA de ese texto. Es un muy buen texto,
+no nos vamos a engañar, por eso le han
+dado el premio y porque la inteligencia
+artificial demuestra una vez más que
+está a la altura, que no es que sea mala
+ni muy mala. Lo que no sabemos es si
+esto se ha hecho con un humano
+haciéndolo junto a la IA o si
+directamente le ha dicho a la IA, "Oye,
+utiliza, hazme un texto y lo presento a
+ver si me dan un premio." Y se lo han
+dado. Pero hablamos de uno de los
+premios más importantes de literatura en
+la zona del Caribe. Un premio que está
+muy reconocido y en este caso se lo han
+dado, repito, a una historia con
+inteligencia artificial. El artículo lo
+tenéis aquí en The Guardian, que explica
+un poquito lo que ha sido todo esto,
+pero lo que tenéis también es que os he
+conseguido el link donde podéis ver la
+historia en sí que se llama The Serpent
+in the Grove. Y a ver si os la leéis y
+podéis ver si vais a ser capaces o no de
+interpretar si esto está escrito por
+como lo he visto yo a la que me he leído
+tres o cuatro de los párrafos. Miráoslo,
+es un texto que está muy bien. Repito,
+aquí no estoy yo diciendo que la
+inteligencia artificial sea mejor o
+peor, sino es simplemente que me parece
+que la inteligencia artificial es
+indistinguible de un humano, a menos de
+sean esas pequeñas coletillas que todos
+identificamos fácilmente cuando estás
+leyendo inteligencia artificial. Dejám
+en los comentarios si lo veis tan claro
+como yo, pero desde luego eh el premio
+se le ha mantenido porque no son capaces
+de demostrarlo porque una vez más no hay
+forma de detectar si algo está hecho con
+IA o no lo está más allá de la intuición
+propia, pero la realidad es que es
+perfectamente válido el resultado. Y
+esto que estáis viendo es la nueva flota
+de robotaxis en China. Son de la marca
+Xpen, que como sabéis soy embajador de
+la marca aquí en España y la verdad es
+que es un coche increíble. En este caso
+tienen un acercamiento distinto a otros
+robóxis que hemos visto, mucho más
+pequeños. Aquí lo hacen con un vehículo
+de seis plazas, el GX, que es un cochazo
+increíble, y con sus cuatro chips de
+inteligencia artificial y su VLA2 ya
+puede conducir de forma autónoma y
+estará disponible durante 2026 en China.
+Veremos si son capaces de expandirlo a
+otros países del mundo, pero desde luego
+entran el mercado de los robotaxis por
+la puerta grande y Xpen demuestra que
+está yendo muy a saco con la parte de la
+inteligencia artificial aplicada al
+mundo físico. Ya sabéis que no solo
+tienen coches, sino también los robots
+como Iron, etcétera. Y os aseguro que
+vamos a oír mucho que hablar de Xpen en
+los próximos años. Bien, y esta semana
+quiero terminar con este paper del MTR,
+que es un centro de estudios muy
+conocido, que recordaréis por esa
+gráfica de exponencialidad de cómo la IA
+puede completar tareas que a un humano
+llevarían x tiempo e sobre todo de
+programación y a lo largo del tiempo han
+ido saliendo los modelos. Una gráfica
+que utilizo muchísimo en mis ponencias
+porque realmente muestra muy bien la
+progresión de la inteligencia artificial
+como capacidad autónoma de hacer tareas
+que normalmente hacíamos humanos. Pues
+bien, han sacado un nuevo reporte de
+cómo estaría la situación del peligro de
+la inteligencia artificial en la
+frontera, es decir, en los modelos más
+potentes. Y la gracia es que esto de
+aquí se ha hecho colaborando con la
+mayoría de laboratorios más importantes
+de inteligencia artificial, es decir,
+les han dejado entrar en Antropic, en
+Google, en Meta y en Open AI, y con lo
+cual eso les ha permitido tener una
+visión muy muy real de la situación
+actual dentro. Pues bien, básicamente el
+anuncio, lo que viene a ser el estudio,
+viene a decir, "Oye, tenemos esto bajo
+control, sabemos lo que estamos haciendo
+y la respuesta." Si os queréis leer el
+informe entero, os lo podéis descargar
+en PDF, meter solo notebook elem o lo
+que queráis. La respuesta es no. Estamos
+fatal. Esto no está ni tan solo ni
+siquiera remotamente controlado.
+Básicamente lo que viene a decirnos es
+que las empresas de inteligencia
+artificial ya tienen modelos que en
+cuanto les dan cierta autonomía mienten,
+se inventan cosas, cambian información,
+eh intentan buscarse la vida para que no
+se les vea las cosas que han hecho mal,
+para intentar tapar sus propios errores,
+etcétera. con lo cual nos viene a decir
+que básicamente los laboratorios de
+inteligencia artificial no saben muy
+bien cómo controlar su propia
+inteligencia artificial y con lo cual a
+medida que sea más potente, sin ninguna
+duda, esto va a ser un problema. Su CEO
+Elizabeth Barns ha puesto una serie de X
+de Twitters en los que ha explicado un
+poco su opinión personal del tema y yo
+creo que se resume muy bien en este
+tweet de aquí que dice eh muchas veces
+gente de fuera del campo de la IA dice
+cosas como la situación de la
+inteligencia artificial no puede ser tan
+mala porque hay expertos que están
+encima de ello y como experta yo quiero
+decir que quiero dejar muy claro que no
+estamos encima de ello. Hay muchas cosas
+que se nos escapan y que realmente la
+situación hace que sea muy peligrosa.
+Entre ellas, básicamente explica como
+los mismos expertos del mundo de la
+inteligencia artificial no son capaces
+de controlar los modelos que están
+desarrollando y con lo cual que no hay
+ninguna garantía de que esto se esté
+haciendo bien. De hecho, hay otro tweet
+que realmente es muy iluminador en el
+que nos dice lo siguiente. En mi
+opinión, cualquier civilización
+razonable se se llevaría esto mucho más
+despacio y con mucho más cuidado con lo
+que tiene que ver con la inteligencia
+artificial. Los beneficios de conseguir
+mejoras en el mundo de la IA un poquito
+más rápido son muy pequeños comparados
+con los riesgos de que lo hagamos
+realmente mal y esto pudiese realmente
+mejorarse con una reducción de la
+velocidad para mejorar el riesgo que
+esto supone. Como veis, en definitiva,
+una de las personas que más acceso tiene
+a saber lo que está pasando dentro de
+los laboratorios nos viene a avisar de
+que están cogiendo atajos, de que están
+sacando modelos a lo loco cuando aún no
+saben ni tan siquiera cómo controlar las
+generaciones anteriores y con lo cual
+vamos de camino a un precipicio
+importante o probablemente a un
+precipicio como no nos pongamos las
+pilas con la parte de la seguridad de la
+inteligencia artificial. Creo que ya
+empieza a ser hora de que haya cierta
+legislación para intentar ayudar a que
+estas empresas tengan unos requisitos de
+obligatoriedad de cumplimiento para
+poder sacar esto de forma segura. Como
+digo, Demis Hasabis en su momento
+recordar que dijo aquella frase que nos
+tendríamos que tatuar todos, que es como
+sabemos el impacto que esto va a tener,
+más vale que lo hagamos bien y no
+deprisa, porque inteligencia artificial
+nos va a cambiar la vida a todos y más
+vale que nos la cambie para bien. Bien,
+en definitiva, recordar que esta semana
+también tenemos esos cursos gratuitos. A
+partir de mañana 26, 27 y 28 tenemos 3
+días de formación gratuita sobre
+inteligencia artificial de cero a
+agentes. Así que no os lo perdáis,
+tenéis el link en la descripción,
+apuntaros y nos vemos en las
+formaciones. ¿Tenéis cualquier pregunta
+sobre el vídeo de hoy, dejar un
+comentario por aquí debajo y nos vemos
+en el próximo vídeo. Chao, familia. M.

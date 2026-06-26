@@ -1,0 +1,1082 @@
+# Transcripcion
+
+- Titulo: ¡Claude Code + Antigravity revientan a las AGENCIAS web! El sistema entero de un negocio 🔥
+- URL: https://www.youtube.com/watch?v=zgJ2f_fAynY
+- ID video: zgJ2f_fAynY
+- Canal: José Manuel Fernández
+- Duracion: 36:06
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 7197
+- Provider IA: google
+- Modelo IA: gemini-3.5-flash
+- Prompt: Análisis crítico avanzado: desmonta argumentos, sesgos, exageraciones y verdades incómodas
+- Fecha de procesamiento: 2026-06-19T17:34:18.767Z
+
+Kind: captions
+Language: es
+Esto que vas a ver aquí no es una
+aplicación más hecha a conía.
+Seguramente hayas visto decenas de
+vídeos donde te enseñan a crear web
+bonitas con cuatro botones. Este vídeo
+no va de eso. Aquí vamos a crear un
+sistema digital entero de un negocio
+real montado desde cero y sin tocar una
+sola línea de código compuesto por estas
+tres partes. Un sitio web con diseño
+premium y elegante. Un sistema de
+reserva se automático. El cliente entra,
+pilla su hueco libre y le llega un email
+de confirmación. Cero trabajo para el
+dueño y lo que convierte en un negocio
+de verdad, un panel de gestión con
+agenda, clientes y dashboard de
+facturación. Un software de gestión
+real, no una simple demo. Y aquí viene
+lo que te interesa. De verdad, esto una
+agencia lo cobra a miles de euros. Tú
+aprenderás a montarlo en una tarde y a
+venderlo a cualquier negocio de tu
+ciudad. No es una demo de juguetes,
+funciona de principio a fin y te lo
+enseño en directo. Vamos a ello. En este
+vídeo te traigo un sistema de gestión
+completo a un negocio real que
+literalmente se puede vender por miles
+de euros. Y todo esto lo vamos a crear
+sin tocar una sola línea de código. Te
+voy a dar el paso a paso completo. Bien,
+para empezar te voy a enseñar lo que
+hemos creado. Aquí puedes ver el sitio
+web. En este caso está para una
+estética, ¿no? Para una clínica estética
+y belleza. Y aquí pues puedes ver que
+tiene un diseño muy elegante con una
+buena animación y la verdad que pues
+entra ganas, ¿no?, de entrar dentro de
+este sitio, ¿no? Si vas bajando hacia
+abajo, pues podes ver que el estilo es
+bastante bueno, lo dicho, de versión
+premium, elegante, estilista, ¿no? Que
+es un poco lo que se busca para este
+tipo de negocios, ¿no? Vemos que
+aparecen los distintos servicios,
+podemos reservar en cualquiera de ellos
+y bueno, básicamente es así un poco,
+¿no? todo el sitio web. Vamos a bajar
+más rápidamente y vemos que es
+espectacular, o sea, está muy bien
+logrado. Bien, todo esto ahora podes
+reservar aquí tu cita y si haces clic
+aparece este panel donde puedes
+seleccionar el servicio que tú quieras,
+¿no? Vamos a suponer que quiero pues no
+sé, hacerme un diseño de cejas, pues
+pulsa sobre él y podemos seleccionar el
+día, por ejemplo, para el martes 16 de
+junio. Y aquí podemos seleccionar la
+hora a las 1:30. Luego aquí introduce el
+nombre y el email y automáticamente te
+va a llegar este email donde han
+recibido la reserva. Como puedes ver es
+también un email que está increíble y
+eso lo hemos recibido de forma
+automática, pero hasta ahora nada nuevo,
+¿no? Eh, lo has visto en cientos de
+vídeos. Bien, pero es que hay más. Ahora
+viene la parte del sistema de gestión,
+porque lo que hemos visto es el sistema
+donde un cliente reserva una cita, pero
+eso requiere un sistema de gestión por
+detrás para que las personas que
+trabajen en el negocio puedan realizar
+toda esta gestión. Y esto te aseguro que
+literalmente se vende por miles de
+euros. Por lo tanto, aquí puedes ver que
+tienes un sistema de citas, podemos
+filtrar, podemos hacer lo que queramos y
+también aparecen todas, ¿no? Vemos que
+aparece pendiente, confirmar, completar,
+cancelar, no asistió, puede hacer lo que
+quiera y aparece ordenado por fecha.
+todos y cada una de las citas con los
+servicios. Por ejemplo, si confirmamos
+la que acabamos de hacer, te va a llegar
+otro email donde ya sí te dice que tu
+cita está confirmada eh para el servicio
+y en la fecha en la que es. Pero es que
+además podemos ver más cosas. Por
+ejemplo, podemos modificar los servicios
+que tenemos. Si aquí añadimos un nuevo
+servicio o editamos algún existente,
+automáticamente en el sitio web también
+va a cambiarse y esto es increíble que
+se haga de forma automática. Además,
+también podemos modificar los horarios
+para no dejar libre huecos que en los
+que no se trabaje, como por ejemplo
+añadir vacaciones objetivos. E incluso
+tenemos un CRM de cliente. Pero es que
+esto está brutal porque si entras dentro
+de un cliente en concreto, vas a poder
+ver el historial de citas y todo lo que
+ha hecho en cada una de ellas, si tiene
+una cita confirmada, pendiente, si no
+asistió, si pagó eh una cantidad por
+ella. O sea, fijaros la gran cantidad
+que hay de datos, ¿no? Y dentro del
+dashboard podemos ver todo lo que se
+haya facturado este mes, el servicio más
+eh utilizado, la ocupación de la semana,
+el ticket medio, es decir, un dashboard
+donde pueda eh recopilar, perdón,
+información sobre todo lo que se ha
+hecho. Fijaros que es un sistema que
+literalmente transforma un negocio
+entero. También comentarte que el
+resultado final de toda esta aplicación
+lista para usar lo dejaré para los
+miembros de la comunidad de Dominia
+Academy. Aquí crearé un post que cuando
+salga este vídeo estará disponible y
+literalmente aquí podrán descargarlo y
+utilizarlo para realizar los cambios
+correspondientes e incluso directamente
+venderlo y ofrecerlo a cualquier
+negocio. Esto lo dejaré aquí para los
+miembros de la comunidad, pero si no
+estás dentro no te preocupes porque te
+voy a dar el paso a paso y como siempre
+te voy a regalar los prom para que
+puedas eh replicarlo tal cual lo hago
+yo. Y muy rápidamente te voy a explicar
+los distintos pasos que tenemos, ¿no? En
+primer lugar utilizaremos algún sistema
+agéntico. Ahora después veremos esto,
+pero da igual cuá lo utilices. Te lo voy
+a enseñar con distintos ejemplos, ¿no?
+Por lo tanto, si utilizas close code,
+eh, codes, antigravity, open code, da
+igual, ¿vale? El resultado puede ser
+similar. Bien, luego crearemos primero
+la landing con un diseño eh que sea
+espectacular. Implementaremos un sistema
+de reserva dentro de la landing, como
+hemos visto, y finalmente todo el
+sistema de gestión. Además, para ser
+todo esto, para el diseño de esta
+Landing, vamos a utilizar una librería
+que es Open Show de código abierto, eh,
+que se llama Gisap, eh, que esto te
+permite crear animaciones, bueno, más
+que una librería es un framework que te
+permite crear animaciones de ese estilo,
+¿no? Para conseguir ese aspecto premium
+de la cabecera. Lo integraremos, por
+supuesto, con Supabase para la base de
+datos y el sistema de autenticación y
+además lo vincularemos con Resent que te
+permite desde totalmente gratis empezar
+a enviar email de confirmación y
+gestionarlo directamente desde aquí. Así
+que quédate porque te aseguro que hay
+muchísimo valor de aquí y esto es
+totalmente gratis. Todas las
+herramientas, recursos y prom que hemos
+utilizado para crear esta aplicación de
+este vídeo, te lo voy a dejar totalmente
+gratis en este documento. Y este
+documento se encuentra dentro de la
+comunidad privada gratuita, que si ya
+perteneces a ella, pues simplemente
+tienes que entrar y cogerlo. Y si no, la
+forma de entrar es rellenando este
+formulario cuyo enlace vas a encontrar
+tanto en el comentario fijado como en la
+descripción de este vídeo. Simplemente
+rellena los datos y automáticamente te
+voy a enviar un correo electrónico con
+el cual te voy a dar acceso a la
+comunidad privada de Telegram. Aquí
+dentro, pues entre otras muchas cosas,
+vas a encontrar los recursos y
+simplemente aquí vas a ver un comentario
+fijado al inicio del todo. Haces clic,
+haces clic luego en este enlace de aquí
+y eso te va a llevar a este repositorio
+con recursos totalmente gratuitos. Lo
+que te interesa de este vídeo se
+encuentra dentro de la carpeta 9. Clow
+Code. Entras aquí dentro, bajas a 9.10.
+10 app estética reservas y aquí tienes
+el documento. El primer paso es la
+instalación y preparativos para poder
+crear esta aplicación. Voy a ir muy
+rápido con esto porque ya lo he
+explicado en muchos vídeos y sé que la
+gran mayoría que me seguís y que estáis
+viendo este vídeo, pues ya esto lo
+manejáis, pero eh pues si acabas de
+llegar nuevo para que no te pierdas,
+¿vale? Bien, para crear y construir
+aplicaciones existen pues muchísimas
+herramientas que podemos utilizar. Las
+más comunes en estos momentos es Cloud
+Code de la empresa de Antropi, OpenI de
+la empresa de perdón, Codex de la
+empresa de Openi y Google Antigravity de
+la empresa de Google, ¿no? Y también
+tenemos la herramienta de Open Code, que
+es una una alternativa de código
+abierto. Bien, para seguir este vídeo
+puedes seguir puedes utilizar la que
+quieras, ¿vale? Cualquiera de estas
+herramientas te va a bastar y a sobrar
+porque todas tienen modelos lo
+suficientemente potentes como para
+construir lo que vamos a ver a
+continuación. De hecho, he visto una
+gran oleada, ¿no?, de gente insatisfecha
+porque han quitado el modelo eh Cloud
+Fable 5, este modelo tan potente. La
+realidad es que sí, que era
+espectacular. Lo probé y construí cosas
+con él y tenéis vídeos por aquí que os
+dejaré y hacía cosas brutales, pero eh
+de momento parece que Trump no lo quiere
+no lo quiere compartir con los demás o
+quizás sea una estrategia masiva de
+marketing de Antropy. Vale, no tengo ni
+idea, pero la realidad es que no tenemos
+disponible ese modelo en este momento
+que estoy grabando el vídeo, pero
+tampoco es el fin del mundo porque
+literalmente ha durado 3 días y hasta
+hace 3 días eh estábamos construyendo
+todo tipo de cosas brutales con estas
+herramientas, ¿vale? Así que no es el
+fin, se puede construir y vamos a
+continuar con con lo que tenemos
+disponible, ¿no? Por lo tanto, vas a
+seguir el vídeo igualmente. Si acabas de
+empezar en la guía que tiene los
+recursos, te dejo todos los enlaces,
+pero tienes que instalar Nujs.
+Simplemente te vienes a este sitio web,
+le das aquí a obtener, ¿vale? lo
+descargas para tu sistema operativo y
+luego es eh abrir el ejecut el ejecutor
+del archivo y siguiente siguiente y
+listo, ya lo tienes instalado. Lo mismo
+con Git, también tienes el enlace, lo
+mismo, lo instalas para tu sistema
+operativo, siguiente, siguiente y listo.
+¿Vale? Bien, una vez que tienes todo
+esto, ahora tú puedes crear aplicaciones
+de dos formas. Puedes, bueno, realmente
+de tres, ¿no? Puedes o bien utilizar la
+aplicación de cada una de estas
+herramientas, es decir, cada una tiene
+su aplicación de escritorio. Puede
+utilizar también la terminal por línea
+de comando o bien puede utilizar un
+entorno de desarrollo donde puedas ver
+todos los archivos que genera eh la
+aplicación que vamos a crear con con el
+código y demás, aunque no necesites
+programar, pero eh está bien verlo. Y
+ahí dentro vamos a utilizar esta
+herramienta y esta tercera opción es la
+que vamos a utilizar durante el vídeo.
+Por lo tanto, necesitas un entorno de
+desarrollo. Por ejemplo, Visual Studio
+Code. Lo puedes descargar de forma
+también totalmente gratuita. Siguiente,
+siguiente. Y esto es totalmente libre.
+Lo puedes utilizar sin pagar
+absolutamente nada. O bien, yo voy a
+utilizar la opción de Google
+Antigravity. ¿Por qué? Porque dentro de
+producas el Antigravity ID, esto también
+es gratuito y además tiene una capa
+gratis para utilizar los modelos de
+inteligencia artificial y puedes
+comenzar por ahí. Obviamente es una capa
+muy reducida, posiblemente no te dé para
+seguir el vídeo, pero simplemente pues
+si quieres empezar por ahí, por lo que
+simplemente lo descargamos y lo mismo
+siguiente, siguiente y tendrás una
+interfaz como esta. A partir de aquí
+ahora vas a abrir un directorio y listo,
+ya lo tienes. Tiene abierto el
+directorio y aquí dentro donde vamos a
+trabajar dentro de esta carpeta que has
+creado en tu ordenador, vamos a trabajar
+en la aplicación que vamos a crear.
+Bien, a partir de aquí, como te he
+dicho, independientemente de la
+herramienta que utilizas de aquí en
+adelante, vas a poder seguir el vídeo.
+Quizás haya alguna diferencia, pero
+bueno, puedes seguirlo, ¿vale? Aquí a la
+derecha tienes un chat, ¿vale? Eh, como
+puedes ver, aquí tienes distintos
+modelos para seleccionar. Vemos que
+aparecen los modelos de Gemini 3.5 y
+también de 3.1 y también los de eh
+Antropi. Por lo tanto, ya directamente
+puedes comunicarte con la IA desde este
+chat y utilizarlo para construir. En
+caso de que quieras utilizar codes de
+OpenI porque tengas una suscripción GPT
+Plus, pues básicamente te vienes aquí a
+la izquierda a extensiones y luego aquí
+vas a escribir la palabra open y
+entonces te va a salir este eh icono, o
+sea, esta extensión de aquí que es la de
+Codes. Simplemente instálala, yo ya la
+tengo aquí disponible y te va a aparecer
+el chat directamente conectado a codes.
+De esta manera, pues ya puedes utilizar
+esa suscripción sin ningún problema. Y
+la otra alternativa, que es la que yo
+voy a utilizar en este vídeo, va a ser
+la de Cloud Code, ¿vale? Por lo tanto,
+simplemente busca la extensión, la
+añades y le das a instalar. Yo ya la
+tengo instalada. Una nota importante que
+te va que te va a venir bien es que aquí
+en settings le entres en este apartado
+de aquí y marques esta opción para que
+no esté continuamente dándote eh
+pidiéndote permisos y listo, ya tendrías
+aquí Clow Code y ya puedes empezar a
+utilizar Cloud Code, ya puedes utilizar
+codes o directamente el chat de
+Antigravity como hemos visto antes,
+¿vale? son las tres herramientas dentro
+de un mismo entorno y aquí ya puedes
+elegir la que más te interese. El
+siguiente paso es instalar unas skills
+que nos va a dar ese diseño que te he
+mostrado eh al inicio, ¿no? Y para poder
+hacer esa animación de la portada vamos
+a utilizar Gesap. Esto es una eh es una
+eh un sistema Open Soul de código
+abierto que está liberado. Esto lo puede
+utilizar totalmente gratuito, se
+encuentra libre y eh para utilizar esta
+herramienta, para que la IA pues tenga
+más conocimiento sobre ella, existe una
+skill que son oficiales, que son este
+repo de aquí que la vas a tener también
+en la guía, ¿vale? Por lo tanto, lo
+único que tienes que hacer es venirte
+aquí y vas a copiar este comando.
+Simplemente le das aquí a copiar o lo
+copias dentro del recurso gratuito que
+tiene dentro de la comunidad. Por lo
+tanto, una vez que tengas copiado eso,
+te vas a venir al entorno de desarrollo
+y aquí arriba le vas a dar a terminal y
+le vas a escribir en nuevo terminal. Y
+aquí simplemente vas a pegar el comando,
+vas a pulsar enter para instalar esta
+skill dentro de nuestro propio proyecto.
+Como puedes ver, te permite seleccionar
+varias, ¿vale? Esto va con el cursor y
+el teclado, ¿vale? Por lo tanto,
+simplemente escribe espacio, ¿vale?
+Pulsan en espacio en cada uno y va
+seleccionando todas, ¿vale? porque
+queremos todas las habilidades. Pulsas
+center. Y ahora aquí importante, si vas
+a utilizar Clow Code, necesitas marcar
+esta opción de aquí. Si vas a usar
+antigravity o codes, no hace falta,
+¿vale? Pero si no tienes que darle aquí
+a espacio para marcarlo y pulsar enter.
+Luego lo instalamos a nivel de proyecto
+solamente para que no se instale a nivel
+global. Esto, pulsamos enter, volvemos a
+pulsar enter y listo. Y ya está
+instalado. Bien, punto importante, como
+puedes ver, se añade aquí una nueva
+carpetita que se llama punto agents.
+Aquí es donde se almacenan todas las
+skill para eh la las herramientas de
+antigravity, codes, open code y la
+mayoría de sistemas génticos. Sin
+embargo, Cloud Code es especialito y
+necesita una carpeta punto cloud.
+Nosotros como la hemos seleccionado aquí
+debería de haber aparecido, pero hay
+veces que falla. ¿Vale? Entonces, la
+solución, si no te aparece aquí un punto
+cloue es muy sencillo. Aquí arriba le
+damos a crear nueva carpeta. Bueno,
+disculpa, aquí no sería, sería en la
+raíz, ¿vale? En esta creamos una
+carpeta, escribimos punto cloud,
+pulsamos enter y ahora nos venimos a la
+carpeta agents y sobre skill vamos a
+pulsar en copiar, nos venimos dentro de
+Cloud y pulsamos en pegar y de esa
+manera ya lo tenemos. Entonces, así ya
+estas habilidades van a ser, digamos,
+detectadas tanto desde close co de
+antigravity como desde Code. Ya te da
+absolutamente igual. Ahora ya sí vamos
+con la parte de la construcción y para
+eso te voy a regalar este pron de aquí
+que lo único que tienes que hacer es
+literalmente copiarlo, ¿vale? Te vas a
+venir aquí, lo vas a copiar entero.
+Ahora lo vamos a analizar, pero
+simplemente lo copiamos, nos venimos a
+Cloud Code. Importante selección de
+modelo. Yo voy a utilizar para porque
+vamos a planificar primero. Por lo
+tanto, aquí vamos a seleccionar el Opus.
+Es recomendado para eh realizar una
+planificación de toda la aplicación
+antes de empezar a ejecutar. Por lo
+tanto, utilizaremos Opus. Si cuando veas
+este vídeo tienes Fable y lo quieres
+utilizar, pues adelante porque
+evidentemente es mucho más potente,
+aunque gasta más. Vale, eso sí, teno en
+cuenta. Bien, por lo tanto, simplemente
+marcamos eso. Un tema importante,
+¿vale?, con respecto a Cloud Code es que
+existe unos plugins, ¿vale? Eh, si
+escribes aquí plugins te va a aparecer
+bien. Pues te recomiendo que instales el
+de Contest 7 y el de Front Design.
+Simplemente buscándolo aquí te va a
+aparecer en automático y lo activas como
+lo tengo yo activado. Yo tengo alguno
+más, pero realmente con esos dos es más
+que suficiente. CT7 te permite utilizar
+código actualizado de librerías
+actualizadas y Frontend Design va a
+mejorar un poquito más el diseño. Esto
+también lo puedes instalar con Codes o
+con Antigravity si los necesitas. De
+hecho, tiene hasta MSP para hacerlo,
+¿vale? Por lo tanto, eso tenlo en
+cuenta. Aquí importante ponerlo esto en
+modo plan y con el esfuerzo. Veis que
+tiene varios esfuerzos, ¿verdad? Eh,
+bien, yo te recomendaría que lo dejes en
+high como mucho, porque esto quizás te
+gaste demasiado, eh, por lo tanto,
+déjalo en high. Y ahora ya sí pegamos el
+prom. En este caso les decimos que es un
+developer senior que construye web nivel
+of the day. Básicamente esto es este
+sitio web de aquí que os enseño que se
+registran como los mejores eh sitios web
+pues más espectaculares que hay, ¿no?
+Entonces, al decirle eso en el prono,
+¿no? Por lo que se lo incluimos en el
+plón, le decimos, "Importante, hazme un
+plan." Esto realmente no es necesario
+porque ya lo hemos puesto en el modo
+plan, pero quizás para codes o
+antigravity venga bien. Y aquí pues le
+explicamos todo lo que vamos a
+implementar, ¿no? Y que lo haga todo él
+y que no nos deje a nosotros esa
+responsabilidad de seleccionar
+herramientas, aunque igualmente yo ya le
+indico que vamos a utilizar una
+herramienta tipo Nest. En fin, esto no
+tienes por qué saberlo. Eh, aquí tenemos
+el objetivo y recuerda que el prom
+puedes cambiarlo. Eh, también
+importante, le vamos a dar varios
+enlaces. Esto simplemente es para que
+haga correctamente el la animación.
+Básicamente el enlace que le paso es
+este sitio donde aparecen pues varias
+animaciones de este tipo y de esa manera
+le podemos eh le damos a close code más
+herramientas para que lo haga lo mejor
+posible.
+También dejamos las bases sentadas para
+lo que vamos a hacer posteriormente
+porque recuerda que no solo es un sitio
+web bonito, vamos a implementar un
+sistema de reserva, vamos a necesitar un
+dashboard privado para los dueños del
+negocio, eh, y también vamos a luego
+vincularlo con un sistema de base de
+datos y autenticación como Supabin,
+¿vale? Por lo tanto, esto es importante
+dejárselo eh dicho desde primera hora.
+Así que simplemente pulsamos en enviar y
+empezamos con el plan. Normalmente Cloud
+Code nos hará una serie de preguntas
+sobre todo referido al diseño, ¿de
+acuerdo? Yo, por ejemplo, voy a
+seleccionar esta opción de aquí, luego
+también en cuanto al nombre voy a
+seleccionar que se va a llamar Lumier y
+simplemente lo enviamos y de esta manera
+podemos, o sea, podemos darle respuesta.
+También podemos darle una respuesta
+alternativa si tenemos claro lo que
+necesitamos. Y listo, ya tendríamos aquí
+el plan. para implementar todo eh todo
+nuestro aplicación, ¿no? Aquí tiene pues
+todas las tecnologías, todas las
+herramientas y toda la estructura de
+directorios. En fin, tú esto no tienes
+por qué saberlo, pero sí está bien que
+le eches un vistazo para que poquito a
+poco pues te vayas enterando, porque al
+final recuerdas que se trata de que
+nosotros tengamos criterio a la hora de
+manejar a la IA. Si empieza desde cero,
+esto se va aprendiendo poco a poco. Lo
+bueno es que puedes empezar a construir
+sin conocer nada de esto y a medida que
+avances pues ir aprendiendo. Bien, ahora
+llega el momento de construir. Para ello
+aquí podemos directamente darle aceptar,
+aunque yo lo que le voy a es utilizar
+esta tercera opción y le voy a pegar lo
+siguiente. Le voy a decir que ejecute y
+desarrolle la aplicación del plan, pero
+recuerda implementar solo la parte uno.
+¿Por qué? porque solamente queremos
+primero la parte de la interfaz para que
+no lo haga todo a la vez y luego la
+parte dos de reservas superabí lo
+hacemos cuando el diseño de la app sea
+adecuado, ¿vale? Muchas veces es mejor
+empezar por una parte, dejarla bien y
+luego ya vamos continuando con el resto
+de partes. Una cosa que no te he dicho
+es que a la hora ya de implementar, es
+decir, después del plan y lo que
+queremos es construir, ya desarrollar,
+quizás para ahorrarte tokens puedas
+utilizar mejor el modelo Sonet. ¿Por
+qué? Porque una vez que ya tiene el plan
+trazado, la arquitectura, digamos, pues
+el hecho de ejecutar y desarrollar
+código Sonet funciona bastante bien y a
+Opus le damos la tarea pesada de
+planificar. Vale, esto ya te lo dejo a
+ti según cómo consideres. Siempre Opus
+obviamente va a ser superior, pero que
+sepas que con este modelo puede
+funcionar bastante bien. Y luego aquí
+importante también que selecciones
+bypass permisión para evitar, ¿no?, que
+eh te esté todo el rato preguntando. Y
+el resultado que acabamos de obtener en
+una sola iteración es la siguiente. Aquí
+tenemos como tiene este efecto que queda
+bastante chulo, la verdad. Al final, ten
+en cuenta que la animación tiene que ir
+acorde al negocio que estamos
+implementando, ¿no? De nada sirve meter
+aquí una animación hiper mega
+espectacular si al final el negocio va
+de un centro de eh de estética o de
+belleza como es en este caso, ¿no? Que
+no tiene tampoco sentido hacer algo
+demasiado vistoso, sino simplemente algo
+que quede elegante, ¿no? Que quede
+premium. Y yo creo que aquí hemos dado
+hemos afinado bastante a lo que se
+necesita, ¿no? Como podemos ver, tenemos
+aquí el botón de reservar, tenemos aquí
+eh la empresa, podemos reservar una
+cita, aunque esto todavía no está
+implementado. Bien, y si bajamos hacia
+abajo, vais a ver qué buenos efectos. De
+hecho, las imágenes nosotros no hemos
+hecho absolutamente nada. Clow Code se
+ha encargado de obtenerlas de
+repositorios públicos. no la ha generado
+porque Cloudco Code no tiene modelo de
+imagen como tal, pero sí que se ha
+encargado de buscarse la vida para
+obtener imágenes públicas de ejemplo,
+¿no? Fijaros, aquí tenemos varios
+servicios, depilación láser, diseño de
+cejas, uñas, ¿no? Servicios habituales
+que puedes tener dentro de este tipo de
+negocios, ¿no? Aquí un mensaje final y
+vemos que la verdad que está bastante
+chulo, ¿eh? Está muy bien, muy premium,
+muy bien logrado y esto literalmente es
+mucho mejor que la mayoría de sitios que
+tienen pues este tipo de negocios, ¿no?
+Bien, pues este sería un poco la versión
+inicial. Ahora tenemos que implementarle
+la funcionalidad. Podemos asumir que el
+diseño nos gusta, está perfecto, si no
+te gusta itera un poco hasta que
+consigas el resultado que buscas. Y a
+partir de ahí ya pasamos con el
+siguiente paso. Antes de seguir
+construyendo en este punto ya una cosa
+que te recomiendo es que directamente
+aquí escribas el comando init y de esa
+manera si lo pulsas se te va a generar
+el archivo de contexto del clow.md,
+que es un archivo que va a tener toda la
+estructura de tu aplicación como un
+índice para que cuando nosotros ahora
+abramos una nueva conversación eh, pues
+tenga contexto siempre de la misma,
+¿vale? Entonces, ya es el momento de
+generarlo. En mi caso, yo ya lo había
+generado. Y como podes ver, pues aparece
+aquí, ¿no? Aquí da toda la información.
+Está en inglés, no te preocupes. Esto
+simplemente es para que la tenga claro
+la estructura que tiene en este momento
+nuestro sistema. Si este comando lo
+ejecutas en en anti, o sea, lo haces en
+antigravity, se lo pides o a codes, que
+también tiene el mismo comando, vas a
+ver que en vez de un Cloud MD te va a
+generar un agents.m,
+¿vale? ¿Por qué? Porque es el que
+utiliza dentro de esas herramientas.
+Ahora vamos ya con la siguiente fase,
+que es la de darle la funcionalidad de
+reservas. ¿Por qué? porque ahora mismo
+tenemos pues un sitio bonito, pero
+tenemos que poder reservar en ese sitio
+y también crear todo el sistema por
+detrás para que el dueño del negocio o
+los administradores del negocio puedan
+gestionar esas citas que le llegan, ¿no?
+Es decir, ahora mismo tenemos el sitio
+web, que sería donde entrarían todas las
+personas que quieren contratar el
+servicio, pero luego tenemos que añadir
+un sitio privado que sol que solamente
+tenga acceso y solamente tenga
+autorización los dueños del negocio para
+poder ver todas las métricas y todo lo
+que haya por detrás y gestionar todas
+las citas, ¿vale? Por lo tanto, ¿qué
+tenemos que hacer de primera? Pues una
+base de datos y un sistema de
+autenticación. Y para ello vamos a
+utilizar Supase. ¿Por qué Subabase?
+Porque lo puedo utilizar gratis desde el
+entorno cloud. Te dejaré el enlace y
+desde aquí crearte una cuenta gratis si
+empezas a utilizarlo. Y también suave lo
+puedes instalar en tu propio servidor.
+Por lo tanto, si quieres tenerlo eh como
+gestionarlo de manera propia, de manera
+autónoma, sin que sin que tengas
+límites, pues para eso puedes instalarlo
+en tu servidor totalmente gratis. Lo
+aquí, crearte una cuenta, es muy rápido.
+Luego el siguiente paso es darle un
+nombre a la organización que vas a crear
+dentro de Supab. Aquí selecciona lo que
+quieras, ¿vale? Y selecciona la opción
+gratis. Vemos que tienes planes más
+altos, pero yo siempre te voy a
+recomendar que antes de pagar esta
+plataforma directamente en tu propio
+servidor lo instales. Tenés, creo que
+tenés vídeos en el canal, así que busca
+por ahí porque en algún momento seguro
+que lo he hecho. Y simplemente le damos
+a crear organización. Luego dentro de la
+organización tenemos que crear un
+proyecto. Yo le voy a poner también app
+estética. Luego aquí introducimos una
+contraseña. Yo voy a utilizar esta que
+he puesto aquí. Y listo. ¿Vale? Y lo
+dejamos lo puedes seleccionar tal y como
+está. ¿Vale? Por lo tanto, le damos a
+crear nuevo proyecto y ya lo tendríamos.
+Ya tenemos nuestro sistema preparado.
+Ahora mismo estará vacío, pero no te
+preocupes porque Cloud Code lo va a
+hacer todo por nosotros. Para ello lo
+que vas a hacer es escribir Sup
+mspalquier navegador y te va a aparecer
+este enlace de aquí. Si entras, bajas
+hacia abajo, vas a ver que directamente
+pues puedes eh seleccionar para close,
+por lo tanto te aparece este comando de
+aquí. Eh, por aquí te puedes puedes
+seleccionar el proyecto. Yo voy a
+seleccionar app estética, que es la que
+acabamos de crear, ¿vale? Si lo abre en
+el mismo navegador donde te ha
+registrado con sub, veis, te aparecerá
+todo, ¿vale? Y ahora automáticamente
+pues ya puedes eh copiar este comando y
+te vas a venir aquí a Cloud Code y
+directamente le vamos a decir que
+instala el msposa
+en Subab. Vale, bueno, esto se lo
+pegamos, en principio lo tiene, ¿vale?
+Le pegas el comando que acabamos de
+copiar. Una vez que se haya instalado,
+es importante que sepas que tenemos que
+abrir una nueva conversación de Clow
+Code para que detecte el MSP, por lo que
+abre una nueva, selecciona siquiera aquí
+el Cloud MD para que tenga contexto de
+todo y le voy a decir que eh analiza
+este proyecto y el siguiente paso era
+probar la conexión con Supi
+que hemos instalado. ¿Vale? Y ahora aquí
+le voy a poner el bypass permiso. Y
+esto, la idea es ahora conectarnos a su
+y hacer esa conexión. Vemos que nos da
+esta URL. Simplemente la copiamos, nos
+venimos al navegador y la pegamos. De
+esta manera lo que vamos a poder hacer
+así es realizar esta conexión. Veis que
+aparece aquí que le podemos autorizar
+para nuestro proyecto. Simplemente
+autorizamos a Clow Code y de esta manera
+ya estaríamos directamente conectados.
+Bien, ahora que tenemos ya superabase
+conectado, el el siguiente punto es
+implementar pues todo el sistema de eh
+reserva dashboard de gestión y
+conectarlo con subabr
+que te dejo por aquí. Cosa interesante
+de este pron que no te he dicho antes,
+eh, es que estamos utilizando PNPM y me
+dirás, "Oye, ¿qué es esto de PNPM?"
+Bueno, pues básicamente en todos los
+prom que te he estado dando le indicamos
+a a la IA que utilice siempre a la hora
+de instalar cosas, librerías y ese tipo
+de de cosas, PNPM. ¿Por qué? Porque
+cuando tú instalas librerías pesadas con
+npm pueden venir pueden tener eh cosas
+maliciosas por eh cosas que se han
+descubierto, o sea, que han atacado eh a
+este tipo de digamos de de herramientas.
+Vale, no voy a entrar a ponerme técnico
+porque si no ya nos desviamos, pero
+básicamente utiliza siempre PNPM, ya
+está. Con eso el 90 y pico% de los caso
+está resuelto, ¿vale? Y eso ya tu
+inteligencia artificial lo conoce,
+¿vale? Por lo tanto, ¿qué le vamos a
+decir? Pues simplemente que cree que se
+conecte utilizando la base de datos eh
+de Supab, ¿vale? Por MSP. Le damos aquí
+toda esa información, eh, y también le
+vamos a indicar la reserva pública, es
+decir, sin login. Queremos este sitio
+web típico, no sé si has alguna vez ha
+ido a algún sitio web de estos donde
+cuando vas a eh agendar una cita, pues
+directamente te pide un correo
+electrónico para enviarte la
+confirmación y ya está, ¿vale? No
+necesitas estar con la sesión iniciada,
+¿vale? Pues eso es justamente lo que
+vamos a hacer aquí, ¿no? También le
+vamos a indicar el panel de gestión y
+por supuesto que mantenga siempre la
+misma estética, ¿vale? Por lo tanto,
+simplemente copiamos este pro y se lo
+vamos a pegar a close code y simplemente
+pulsamos enter y vamos a dejar que se
+encargue de construir el resto. Bien,
+pues ya ha finalizado la implementación
+de esta nueva mejora y bueno, ahora
+tendríamos que realizar un pequeño
+cambio y es conectarlo con Resin, que es
+una herramienta que vamos a utilizar
+para que pueda enviar correos
+electrónicos para esta demostración.
+Pero antes de eso, vamos a ver lo que ha
+conseguido, ¿no? Bien, aquí tenemos el
+sitio web, es exactamente lo mismo, pero
+si ahora pulsamos en botón de reservar,
+vamos a ver que tenemos la posibilidad
+de reservar una cita. Aquí vemos los
+distintos servicios que aparece. Podemos
+seleccionar depilación, seleccionamos el
+día del calendario que nosotros queramos
+y podemos reservar la hora. Y a partir
+de aquí ya pondremos nuestro nombre,
+nuestro email, teléfono si lo
+consideramos necesario. Y y esto lo
+enviará un correo electrónico cuando
+ahora lo conectemos. Pero antes de ir a
+esa parte, hay otro punto que es muy
+importante que acabamos de añadir y es
+que aquí en la URL, si tú escribes eh
+barra admin, automáticamente te va a
+redirigir a un login. Bien, este login
+lo que hace es eh el hecho de que pueda
+acceder un usuario administrador. Esto
+sería para el dueño del negocio y eso
+pues no es accesible desde el sitio web.
+Sí, es verdad que cualquiera que escriba
+en la URL admin pues le saldrá este este
+acceso, ¿no? Pero obviamente está
+protegido con usuario y contraseña,
+entonces no puede salir cualquiera.
+Igualmente eh esto se le puede abrar a
+la IA para que con Supabase pues haga un
+sistema de gestión un poquito más
+avanzado para tratar de maximizar la
+seguridad, pero eso ya sería algo un
+poquito más complejo que tampoco hace
+falta para este caso. Bien, por lo
+tanto, si bajamos aquí vemos que nos
+aparece email y contraseña de prueba
+para el usuario admin. Por lo tanto, yo
+lo que voy a hacer es copiarme esto de
+aquí. Voy a pegar el email y me voy a
+venir aquí abajo y voy a pegar, voy a
+copiar esta contraseña y la vamos a
+pegar aquí. Y si entramos, vemos que
+ahora tenemos este sistema por dentro
+donde aparecen todas las citas
+confirmadas y también las que están
+pendientes y nosotros podemos
+confirmarl. Esto son citas de prueba que
+nos han cargado, pero vemos que aparece
+en la de cada día, ¿no? Por ejemplo,
+vamos a confirmar esta. Simplemente
+pulsamos sobre ella y la confirmamos y
+listo. Y ya tendríamos todo esto.
+Igualmente ahora le vamos a mejorar esta
+parte, ¿vale? Pero ah y otra cosa que no
+se me quería olvidar enseñaros es
+Supabase, ¿vale? Dentro de la interfaz
+de Supabase, si te vienes aquí el
+apartado de database, vais a ver que
+ahora tenéis un montón de tablas creadas
+y si nos venimos a Table Editor, vais a
+poder ver los datos dentro de cada
+tabla. Por ejemplo, en reservas podéis
+ver que eh aparecen todas las reservas
+que que hay de prueba. Fijaros, aquí
+aparece con los horarios y el nombre de
+cada cliente. Y de esta manera pues lo
+tenemos todo ya registrado en nuestra
+propia base de datos. Pero como hemos
+visto, tenemos que implementar el
+servicio que envíe el email a cada
+cliente que reserve una sigita para eh
+el email de confirmación, ¿no? Bien,
+para ello vamos a utilizar un servicio
+que es el de resin que permite esto está
+hecho para desarrolladores como podéis
+ver, pero no pasa nada, es muy fácil eh
+de hacerlo, eh, porque esto no va a
+permitir vincularlo con un email de
+prueba para que envíe estos correos
+electrónicos y luego esto pues lo vas a
+poder siempre sustituir por el email que
+tú quieras, ¿vale? Para ello, si nos
+venimos a Cloud Code, vemos que nos dice
+que, bueno, que ya está todo preparado,
+pero que falta que en este archivo de
+aquí, si haces clic aquí a la derecha se
+abre, peguemos la clave API de el propio
+resin de resin APK y para ello podemos
+sacarlo gratis desde aquí, ¿no?
+Directamente vemos que te dice el enlace
+hacia dónde lo puedes obtener. Para ello
+vamos a iniciar sesión o te creas una
+cuenta que es totalmente gratuita y como
+podemos ver aquí nos va a aparecer la
+opción de añadir clave API.
+Igualmente, si no llegas a esta pantalla
+desde la parte izquierda, como puedes
+ver aquí, puedes acceder sin ningún
+problema a esta pantalla de aquí, ¿vale?
+Apik. Por lo tanto, le damos a añadir
+clave API. Esto lo vamos a copiar y nos
+vamos a venir aquí y se la puedes o
+entregar a Cloud Code o directamente
+puedes pegarla aquí. Como vemos aquí a
+la derecha te aparece ya preparado para
+que la pegues, ¿vale? Puedes hacer
+ambas. Si no si no encuentras esto
+directamente lo puedes añadir aquí,
+¿vale? Esto obviamente no lo compartas
+con nadie. Yo lo estoy mostrando porque
+ahora lo voy a eliminar antes de subir
+el vídeo, pero esto tenlo muy en cuenta
+y importante darle a guardar. Por lo
+tanto, ya se ha guardado el archivo y le
+voy a decir a Cloud que eh ya he añadido
+la clave API a lo necesario para que
+funcione el envío de email. Y ahora
+Cloud Code se va a encargar de resto.
+Una vez que finaliza, al parecer ya está
+funcionando. Por lo tanto, vamos a
+venirnos ahora otra vez a nuestra
+aplicación. Vamos a recargarlo para ver
+que que se había quedado ahí un poco
+colgado y vamos a volver al sitio web
+principal, ¿no? Por lo tanto, le damos a
+reservar cita, vamos a elegir diseño de
+cejas para el martes 16 a la 1:30 voy a
+poner Josema, voy a poner este email y
+un número de prueba, ¿vale? Y le damos a
+confirmar reserva. Como podemos ver, nos
+dice gracias que ha reservado eh la
+cita. Y si nos venimos al panel, vemos
+que aquí aparece ya el el nuevo, ¿no? E
+la seta que acabo de reservar. Por lo
+tanto, desde dentro yo lo tengo puesto.
+O sea, este sistema está hecho para que
+te confirmen de manera manual, pero
+podemos hacerlo automático, ¿no? En este
+caso, como es manual, le voy a dar a
+confirmar. Y aquí tenemos el correo de
+confirmación. Bueno, realmente sí que te
+envían dos email, ¿vale? Uno cuando eh
+haces la reserva donde te dice que tu
+solicitud ha quedado registrada y que te
+confirmaremos en breve y luego cuando
+confirma te llega el correo de
+confirmación. Por lo tanto, esto está
+funcionando perfecto. Un apunte que te
+quiero hacer es que dentro del resin,
+¿vale? Ahora mismo solamente los correos
+que van a funcionar son al correo con el
+que te haya registrado. Es decir, si tú
+aquí en Resent te has registrado con x
+correo, solamente vas a poder recibir
+correo, solamente va a poder enviar
+correo a ese email, ¿vale? Esto lo hace
+de prueba porque al final estamos
+utilizando eh email digamos generales,
+¿no? De GMI y todo este tipo de cosas.
+Si lo que quieres es ya configurarlo
+para tu cliente, aquí en añadir domain
+lo único que tienes que hacer es añadir
+un correo que tenga un dominio propio,
+¿vale? De esta manera de ya lo tendrías
+funcionando y ahora ya sí que podrías
+hacerlo y esto Cloud Code te puede
+guiar, ¿vale? Le dice a Cloud Code cómo
+funciona, ¿vale? y te aseguro que va a
+conseguir resolvértelo. Y por último,
+vamos a llevar a un nivel más alto al
+sistema de gestión interno para el
+negocio, porque como hemos visto es muy
+simple, solamente te aparecen la cita,
+la reserva y te permite o o confirmar o
+cancelarla, pero no aparece, digamos, un
+panel de gestión como tal, ¿no?
+Entonces, para ello vamos a introducir
+este último prom para mejorarlo. Lo
+tienes ahí eh todo listo para copiar y
+esto lo vamos a llevar a Cloud Code y se
+lo enviamos. Y ahora pues se va a
+encargar de hacerlo todo. Una vez que ya
+haya finalizado, podemos acceder
+directamente al sitio. Recuerda que
+estaba dentro de la barra de admin y
+aquí dentro ahora vemos que ya aparece
+pues un dashw, ¿no? En este caso ya
+tenemos aquí nuestro sistema completo.
+Aquí podemos ver las citas. Ahora ya sí
+podemos terminar de verla, de
+completarla, podemos añadirle hasta un
+no asistido, o sea, tenemos bastante, o
+sea, es un sistema ya a otro nivel, ¿no?
+Mucho más completo. También tenemos
+filtros para buscar, tenemos muchas más
+cosas y también podemos modificar los
+servicios, cosa que antes no teníamos,
+¿no? No teníamos la posibilidad de
+cambiar los servicios que ahora sí
+tenemos dentro de la landing. Por lo
+tanto, cuando lo modifiquemos aquí en el
+sitio web también va a aparecer de forma
+automática. Luego también tenemos el
+apartado de los horarios para poder
+determinar y y modificar qué tipo de qué
+huecos tenemos disponibles. También
+podemos modificar aquí cuando están eh
+cerrados o cuando es efectivo o cuando
+te vas de vacaciones. Lo puede hacer
+todo. Y también almacenamos los
+clientes, cosa que antes no habíamos
+hecho, ¿no? Aquí vamos a tener como un
+CRM con los distintos clientes. Fijaros,
+esto es espectacular y solamente
+añadiendo un promba más lo hemos subido
+a otro nivel. Esto lo enseño no tanto
+por la demo final o por la solución
+final, sino para que veas realmente todo
+lo que se puede hacer si tienes el
+sistema completo y vas paso a paso, ¿no?
+También eh el hecho de que puedes hacer
+muchísimas cosas dentro de todo esto.
+Fijaros, es que hasta aparece por cada
+cliente el número, o sea, las citas que
+tiene disponibles. O sea, es que es una
+auténtica locura lo que se puede crear
+hoy en día con inteligencia artificial y
+eh esto pues es es que es tu momento,
+¿no? Es momento ahora mismo de
+aprovechar todo esto. Dentro de la
+comunidad de school dejaré el sistema
+completo para que lo puedan descargar.
+Si ya forma parte dentro de la
+comunidad, pues ya lo tienes. Y lo
+dicho, si en caso de que realmente
+quieras aprender cómo crear todo este
+tipo de sistema y lo más importante
+ponerlo en producción y venderlo a
+negocios reales, Dominicio Academy es
+justamente lo que trabajamos aquí
+dentro. No solamente te voy a enseñar a
+crear aplicaciones bonitas, sino
+realmente crear h soluciones que
+resuelvan problemas a negocios reales y
+ponerlos en entorno de producción, que
+es realmente de lo que se trata y por lo
+que te van a pagar. Así que ya sabes, si
+quieres eh aprender a construir todo
+esto y a montar tu propio negocio,
+Dominicia Academy es la comunidad que
+necesitas y en la descripción y
+comentario fijado te dejo el enlace para
+acceder. Pues ya tienes tu sistema
+completo montado. Hazme saber en los
+comentarios si has sido capaz de
+replicarlo con las instrucciones de este
+vídeo y sobre todo dime si has
+conseguido incluso cosas mejores, que
+estoy seguro de que cada uno de vosotros
+vais a poder lograr cosas espectaculares
+y que hayan quedado mejor incluso que
+este. Por cierto, si ahora quieres
+aprender cómo pasar todo esto a un
+entorno en producción, es decir, subirlo
+a tu propio servidor, te dejo este vídeo
+de aquí donde construimos otra solución
+y la desplegamos. Por lo tanto, los
+pasos que hacemos de despliegue en ese
+vídeo te van a servir para eh poner en
+producción este sistema. Nos vemos en el
+siguiente vídeo.

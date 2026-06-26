@@ -1,0 +1,295 @@
+# Transcripcion
+
+- Titulo: ¿Jubilarse a los 70? Ya se prepara la reforma
+- URL: https://www.youtube.com/watch?v=ANYqFw7OHaI
+- ID video: ANYqFw7OHaI
+- Canal: Juan Ramón Rallo
+- Duracion: 12:28
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 1716
+- Provider IA: nanogpt
+- Modelo IA: minimax/minimax-m3
+- Prompt: Análisis crítico avanzado: desmonta argumentos, sesgos, exageraciones y verdades incómodas
+- Fecha de procesamiento: 2026-06-24T15:04:13.547Z
+
+Kind: captions
+Language: es
+Alemania está a punto de aprobar la
+jubilación a los 70 años. Veámoslo.
+Alemania es el estado más solvente de
+Europa y aún así, o precisamente por
+ello, se está planteando una profunda
+reforma de su insostenible sistema de
+pensiones públicas. ¿Y por qué el Estado
+alemán juzga que su sistema público de
+pensiones es insostenible? Pues por lo
+que ya está sucediendo y por lo que va a
+suceder en el futuro. ¿Qué está
+sucediendo? pues que el gasto público en
+pensiones ya absorbe más del 40%
+del presupuesto del Estado alemán y las
+actuales cotizaciones sociales de los
+trabajadores no bastan para hacer frente
+al pago de las pensiones. Solo el año
+pasado el Estado alemán tuvo que
+inyectar a la seguridad social del país
+más de 100,000 millones de euros. Ese es
+el agujero contributivo de su sistema de
+pensiones. Pero si las cosas ya están
+mal, todavía se pondrán peor en el
+futuro. Y es que durante los próximos
+años se jubilarán más de 16 millones de
+personas en Alemania, agravando, por
+tanto, la tensión financiera del
+sistema. Por tanto, si hoy los números
+del sistema ya son muy rojos, durante
+los próximos años se pondrán ardiendo. Y
+por eso hace tiempo los políticos
+alemanes les encargaron a un grupo de
+expertos que redactara un documento con
+propuestas para reformar, es decir,
+recortar las prestaciones del sistema
+público de pensiones. Y ayer martes se
+hizo público el informe con las
+recomendaciones de este grupo de
+expertos que el portavoz del gobierno
+alemán ya ha adelantado que van a
+aplicar en su totalidad. Es decir, que
+aunque lo que voy a contar a
+continuación todavía no tiene fuerza de
+ley, si son medidas que el gobierno
+alemán, compuesto por una coalición de
+los democristianos del PP y de los
+socialdemócratas del PSOE, si son
+medidas que ese gobierno de coalición
+quiere aplicar íntegramente y antes de
+que empiece a desgranar esas medidas,
+quizá algunos de vosotros penséis que
+tampoco nos han de preocupar demasiado.
+Porque al final son recortes que se van
+a aplicar en Alemania, no en España.
+Pero recordad que en Alemania ha estado
+mucho más solvente que España, con más
+margen, por tanto, para no recortar las
+pensiones. Esta reforma del sistema
+público de pensiones se ha dado porque
+se cumplen tres circunstancias que los
+políticos alemanes consideran
+indeseables e insostenibles. La primera,
+que las pensiones públicas ya absorben
+más del 40% del presupuesto. La segunda,
+que el agujero contributivo del sistema
+de pensiones ya es enorme y creciente. Y
+la tercera, porque durante los próximos
+años el número de pensionistas se va a
+incrementar sustancialmente un 25, un
+30, un 35% con respecto a sus niveles
+actuales. Pues bien, estas tres
+condiciones que han forzado a la clase
+política alemana a reformar guortar las
+pensiones públicas se cumplen corregidas
+y aumentadas también en España. Por
+tanto, si en Alemania con mayor
+solvencia ya están haciendo este tipo de
+reformas, recortes en las pensiones
+públicas, en no mucho tiempo también
+terminaremos viéndolas en España. Pero
+bueno, más allá de la cuestión de si nos
+queremos dar por enterados de lo que
+tarde o temprano va a terminar
+sucediendo en España, en qué consisten
+exactamente estas reformas, estos
+recortes que van a ser aprobados sobre
+las pensiones públicas alemanas. En
+primer lugar y probablemente de manera
+más llamativa, vinculación de la edad de
+jubilación a la evolución de la
+esperanza de vida. Cuanto más vivamos,
+más tarde nos jubilaremos. De esta
+manera, a partir del año 2031, que es el
+año en el que la edad de jubilación de
+Alemania llegará a 67 años, como en
+España, a partir del año 2031, conforme
+vaya aumentando la esperanza de vida en
+el país, se irá elevando paripasu la
+edad de jubilación, hasta el punto de
+que el comité de expertos que ha
+elaborado esta propuesta considera que
+según sus conservadoras proyecciones
+de la evolución de la esperanza de vida
+en el país. A finales de este siglo, los
+alemanes podrían jubilarse a los 70
+años. En segundo lugar, factor de
+sostenibilidad para las pensiones
+públicas. Esto significa que mientras la
+seguridad social tenga déficit, es
+decir, calendas graecas, las pensiones
+públicas en Alemanía se revalorizarán
+siempre por debajo de la evolución de
+los salarios. Esto implica, por tanto,
+que el pensionista irá perdiendo poder
+adquisitivo frente al trabajador. El
+trabajador que cotiza, que nutre con
+ingresos a la seguridad social, ganará
+poder adquisitivo en relación con los
+pensionistas, que son aquellos que
+sustraen gasto de la seguridad social.
+La idea de fondo, obvio, es que los
+ingresos de la seguridad social empiecen
+a crecer más rápido, al menos per
+cápita, que los gastos de la seguridad
+social. Pero claro, esto tiene como
+contrapartida no solo que la calidad de
+vida del pensionista promedio vaya
+menguando en relación a la calidad de
+vida del trabajador promedio, sino que
+en la medida en que la evolución de los
+salarios vaya de la mano de la evolución
+de los precios, eso significará que las
+pensiones se revalorizarán por debajo
+del IPC, es decir, que habrá un recorte
+en términos reales de las pensiones
+públicas, por lo que ya hemos dicho,
+porque son financieramente
+insostenibles. Por tanto, la reforma
+hasta aquí consiste en esencia en
+trabajar más años para cobrar menos,
+pero existe un tercer pilar de esta
+reforma que pasa por aumentar las
+cotizaciones sociales a los
+trabajadores, no para pagar las
+pensiones, sino para constituir un fondo
+de ahorro cuyo régimen de inversiones
+será gestionado por el Estado alemán.
+Pero antes de explicaros los
+clarooscuros de este mecanismo de ahorro
+forzoso estatal, dejadme que os recuerde
+que si queréis ahorrar no de manera
+forzosa, sino de manera voluntaria,
+preparándoos también patrimonialmente
+para vuestra jubilación en el futuro,
+esto es algo que podéis hacer a través
+de la plataforma que apadrina este
+vídeo, Trade Republic. Trade Republic
+abarata y automatiza el proceso de
+inversión a largo plazo para ir
+construyendo tu patrimonio personal. A
+través de su plataforma puedes montar un
+plan de inversión periódico eligiendo
+entre acciones, fondos o más de 2000
+ETFs. Solo tienes que programar tu
+aportación periódica, que puede ser de
+un solo euro y mes a mesa esa aportación
+se irá invirtiendo sola en los activos
+que hayas seleccionado sin que tengas
+que acordarte ni mover un solo dedo. Y
+en este punto encontramos de hecho una
+de las grandes ventajas de Trade
+Republic y aquí está una de las mayores
+ventajas de utilizar Trade Republic. Si
+las operaciones ordinarias de comprar o
+vender acciones o de comprar o vender
+ETFs ya tienen comisiones muy bajas,
+comisiones de ejecución de un solo euro
+por operación, cuando las ejecutas a
+través de un plan de inversión
+periódica, cada una de estas
+transacciones es gratuita. ¿Y qué ocurre
+con el dinero que mantienes dentro de
+Trade Republic y que estás esperando
+para invertir? Trade Republic lo
+remunera actualmente a un tipo de
+interés del 2,25%
+anual para clientes ya existentes o del
+3% anual para nuevos clientes. Si
+quieres obtener más información sobre
+Trade Republic y abrirte gratuitamente
+una cuenta, puedes hacerlo pinchando en
+el enlace que aparece en la caja de
+descripción del vídeo o en el comentario
+destacado. Bien, entonces, ¿en qué
+consiste exactamente esa tercera parte
+de la reforma que pasa por crear fondos
+de ahorro obligatorios de gestión
+estatal? De entrada, la propuesta suena
+bastante bien, más allá de que sea
+obligatoria. El Estado alemán aumentará
+las cotizaciones sociales en dos puntos
+porcentuales. Un punto porcentual recae
+sobre el trabajador, otro punto
+porcentual sobre la empresa, aunque al
+final lo paga el trabajador. Y el dinero
+recaudado con esas cotizaciones sociales
+no va a parar a la seguridad social,
+sino a unas cuentas de ahorro
+individualizadas
+para cada trabajador. Y esos fondos que
+se van acumulando en esas cuentas
+se reinvierten en activos financieros
+que le proporcionarán a lo largo del
+tiempo una rentabilidad a ese
+trabajador. Vendría a ser, por tanto, un
+pilar de capitalización individual
+obligatorio de las pensiones. Y hasta
+ahí, como digo, no suena del todo mal.
+Sin embargo, tengamos presente que el
+gestor monopolístico
+del ahorro depositado por los alemanes
+en esas cuentas individuales no será
+aquel gestor que elija cada ciudadano
+alemán. Oiga, yo quiero invertir a
+través de este fondo que tiene esta
+estrategia de inversión en bonos o en
+bolsa. No, no, aparentemente, porque
+todo esto todavía tiene que convertirse
+en texto de ley, pero la propuesta de
+los expertos ha sido que esas cuentas de
+ahorro individual, esos fondos
+individuales sean administrados por el
+Estado alemán y eso, más allá de las
+ineficiencias gestoras que pueda
+generar, tiene un problema conceptual
+importante y es que la tentación que
+tendrán esos políticos para utilizar ese
+ahorro cautivo de sus ciudadanos para
+financiar su propio gasto, el gasto
+público será enorme. De hecho, la propia
+clase política alemana ya viene
+anticipando que parte de ese ahorro en
+cuentas individualizadas obligatorias se
+empleará, por ejemplo, para financiar la
+inversión pública en infraestructuras.
+Pero claro, da cuenta de la paradoja que
+supone esto. Si los alemanes ahorran
+forzosamente en unas cuentas
+individualizadas que luego se invierten
+en títulos de deuda pública para
+canalizar ese ahorro, esa financiación
+hacia el déficit público estatal,
+entonces en última instancia las
+pensiones que terminarán cobrando o no
+cobrando los alemanes del futuro
+seguirán dependiendo de la solvencia del
+Estado alemán, porque el deudor, ya sea
+vía seguridad social o ya sea vía
+tesoro, de los pensionistas alemanes del
+futuro será seguirá siendo el Estado
+alemán. Subimos las cotizaciones
+sociales para que los trabajadores
+alemanes ahorren por una vía distinta al
+Estado para que sus pensiones del futuro
+no dependan de la solvencia o
+insolvencia del Estado alemán. Y al
+final los terminamos convirtiendo de
+nuevo en acreedores del Estado,
+colocándoles títulos de deuda pública a
+cambio de ese ahorro. Pues hombre, esto
+sí es hacer un pan con unas tortas y no
+en asuntos triviales, sino en un tema
+tan crucial como el de las pensiones. En
+definitiva, Alemania ya ha diagnosticado
+el problema y va despejando el camino
+para aplicar soluciones que, por mucho
+que nos desagraden, también terminarán
+llegando a España.

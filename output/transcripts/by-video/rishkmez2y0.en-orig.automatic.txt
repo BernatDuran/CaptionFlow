@@ -1,0 +1,286 @@
+# Transcripcion
+
+- Titulo: I let Microsoft’s AI skills design me a Power BI report...
+- URL: https://www.youtube.com/watch?v=RisHKmeZ2y0
+- ID video: RisHKmeZ2y0
+- Canal: Drop Materialized View
+- Duracion: 11:30
+- Fuente: automatic
+- Idioma: en-orig
+- Palabras transcripcion: 1891
+- Provider IA: google
+- Modelo IA: gemini-3.5-flash
+- Prompt: Análisis crítico avanzado: desmonta argumentos, sesgos, exageraciones y verdades incómodas
+- Fecha de procesamiento: 2026-06-24T15:00:07.659Z
+
+Kind: captions
+Language: en
+Today, I am going to absolutely blow
+your mind because we are creating Power
+BI visuals completely with AI in an open
+report. And this is a new feature as of
+the June 2026
+release. [music]
+Now, coming up in this video, I'm going
+to be showing you how you can set up
+these AI tools on your own computer. I'm
+going to be showing you how they [music]
+work. And then at the very end, we're
+going to be taking a look at some of the
+secret CLIs [music] that the tools
+themselves are actually using. So, if
+any of that sounds interesting, give
+this video a thumbs up, hit the
+subscribe button, and now let's jump
+into the computer. Okay, so starting
+things off, here we have a blank report.
+Now, this report has data in it, and
+it's been saved as a Power BI project
+file, which you can do by simply going
+over here, going file, save as, browse
+this device, and then saving it as a
+Power BI project file right here.
+This Power BI project file is saved in
+this folder, which is in my secondary
+hard drive that I have in my laptop.
+Here you can see we have the PBIP report
+folder, the PBIP semantic model, and the
+PBIP file itself. In order to use these
+AI skills, we need to initialize an
+agent in the same directory as this PBIP
+file. So, the way I'm going to do that
+is I'm going to go into command prompt,
+and command prompt will initialize onto
+my C drive. Now, I need to switch drives
+because this report is saved on my D
+drive. So, I'm going to go CD
+{backslash} D to switch drives, and then
+because this file path has spaces in it,
+I'm going to put it into double quotes,
+and then copy the path, paste this right
+here, and go ahead and hit enter. And I
+am now navigated into the directory
+where the PBIP is saved. I'm then going
+to go ahead and type copilot to launch
+the Copilot CLI, which is something that
+I have installed previously and will not
+be covering in this video in this
+path. And it's going to go ahead and
+it's going to ask me if I'm okay
+trusting this folder. And yes, I am. So
+I'm going to say yes and remember this
+folder for future sessions because this
+folder is where I
+you know, it's on my computer. I trust
+it. One quick callout about Copilot. So
+couple things here. First, I can see my
+AI credits used in the session, which
+right now is zero. And for context,
+every single one AI credit is 1 cent.
+And then I can see the model that's
+active right down here. Now, I might
+want to switch the model to auto. So I'm
+going to hit model and then I'm going to
+go ahead and switch it into auto mode.
+And as you can see now, Copilot is
+choosing GPT 5.3
+Codex. All right. From this point, it's
+now time for us to install the AI
+skills.
+The first thing that we're going to need
+to do is install the marketplace for
+those skills into Copilot. Or I should
+say register the marketplace for those
+skills into Copilot. I'm going to go
+ahead and I'm going to paste a command
+here into the CLI. And that is backslash
+plugin marketplace add Microsoft skills
+for Fabric. And I'm going to go ahead
+and hit enter. And what this should do
+is this should now create the
+marketplace in Copilot, which it did. As
+you can see, I can now backslash plugin
+browse Fabric collection to see all
+available plugins.
+I am going to install the Power BI
+authoring plugin by copying this skill
+right here, pasting this on in, so that
+way it goes backslash plugin install
+Power BI authoring at Fabric collection.
+And we're going to go ahead and hit
+enter. And this should now install all
+of the skills and tools that I need to
+build Power BI reports
+agentically. Now, as you can see, it's
+installed six skills and I can use {back
+slash} skills to see them. So, let's go
+ahead and let's type {back slash} skills
+and let's take a look at these skills.
+It looks like we got a few new skills
+installed. The first one is check
+updates. The next one is semantic model
+authoring. Then we have Power BI report
+planning, Power BI report design, Power
+BI report authoring, and Power BI report
+management. Now, I am going to test the
+Power BI report authoring skill in this
+video. I would encourage you to go ahead
+and to explore some of the others, in
+particular the Power BI report planning,
+if you're starting from scratch. But, I
+think that that process can take a
+little bit more time. So, we're going to
+start over here with the Power BI report
+authoring. So, let's go ahead and hit
+escape and then let's activate that
+skill by typing {back slash} Power BI
+and then we'll go report authoring. And
+there is the skill right here and we'll
+go ahead and hit enter to activate that
+skill.
+Now, when this skill is activated, what
+it should do is it should start to kick
+off some various checks. As you can see
+right now, it's uh checking for updates.
+So, let's be right back as soon as it's
+gone ahead and it's successfully updated
+itself. Okay, so it's gone ahead and
+updated itself and then it also has
+exited out of the skill after it checked
+for updates. So, I think we need to
+provide it some additional instructions
+as to what we want it to do. So, let's
+go ahead. Let's click back over here and
+now let's hit {back slash} Power BI
+report authoring. Then let's hit tab,
+and then let's ask it to add a home page
+to the current PBIP
+file in the directory that is open right
+now. And let's see what it goes ahead
+and does. So,
+it's going to think for a little bit.
+And after a few minutes, it's asking me
+for some permissions. So, after it went
+through and it looked for various CLIs
+and read some JSON. So, I'm going to go
+ahead and say, "Hey, you don't need to
+ask for permission again in this
+directory." Go ahead, hit enter,
+and let it continue on its way building
+the report. And again, it's asking for
+permission,
+and I just said, "Hey, you don't need
+any more permission to be able to edit
+anything." Okay. So, it says it's added
+the home page files, and now it's going
+to validate the desktop and reload the
+screenshot. So, as you can see here,
+it's once again using the CLI to do that
+validation. After a minute or two, as
+you can see, it captured a screenshot,
+it reloaded the Power BI report, and it
+also found some pre-existing errors for
+me. But, let's go back into Microsoft
+Power BI and let's see what it went
+ahead and did. So, I'm going to go back
+over here, and as you can see, I now
+have a page called home. So, let's ask
+it one to fix those errors, but then two
+to do something a little bit more
+complicated. Maybe, for example, adding
+a matrix onto the home page and applying
+a minimal theme. So,
+I'm going to go ahead, I'm going to
+type, uh, once again, uh, use the skill
+to fix
+the errors
+and add a matrix
+to the home page
+with a minimal theme.
+And let's go at let it let's you know
+let Copilot do its thing and we'll be
+right back once it's done. Okay, it's
+been a few minutes. It looks like it
+read the report and then it said that it
+updated some files and it then reloaded
+the report. So let's click on to the
+report and hopefully now we should see a
+matrix and it looks like we now have a
+matrix nicely sorted
+on the screen. Jumping though back into
+the command line, let's take a look at
+how many how many AI credits this used
+and it looks like it used 87.5
+AI credits, which is roughly equivalent
+to 87 cents in AI credits to create this
+home page, understand it and add in this
+matrix. So now that we've established
+that AI can build and interact with
+reports and create visuals, I don't
+really want to spend that much time
+diving in having the AI actually design
+something for me. What I would rather do
+is take a look at how it's actually
+working because one of the things you
+might notice is that it's using some
+tool calls here.
+Uh it looks like it has some pretty
+standard AI skills which are essentially
+just markdown text files with
+instructions but it looks like it's also
+using some tools. So I went ahead and I
+found out what these tools are and it
+looks like they are various CLIs. The
+first CLI is the Power BI Desktop Bridge
+which we can view the various commands
+available to it by
+creating a new PowerShell window and
+then going power bi {dash} desktop
+{dash} {dash} help and you can see that
+this CLI allows for you to check the
+status of the desktop bridge instances.
+So get current file path, unchanged save
+state, and various changes.
+The manifest, so essentially showing
+what bridge methods are available to
+Power BI Desktop. It can open a report,
+it can reload a report, and it can take
+a screenshot of a report, of a single
+page, or it can screenshot all pages.
+The next CLI that I found is the Power
+BI Report Author CLI. So, we can just
+simply copy and paste this help command
+here.
+And when we run this CLI,
+oops,
+mispasted it here, so it's not Let's go
+back here, and let's just manually type
+it. So, if you run this CLI, so Power BI
+{dash} Report {dash} Author {dash}{dash}
+Help, what you'll see is that uh it can
+look up the various visual types, it can
+look at formatting, it can pull
+expressions, it can make a theme file,
+it can validate if PBIP is in correct
+formatting, it can preview visuals,
+preview pages, preview filters, preview
+themes, and it can even kind of
+self-diagnose your node setup to make
+sure that you have everything installed.
+So, that is pretty interesting. So, with
+that, you've reached the end of today's
+video. If you enjoyed it, again, give
+this video a thumbs up and subscribe.
+Now, one last quick thought before you
+leave, uh this is meant for PBIP files
+only. So, if you're trying to use this
+with a PBIX file, and you're running
+into problems, remember this is meant
+for PBIP only. The other thing is if you
+are hitting a Newtonsoft JSON error, uh
+that is not due to these AI skills. I
+will include a link down below in the
+video description, uh where there's a
+PowerShell script that can help fix
+that. All right, with that, I'll catch
+you in the next one.

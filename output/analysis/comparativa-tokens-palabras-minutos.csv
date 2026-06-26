@@ -1,0 +1,11 @@
+file,videoId,durationText,minutes,transcriptWords,wpm,prompt,model,modelShown,inputTokens,outputTokens,totalTokens,inputPerWord,totalPerWord,totalPerMin,docSec
+paso_a_paso_profundo-2026-05-23t20-33-17-313z.meta.json,cxsr69rkPLk,9:59,9.98,2069,207.2,"Paso a paso profundo",zai-org/glm-5.1,glm-5.1,3126,2885,6011,1.51,2.91,602,83.1
+paso_a_paso_profundo-2026-05-23t20-35-02-323z.meta.json,cxsr69rkPLk,9:59,9.98,2069,207.2,"Paso a paso profundo",qwen/qwen3.5-397b-a17b,qwen3.5-397b-a17b,3186,4450,7636,1.54,3.69,765,68.7
+paso_a_paso_profundo-2026-05-24t11-05-12-675z.meta.json,cxsr69rkPLk,9:59,9.98,2069,207.2,"Paso a paso profundo",alibaba/qwen3.6-27b,qwen3.6-27b,3188,3075,6263,1.54,3.03,627,60.7
+paso_a_paso_profundo-2026-05-24t12-01-23-910z.meta.json,INMPwIkRvSc,5:41,5.68,1087,191.3,"Paso a paso profundo",alibaba/qwen3.6-27b,qwen3.6-27b,1940,149,2089,1.78,1.92,368,5.6
+paso_a_paso_profundo-2026-05-24t12-08-46-813z.meta.json,INMPwIkRvSc,5:41,5.68,1087,191.3,"Prompt personalizado",alibaba/qwen3.6-27b,qwen3.6-27b,1939,73,2012,1.78,1.85,354,4.2
+paso_a_paso_profundo-2026-05-24t12-26-09-009z.meta.json,INMPwIkRvSc,5:41,5.68,1087,191.3,"Paso a paso profundo",alibaba/qwen3.6-27b,qwen3.6-27b,2217,3224,5441,2.04,5.01,957,56.3
+paso_a_paso_profundo-2026-05-24t12-31-47-212z.meta.json,INMPwIkRvSc,5:41,5.68,1087,191.3,"Prompt personalizado",alibaba/qwen3.6-27b,qwen3.6-27b,2028,588,2616,1.87,2.41,460,15.7
+paso_a_paso_profundo-2026-05-25t08-07-02-950z.meta.json,w-gkjp4UbPU,7:10,7.17,1248,174.1,"Paso a paso profundo",alibaba/qwen3.6-27b:thinking,qwen3.6-27b:thinking,2006,5381,7387,1.61,5.92,1031,91.4
+resumen-2026-05-24t10-59-09-256z.meta.json,cxsr69rkPLk,9:59,9.98,2069,207.2,"Resumen ejecutivo",alibaba/qwen3.6-27b,qwen3.6-27b,3015,1419,4434,1.46,2.14,444,28.5
+resumen_claro-2026-05-24t09-08-28-833z.meta.json,cxsr69rkPLk,9:59,9.98,2069,207.2,"Resumen claro",qwen/qwen3.5-397b-a17b,qwen3.5-397b-a17b,3105,3488,6593,1.5,3.19,660,19.7

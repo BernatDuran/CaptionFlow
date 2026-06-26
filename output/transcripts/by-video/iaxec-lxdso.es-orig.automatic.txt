@@ -1,0 +1,559 @@
+# Transcripcion
+
+- Titulo: Si quisiera ser DATA SCIENTIST en 2026 haría ESTE proyecto
+- URL: https://www.youtube.com/watch?v=IaxEc-LXDSo
+- ID video: IaxEc-LXDSo
+- Canal: DataScience ForBusiness
+- Duracion: 15:17
+- Fuente: automatic
+- Idioma: es-orig
+- Palabras transcripcion: 3532
+- Provider IA: nanogpt
+- Modelo IA: zai-org/glm-5.2
+- Prompt: Análisis crítico avanzado: desmonta argumentos, sesgos, exageraciones y verdades incómodas
+- Fecha de procesamiento: 2026-06-24T12:17:28.818Z
+
+Kind: captions
+Language: es
+construir un agente día que toma los
+datos históricos de un negocio y simula
+estrategias con 10,000 futuros posibles,
+modelizando todo el caos potencial del
+mercado antes de que nos gastemos ni un
+solo céntimo. Y analizando los
+resultados como tres directivos
+diferentes, el CEO, el de marketing y el
+de riesgos. En este vídeo vas a
+descubrir cómo hay una estrategia que
+nos haría claramente ganar más dinero y
+como también había otra que parecía a
+priori la mejor, pero que tenía un
+riesgo oculto que podría haber destruido
+completamente nuestro margen. Imagina
+que tienes un negocio y estás a punto de
+tomar una decisión crítica para crecer.
+Tienes cuatro opciones sobre la mesa. La
+primera, meter 9,000 € en anuncios de
+Google y de Facebook. La segunda,
+invertir 12,000 en la creación y
+lanzamiento de un nuevo producto. La
+tercera es invertir 2,500 en un webinar
+para convertir a los leads templados. Y
+la cuarta, gastar solamente 10000 en
+optimizar el funnel, la landing page y
+los cass. Da igual cuáles sean, es
+simplemente un ejemplo de que hay varias
+alternativas, cada una con diferentes
+costes y cada una también con diferentes
+retornos o impacto esperado. Y el
+problema es que en el 99% de las
+empresas esta decisión se va a tomar por
+simple intuición o como mucho haciendo
+unos escenarios en un Excel medio
+inventados y asignando también los
+valores de los escenarios por pura
+intuición. Pero hoy vamos a hacer otra
+cosa. Vamos a ver cómo lo resolveríamos
+utilizando un enfoque típico de data
+science, es decir, con datos más machine
+learning más IA más una app que
+construyamos para el usuario. Y esto es
+un campo de data science que se llama
+Decision Intelligence. Ahora bien, en la
+mayoría de proyectos de data science se
+entrena un modelo de machine learning
+que predica un scoring o un forecast de
+ventas o lo que sea y eso funciona
+genial y como decía, son la mayor parte
+de los proyectos de data science en la
+empresa, pero en el mundo real hay
+incertidumbre y hay muchas piezas
+móviles que podrían cambiar el resultado
+que ha predicho el modelo de machine
+learning. Por ejemplo, al aumentar la
+inversión en anuncios, seguramente el
+retorno no será lineal, sino que se
+producirá un efecto de saturación o
+incluso de canibalización entre
+diferentes campañas, etcétera. Por
+tanto, si tomas decisiones basadas en
+una única predicción, seguramente estás
+corriendo mucho riesgo. Así que lo que
+queremos es un sistema que no únicamente
+prediga, sino que además intervenga,
+estrese al modelo y simule el caos de la
+realidad para tener controlados los
+potenciales riesgos. Y eso es justo lo
+que vamos a hacer en el proyecto de hoy.
+Vamos a utilizar un dataset con 20,000
+filas que se corresponden con campañas
+históricas que ha ejecutado la empresa y
+el resultado que han tenido. Es un
+dataset sintético que he generado
+simulando distribuciones comerciales
+coherentes y que incluye variables como
+el canal de cada oportunidad, qué tipo
+de cliente es, en qué punto del fanel
+está, cuánto nos costó generar la
+oportunidad y al final si convierte o
+no, en el caso de que sí, cuánto dinero
+nos deja y cuánto margen se genera. Pero
+si en tu empresa tienes esta información
+en real, ya te digo que es una auténtica
+mina de oro para hacer cosas como las
+que vas a ver a continuación. ¿Vale? Y
+entonces, ¿cómo resolvemos esto? Porque
+no podemos utilizar un simple prompt de
+chat GPT de oye, ¿qué estrategia es la
+mejor para mi caso, sino que vamos a
+necesitar una arquitectura de tres
+niveles analíticos interconectados. El
+primer nivel es el modelizador de
+machine learning. Aquí vamos a entrenar
+modelos de regresión logística y del
+IGVM para generar escenarios uplift
+contrafactuales y evaluar el potencial
+impacto de diferentes configuraciones de
+campañas. El segundo nivel que va a ser
+un simulador Montecarlo, que va a
+los delta del uplift y va a inyectar
+ruido de tres tipos diferentes de
+incertidumbre, de ejecución y residual
+para simular estadísticamente las
+diferentes cosas, las diferentes
+contingencias que pueden pasar en la
+realidad. Y el tercer nivel, que va a
+ser un agente de IA intérprete que va a
+estar conectado a la API de OpenI y que
+va a leer la información generada por
+los niveles anteriores y la va a
+traducir a lenguaje de negocio y a
+estrategias concretas. Lo importante del
+caso es que veas cómo saber montar este
+tipo de soluciones es lo que separa a un
+data scientist junior de Model.fit, fit
+de un data scientist profesional con
+perfil mixto, técnico, negocio, que sabe
+generar resultados para su empresa. Y
+por cierto, vas a poder descargar la app
+y los datos en la descripción de este
+vídeo por si quieres replicarlo por tu
+cuenta, pero te advierto de que este
+proyecto es un proyecto ya de
+complejidad media alta. Si en tu caso
+estás empezando, no te recomiendo
+empezar por aquí. En su lugar, lo que te
+recomiendo es que te apuntes al curso de
+introducción de data science conia, que
+también te dejo en la descripción, que
+es un curso de unas 6 horas de duración
+totalmente gratuito y diseñado para
+principiantes en el que vas a aprender a
+hacer data science conía y vas a
+aprender a hacer tu primer modelo
+predictivo y también vas a crear tu
+primera app y todo y además sin
+necesidad de saber programar previamente
+porque también te voy a enseñar cómo te
+puedes apoyar en la IA para ayudarte con
+toda la parte de programación. Así que,
+como te digo, te dejo también el link en
+la descripción y vamos a pasar ya a ver
+la app que vamos a construir para este
+proyecto en concreto. Bueno, pues aquí
+tenemos nuestro agente de decisión
+comercial. 20,000 campañas analizadas,
+10,000 futuros evaluar, 28 variables
+disponibles, 28 ventanas temporales y
+aquí en vertical pues tenemos las
+diferentes fases que vamos a ir
+siguiendo. En la pestaña de
+introducción, que simplemente es el
+contexto que ya te he explicado. Luego
+la pestaña de carga de los datos, donde
+nos aparece pues una información muy
+interesante para empezar a entender los
+datos clave del dataset que estamos
+manejando, pues el periodo analizado, un
+10,5 de conversión promedio, el ticket
+medio es de 11110 €, evolución mensual
+del negocio, una previsualización del
+dataset. Bueno, pues como digo, para
+empezar a entender la información y a
+partir de aquí pasamos ya a las fases
+más analíticas. Después de enseñar la
+voy a hacer una sección específica para
+hablarte sobre la metodología, los
+modelos que van por debajo, que es cada
+uno, etcétera. Así que de momento
+simplemente vamos a verlo como una
+preview de cómo se hace todo esto en la
+app y como te digo, después te voy a
+explicar lo que lleva por debajo. En la
+solución estamos utilizando dos tipos de
+modelos. Primero, la regresión logística
+para poder evaluar si en esa oportunidad
+comercial concreta el cliente va a
+acabar comprando o no. Y después
+realmente es un LVM para en el caso de
+que pensemos que el cliente acaba
+comprando poder estimar cuál va a ser el
+impacto económico o el importe económico
+de esa operación. Además a partir de
+esos modelos ya nos calcula
+automáticamente los escenarios que
+maximizan el uplift. Y lo que está
+haciendo por debajo, como te voy a
+explicar después, pues es generar estos
+modelos de tipo uplift contra factuales,
+que básicamente lo que nos dicen es,
+"Oye, si en esta oportunidad comercial
+el canal, en lugar de ser este hubiera
+sido este otro, ¿cómo cambia la
+probabilidad de contratación? ¿Cómo
+cambia el importe económico esperado?" Y
+lo mismo con variaciones sobre todas
+esas variables de campaña sobre las
+cuales nosotros podríamos teóricamente
+actuar. Ahora bien, esto es lo que
+decíamos, que va a ser una predicción
+del modelo, pero va a ser una. En la
+realidad esa predicción puede verse
+afectada por muchos factores y puede
+fluctuar. Y ahí es donde entrra juego la
+siguiente fase, que es la de la
+simulación Montecarlo. Entonces, ahora
+mismo aquí es donde estamos simulando ya
+los 10,000 potenciales futuros. Aquí
+vemos la barra de progreso, vemos cómo
+va iterando en el futuro 3600 de 10,000
+y así va avanzando. Si bajamos podemos
+ir viendo cómo van cambiando las
+diferentes estrategias que hemos
+planteado, las que decíamos al principio
+del vídeo y cómo según se van simulando
+futuros se van posicionando en el mapa
+entre beneficio y riesgo y nos va dando
+también pues las diferentes posiciones
+que durante esta simulación pues podrían
+ir cambiando. Ahora ya ha terminado, ya
+ha hecho la simulación 10,000 de las
+10,000 que teníamos planificadas y ya lo
+que nos da pues son los resultados. Y en
+la primera posición entre las cuatro
+estrategias que estábamos valorando,
+parece ser que la que ha quedado mejor
+posicionada en términos generales es la
+de mejorar la landing más el CTA más el
+L Magnet. Vemos que tiene una pérdida
+del 0%, es decir, no vamos a perder
+dinero en ninguno de los futuros que
+hemos simulado. Y sin embargo vemos que
+tiene un retorno de inversión de 55
+veces la inversión, lo cual está
+fenomenal. Podemos ver los mismos datos
+para las otras estrategias y aquí pues
+también podemos ver cómo han ido
+evolucionando y cuál es el ranking final
+que ha encontrado nuestro sistema. Pero
+además, como decíamos, todavía nos queda
+una última capa analítica, que es la de
+utilizar una inteligencia artificial. En
+este caso, por debajo, estamos
+utilizando los modelos de Open para que
+ayuden al usuario a interpretar todos
+esos datos que ha analizado el sistema y
+le ayuden a traducirlo a conclusiones de
+negocio. Aquí tenemos una sección con un
+informe ejecutivo final donde además
+tenemos la característica de que podemos
+verlo desde tres ángulos diferentes. Por
+un lado, de la decisión que tomaría un
+CEO con los resultados que nos han
+salido. Por otro lado, la decisión que
+tomaría un perfil de growth, por
+ejemplo, el director de marketing, que
+siempre va a ser como más agresiva o más
+orientada hacia la consecución de
+ingresos sin tener tanto en cuenta los
+riesgos. y por otro lado, al revés, como
+lo haría, por ejemplo, un director de
+operaciones, un director de riesgo que
+seguramente tendrá una mirada diferente.
+En el caso, por ejemplo, del CEO vemos
+que nos habla de conceptos como
+eficiencia de capital, mientras que si,
+por ejemplo, vamos al perfil grow, nos
+habla de la mejor secuencia de
+crecimiento y nos explica por qué. Y el
+perfil de riesgo nos habla de la
+protección de los downsides y nos
+explica también por qué. Por tanto,
+superinesante este análisis de la misma
+situación o de los mismos datos, pero
+desde tres puntos de vista diferentes. Y
+luego, además, pues tenemos secciones
+también complementarias de mucho valor:
+riesgos y siguientes pasos, puntos de
+control, explicaciones que justificarían
+diferentes decisiones, lecturas
+complementarias, en qué casos se podría
+cambiar la recomendación que se ha
+obtenido y ya un plan recomendado de
+ejecución. Por tanto, te recuerdo, le
+cargamos unos datos, se construyen unos
+modelos de machine learning, se calculan
+los applift, se simulan las potenciales
+variaciones de esos uplift en la
+realidad utilizando simulaciones Monte
+Carlo. Y finalmente tenemos tres
+perfiles de IAS diferentes que analizan
+todo esto y generan las diferentes
+conclusiones cada una desde su punto de
+vista. Bueno, y ahora que hemos visto
+cómo funciona la solución, vamos a
+entender qué es lo que está pasando por
+debajo a nivel analítico. Recuerda que
+un buen data scientist tiene que dominar
+las tres patas, la de negocio, la
+analítica y la técnica. Al menos eso es
+siempre lo que enseñamos en Data Science
+for Business. Entonces, ya hemos visto
+la de negocio, hemos visto la técnica,
+vamos a ver un poco más de detalle sobre
+la parte analítica y vamos a empezar con
+la parte de los modelos de machine
+learning. Como ya te había comentado,
+utilizamos dos modelos, un modelo de
+scoring de conversión y un modelo de
+valor o de ticket medio esperado. El
+primero es un modelo de clasificación y
+utilizamos la regresión logística y el
+segundo que es un modelo de regresión y
+utilizamos el Hist Gradient Boosting
+Regressor porque estamos utilizando por
+debajo Pychid Learn, pero que digamos a
+nivel de familias de algoritmos esto
+sería un GV. Por tanto, el primero nos
+devuelve una probabilidad, una
+probabilidad de compra, un 67%, mientras
+que el segundo lo que nos devuelve es el
+importe de compra esperado, en el caso
+de que se produzca, pues 545 €. A partir
+de ahí, los dos modelos se combinan para
+calcular un beneficio esperado, que lo
+calculamos como la probabilidad de
+conversión por el importe esperado, por
+el margen que nos deja el producto y
+restándole el coste en función de cómo
+sea la configuración de campaña de esa
+oportunidad comercial concreta. Por
+tanto, en este punto lo que tenemos es
+cada oportunidad comercial con su
+beneficio esperado calculado de la
+manera que te he explicado. A partir de
+aquí, generamos los escenarios
+contrafactuales. ¿Y qué significa esto?
+Pues significa generar cuatro versiones
+alternativas de la misma oportunidad de
+negocio sobre una base histórica
+comparable. En otras palabras,
+comparamos el canal de la oportunidad
+original con la misma oportunidad,
+manteniendo el resto de variables, pero
+cambiando el canal. o en otra
+oportunidad lo que modificamos es la
+landing landing básica versus landing
+avanzada, etcétera. Eso lo que nos
+genera al final son dos tablas. En una
+tabla tenemos los datos históricos
+reales, en la otra tabla tenemos los
+datos esperados según los resultados de
+haber ejecutado los modelos de machine
+learning sobre esas variaciones que
+hemos generado sobre las oportunidades.
+Y aquí utilizamos un enfoque de uplift,
+es decir, cuánto mejora o empeora esa
+oportunidad a la que le hemos cambiado
+algún parámetro de su configuración con
+respecto a lo que había sido la
+oportunidad original. Y esa diferencia
+es lo que vamos a llamar un delta. Por
+tanto, imagínate que el delta para una
+oportunidad de utilizar una landing
+básica a utilizar la landin avanzada,
+hubiera sido que se está mejorando en un
+8% la posibilidad de conversión, por
+ejemplo. Y eso al final cuando le
+aplicamos la fórmula que vimos antes
+para calcular el beneficio, nos lleva a
+un delta de beneficio de 57 € lo que
+sea. Ahora bien, ese delta de 57 € pues
+es una única estimación, es la que nos
+ha dado el modelo, pero en la realidad
+podrían pasar muchas cosas que podrían
+hacer que el resultado fuera diferente.
+Y aquí es donde entra en juego la parte
+de la simulación Montecarlo. Básicamente
+lo que vamos a hacer es simular tres
+grandes grupos de variaciones que
+podrían pasar. La primera es la que
+llamamos variación por incertidumbre y
+que básicamente significa que, como te
+decía, el modelo nos ha dado un único
+dato, pero realmente ese dato nos lo da
+porque es el más representativo de una
+distribución que existe por detrás de
+otros potenciales valores que se podrían
+dar, pero con diferentes niveles de
+probabilidad. En palabras llanas, que
+nos ha salido 57, pero lo mismo nos
+podría haber salido también 53 o a lo
+mejor nos podría haber salido 61. Por
+tanto, si lo analizas desde el punto de
+vista estadístico, como te digo, por
+detrás existe una distribución. Y aquí
+en la variabilidad de incertidumbre,
+pues básicamente lo que hacemos es
+modelizar esa distribución y asumir que
+en unos casos funcionará un poco peor,
+en otros casos funcionará un poco mejor
+y eso es precisamente lo que queremos
+simular. Luego, el siguiente tipo de
+variabilidad va a ser la de ejecución y
+eso lo que significa es que en el mundo
+real pueden pasar muchas cosas. Puede
+pasar que el cliente para el cual hemos
+simulado que al final va a comprar y que
+se va a gastar x pues simplemente no nos
+coja el teléfono. Puede pasar que los de
+marketing tengan retrasos en las
+creatividades de las campañas. Puede
+pasar que la competencia esté ejecutando
+campañas en el mismo tiempo en el que lo
+estamos haciendo nosotros. Pueden pasar
+muchas cosas y eso es lo que llamamos el
+riesgo de ejecución. Y luego, por
+último, tenemos una tercera variabilidad
+que es simplemente ruido estadístico.
+Aquí entra también el trabajo del
+analista. Tú tienes que definir cómo vas
+a operativizar cada uno de estos
+efectos. Por ejemplo, aquí el primer
+efecto lo vamos a simular utilizando una
+distribución logos
+que se desvían de forma asimétrica, lo
+cual es mucho más real. La parte del
+retraso en la ejecución lo vamos a
+simular mediante distribuciones
+discretas y el puro ruido pues
+simplemente mediante un enfoque
+gausiano. Más allá de los detalles, el
+concepto clave aquí es no nos quedamos
+únicamente con lo que nos dicen los
+modelos de Uplift, eso es un futuro que
+podría pasar, sino que simulamos
+estadísticamente y en base a una serie
+de ruidos o variaciones predefinidas, un
+número finito pero alto, en nuestro caso
+10,000 escenarios potenciales que se
+podrían dar. Eso es por un lado mucho
+más cercano a la realidad y por otro
+lado nos permite también establecer esos
+escenarios que decíamos al principio del
+vídeo que la mayoría de las empresas se
+van a hacer así un poco por pura
+intuición o inventándote que escenario
+negativo 30% menos, escenario positivo
+30% más. Vale, pero ¿por qué? Pues en
+este caso esos escenarios se los vamos a
+poder hacer de forma mucho más
+justificada en base a la metodología que
+te he enseñado. Y al final pues tenemos
+esos resultados donde tenemos para cada
+una de las cuatro estrategias que
+estábamos evaluando y recuerda que esto
+es siempre en base a datos históricos.
+Por tanto, estos resultados vienen de
+aprender sobre lo que pasó en el pasado
+cuando mejoramos el funnel, cuando se
+hizo un webinar, cuando se incrementó,
+disminuyó la inversión en publicidad o
+cuando se lanzó un nuevo producto. Y por
+tanto no son intuiciones, sino
+proyecciones de los patrones históricos.
+Y tenemos, como te decía, pues por un
+lado, el beneficio esperado mediano.
+Estamos utilizando en este caso la
+mediana de la distribución y aquí ya es
+donde podemos empezar a comparar entre
+ellos. Pero luego, además, tenemos lo
+que podríamos llamar el escenario
+negativo, tenemos lo que podríamos
+llamar el escenario positivo y tenemos
+también muy importante, ¿cuál es la
+probabilidad de pérdida, que vemos que
+hay mucha diferencia, por ejemplo, entre
+la estrategia del funnel o la estrategia
+de lanzamiento de un nuevo producto.
+Lanzar un nuevo producto tiene mucho más
+riesgo de que no salga mal. Y tenemos,
+por otro lado, también el retorno de
+inversión esperado. ¿Por qué no gana,
+por ejemplo, el nuevo producto? Vemos
+que tenemos un percentil 50 similar,
+bueno, no exactamente similar, pero
+digamos son los dos mejores desde el
+punto de vista del percentil 50. Pero en
+el caso del producto, como habíamos
+visto, el escenario negativo nos puede
+salir incluso a perder. Mientras que en
+el peor de los escenarios negativos o en
+el escenario negativo del funnel, pues
+ganaremos menos que en el resto de los
+escenarios, pero estaremos ganando
+dinero, no perdiendo. Y luego ya a
+partir de esto, que son los datos, pues
+obviamente como humanos podremos tomar
+una decisión, pero como ves, los
+escenarios calculados de esta manera son
+mucho más realistas que simplemente en
+un Excel decir, "Le quito un 30%, le
+añado un 30%." Bueno, sin datos,
+seguramente la intuición inicial de
+cualquier profesional de negocio
+marketer hubiera sido la de vamos a
+meter más presión con los ads o vamos a
+lanzar un nuevo producto para hacer
+ruido en el mercado. Pero sin embargo,
+el agente analizando el histórico y
+modelizando el riesgo matemático,
+primero céntrate en arreglar el cuello
+de botella, que actualmente está siendo
+el fannel tal cual lo tienes definido. Y
+por tanto, estamos viendo como aquí no
+gana la idea más espectacular, sino que
+la que gana es la decisión con mejor
+esperanza matemática ajustada al riesgo.
+Lo bueno es que aquí hemos visto un
+caso, pero puedes utilizar este mismo
+enfoque para optimizar precios, para
+decidir el stock de un almacén, para
+conceder créditos financieros, gestionar
+campañas de retención o realmente para
+lo que quieras. La clave está en
+integrar tus capacidades de data science
+con el lenguaje que entiende el negocio,
+como la generación de ingresos o como el
+control de los riesgos. En 2026, saber
+hacer este tipo de proyectos es lo que
+te va a ayudar a conseguir el trabajo.
+El data scientist de Jupiter más Titanic
+ya se quedó en 2024. Por tanto, si
+quieres empezar en esta ruta del data
+scientist mixto técnico negocio, te
+recuerdo que tienes en la descripción
+del vídeo el enlace para apuntarte al
+curso introductorio de IA Data Science.
+Y nos vemos aquí en tu canal favorito de
+data science aplicado a negocio.
