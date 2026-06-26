@@ -13,6 +13,7 @@ output
 transcripts
 results
 *.log
+iniciar_captionflow.bat
 .tmp
 tmp
 .DS_Store

@@ -1,1 +1,0 @@
-El expresidente Zapatero es imputado por tráfico de influencias y blanqueo de capitales. Un auto judicial detalla flujos de dinero vinculados a lobbies chinos y sociedades opacas, desmintiendo sus negativas. Se investiga la recepción de millones por él y sus hijas, con riesgo de prisión por fuga.
