@@ -183,6 +183,7 @@ export function App() {
             diagramPrompts={diagramPrompts}
             isLoading={isHistoryLoading}
             diagramFilename={diagramActions.diagramFilename}
+            onHistoryChanged={loadHistory}
           />
         </section>
       )}

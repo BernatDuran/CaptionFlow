@@ -89,6 +89,7 @@ export function useTextDocumentModal(history: HistoryItem[]) {
         channelName: data.metadata?.channelName,
         durationSeconds: data.metadata?.durationSeconds,
         durationText: data.metadata?.durationText,
+        uploadDate: data.metadata?.uploadDate,
         transcriptLanguage: data.metadata?.transcriptLanguage,
         transcriptWords: data.metadata?.transcriptWords,
         outputWords: data.metadata?.outputWords,

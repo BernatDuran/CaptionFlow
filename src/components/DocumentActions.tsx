@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Download, Eye, FileText, GitFork, Loader2 } from "lucide-react";
+import { ChevronDown, Download, Eye, FileText, GitFork, Loader2, Trash2 } from "lucide-react";
 import type { DiagramPromptOption, HistoryRun } from "../api/types";
 import { formatDurationMs, formatModelShort, formatTokens } from "../utils/formatters";
 import { DownloadModal } from "./DownloadModal";
@@ -20,6 +20,8 @@ type DocumentActionsProps = {
   showOpen?: boolean;
   disabled?: boolean;
   onTranscript?: (filename: string) => void;
+  onDeleteResult?: (filename: string) => void;
+  onDeleteDiagram?: (filename: string, prompt: DiagramPromptOption) => void;
   align?: "left" | "right";
 };
 
@@ -37,6 +39,8 @@ export function DocumentActions({
   showOpen = true,
   disabled = false,
   onTranscript,
+  onDeleteResult,
+  onDeleteDiagram,
   align = "right"
 }: DocumentActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +115,7 @@ export function DocumentActions({
       </button>
 
       {isOpen ? (
-        <div className={`actions-popover align-${align}`} role="menu">
+        <div className={`actions-popover align-${align}${isDiagramPickerOpen ? " diagrams-open" : ""}`} role="menu">
           {showOpen ? (
             <button
               role="menuitem"
@@ -163,16 +167,51 @@ export function DocumentActions({
                     ? `${formatModelShort(latestRun.model)} · ${formatTokens(latestRun.totalTokens) || "sin tokens"} · ${formatDurationMs(latestRun.durationMs)}`
                     : "";
                 return (
-                  <button key={prompt.id} type="button" onClick={() => triggerDiagram(prompt.id)}>
-                    <span>
-                      {prompt.name}
-                      {runSummary ? <small>{runSummary}</small> : null}
-                    </span>
-                    {isGeneratedType ? <i aria-label="Ya generado" title="Ya generado para este tipo" /> : null}
-                  </button>
+                  <div className="diagram-prompt-row" key={prompt.id}>
+                    <button className="diagram-prompt-action" type="button" onClick={() => triggerDiagram(prompt.id)}>
+                      <span>
+                        {prompt.name}
+                        {runSummary ? <small>{runSummary}</small> : null}
+                      </span>
+                      {isGeneratedType ? <i aria-label="Ya generado" title="Ya generado para este tipo" /> : null}
+                    </button>
+                    {isGeneratedType && onDeleteDiagram ? (
+                      <button
+                        className="diagram-delete-button"
+                        type="button"
+                        aria-label={`Eliminar diagrama ${prompt.name}`}
+                        title={`Eliminar diagrama ${prompt.name}`}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setIsDiagramPickerOpen(false);
+                          onDeleteDiagram(filename, prompt);
+                        }}
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>
+          ) : null}
+          {onDeleteResult ? (
+            <>
+              <div className="actions-separator" role="separator" />
+              <button
+                className="danger-menu-item"
+                role="menuitem"
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsDiagramPickerOpen(false);
+                  onDeleteResult(filename);
+                }}
+              >
+                <Trash2 size={16} />
+                Eliminar
+              </button>
+            </>
           ) : null}
         </div>
       ) : null}

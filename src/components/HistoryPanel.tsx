@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, ChevronDown, ChevronRight, Eye, GitFork, Search, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowUp, Check, ChevronDown, ChevronRight, Eye, GitFork, Search, ExternalLink, Trash2 } from "lucide-react";
+import { apiFetch } from "../api/client";
 import type { DiagramPromptOption, HistoryItem } from "../api/types";
 import {
   formatDateShort,
@@ -8,10 +9,13 @@ import {
   formatMonth,
   formatVideoDuration,
   formatWords,
+  getDateTime,
   getMonthKey,
   normalizeSearchText
 } from "../utils/formatters";
 import { DocumentActions } from "./DocumentActions";
+import { ConfirmModal } from "./ModalShell";
+import { Button } from "./ui";
 
 export type { HistoryItem };
 
@@ -23,13 +27,36 @@ type HistoryPanelProps = {
   diagramPrompts: DiagramPromptOption[];
   isLoading?: boolean;
   diagramFilename?: string;
+  onHistoryChanged?: () => void | Promise<void>;
 };
+
+type DeleteTarget =
+  | {
+      type: "video";
+      title: string;
+      filenames: string[];
+      resultCount: number;
+      diagramCount: number;
+    }
+  | {
+      type: "result";
+      item: HistoryItem;
+      diagramCount: number;
+    }
+  | {
+      type: "diagram";
+      filename: string;
+      prompt: DiagramPromptOption;
+    };
 
 type HistoryFilterOption = {
   value: string;
   label: string;
   count: number;
 };
+
+type HistorySortKey = "processedAt" | "uploadDate" | "channelName" | "durationSeconds" | "executionCount";
+type HistorySortDirection = "asc" | "desc";
 
 type HistoryFilterComboboxProps = {
   options: HistoryFilterOption[];
@@ -222,13 +249,27 @@ function filterHistoryItems(
   });
 }
 
-export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagramPrompts, isLoading, diagramFilename }: HistoryPanelProps) {
+export function HistoryPanel({
+  items,
+  onOpen,
+  onDiagram,
+  onViewTranscript,
+  diagramPrompts,
+  isLoading,
+  diagramFilename,
+  onHistoryChanged
+}: HistoryPanelProps) {
   const [channelFilter, setChannelFilter] = useState("");
   const [modelFilter, setModelFilter] = useState("");
   const [diagramFilter, setDiagramFilter] = useState("");
   const [monthFilter, setMonthFilter] = useState("");
   const [query, setQuery] = useState("");
+  const [sortKey, setSortKey] = useState<HistorySortKey>("processedAt");
+  const [sortDirection, setSortDirection] = useState<HistorySortDirection>("desc");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   function toggleGroup(videoId: string) {
     setExpandedGroups(prev => {
@@ -237,6 +278,60 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
       else next.add(videoId);
       return next;
     });
+  }
+
+  function requestDeleteVideo(group: { title: string; items: HistoryItem[] }) {
+    setDeleteError("");
+    setDeleteTarget({
+      type: "video",
+      title: group.title,
+      filenames: group.items.map((item) => item.filename),
+      resultCount: group.items.length,
+      diagramCount: group.items.reduce((total, item) => total + (item.diagramCount || (item.hasDiagram ? 1 : 0)), 0)
+    });
+  }
+
+  function requestDeleteResult(item: HistoryItem) {
+    setDeleteError("");
+    setDeleteTarget({
+      type: "result",
+      item,
+      diagramCount: item.diagramCount || (item.hasDiagram ? 1 : 0)
+    });
+  }
+
+  function requestDeleteDiagram(filename: string, prompt: DiagramPromptOption) {
+    setDeleteError("");
+    setDeleteTarget({ type: "diagram", filename, prompt });
+  }
+
+  async function confirmDelete() {
+    if (!deleteTarget) return;
+    setIsDeleting(true);
+    setDeleteError("");
+
+    try {
+      if (deleteTarget.type === "video") {
+        await apiFetch("/api/history/videos", {
+          method: "DELETE",
+          json: { filenames: deleteTarget.filenames }
+        });
+      } else if (deleteTarget.type === "result") {
+        await apiFetch(`/api/results/${encodeURIComponent(deleteTarget.item.filename)}`, { method: "DELETE" });
+      } else {
+        await apiFetch(`/api/results/${encodeURIComponent(deleteTarget.filename)}/diagrams`, {
+          method: "DELETE",
+          json: { promptId: deleteTarget.prompt.id, diagramKind: deleteTarget.prompt.diagramType }
+        });
+      }
+
+      setDeleteTarget(null);
+      await onHistoryChanged?.();
+    } catch (error) {
+      setDeleteError(error instanceof Error ? error.message : "No se pudo eliminar el registro.");
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
   const channelOptions = useMemo(() => {
@@ -305,6 +400,8 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
       title: string;
       channelName?: string;
       latestDate: string;
+      uploadDate?: string;
+      durationSeconds?: number;
       items: typeof visibleItems;
     }>();
 
@@ -316,33 +413,91 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
           videoId: key,
           title: item.videoTitle || item.title,
           channelName: item.channelName,
-          latestDate: item.createdAt,
+          latestDate: item.processedAt || item.createdAt,
+          uploadDate: item.uploadDate,
+          durationSeconds: item.durationSeconds,
           items: []
         };
         groups.set(key, group);
       }
       group.items.push(item);
-      if (Date.parse(item.createdAt) > Date.parse(group.latestDate)) {
-        group.latestDate = item.createdAt;
+      const itemProcessedDate = item.processedAt || item.createdAt;
+      if (getDateTime(itemProcessedDate) > getDateTime(group.latestDate)) {
+        group.latestDate = itemProcessedDate;
+      }
+      if (!group.uploadDate && item.uploadDate) {
+        group.uploadDate = item.uploadDate;
+      }
+      if (typeof group.durationSeconds !== "number" && typeof item.durationSeconds === "number") {
+        group.durationSeconds = item.durationSeconds;
       }
     }
     
-    return Array.from(groups.values()).sort((a, b) => Date.parse(b.latestDate) - Date.parse(a.latestDate));
-  }, [visibleItems]);
+    return Array.from(groups.values()).sort((a, b) => {
+      const direction = sortDirection === "asc" ? 1 : -1;
+      if (sortKey === "channelName") {
+        return direction * (a.channelName || "").localeCompare(b.channelName || "", "es", { sensitivity: "base" });
+      }
+      if (sortKey === "durationSeconds") {
+        return direction * ((a.durationSeconds || 0) - (b.durationSeconds || 0));
+      }
+      if (sortKey === "executionCount") {
+        return direction * (a.items.length - b.items.length);
+      }
+      if (sortKey === "uploadDate") {
+        return direction * (getDateTime(a.uploadDate) - getDateTime(b.uploadDate));
+      }
+      return direction * (getDateTime(a.latestDate) - getDateTime(b.latestDate));
+    });
+  }, [sortDirection, sortKey, visibleItems]);
 
   const uniqueChannelsCount = useMemo(() => new Set(visibleItems.map(i => i.channelName).filter(Boolean)).size, [visibleItems]);
+  const deleteTitle =
+    deleteTarget?.type === "video"
+      ? "Eliminar video"
+      : deleteTarget?.type === "result"
+        ? "Eliminar ejecucion"
+        : "Eliminar diagrama";
+  const deleteDescription =
+    deleteTarget?.type === "video"
+      ? `Se eliminaran ${deleteTarget.resultCount} ejecucion(es), ${deleteTarget.diagramCount} diagrama(s) y la transcripcion asociada si no queda referenciada por otro resultado.`
+      : deleteTarget?.type === "result"
+        ? `Se eliminara este resumen, su Markdown, sus metadatos con el prompt usado y ${deleteTarget.diagramCount} diagrama(s) asociado(s). Si la transcripcion queda sin uso, tambien se eliminara.`
+        : deleteTarget
+          ? `Se eliminara solamente el diagrama "${deleteTarget.prompt.name}". El resumen y el video se conservaran.`
+          : "";
 
   return (
     <section className="history-section" aria-label="Historial">
       <div className="history-header">
-        <div>
+        <div className="history-title-row">
           <h2>Historial</h2>
-          <p>Documentos generados anteriormente</p>
+          <div className="history-header-stats" aria-label="Resumen de historial">
+            <span className="count-badge">{uniqueChannelsCount} canales</span>
+            <span className="count-badge">{groupedItems.length} videos</span>
+            <span className="count-badge">{visibleItems.length} documentos</span>
+          </div>
         </div>
-        <div className="history-header-stats">
-          <span className="count-badge">{uniqueChannelsCount} canales</span>
-          <span className="count-badge">{groupedItems.length} videos</span>
-          <span className="count-badge">{visibleItems.length} documentos</span>
+        <div className="history-sort-controls" aria-label="Ordenar videos">
+          <label className="history-sort-field">
+            <span>Orden</span>
+            <select value={sortKey} onChange={(event) => setSortKey(event.target.value as HistorySortKey)}>
+              <option value="processedAt">Fecha Procesamiento</option>
+              <option value="uploadDate">Fecha Publicación</option>
+              <option value="channelName">Canal</option>
+              <option value="durationSeconds">Duración</option>
+              <option value="executionCount">Número de ejecuciones</option>
+            </select>
+          </label>
+          <button
+            className="history-sort-direction"
+            type="button"
+            aria-label={`Orden ${sortDirection === "desc" ? "descendente" : "ascendente"}`}
+            title={`Orden ${sortDirection === "desc" ? "descendente" : "ascendente"}`}
+            onClick={() => setSortDirection((current) => (current === "desc" ? "asc" : "desc"))}
+          >
+            {sortDirection === "desc" ? <ArrowDown size={14} /> : <ArrowUp size={14} />}
+          </button>
         </div>
       </div>
 
@@ -414,6 +569,18 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
                         <ExternalLink size={12} />
                       </a>
                     ) : null}
+                    <button
+                      className="history-group-delete"
+                      type="button"
+                      title="Eliminar video del historial"
+                      aria-label={`Eliminar video ${group.title}`}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        requestDeleteVideo(group);
+                      }}
+                    >
+                      <Trash2 size={12} />
+                    </button>
                   </div>
                   <div className="history-group-meta">
                     {group.channelName ? <span className="channel-badge">{group.channelName}</span> : null}
@@ -462,6 +629,8 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
                           existingDiagramKinds={item.diagramKinds}
                           aiRuns={item.aiRuns}
                           disabled={diagramFilename === item.filename}
+                          onDeleteResult={() => requestDeleteResult(item)}
+                          onDeleteDiagram={requestDeleteDiagram}
                         />
                       </article>
                       );
@@ -473,6 +642,37 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
           })}
         </div>
       )}
+      {deleteTarget ? (
+        <ConfirmModal
+          title={deleteTitle}
+          className="deletion-confirm-modal"
+          onClose={() => {
+            if (!isDeleting) setDeleteTarget(null);
+          }}
+          actions={
+            <>
+              <Button compact type="button" onClick={() => setDeleteTarget(null)} disabled={isDeleting}>
+                Cancelar
+              </Button>
+              <Button compact variant="danger" type="button" onClick={() => void confirmDelete()} disabled={isDeleting}>
+                {isDeleting ? "Eliminando" : "Eliminar"}
+              </Button>
+            </>
+          }
+        >
+          <div className="deletion-confirm-copy">
+            <p>
+              {deleteTarget.type === "video"
+                ? deleteTarget.title
+                : deleteTarget.type === "result"
+                  ? deleteTarget.item.promptName || deleteTarget.item.title
+                  : deleteTarget.prompt.name}
+            </p>
+            <small>{deleteDescription}</small>
+            {deleteError ? <div className="error-message compact deletion-error" role="alert">{deleteError}</div> : null}
+          </div>
+        </ConfirmModal>
+      ) : null}
     </section>
   );
 }

@@ -11,6 +11,7 @@ export type Provider = {
 export type ModelOption = {
   id: string;
   label: string;
+  contextTokens?: number;
   limits?: { maxInputTokens: number | null };
 };
 
@@ -60,6 +61,7 @@ export type ProcessResult = {
     channelName?: string;
     durationSeconds?: number;
     durationText?: string;
+    uploadDate?: string;
     transcriptLanguage?: string;
     transcriptWords?: number;
     outputWords?: number;
@@ -121,6 +123,7 @@ export type HistoryItem = {
   outputWords?: number;
   durationSeconds?: number;
   durationText?: string;
+  uploadDate?: string;
   transcriptLanguage?: string;
   transcriptSource?: string;
   processedAt?: string;

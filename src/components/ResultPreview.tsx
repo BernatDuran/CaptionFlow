@@ -38,6 +38,8 @@ export function ResultPreview({
 }: ResultPreviewProps) {
   const [copied, setCopied] = useState(false);
   const { descriptionId, titleId } = useModalBehavior(onClose, false);
+  const videoText = result.metadata.title || result.metadata.videoUrl || "";
+  const uploadDate = result.metadata.uploadDate || historyItem?.uploadDate;
 
   async function handleCopy() {
     await navigator.clipboard.writeText(result.markdown);
@@ -90,14 +92,17 @@ export function ResultPreview({
         </div>
       </ModalHeader>
 
-      {result.metadata.title && result.metadata.videoUrl ? (
+      {videoText && result.metadata.videoUrl ? (
         <a className="video-title-link result-video-title" href={result.metadata.videoUrl} target="_blank" rel="noreferrer">
-          {result.metadata.title}
+          {videoText}
         </a>
+      ) : videoText ? (
+        <span className="video-title-text result-video-title">{videoText}</span>
       ) : null}
 
       <div className="metadata-row">
         {result.metadata.durationText ? <span>Vídeo: {result.metadata.durationText}</span> : null}
+        {uploadDate ? <span>Publicado el: {formatDateShort(uploadDate)}</span> : null}
         {result.metadata.transcriptWords ? <span>Transcripcion: {result.metadata.transcriptWords.toLocaleString("es")} pal.</span> : null}
         {result.metadata.outputWords ? <span>Output: {result.metadata.outputWords.toLocaleString("es")} pal.</span> : null}
         {result.metadata.usageTotals?.document.totalTokens ? (

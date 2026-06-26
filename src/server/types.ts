@@ -184,6 +184,7 @@ export type HistoryItem = {
   outputWords?: number;
   durationSeconds?: number;
   durationText?: string;
+  uploadDate?: string;
   transcriptLanguage?: string;
   transcriptSource?: "official" | "automatic";
   processedAt?: string;

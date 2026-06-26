@@ -15,6 +15,15 @@ type ModelComboboxProps = {
 
 export { formatModelDisplayId };
 
+function getModelContextTokens(model: ModelOption) {
+  return model.limits?.maxInputTokens ?? model.contextTokens ?? null;
+}
+
+function getModelDetail(model: ModelOption, provider: ProviderId) {
+  if (provider !== "nanogpt" || !model.id.includes("/")) return "";
+  return model.id;
+}
+
 export function ModelCombobox({ models, value, provider, onChange, disabled }: ModelComboboxProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -123,10 +132,13 @@ export function ModelCombobox({ models, value, provider, onChange, disabled }: M
                     setQuery("");
                   }}
                 >
-                  <span className="model-option-label">{formatModelDisplayId(model.id, provider)}</span>
-                  {model.limits?.maxInputTokens ? (
+                  <span className="model-option-label">
+                    <span>{formatModelDisplayId(model.id, provider)}</span>
+                    {getModelDetail(model, provider) ? <small>{getModelDetail(model, provider)}</small> : null}
+                  </span>
+                  {getModelContextTokens(model) ? (
                     <span className={`model-option-token-chip${model.id === value ? " selected" : ""}`}>
-                      {Intl.NumberFormat("en-US", { notation: "compact", compactDisplay: "short" }).format(model.limits.maxInputTokens)}
+                      {Intl.NumberFormat("en-US", { notation: "compact", compactDisplay: "short" }).format(getModelContextTokens(model) || 0)}
                     </span>
                   ) : null}
                   {model.id === value ? <Check size={16} /> : null}

@@ -41,6 +41,10 @@ function formatPreset(tokens: number) {
   return `${Math.round(tokens / 1000)}k`;
 }
 
+function getModelContextTokens(model: ModelOption) {
+  return model.limits?.maxInputTokens ?? model.contextTokens ?? null;
+}
+
 type ContextPresetOption = {
   value: number;
   label: string;
@@ -210,14 +214,20 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
 
   const filteredModels = useMemo(() => {
     const minimumContext = settings?.minimumModelContextTokens ?? 4000;
-    return models.filter((model) => !model.limits?.maxInputTokens || model.limits.maxInputTokens >= minimumContext);
+    return models.filter((model) => {
+      const contextTokens = getModelContextTokens(model);
+      return !contextTokens || contextTokens >= minimumContext;
+    });
   }, [models, settings?.minimumModelContextTokens]);
 
   const contextOptions = useMemo(
     () =>
       CONTEXT_PRESETS.map((tokens) => {
-        const unknownCount = models.filter((model) => !model.limits?.maxInputTokens).length;
-        const count = models.filter((model) => model.limits?.maxInputTokens && model.limits.maxInputTokens >= tokens).length;
+        const unknownCount = models.filter((model) => !getModelContextTokens(model)).length;
+        const count = models.filter((model) => {
+          const contextTokens = getModelContextTokens(model);
+          return Boolean(contextTokens && contextTokens >= tokens);
+        }).length;
 
         return {
           value: tokens,

@@ -81,6 +81,25 @@
       "cachedInputTokens": 0,
       "reasoningTokens": 0,
       "usageSource": "provider_reported"
+    },
+    {
+      "runId": "f12626a8-1f1b-4714-95f3-356b82ab9208",
+      "operation": "diagram_generation",
+      "scope": "diagram",
+      "provider": "nanogpt",
+      "model": "xiaomi/mimo-v2.5-pro",
+      "promptId": "an-lisis-cr-tico-avanzado-desmonta-argumentos-sesgos-exageraciones-y-verdades-inc-modas",
+      "diagramPromptId": "flowchart",
+      "diagramType": "flowchart",
+      "startedAt": "2026-06-26T16:54:42.769Z",
+      "finishedAt": "2026-06-26T16:58:47.318Z",
+      "durationMs": 244549,
+      "inputTokens": 2899,
+      "outputTokens": 2146,
+      "totalTokens": 5045,
+      "cachedInputTokens": 2880,
+      "reasoningTokens": 1096,
+      "usageSource": "provider_reported"
     }
   ],
   "usageTotals": {
@@ -92,10 +111,10 @@
       "unavailableUsageRuns": 0
     },
     "diagrams": {
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "totalTokens": 0,
-      "durationMs": 0,
+      "inputTokens": 2899,
+      "outputTokens": 2146,
+      "totalTokens": 5045,
+      "durationMs": 244549,
       "unavailableUsageRuns": 0
     },
     "transcript": {
@@ -106,12 +125,14 @@
       "unavailableUsageRuns": 0
     },
     "all": {
-      "inputTokens": 7202,
-      "outputTokens": 4285,
-      "totalTokens": 11487,
-      "durationMs": 124882,
+      "inputTokens": 10101,
+      "outputTokens": 6431,
+      "totalTokens": 16532,
+      "durationMs": 369431,
       "unavailableUsageRuns": 0
     }
   },
-  "latestDiagramRuns": {}
+  "latestDiagramRuns": {
+    "flowchart": "f12626a8-1f1b-4714-95f3-356b82ab9208"
+  }
 }

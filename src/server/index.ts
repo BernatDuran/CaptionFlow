@@ -4,7 +4,19 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import { PROVIDERS } from "./config/modelCatalog";
 import { listModels } from "./config/modelService";
-import { getDownloadPath, listResultHistory, readDiagramForResult, readResultFile, readTranscriptMetadataForResult, readResultMetadata, readTranscriptTextForResult, sanitizeFilename } from "./files/fileService";
+import {
+  deleteDiagramForResult,
+  deleteResultRecord,
+  deleteVideoRecords,
+  getDownloadPath,
+  listResultHistory,
+  readDiagramForResult,
+  readResultFile,
+  readTranscriptMetadataForResult,
+  readResultMetadata,
+  readTranscriptTextForResult,
+  sanitizeFilename
+} from "./files/fileService";
 import { markdownToPdfBuffer } from "./files/pdfService";
 import { listDiagramPrompts, listPrompts, savePrompt, deletePrompt } from "./prompts/promptService";
 import { generateDiagramFromResult } from "./processing/diagramService";
@@ -226,6 +238,11 @@ app.get("/api/history", async (_req, res) => {
   res.json({ items: await listResultHistory() });
 });
 
+app.delete("/api/history/videos", async (req, res) => {
+  const filenames = Array.isArray(req.body?.filenames) ? req.body.filenames.filter((value: unknown) => typeof value === "string") : [];
+  res.json(await deleteVideoRecords(filenames));
+});
+
 app.get("/api/results/:filename", async (req, res) => {
   const markdown = await readResultFile(req.params.filename);
   const transcriptMetadata = await readTranscriptMetadataForResult(req.params.filename);
@@ -246,6 +263,10 @@ app.get("/api/results/:filename/prompt", async (req, res) => {
 app.get("/api/results/:filename/transcript", async (req, res) => {
   const text = await readTranscriptTextForResult(req.params.filename);
   res.json({ transcript: text });
+});
+
+app.delete("/api/results/:filename", async (req, res) => {
+  res.json(await deleteResultRecord(req.params.filename));
 });
 
 app.get("/api/pdf/:filename", async (req, res) => {
@@ -278,6 +299,16 @@ app.get("/api/diagram/:filename", async (req, res) => {
       diagramKind: typeof req.query.kind === "string" ? req.query.kind : undefined
     })
   );
+});
+
+app.delete("/api/results/:filename/diagrams", async (req, res) => {
+  const { promptId, diagramKind, diagramFilename } = req.body as {
+    promptId?: string;
+    diagramKind?: string;
+    diagramFilename?: string;
+  };
+
+  res.json(await deleteDiagramForResult(req.params.filename, { promptId, diagramKind, diagramFilename }));
 });
 
 app.get("/api/download/:filename", async (req, res) => {

@@ -32,6 +32,18 @@ type DiagramMatch = {
   updatedAt: string;
 };
 
+export type DeleteResultSummary = {
+  success: true;
+  deleted: {
+    videos: number;
+    results: number;
+    metadata: number;
+    diagrams: number;
+    transcripts: number;
+    transcriptCaches: number;
+  };
+};
+
 function emptyUsageTotal(): UsageTotal {
   return {
     inputTokens: 0,
@@ -85,10 +97,7 @@ function normalizeMetadata(metadata: Partial<ResultMetadata>): Partial<ResultMet
     ...metadata,
     aiRuns,
     usageTotals: calculateUsageTotals(aiRuns),
-    latestDiagramRuns: {
-      ...(metadata.latestDiagramRuns || {}),
-      ...calculateLatestDiagramRuns(aiRuns)
-    }
+    latestDiagramRuns: calculateLatestDiagramRuns(aiRuns)
   };
 }
 
@@ -181,6 +190,15 @@ function getMetadataPath(filename: string) {
   return path.join(paths.RESULTS_DIR, `${safe}.meta.json`);
 }
 
+function normalizeResultFilename(filename: string) {
+  const safe = path.basename(filename || "");
+  if (!safe || safe !== filename || !safe.toLowerCase().endsWith(".md")) {
+    throw new AppError("VALIDATION_ERROR", "Documento no valido.", 400);
+  }
+
+  return safe;
+}
+
 function assertPathInside(baseDir: string, targetPath: string) {
   const resolvedBase = path.resolve(baseDir);
   const resolvedTarget = path.resolve(targetPath);
@@ -196,6 +214,12 @@ export async function saveResultMetadata(filename: string, metadata: ResultMetad
   const fullPath = getMetadataPath(filename);
   await fs.writeFile(fullPath, JSON.stringify(normalizeMetadata(metadata), null, 2), "utf8");
   return { filename: path.basename(fullPath), fullPath };
+}
+
+async function writeResultMetadata(filename: string, metadata: Partial<ResultMetadata>) {
+  await ensureOutputDirs();
+  const fullPath = getMetadataPath(filename);
+  await fs.writeFile(fullPath, JSON.stringify(normalizeMetadata(metadata), null, 2), "utf8");
 }
 
 export async function readResultMetadata(filename: string): Promise<Partial<ResultMetadata>> {
@@ -231,6 +255,126 @@ export async function readResultFile(filename: string) {
   } catch {
     throw new AppError("FILE_NOT_FOUND", "El documento solicitado no existe.", 404);
   }
+}
+
+async function removeFileIfExists(fullPath: string) {
+  try {
+    await fs.access(fullPath);
+    await fs.rm(fullPath, { force: true });
+    return true;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return false;
+    throw error;
+  }
+}
+
+async function readResultRecord(filename: string) {
+  const safe = normalizeResultFilename(filename);
+  const markdown = await readResultFile(safe);
+  const metadata = await readResultMetadata(safe);
+  const title = markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || safe.replace(/\.md$/i, "");
+  return { filename: safe, metadata, title };
+}
+
+function getHistoryGroupKey(record: { filename: string; metadata: Partial<ResultMetadata>; title: string }) {
+  return record.metadata.videoUrl || record.metadata.videoTitle || record.metadata.title || record.title || record.filename;
+}
+
+async function listRemainingResultMetadata(excludedFilenames: Set<string>) {
+  await ensureOutputDirs();
+  const entries = await fs.readdir(paths.RESULTS_DIR, { withFileTypes: true }).catch(() => []);
+  const files = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".md") && !excludedFilenames.has(entry.name))
+    .map((entry) => entry.name);
+
+  return Promise.all(files.map((filename) => readResultMetadata(filename)));
+}
+
+async function deleteUnreferencedTranscriptArtifacts(deletedMetadata: Partial<ResultMetadata>[], excludedFilenames: Set<string>) {
+  const remaining = await listRemainingResultMetadata(excludedFilenames);
+  let transcripts = 0;
+  let transcriptCaches = 0;
+
+  const candidateRefs = new Set(deletedMetadata.map((metadata) => metadata.transcriptRef).filter(Boolean));
+  for (const transcriptRef of candidateRefs) {
+    const isStillReferenced = remaining.some((metadata) => metadata.transcriptRef === transcriptRef);
+    if (isStillReferenced) continue;
+
+    const transcriptPath = assertPathInside(paths.TRANSCRIPTS_DIR, path.join(paths.TRANSCRIPTS_DIR, transcriptRef as string));
+    if (await removeFileIfExists(transcriptPath)) transcripts += 1;
+  }
+
+  const candidateVideoIds = new Set(deletedMetadata.map((metadata) => metadata.videoId).filter(Boolean));
+  for (const videoId of candidateVideoIds) {
+    const isStillReferenced = remaining.some((metadata) => metadata.videoId === videoId);
+    if (isStillReferenced) continue;
+
+    const cacheDir = path.join(paths.TRANSCRIPTS_DIR, "cache");
+    const cachePath = assertPathInside(cacheDir, path.join(cacheDir, `${sanitizeFilename(videoId as string)}.json`));
+    if (await removeFileIfExists(cachePath)) transcriptCaches += 1;
+  }
+
+  return { transcripts, transcriptCaches };
+}
+
+async function deleteResultRecords(filenames: string[], videos: number): Promise<DeleteResultSummary> {
+  const uniqueFilenames = Array.from(new Set(filenames.map(normalizeResultFilename)));
+  if (uniqueFilenames.length === 0) {
+    throw new AppError("VALIDATION_ERROR", "Selecciona al menos un documento para eliminar.", 400);
+  }
+
+  const records = await Promise.all(uniqueFilenames.map((filename) => readResultRecord(filename)));
+  const deletedMetadata = records.map((record) => record.metadata);
+  let diagrams = 0;
+  let results = 0;
+  let metadata = 0;
+
+  for (const record of records) {
+    const resultPath = getDownloadPath(record.filename);
+    const metadataPath = getMetadataPath(record.filename);
+    const diagramFiles = await findDiagramsForResult(record.filename);
+
+    for (const diagram of diagramFiles) {
+      if (await removeFileIfExists(diagram.fullPath)) diagrams += 1;
+    }
+
+    if (await removeFileIfExists(resultPath)) results += 1;
+    if (await removeFileIfExists(metadataPath)) metadata += 1;
+  }
+
+  const transcriptCleanup = await deleteUnreferencedTranscriptArtifacts(deletedMetadata, new Set(uniqueFilenames));
+
+  return {
+    success: true,
+    deleted: {
+      videos,
+      results,
+      metadata,
+      diagrams,
+      transcripts: transcriptCleanup.transcripts,
+      transcriptCaches: transcriptCleanup.transcriptCaches
+    }
+  };
+}
+
+export async function deleteResultRecord(filename: string) {
+  return deleteResultRecords([filename], 0);
+}
+
+export async function deleteVideoRecords(filenames: string[]) {
+  const uniqueFilenames = Array.from(new Set(filenames.map(normalizeResultFilename)));
+  if (uniqueFilenames.length === 0) {
+    throw new AppError("VALIDATION_ERROR", "Selecciona al menos un documento para eliminar.", 400);
+  }
+
+  const records = await Promise.all(uniqueFilenames.map((filename) => readResultRecord(filename)));
+  const groupKeys = new Set(records.map(getHistoryGroupKey));
+
+  if (groupKeys.size !== 1) {
+    throw new AppError("VALIDATION_ERROR", "Solo se puede eliminar un video cada vez.", 400);
+  }
+
+  return deleteResultRecords(uniqueFilenames, 1);
 }
 
 export async function readTranscriptMetadataForResult(filename: string) {
@@ -321,6 +465,7 @@ export async function listResultHistory(): Promise<HistoryItem[]> {
         outputWords: metadata.outputWords,
         durationSeconds: metadata.durationSeconds,
         durationText: metadata.durationText,
+        uploadDate: metadata.uploadDate,
         transcriptLanguage: metadata.transcriptLanguage,
         transcriptSource: metadata.transcriptSource,
         processedAt: metadata.processedAt,
@@ -405,4 +550,51 @@ export async function readDiagramForResult(resultFilename: string, input?: { pro
   } catch {
     throw new AppError("FILE_NOT_FOUND", "No se pudo leer el diagrama guardado.", 404);
   }
+}
+
+export async function deleteDiagramForResult(resultFilename: string, input: { promptId?: string; diagramKind?: string; diagramFilename?: string }) {
+  const safeResultFilename = normalizeResultFilename(resultFilename);
+  await readResultFile(safeResultFilename);
+
+  const diagrams = await findDiagramsForResult(safeResultFilename);
+  const safePromptId = input.promptId ? sanitizeFilename(input.promptId) : undefined;
+  const safeDiagramFilename = input.diagramFilename ? path.basename(input.diagramFilename) : undefined;
+  const byFilename = safeDiagramFilename ? diagrams.find((diagram) => diagram.filename === safeDiagramFilename) : undefined;
+  const byPrompt = safePromptId
+    ? diagrams.find((diagram) => getPromptIdFromDiagramFilename(diagram.filename, safeResultFilename) === safePromptId)
+    : undefined;
+  const byKind = input.diagramKind ? diagrams.find((diagram) => diagram.kind === input.diagramKind) : undefined;
+  const diagram = byFilename || byPrompt || byKind;
+
+  if (!diagram) {
+    throw new AppError("FILE_NOT_FOUND", "No se encontro el diagrama solicitado.", 404);
+  }
+
+  const diagramPromptId = getPromptIdFromDiagramFilename(diagram.filename, safeResultFilename);
+  const metadata = await readResultMetadata(safeResultFilename);
+  const aiRuns = (metadata.aiRuns || []).filter((run) => {
+    if (run.operation !== "diagram_generation") return true;
+    if (diagramPromptId) return sanitizeFilename(run.diagramPromptId || "") !== diagramPromptId;
+    if (safePromptId) return sanitizeFilename(run.diagramPromptId || "") !== safePromptId;
+    return run.diagramType !== diagram.kind;
+  });
+
+  const deleted = await removeFileIfExists(diagram.fullPath);
+  await writeResultMetadata(safeResultFilename, {
+    ...metadata,
+    aiRuns,
+    latestDiagramRuns: calculateLatestDiagramRuns(aiRuns)
+  });
+
+  return {
+    success: true,
+    deleted: {
+      videos: 0,
+      results: 0,
+      metadata: 0,
+      diagrams: deleted ? 1 : 0,
+      transcripts: 0,
+      transcriptCaches: 0
+    }
+  } satisfies DeleteResultSummary;
 }

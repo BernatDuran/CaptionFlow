@@ -261,6 +261,7 @@ export async function processVideo(input: { youtubeUrl: string; promptId: string
 - ID video: ${video.videoId || "desconocido"}
 - Canal: ${video.channelName || "desconocido"}
 - Duracion: ${video.durationText || (video.durationSeconds ? `${video.durationSeconds}s` : "desconocida")}
+- Fecha de publicacion: ${video.uploadDate || "desconocida"}
 - Fuente: ${video.source}
 - Idioma: ${video.language || "desconocido"}
 - Palabras transcripcion: ${transcriptWords}
@@ -378,6 +379,7 @@ ${video.transcript}
       channelName: video.channelName,
       durationSeconds: video.durationSeconds,
       durationText: video.durationText,
+      uploadDate: video.uploadDate,
       transcriptLanguage: video.language,
       transcriptWords,
       outputWords,

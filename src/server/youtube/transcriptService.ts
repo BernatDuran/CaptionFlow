@@ -263,7 +263,7 @@ export async function getYoutubeTranscript(url: string): Promise<VideoTranscript
 
   if (videoId) {
     cachedTranscript = await readTranscriptCache(videoId);
-    if (cachedTranscript?.channelName && cachedTranscript.durationSeconds) return cachedTranscript;
+    if (cachedTranscript?.channelName && cachedTranscript.durationSeconds && cachedTranscript.uploadDate) return cachedTranscript;
   }
 
   const infoResult = await timedYtDlpRun("yt_dlp_info", () => fetchInfo(cleanUrl));

@@ -3,6 +3,7 @@ import { useEffect, useId, useRef } from "react";
 let openModalCount = 0;
 let previousBodyOverflow = "";
 let previousBodyPaddingRight = "";
+let modalStack: symbol[] = [];
 
 const focusableSelector = [
   "a[href]",
@@ -45,12 +46,14 @@ function getFocusableElements(root: HTMLElement | null) {
 export function useModalBehavior(onClose: () => void, isOpen = true) {
   const dialogRef = useRef<HTMLElement | null>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const modalIdRef = useRef(Symbol("modal"));
   const titleId = useId();
   const descriptionId = useId();
 
   useEffect(() => {
     if (!isOpen) return;
     lockPageScroll();
+    modalStack = [...modalStack, modalIdRef.current];
     previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
     window.requestAnimationFrame(() => {
@@ -59,6 +62,7 @@ export function useModalBehavior(onClose: () => void, isOpen = true) {
     });
 
     return () => {
+      modalStack = modalStack.filter((modalId) => modalId !== modalIdRef.current);
       unlockPageScroll();
       previousFocusRef.current?.focus();
     };
@@ -68,7 +72,12 @@ export function useModalBehavior(onClose: () => void, isOpen = true) {
     if (!isOpen) return;
 
     function handleKeyDown(event: KeyboardEvent) {
+      const isTopModal = modalStack[modalStack.length - 1] === modalIdRef.current;
+      if (!isTopModal) return;
+
       if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
         onClose();
         return;
       }

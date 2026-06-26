@@ -16,11 +16,35 @@ export function formatModelShort(model?: string) {
 
 export function formatDateShort(value?: string) {
   if (!value) return "";
+  if (/^\d{8}$/.test(value)) {
+    const year = Number(value.slice(0, 4));
+    const month = Number(value.slice(4, 6));
+    const day = Number(value.slice(6, 8));
+    return new Intl.DateTimeFormat("es", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit"
+    }).format(new Date(year, month - 1, day));
+  }
+
   return new Intl.DateTimeFormat("es", {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit"
   }).format(new Date(value));
+}
+
+export function getDateTime(value?: string) {
+  if (!value) return 0;
+  if (/^\d{8}$/.test(value)) {
+    const year = Number(value.slice(0, 4));
+    const month = Number(value.slice(4, 6));
+    const day = Number(value.slice(6, 8));
+    return new Date(year, month - 1, day).getTime();
+  }
+
+  const timestamp = Date.parse(value);
+  return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
 export function formatDurationMs(ms?: number) {
