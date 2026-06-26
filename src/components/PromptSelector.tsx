@@ -1,11 +1,6 @@
-export type PromptSummary = {
-  id: string;
-  name: string;
-  description: string;
-  outputFilenamePrefix: string;
-  temperature: number;
-  content: string;
-};
+import type { PromptSummary } from "../api/types";
+
+export type { PromptSummary };
 
 type PromptSelectorProps = {
   prompts: PromptSummary[];
@@ -31,15 +26,14 @@ export function PromptSelector({ prompts, value, onChange, disabled, isCustomizi
         ))}
       </select>
       {selected ? (
-        <label className="checkbox-field" style={{ position: "absolute", top: "calc(100% + 7px)", left: 0, right: 0, display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", margin: 0 }}>
+        <label className="checkbox-field prompt-customize-field">
           <input
             type="checkbox"
             checked={isCustomizing}
             onChange={(e) => onToggleCustomizing?.(e.target.checked)}
             disabled={disabled}
-            style={{ width: "14px", height: "14px", margin: 0, cursor: "pointer" }}
           />
-          <span style={{ fontSize: "12px", fontWeight: 400, color: "#64748b" }}>Personalizar prompt</span>
+          <span>Personalizar prompt</span>
         </label>
       ) : null}
     </label>

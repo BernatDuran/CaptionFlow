@@ -9,6 +9,7 @@ import {
   type AnalyticsMetricKey,
   type AnalyticsRecord
 } from "../shared/analytics";
+import { apiFetch } from "../api/client";
 import {
   aggregateByDimension,
   aggregateHeatmap,
@@ -103,15 +104,6 @@ const DEFAULT_CHARTS: AnalyticsChartConfig[] = [
     aggregation: "sum"
   }
 ];
-
-async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload?.error?.message || "No se pudo completar la operacion.");
-  }
-  return payload as T;
-}
 
 function getDimensionLabel(key?: AnalyticsDimensionKey) {
   return ANALYTICS_DIMENSIONS.find((dimension) => dimension.key === key)?.label || "Dimension";

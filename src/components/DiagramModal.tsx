@@ -1,7 +1,7 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent } from "react";
-import { Download, Minus, Plus, X } from "lucide-react";
-import { useModalClose } from "./useModalClose";
+import { Download, Minus, Plus } from "lucide-react";
+import { ModalHeader, ModalShell } from "./ModalShell";
 
 type DiagramModalProps = {
   title: string;
@@ -39,6 +39,8 @@ function getBaseScale(input: { type: string; width: number; height: number; avai
 }
 
 export function DiagramModal({ title, mermaidCode, onClose }: DiagramModalProps) {
+  const titleId = useId();
+  const descriptionId = useId();
   const [svg, setSvg] = useState("");
   const [error, setError] = useState("");
   const [zoom, setZoom] = useState(100);
@@ -57,8 +59,6 @@ export function DiagramModal({ title, mermaidCode, onClose }: DiagramModalProps)
   });
   const diagramType = useMemo(() => getDiagramType(mermaidCode), [mermaidCode]);
   const renderId = useMemo(() => `captionflow-diagram-${Date.now()}`, [mermaidCode]);
-
-  const { handleBackdropClick } = useModalClose(onClose);
 
   useEffect(() => {
     let isMounted = true;
@@ -221,17 +221,8 @@ export function DiagramModal({ title, mermaidCode, onClose }: DiagramModalProps)
   }, [displaySize?.height, displaySize?.width]);
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Diagrama" onClick={handleBackdropClick}>
-      <section className="diagram-modal">
-        <header className="modal-header">
-          <div>
-            <h2>Diagrama</h2>
-            <p>{title}</p>
-          </div>
-          <button className="icon-button" type="button" aria-label="Cerrar diagrama" onClick={onClose}>
-            <X size={20} />
-          </button>
-        </header>
+    <ModalShell className="diagram-modal" labelledBy={titleId} describedBy={descriptionId} onClose={onClose}>
+        <ModalHeader title="Diagrama" subtitle={<span id={descriptionId}>{title}</span>} titleId={titleId} onClose={onClose} />
 
         <div
           className={`diagram-stage${isPanning ? " is-panning" : ""}`}
@@ -263,7 +254,6 @@ export function DiagramModal({ title, mermaidCode, onClose }: DiagramModalProps)
             </div>
           )}
         </div>
-      </section>
-    </div>
+    </ModalShell>
   );
 }

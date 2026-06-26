@@ -1,9 +1,10 @@
-import { useState, type ReactNode } from "react";
-import { Copy, Check, Download, FileText, X } from "lucide-react";
+import { useId, useState, type ReactNode } from "react";
+import { Check, Copy, Download } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { DownloadModal, type DownloadType } from "./DownloadModal";
-import { useModalClose } from "./useModalClose";
+import { ModalHeader, ModalShell } from "./ModalShell";
+import { Button } from "./ui";
 
 interface TextDisplayModalProps {
   title: string;
@@ -18,10 +19,22 @@ interface TextDisplayModalProps {
   isMarkdown?: boolean;
 }
 
-export function TextDisplayModal({ title, subtitle, chips, content, onClose, downloadUrl, downloadAction, onDownloadTxt, enableCopy, isMarkdown }: TextDisplayModalProps) {
+export function TextDisplayModal({
+  title,
+  subtitle,
+  chips,
+  content,
+  onClose,
+  downloadUrl,
+  downloadAction,
+  onDownloadTxt,
+  enableCopy,
+  isMarkdown
+}: TextDisplayModalProps) {
+  const titleId = useId();
+  const descriptionId = useId();
   const [copied, setCopied] = useState(false);
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const { handleBackdropClick } = useModalClose(onClose);
 
   async function handleCopy() {
     await navigator.clipboard.writeText(content);
@@ -30,88 +43,63 @@ export function TextDisplayModal({ title, subtitle, chips, content, onClose, dow
   }
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label={title} onClick={handleBackdropClick}>
-      <section className="confirm-modal" style={{ width: "min(800px, 90vw)", display: "flex", flexDirection: "column", maxHeight: "80vh" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
-          <div>
-            <h2 style={{ fontSize: "20px", marginBottom: "4px" }}>{title}</h2>
-            {subtitle ? <p style={{ margin: 0, color: "#64748b", fontSize: "14px" }}>{subtitle}</p> : null}
-            {chips && chips.length > 0 ? (
-              <div style={{ display: "flex", gap: "8px", marginTop: "8px", flexWrap: "wrap" }}>
-                {chips.map((chip, i) => (
-                  <span key={i} className="group-chip" style={{ fontSize: "12px", padding: "2px 8px", backgroundColor: "#e2e8f0", borderRadius: "12px", color: "#475569" }}>
-                    {chip}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-          </div>
-          <div style={{ display: "flex", gap: "8px" }}>
-            {enableCopy ? (
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={handleCopy}
-                style={{ height: "34px", padding: "0 12px", gap: "6px", fontSize: "13px" }}
-              >
-                {copied ? <Check size={15} /> : <Copy size={15} />}
-                {copied ? "Copiado" : "Copiar"}
-              </button>
-            ) : null}
-            {onDownloadTxt ? (
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={() => setIsDownloadModalOpen(true)}
-                style={{ height: "34px", padding: "0 12px", gap: "6px", fontSize: "13px" }}
-              >
-                <Download size={15} />
-                Descargar .txt
-              </button>
-            ) : null}
-          </div>
+    <ModalShell className="confirm-modal text-display-modal" labelledBy={titleId} describedBy={descriptionId} onClose={onClose}>
+      <ModalHeader
+        title={title}
+        subtitle={subtitle ? <span id={descriptionId}>{subtitle}</span> : undefined}
+        titleId={titleId}
+        onClose={onClose}
+        className="text-display-header"
+      >
+        <div className="text-display-actions">
+          {enableCopy ? (
+            <Button className="small-action-button" type="button" onClick={handleCopy}>
+              {copied ? <Check size={15} /> : <Copy size={15} />}
+              {copied ? "Copiado" : "Copiar"}
+            </Button>
+          ) : null}
+          {onDownloadTxt ? (
+            <Button className="small-action-button" type="button" onClick={() => setIsDownloadModalOpen(true)}>
+              <Download size={15} />
+              Descargar .txt
+            </Button>
+          ) : null}
         </div>
-        
-        <div
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            backgroundColor: "#f8fafc",
-            border: "1px solid #d8dee8",
-            borderRadius: "6px",
-            padding: "16px",
-            ...(isMarkdown ? {} : {
-              fontFamily: "monospace",
-              fontSize: "13px",
-              lineHeight: "1.6",
-              whiteSpace: "pre-wrap",
-            }),
-            color: "#334155"
-          }}
-        >
-          {isMarkdown ? (
-            <article className="markdown-preview">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-            </article>
-          ) : (
-            content
-          )}
-        </div>
+      </ModalHeader>
 
-        <div className="confirm-actions" style={{ marginTop: "20px" }}>
-          <button className="primary-button subtle-primary-button" type="button" onClick={onClose}>
-            Cerrar
-          </button>
+      {chips && chips.length > 0 ? (
+        <div className="text-display-chips">
+          {chips.map((chip, index) => (
+            <span key={index} className="group-chip">
+              {chip}
+            </span>
+          ))}
         </div>
-      </section>
+      ) : null}
+
+      <div className={`text-display-content${isMarkdown ? " is-markdown" : ""}`}>
+        {isMarkdown ? (
+          <article className="markdown-preview text-display-markdown">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          </article>
+        ) : (
+          content
+        )}
+      </div>
+
+      <div className="confirm-actions text-display-footer">
+        <Button variant="subtle" type="button" onClick={onClose}>
+          Cerrar
+        </Button>
+      </div>
 
       <DownloadModal
         isOpen={isDownloadModalOpen}
-        type="txt"
-        url={null}
-        onConfirm={onDownloadTxt || (() => {})}
+        type={downloadAction || "txt"}
+        url={downloadUrl || null}
+        onConfirm={onDownloadTxt || (() => undefined)}
         onCancel={() => setIsDownloadModalOpen(false)}
       />
-    </div>
+    </ModalShell>
   );
 }

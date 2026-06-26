@@ -1,13 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
+import type { ModelOption, ProviderId } from "../api/types";
+import { formatModelDisplayId } from "../utils/formatters";
 
-export type ProviderId = "openai" | "google" | "nanogpt";
-
-export type ModelOption = {
-  id: string;
-  label: string;
-  limits?: { maxInputTokens: number | null };
-};
+export type { ModelOption, ProviderId };
 
 type ModelComboboxProps = {
   models: ModelOption[];
@@ -17,13 +13,7 @@ type ModelComboboxProps = {
   disabled?: boolean;
 };
 
-export function formatModelDisplayId(id: string, provider: ProviderId) {
-  if (provider === "nanogpt" && id.includes("/")) {
-    return id.slice(id.indexOf("/") + 1).toLowerCase();
-  }
-
-  return id.toLowerCase();
-}
+export { formatModelDisplayId };
 
 export function ModelCombobox({ models, value, provider, onChange, disabled }: ModelComboboxProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -133,9 +123,9 @@ export function ModelCombobox({ models, value, provider, onChange, disabled }: M
                     setQuery("");
                   }}
                 >
-                  <span style={{ flex: 1, textAlign: "left" }}>{formatModelDisplayId(model.id, provider)}</span>
+                  <span className="model-option-label">{formatModelDisplayId(model.id, provider)}</span>
                   {model.limits?.maxInputTokens ? (
-                    <span style={{ fontSize: "11px", color: "#64748b", background: "#f1f5f9", padding: "2px 6px", borderRadius: "12px", fontWeight: "600", marginRight: model.id === value ? "8px" : "0" }}>
+                    <span className={`model-option-token-chip${model.id === value ? " selected" : ""}`}>
                       {Intl.NumberFormat("en-US", { notation: "compact", compactDisplay: "short" }).format(model.limits.maxInputTokens)}
                     </span>
                   ) : null}

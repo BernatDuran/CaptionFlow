@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { AlertCircle, Check, Loader2, Plus, Trash2 } from "lucide-react";
-import type { PromptSummary } from "./PromptSelector";
+import { apiFetch } from "../api/client";
+import type { PromptSummary } from "../api/types";
+import { ConfirmModal } from "./ModalShell";
+import { Button, EmptyState } from "./ui";
 
 type PromptDefinition = PromptSummary & {
   content: string;
@@ -10,25 +13,16 @@ type PromptsSettingsProps = {
   onPromptsChanged: () => void;
 };
 
-async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload?.error?.message || "No se pudo completar la operación.");
-  }
-  return payload as T;
-}
-
 export function PromptsSettings({ onPromptsChanged }: PromptsSettingsProps) {
   const [prompts, setPrompts] = useState<PromptDefinition[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
 
-  // Form state
   const [formId, setFormId] = useState("");
   const [formName, setFormName] = useState("");
   const [formDescription, setFormDescription] = useState("");
@@ -86,33 +80,28 @@ export function PromptsSettings({ onPromptsChanged }: PromptsSettingsProps) {
     setSaved(false);
     try {
       const isNew = selectedId === "new";
-      // Generate ID from name if it's new
       const finalId = isNew ? formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "nuevo-prompt" : formId;
-      
-      const payload = {
-        id: finalId,
-        name: formName,
-        description: formDescription,
-        outputFilenamePrefix: formPrefix,
-        temperature: formTemperature,
-        content: formContent
-      };
 
       const data = await apiFetch<{ prompt: PromptDefinition }>("/api/prompts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        json: {
+          id: finalId,
+          name: formName,
+          description: formDescription,
+          outputFilenamePrefix: formPrefix,
+          temperature: formTemperature,
+          content: formContent
+        }
       });
 
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
-      
-      // Update UI
+      window.setTimeout(() => setSaved(false), 2000);
+
       if (isNew) {
         setSelectedId(data.prompt.id);
         setFormId(data.prompt.id);
       }
-      onPromptsChanged(); // Trigger reload in App.tsx
+      onPromptsChanged();
       await loadPrompts();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error guardando el prompt");
@@ -121,9 +110,8 @@ export function PromptsSettings({ onPromptsChanged }: PromptsSettingsProps) {
     }
   }
 
-  async function handleDelete() {
+  async function deleteSelectedPrompt() {
     if (selectedId === "new") return;
-    if (!window.confirm("¿Estás seguro de que quieres eliminar este prompt?")) return;
 
     setError("");
     setIsDeleting(true);
@@ -131,6 +119,7 @@ export function PromptsSettings({ onPromptsChanged }: PromptsSettingsProps) {
       await apiFetch(`/api/prompts/${encodeURIComponent(selectedId)}`, { method: "DELETE" });
       setSelectedId("");
       setFormId("");
+      setIsDeleteConfirmOpen(false);
       onPromptsChanged();
       await loadPrompts();
     } catch (err) {
@@ -141,158 +130,143 @@ export function PromptsSettings({ onPromptsChanged }: PromptsSettingsProps) {
   }
 
   if (isLoading) {
-    return <div style={{ padding: "20px", display: "flex", justifyContent: "center" }}><Loader2 className="spin" /></div>;
+    return (
+      <div className="prompts-settings-loading">
+        <Loader2 className="spin" />
+      </div>
+    );
   }
 
   const isNew = selectedId === "new";
 
   return (
-    <div className="prompts-settings-container" style={{ display: "flex", gap: "24px", height: "100%", flex: 1, minHeight: 0 }}>
-      {/* Sidebar List */}
-      <div style={{ width: "260px", flexShrink: 0, display: "flex", flexDirection: "column", gap: "12px", borderRight: "1px solid #e2e8f0", paddingRight: "20px" }}>
-        <button 
-          className="secondary-button" 
-          type="button" 
-          onClick={handleNewPrompt}
-          style={{ width: "100%", justifyContent: "center" }}
-        >
+    <div className="prompts-settings-container">
+      <aside className="prompts-settings-sidebar">
+        <Button type="button" onClick={handleNewPrompt} className="prompts-new-button">
           <Plus size={16} /> Nuevo prompt
-        </button>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", overflowY: "auto", flex: 1 }}>
-          {prompts.map(p => (
+        </Button>
+        <div className="prompts-settings-list">
+          {prompts.map((prompt) => (
             <button
-              key={p.id}
+              key={prompt.id}
               type="button"
-              onClick={() => selectPrompt(p)}
-              style={{
-                textAlign: "left",
-                padding: "8px 12px",
-                border: "none",
-                borderRadius: "6px",
-                background: selectedId === p.id ? "#eff6ff" : "transparent",
-                color: selectedId === p.id ? "#1d4ed8" : "#475569",
-                fontWeight: selectedId === p.id ? "600" : "500",
-                cursor: "pointer",
-                fontSize: "13px"
-              }}
+              className="prompt-list-item"
+              aria-selected={selectedId === prompt.id}
+              onClick={() => selectPrompt(prompt)}
             >
-              {p.name}
+              {prompt.name}
             </button>
           ))}
-          {isNew && (
-            <button
-              type="button"
-              style={{
-                textAlign: "left",
-                padding: "8px 12px",
-                border: "none",
-                borderRadius: "6px",
-                background: "#eff6ff",
-                color: "#1d4ed8",
-                fontWeight: "600",
-                cursor: "pointer",
-                fontSize: "13px",
-                fontStyle: "italic"
-              }}
-            >
+          {isNew ? (
+            <button type="button" className="prompt-list-item is-new" aria-selected="true">
               Nuevo...
             </button>
-          )}
+          ) : null}
         </div>
-      </div>
+      </aside>
 
-      {/* Editor */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px", minHeight: 0 }}>
+      <div className="prompts-settings-editor">
         {selectedId || isNew ? (
           <>
-            <div className="settings-grid" style={{ gridTemplateColumns: "1fr", flex: 1, overflowY: "auto", paddingRight: "10px", alignContent: "start" }}>
+            <div className="settings-grid prompts-editor-grid">
               <label className="field">
                 <span>Nombre del prompt</span>
-                <input 
-                  type="text" 
-                  value={formName} 
-                  onChange={(e) => setFormName(e.target.value)} 
-                  placeholder="Ej. Resumen Detallado"
-                />
+                <input type="text" value={formName} onChange={(event) => setFormName(event.target.value)} placeholder="Ej. Resumen Detallado" />
               </label>
 
               <label className="field">
                 <span>Descripción</span>
-                <input 
-                  type="text" 
-                  value={formDescription} 
-                  onChange={(e) => setFormDescription(e.target.value)} 
+                <input
+                  type="text"
+                  value={formDescription}
+                  onChange={(event) => setFormDescription(event.target.value)}
                   placeholder="Breve explicación de qué hace este prompt"
                 />
               </label>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div className="prompts-two-column-row">
                 <label className="field">
                   <span>Prefijo del archivo generado</span>
-                  <input 
-                    type="text" 
-                    value={formPrefix} 
-                    onChange={(e) => setFormPrefix(e.target.value)} 
-                    placeholder="Ej. resumen"
-                  />
+                  <input type="text" value={formPrefix} onChange={(event) => setFormPrefix(event.target.value)} placeholder="Ej. resumen" />
                 </label>
                 <label className="field">
                   <span>Temperatura (0.0 a 1.0)</span>
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     step="0.1"
                     min="0"
                     max="1"
-                    value={formTemperature} 
-                    onChange={(e) => setFormTemperature(parseFloat(e.target.value))} 
+                    value={formTemperature}
+                    onChange={(event) => setFormTemperature(parseFloat(event.target.value))}
                   />
                 </label>
               </div>
 
-              <label className="field" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <label className="field prompts-content-field">
                 <span>Contenido del Prompt (Instrucciones para la IA)</span>
-                <textarea 
-                  value={formContent} 
-                  onChange={(e) => setFormContent(e.target.value)} 
-                  style={{ flex: 1, minHeight: "250px", fontFamily: "monospace", padding: "12px", fontSize: "13px", resize: "vertical" }}
+                <textarea
+                  value={formContent}
+                  onChange={(event) => setFormContent(event.target.value)}
+                  className="prompts-content-textarea"
                   placeholder="Escribe aquí las instrucciones de sistema..."
                 />
               </label>
             </div>
 
             {error ? (
-              <div className="error-message compact" role="alert" style={{ flexShrink: 0 }}>
+              <div className="error-message compact prompts-error" role="alert">
                 <AlertCircle size={18} />
                 <span>{error}</span>
               </div>
             ) : null}
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "16px", borderTop: "1px solid #e2e8f0", flexShrink: 0 }}>
+            <div className="prompts-editor-footer">
               {!isNew ? (
-                <button className="secondary-button" type="button" onClick={handleDelete} disabled={isDeleting} style={{ color: "#ef4444" }}>
+                <Button variant="danger" type="button" onClick={() => setIsDeleteConfirmOpen(true)} disabled={isDeleting}>
                   {isDeleting ? <Loader2 className="spin" size={16} /> : <Trash2 size={16} />}
                   Eliminar
-                </button>
-              ) : <div></div>}
-              
-              <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                {saved && (
-                  <span className="saved-indicator" style={{ display: "flex", alignItems: "center", gap: "4px", color: "#10b981", fontSize: "13px" }}>
+                </Button>
+              ) : (
+                <span />
+              )}
+
+              <div className="prompts-save-group">
+                {saved ? (
+                  <span className="saved-indicator prompts-saved-indicator">
                     <Check size={16} /> Guardado
                   </span>
-                )}
-                <button className="primary-button subtle-primary-button compact-button" type="button" onClick={handleSave} disabled={isSaving || !formName || !formContent}>
+                ) : null}
+                <Button variant="subtle" compact type="button" onClick={handleSave} disabled={isSaving || !formName || !formContent}>
                   {isSaving ? <Loader2 className="spin" size={16} /> : "Guardar"}
-                </button>
+                </Button>
               </div>
             </div>
           </>
         ) : (
-          <div style={{ display: "flex", height: "100%", alignItems: "center", justifyContent: "center", color: "#64748b" }}>
-            Selecciona o crea un prompt.
-          </div>
+          <EmptyState className="prompts-empty">Selecciona o crea un prompt.</EmptyState>
         )}
       </div>
+
+      {isDeleteConfirmOpen ? (
+        <ConfirmModal
+          nested
+          title="Eliminar prompt"
+          onClose={() => setIsDeleteConfirmOpen(false)}
+          actions={
+            <>
+              <Button type="button" onClick={() => setIsDeleteConfirmOpen(false)}>
+                Cancelar
+              </Button>
+              <Button variant="danger" type="button" onClick={() => void deleteSelectedPrompt()} disabled={isDeleting}>
+                {isDeleting ? <Loader2 className="spin" size={16} /> : <Trash2 size={16} />}
+                Eliminar
+              </Button>
+            </>
+          }
+        >
+          <p>¿Estás seguro de que quieres eliminar este prompt?</p>
+        </ConfirmModal>
+      ) : null}
     </div>
   );
 }

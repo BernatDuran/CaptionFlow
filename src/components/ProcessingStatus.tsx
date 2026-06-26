@@ -36,13 +36,13 @@ export function ProcessingStatus({ status, isProcessing }: ProcessingStatusProps
   }
 
   return (
-    <div className="status-line active" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <div className="status-line active processing-status-active">
+      <div className="processing-status-main">
         {isProcessing ? <Loader2 className="spin" size={18} /> : <CircleDashed size={18} />}
         <span>{status}</span>
       </div>
       {isProcessing && (
-        <small style={{ color: '#64748b', textAlign: 'center' }}>El proceso puede tardar un par de minutos</small>
+        <small>El proceso puede tardar un par de minutos</small>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { useModalClose } from "./useModalClose";
+import { useEffect, useId, useState } from "react";
+import { ModalShell } from "./ModalShell";
+import { Button } from "./ui";
 
 type PromptEditorModalProps = {
   initialPrompt: string;
@@ -8,50 +9,29 @@ type PromptEditorModalProps = {
 };
 
 export function PromptEditorModal({ initialPrompt, onSave, onClose }: PromptEditorModalProps) {
+  const titleId = useId();
+  const descriptionId = useId();
   const [promptText, setPromptText] = useState(initialPrompt);
-  const { handleBackdropClick } = useModalClose(onClose);
 
   useEffect(() => {
     setPromptText(initialPrompt);
   }, [initialPrompt]);
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Editar Prompt" onClick={handleBackdropClick}>
-      <section className="confirm-modal prompt-editor-modal" style={{ width: "min(800px, 90vw)", display: "flex", flexDirection: "column", maxHeight: "80vh" }}>
-        <h2>Editar Prompt Personalizado</h2>
-        <p>Modifica las instrucciones para este procesamiento. Esto solo afectará a la ejecución actual.</p>
-        
-        <textarea
-          value={promptText}
-          onChange={(e) => setPromptText(e.target.value)}
-          className="prompt-textarea"
-          style={{
-            flex: 1,
-            minHeight: "300px",
-            marginTop: "16px",
-            padding: "12px",
-            fontFamily: "monospace",
-            fontSize: "14px",
-            border: "1px solid #d8dee8",
-            borderRadius: "6px",
-            resize: "vertical"
-          }}
-        />
+    <ModalShell className="confirm-modal prompt-editor-modal" labelledBy={titleId} describedBy={descriptionId} onClose={onClose}>
+      <h2 id={titleId}>Editar Prompt Personalizado</h2>
+      <p id={descriptionId}>Modifica las instrucciones para este procesamiento. Esto solo afectará a la ejecución actual.</p>
 
-        <div className="confirm-actions">
-          <button className="secondary-button" type="button" onClick={onClose}>
-            Cancelar
-          </button>
-          <button
-            className="primary-button subtle-primary-button"
-            type="button"
-            onClick={() => onSave(promptText)}
-            disabled={!promptText.trim()}
-          >
-            Guardar y usar
-          </button>
-        </div>
-      </section>
-    </div>
+      <textarea value={promptText} onChange={(event) => setPromptText(event.target.value)} className="prompt-textarea" />
+
+      <div className="confirm-actions">
+        <Button type="button" onClick={onClose}>
+          Cancelar
+        </Button>
+        <Button variant="subtle" type="button" onClick={() => onSave(promptText)} disabled={!promptText.trim()}>
+          Guardar y usar
+        </Button>
+      </div>
+    </ModalShell>
   );
 }

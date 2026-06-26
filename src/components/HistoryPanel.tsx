@@ -1,63 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, ChevronRight, Eye, GitFork, Search, ExternalLink } from "lucide-react";
-import { DocumentActions, type DiagramPromptOption } from "./DocumentActions";
+import type { DiagramPromptOption, HistoryItem } from "../api/types";
+import {
+  formatDateShort,
+  formatDurationClock,
+  formatModelShort,
+  formatMonth,
+  formatVideoDuration,
+  formatWords,
+  getMonthKey,
+  normalizeSearchText
+} from "../utils/formatters";
+import { DocumentActions } from "./DocumentActions";
 
-type UsageTotal = {
-  inputTokens: number;
-  outputTokens: number;
-  totalTokens: number;
-  durationMs: number;
-  unavailableUsageRuns: number;
-};
-
-type UsageTotals = {
-  document: UsageTotal;
-  diagrams: UsageTotal;
-  transcript: UsageTotal;
-  all: UsageTotal;
-};
-
-type HistoryRun = {
-  operation: string;
-  provider: string | null;
-  model: string | null;
-  diagramType: string | null;
-  diagramPromptId: string | null;
-  totalTokens: number | null;
-  durationMs: number;
-  startedAt: string;
-};
-
-export type HistoryItem = {
-  filename: string;
-  downloadUrl: string;
-  pdfUrl: string;
-  hasDiagram: boolean;
-  diagramFilename?: string;
-  diagramKind?: string;
-  diagramLabel?: string;
-  diagramKinds?: string[];
-  diagramLabels?: string[];
-  diagramCount?: number;
-  title: string;
-  videoTitle?: string;
-  videoUrl?: string;
-  channelName?: string;
-  provider?: string;
-  model?: string;
-  promptName?: string;
-  usageTotals?: UsageTotals;
-  aiRuns?: HistoryRun[];
-  transcriptWords?: number;
-  outputWords?: number;
-  durationSeconds?: number;
-  durationText?: string;
-  transcriptLanguage?: string;
-  transcriptSource?: string;
-  processedAt?: string;
-  createdAt: string;
-  size: number;
-};
+export type { HistoryItem };
 
 type HistoryPanelProps = {
   items: HistoryItem[];
@@ -162,9 +118,9 @@ function HistoryFilterCombobox({ options, value, searchPlaceholder, onChange }: 
 
   const selected = options.find((option) => option.value === value) || options[0];
   const filteredOptions = useMemo(() => {
-    const normalizedQuery = normalize(query.trim());
+    const normalizedQuery = normalizeSearchText(query.trim());
     if (!normalizedQuery) return options;
-    return options.filter((option) => normalize(option.label).includes(normalizedQuery));
+    return options.filter((option) => normalizeSearchText(option.label).includes(normalizedQuery));
   }, [options, query]);
 
   return (
@@ -211,78 +167,24 @@ function HistoryFilterCombobox({ options, value, searchPlaceholder, onChange }: 
 }
 
 function formatDate(value: string) {
-  return new Intl.DateTimeFormat("es", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit"
-  }).format(new Date(value));
+  return formatDateShort(value);
 }
 
 function formatModel(model?: string) {
-  if (!model) return "";
-  const parts = model.split("/");
-  return parts[parts.length - 1];
-}
-
-function formatSize(size: number) {
-  if (size < 1024) return `${size} B`;
-  if (size < 1024 * 1024) return `${Math.round(size / 1024)} KB`;
-  return `${(size / 1024 / 1024).toFixed(1)} MB`;
-}
-
-function formatTokens(value?: number) {
-  if (!value) return "";
-  if (value >= 1000) return `${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}k tok`;
-  return `${value} tok`;
+  return formatModelShort(model);
 }
 
 function formatDuration(ms?: number) {
-  if (!ms) return "";
-  const totalSeconds = Math.round(ms / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  const minuteText = minutes < 100 ? String(minutes).padStart(2, "0") : String(minutes);
-  return `${minuteText}m ${String(seconds).padStart(2, "0")}s`;
-}
-
-function formatVideoDuration(item: HistoryItem) {
-  if (typeof item.durationSeconds === "number") {
-    const minutes = Math.floor(item.durationSeconds / 60);
-    const seconds = Math.round(item.durationSeconds % 60);
-    return `${minutes}:${String(seconds).padStart(2, "0")}`;
-  }
-  return item.durationText || "";
+  return formatDurationClock(ms);
 }
 
 function formatTranscriptWords(value?: number) {
-  if (!value) return "";
-  return `${String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} pal.`;
+  return formatWords(value);
 }
 
 function formatOutputWords(value?: number) {
   if (!value) return "";
   return `${String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} palabras`;
-}
-
-function getMonthKey(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-}
-
-function formatMonth(value: string) {
-  if (!value) return "Todos los meses";
-  const [year, month] = value.split("-").map(Number);
-  return new Intl.DateTimeFormat("es", { month: "short", year: "2-digit" })
-    .format(new Date(year, month - 1, 1))
-    .replace(".", "");
-}
-
-function normalize(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
 }
 
 function countBy(items: HistoryItem[], getValue: (item: HistoryItem) => string | undefined) {
@@ -306,7 +208,7 @@ function filterHistoryItems(
     skip?: "channel" | "model" | "month";
   }
 ) {
-  const normalizedQuery = normalize((filters.query || "").trim());
+  const normalizedQuery = normalizeSearchText((filters.query || "").trim());
 
   return items.filter((item) => {
     const itemMonth = getMonthKey(item.processedAt || item.createdAt);
@@ -314,7 +216,7 @@ function filterHistoryItems(
     const matchesModel = filters.skip === "model" || !filters.model || item.model === filters.model;
     const matchesMonth = filters.skip === "month" || !filters.month || itemMonth === filters.month;
     const matchesDiagram = !filters.diagram || (filters.diagram === "true" ? item.hasDiagram : !item.hasDiagram);
-    const searchable = normalize(`${item.title} ${item.videoTitle || ""}`);
+    const searchable = normalizeSearchText(`${item.title} ${item.videoTitle || ""}`);
     const matchesQuery = !normalizedQuery || searchable.includes(normalizedQuery);
     return matchesChannel && matchesModel && matchesMonth && matchesDiagram && matchesQuery;
   });
@@ -508,7 +410,6 @@ export function HistoryPanel({ items, onOpen, onDiagram, onViewTranscript, diagr
                         title="Abrir vídeo de YouTube"
                         onClick={(e) => e.stopPropagation()}
                         className="history-external-link"
-                        style={{ color: "#94a3b8", display: "flex", alignItems: "center", marginLeft: "2px" }}
                       >
                         <ExternalLink size={12} />
                       </a>

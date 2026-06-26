@@ -1,25 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Eye, FileText, GitFork, Download, Loader2 } from "lucide-react";
+import { ChevronDown, Download, Eye, FileText, GitFork, Loader2 } from "lucide-react";
+import type { DiagramPromptOption, HistoryRun } from "../api/types";
+import { formatDurationMs, formatModelShort, formatTokens } from "../utils/formatters";
 import { DownloadModal } from "./DownloadModal";
 
-export type DiagramPromptOption = {
-  id: string;
-  name: string;
-  description: string;
-  diagramType: string;
-  temperature: number;
-};
-
-export type ActionRun = {
-  operation: string;
-  provider: string | null;
-  model: string | null;
-  diagramType: string | null;
-  diagramPromptId: string | null;
-  totalTokens: number | null;
-  durationMs: number;
-  startedAt: string;
-};
+export type { DiagramPromptOption };
 
 type DocumentActionsProps = {
   filename: string;
@@ -31,31 +16,12 @@ type DocumentActionsProps = {
   hasDiagram?: boolean;
   existingDiagramKind?: string;
   existingDiagramKinds?: string[];
-  aiRuns?: ActionRun[];
+  aiRuns?: HistoryRun[];
   showOpen?: boolean;
   disabled?: boolean;
   onTranscript?: (filename: string) => void;
   align?: "left" | "right";
 };
-
-function formatTokens(value: number | null | undefined) {
-  if (!value) return "";
-  if (value >= 1000) return `${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}k tok`;
-  return `${value} tok`;
-}
-
-function formatDuration(ms?: number) {
-  if (!ms) return "";
-  if (ms < 1000) return `${ms} ms`;
-  const seconds = ms / 1000;
-  if (seconds < 60) return `${seconds.toFixed(seconds >= 10 ? 0 : 1)} s`;
-  return `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
-}
-
-function formatModel(model: string) {
-  const slashIndex = model.indexOf("/");
-  return slashIndex >= 0 ? model.slice(slashIndex + 1) : model;
-}
 
 export function DocumentActions({
   filename,
@@ -76,7 +42,11 @@ export function DocumentActions({
   const [isOpen, setIsOpen] = useState(false);
   const [isDiagramPickerOpen, setIsDiagramPickerOpen] = useState(false);
   const [busyAction, setBusyAction] = useState<"markdown" | "pdf" | "diagram" | "">("");
-  const [downloadModal, setDownloadModal] = useState<{ isOpen: boolean; url: string; type: "markdown" | "pdf" | null }>({ isOpen: false, url: "", type: null });
+  const [downloadModal, setDownloadModal] = useState<{ isOpen: boolean; url: string; type: "markdown" | "pdf" | null }>({
+    isOpen: false,
+    url: "",
+    type: null
+  });
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -103,6 +73,11 @@ export function DocumentActions({
     window.location.href = downloadModal.url;
   }
 
+  function getPromptKind(prompt: DiagramPromptOption) {
+    if (/^(flowchart|graph)\b/i.test(prompt.diagramType)) return "flowchart";
+    return prompt.diagramType.trim();
+  }
+
   function triggerDiagram(promptId: string) {
     setIsOpen(false);
     setIsDiagramPickerOpen(false);
@@ -118,19 +93,14 @@ export function DocumentActions({
     window.setTimeout(() => setBusyAction(""), 2400);
   }
 
-  const isBusy = Boolean(busyAction) || disabled;
-
-  function getPromptKind(prompt: DiagramPromptOption) {
-    if (/^(flowchart|graph)\b/i.test(prompt.diagramType)) return "flowchart";
-    return prompt.diagramType.trim();
-  }
-
   function getLatestDiagramRun(prompt: DiagramPromptOption) {
     const kind = getPromptKind(prompt);
     return [...aiRuns]
       .filter((run) => run.operation === "diagram_generation" && (run.diagramType === kind || run.diagramPromptId === prompt.id))
       .sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt))[0];
   }
+
+  const isBusy = Boolean(busyAction) || disabled;
 
   return (
     <div className="actions-menu" ref={menuRef}>
@@ -178,11 +148,7 @@ export function DocumentActions({
             <FileText size={16} />
             PDF
           </button>
-          <button
-            role="menuitem"
-            type="button"
-            onClick={() => setIsDiagramPickerOpen((current) => !current)}
-          >
+          <button role="menuitem" type="button" onClick={() => setIsDiagramPickerOpen((current) => !current)}>
             <GitFork size={16} />
             Diagrama
             <ChevronDown size={14} />
@@ -194,7 +160,7 @@ export function DocumentActions({
                 const latestRun = getLatestDiagramRun(prompt);
                 const runSummary =
                   latestRun && latestRun.model
-                    ? `${formatModel(latestRun.model)} · ${formatTokens(latestRun.totalTokens) || "sin tokens"} · ${formatDuration(latestRun.durationMs)}`
+                    ? `${formatModelShort(latestRun.model)} · ${formatTokens(latestRun.totalTokens) || "sin tokens"} · ${formatDurationMs(latestRun.durationMs)}`
                     : "";
                 return (
                   <button key={prompt.id} type="button" onClick={() => triggerDiagram(prompt.id)}>
@@ -216,7 +182,7 @@ export function DocumentActions({
         type={downloadModal.type || "markdown"}
         url={downloadModal.url}
         onConfirm={executeDownload}
-        onCancel={() => setDownloadModal(prev => ({ ...prev, isOpen: false }))}
+        onCancel={() => setDownloadModal((prev) => ({ ...prev, isOpen: false }))}
       />
     </div>
   );

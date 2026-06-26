@@ -1,25 +1,24 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { AlertCircle, BarChart3, Check, ChevronDown, Info, KeyRound, RefreshCw, X, Settings2, FileText, Sliders, FolderOpen } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  AlertCircle,
+  BarChart3,
+  Check,
+  ChevronDown,
+  FileText,
+  FolderOpen,
+  Info,
+  KeyRound,
+  RefreshCw,
+  Settings2,
+  Sliders,
+  X
+} from "lucide-react";
+import { apiFetch } from "../api/client";
+import type { Provider, ProviderId, ProvidersResponse, Settings } from "../api/types";
 import { ModelCombobox, type ModelOption } from "./ModelCombobox";
+import { ConfirmModal, ModalShell } from "./ModalShell";
 import { PromptsSettings } from "./PromptsSettings";
-import { useModalClose } from "./useModalClose";
-
-type ProviderId = "openai" | "google" | "nanogpt";
-
-type Provider = {
-  id: ProviderId;
-  name: string;
-  configured: boolean;
-};
-
-type Settings = {
-  activeProvider: ProviderId;
-  selectedModels: Partial<Record<ProviderId, string>>;
-  adaptiveChunkingEnabled?: boolean;
-  minimumModelContextTokens?: number;
-  outputRootDir?: string;
-  analyticsEnabled?: boolean;
-};
+import { Button, IconButton, Tabs } from "./ui";
 
 type SettingsModalProps = {
   onClose: () => void;
@@ -27,17 +26,16 @@ type SettingsModalProps = {
   onSettingsChanged?: (settings: Settings) => void;
 };
 
-type ProvidersResponse = {
-  providers: Provider[];
-  activeProvider: ProviderId;
-  selectedModels: Settings["selectedModels"];
-  adaptiveChunkingEnabled?: boolean;
-  minimumModelContextTokens?: number;
-  outputRootDir?: string;
-  analyticsEnabled?: boolean;
-};
+type SettingsTab = "models" | "prompts" | "general" | "storage";
 
 const CONTEXT_PRESETS = [4000, 8000, 16000, 32000, 64000, 128000, 256000];
+
+const SETTINGS_TABS: { id: SettingsTab; label: string; icon: ReactNode }[] = [
+  { id: "models", label: "Modelos AI", icon: <Settings2 size={16} /> },
+  { id: "prompts", label: "Prompts", icon: <FileText size={16} /> },
+  { id: "general", label: "General", icon: <Sliders size={16} /> },
+  { id: "storage", label: "Almacenamiento", icon: <FolderOpen size={16} /> }
+];
 
 function formatPreset(tokens: number) {
   return `${Math.round(tokens / 1000)}k`;
@@ -123,31 +121,20 @@ function ContextPresetCombobox({ value, options, onChange }: ContextPresetCombob
   );
 }
 
-async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload?.error?.message || "No se pudo completar la operacion.");
-  }
-
-  return payload as T;
-}
-
 export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: SettingsModalProps) {
-  const [activeTab, setActiveTab] = useState<"models" | "prompts" | "general" | "storage">("models");
+  const titleId = useId();
+  const [activeTab, setActiveTab] = useState<SettingsTab>("models");
   const [providers, setProviders] = useState<Provider[]>([]);
   const [models, setModels] = useState<ModelOption[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
   const [restarted, setRestarted] = useState(false);
+  const [isLoadingSettings, setIsLoadingSettings] = useState(true);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [isRestarting, setIsRestarting] = useState(false);
   const [isChunkingInfoOpen, setIsChunkingInfoOpen] = useState(false);
   const [isAnalyticsConfirmOpen, setIsAnalyticsConfirmOpen] = useState(false);
-
-  const { handleBackdropClick } = useModalClose(onClose);
-  const { handleBackdropClick: handleChunkingInfoBackdropClick } = useModalClose(() => setIsChunkingInfoOpen(false), isChunkingInfoOpen);
-  const { handleBackdropClick: handleAnalyticsConfirmBackdropClick } = useModalClose(() => setIsAnalyticsConfirmOpen(false), isAnalyticsConfirmOpen);
 
   function applyProvidersResponse(data: ProvidersResponse) {
     setProviders(data.providers);
@@ -162,15 +149,33 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
   }
 
   useEffect(() => {
+    let isMounted = true;
+    setIsLoadingSettings(true);
     apiFetch<ProvidersResponse>("/api/providers")
-      .then(applyProvidersResponse)
-      .catch((err) => setError(err instanceof Error ? err.message : "No se pudo cargar la configuracion."));
+      .then((data) => {
+        if (!isMounted) return;
+        applyProvidersResponse(data);
+      })
+      .catch((err) => {
+        if (isMounted) setError(err instanceof Error ? err.message : "No se pudo cargar la configuracion.");
+      })
+      .finally(() => {
+        if (isMounted) setIsLoadingSettings(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
     if (!settings?.activeProvider) return;
+
+    let isMounted = true;
+    setIsLoadingModels(true);
     apiFetch<{ models: ModelOption[] }>(`/api/models?provider=${settings.activeProvider}`)
       .then((data) => {
+        if (!isMounted) return;
         setModels(data.models);
         if (!settings.selectedModels[settings.activeProvider] && data.models[0]) {
           setSettings((current) =>
@@ -186,7 +191,16 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
           );
         }
       })
-      .catch((err) => setError(err instanceof Error ? err.message : "No se pudieron cargar los modelos."));
+      .catch((err) => {
+        if (isMounted) setError(err instanceof Error ? err.message : "No se pudieron cargar los modelos.");
+      })
+      .finally(() => {
+        if (isMounted) setIsLoadingModels(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [settings?.activeProvider]);
 
   const activeProvider = useMemo(
@@ -216,7 +230,7 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
   );
 
   useEffect(() => {
-    if (!settings || filteredModels.length === 0) return;
+    if (!settings || isLoadingModels || filteredModels.length === 0) return;
     const selectedModel = settings.selectedModels[settings.activeProvider];
     if (!selectedModel || filteredModels.some((model) => model.id === selectedModel)) return;
 
@@ -231,7 +245,7 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
           }
         : current
     );
-  }, [filteredModels, settings]);
+  }, [filteredModels, isLoadingModels, settings]);
 
   async function saveSettings(nextSettings: Settings) {
     setError("");
@@ -241,8 +255,7 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
     try {
       const data = await apiFetch<Settings>("/api/settings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nextSettings)
+        json: nextSettings
       });
       setSettings(data);
       onSettingsChanged?.(data);
@@ -295,144 +308,98 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
   }
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Configuracion" onClick={handleBackdropClick}>
-      <section className="settings-modal">
-        <header className="modal-header" style={{ paddingBottom: 0 }}>
-          <div style={{ flex: 1 }}>
-            <h2>Configuración</h2>
-            <div style={{ display: "flex", gap: "20px", marginTop: "16px", borderBottom: "1px solid #e2e8f0" }}>
-              <button 
-                type="button" 
-                onClick={() => setActiveTab("models")}
-                style={{ 
-                  display: "flex", alignItems: "center", gap: "8px", padding: "8px 4px", 
-                  background: "transparent", border: "none", borderBottom: activeTab === "models" ? "2px solid #1d4ed8" : "2px solid transparent",
-                  color: activeTab === "models" ? "#1d4ed8" : "#64748b", fontWeight: activeTab === "models" ? "600" : "500",
-                  cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                <Settings2 size={16} /> Modelos AI
-              </button>
-              <button 
-                type="button" 
-                onClick={() => setActiveTab("prompts")}
-                style={{ 
-                  display: "flex", alignItems: "center", gap: "8px", padding: "8px 4px", 
-                  background: "transparent", border: "none", borderBottom: activeTab === "prompts" ? "2px solid #1d4ed8" : "2px solid transparent",
-                  color: activeTab === "prompts" ? "#1d4ed8" : "#64748b", fontWeight: activeTab === "prompts" ? "600" : "500",
-                  cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                <FileText size={16} /> Prompts
-              </button>
-              <button 
-                type="button" 
-                onClick={() => setActiveTab("general")}
-                style={{ 
-                  display: "flex", alignItems: "center", gap: "8px", padding: "8px 4px", 
-                  background: "transparent", border: "none", borderBottom: activeTab === "general" ? "2px solid #1d4ed8" : "2px solid transparent",
-                  color: activeTab === "general" ? "#1d4ed8" : "#64748b", fontWeight: activeTab === "general" ? "600" : "500",
-                  cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                <Sliders size={16} /> General
-              </button>
-              <button 
-                type="button" 
-                onClick={() => setActiveTab("storage")}
-                style={{ 
-                  display: "flex", alignItems: "center", gap: "8px", padding: "8px 4px", 
-                  background: "transparent", border: "none", borderBottom: activeTab === "storage" ? "2px solid #1d4ed8" : "2px solid transparent",
-                  color: activeTab === "storage" ? "#1d4ed8" : "#64748b", fontWeight: activeTab === "storage" ? "600" : "500",
-                  cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                <FolderOpen size={16} /> Almacenamiento
-              </button>
-            </div>
-          </div>
-          <button className="icon-button" type="button" aria-label="Cerrar configuración" onClick={onClose} style={{ alignSelf: "flex-start" }}>
-            <X size={20} />
-          </button>
-        </header>
+    <ModalShell className="settings-modal" labelledBy={titleId} onClose={onClose}>
+      <header className="modal-header settings-modal-header">
+        <div className="settings-modal-heading">
+          <h2 id={titleId}>Configuración</h2>
+          <Tabs items={SETTINGS_TABS} value={activeTab} onChange={setActiveTab} />
+        </div>
+        <IconButton type="button" aria-label="Cerrar configuración" onClick={onClose}>
+          <X size={20} />
+        </IconButton>
+      </header>
 
-        <div style={{ padding: "20px", display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflow: "hidden" }}>
-          {activeTab === "prompts" ? (
-            <PromptsSettings onPromptsChanged={() => onPromptsChanged?.()} />
-          ) : (
-            <div style={{ overflowY: "auto", flex: 1, display: "flex", flexDirection: "column" }}>
-              {settings ? (
-                <div className="settings-grid">
-                  {activeTab === "general" ? (
-                    <>
-                      <div className="settings-option-card" style={{ marginTop: "24px" }}>
-                        <div>
-                          <strong>Analitica de datos</strong>
-                          <span>Activa el dashboard local con filtros, metricas y graficos personalizados.</span>
-                        </div>
-                        <label className="settings-switch">
-                          <input
-                            type="checkbox"
-                            checked={Boolean(settings.analyticsEnabled)}
-                            onChange={(event) => handleAnalyticsToggle(event.target.checked)}
-                          />
-                          <span>Habilitar analitica de datos</span>
-                        </label>
+      <div className="settings-modal-body">
+        {activeTab === "prompts" ? (
+          <PromptsSettings onPromptsChanged={() => onPromptsChanged?.()} />
+        ) : (
+          <div className="settings-scroll">
+            {isLoadingSettings ? (
+              <div className="settings-loading">Cargando configuración...</div>
+            ) : settings ? (
+              <div className="settings-grid">
+                {activeTab === "general" ? (
+                  <>
+                    <div className="settings-option-card">
+                      <div>
+                        <strong>Analítica de datos</strong>
+                        <span>Activa el dashboard local con filtros, métricas y gráficos personalizados.</span>
                       </div>
-
-                      <div className="restart-card" style={{ marginTop: "24px" }}>
-                        <div>
-                          <strong>Reiniciar configuracion</strong>
-                          <span>Recarga el archivo .env y actualiza las claves detectadas.</span>
-                        </div>
-                        <button className="secondary-button" type="button" onClick={handleRestart} disabled={isRestarting}>
-                          <RefreshCw className={isRestarting ? "spin" : undefined} size={17} />
-                          {isRestarting ? "Reiniciando" : "Reiniciar"}
-                        </button>
-                      </div>
-                    </>
-                  ) : activeTab === "storage" ? (
-                    <>
-                      <label className="field" style={{ gridColumn: "1 / -1" }}>
-                        <span>Ruta raíz de almacenamiento</span>
+                      <label className="settings-switch">
                         <input
-                          type="text"
-                          placeholder="Ej: C:\Ruta\Al\Contenido (Vacío para usar la carpeta del proyecto)"
-                          value={settings.outputRootDir || ""}
-                          onChange={(event) =>
-                            setSettings((current) =>
-                              current ? { ...current, outputRootDir: event.target.value } : current
-                            )
-                          }
+                          type="checkbox"
+                          checked={Boolean(settings.analyticsEnabled)}
+                          onChange={(event) => handleAnalyticsToggle(event.target.checked)}
                         />
+                        <span>Habilitar analítica de datos</span>
                       </label>
+                    </div>
 
-                      <div style={{ gridColumn: "1 / -1", fontSize: "13px", color: "#64748b", lineHeight: "1.5", marginTop: "8px" }}>
-                        <strong>Nota:</strong> Si cambias la ruta raíz, CaptionFlow creará automáticamente las subcarpetas necesarias en el nuevo destino al procesar un video. Los resultados anteriores permanecerán en su ubicación original.
+                    <div className="restart-card">
+                      <div>
+                        <strong>Reiniciar configuración</strong>
+                        <span>Recarga el archivo .env y actualiza las claves detectadas.</span>
                       </div>
-                    </>
-                  ) : (
-                    <>
-                      <label className="field">
-                        <span>Proveedor de IA</span>
-                        <select
-                          value={settings.activeProvider}
-                          onChange={(event) => {
-                            const activeProvider = event.target.value as ProviderId;
-                            setSettings((current) => (current ? { ...current, activeProvider } : current));
-                          }}
-                        >
-                          {providers.map((provider) => (
-                            <option key={provider.id} value={provider.id}>
-                              {provider.name}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
+                      <Button type="button" onClick={handleRestart} disabled={isRestarting}>
+                        <RefreshCw className={isRestarting ? "spin" : undefined} size={17} />
+                        {isRestarting ? "Reiniciando" : "Reiniciar"}
+                      </Button>
+                    </div>
+                  </>
+                ) : activeTab === "storage" ? (
+                  <>
+                    <label className="field settings-grid-span">
+                      <span>Ruta raíz de almacenamiento</span>
+                      <input
+                        type="text"
+                        placeholder="Ej: C:\Ruta\Al\Contenido (Vacío para usar la carpeta del proyecto)"
+                        value={settings.outputRootDir || ""}
+                        onChange={(event) =>
+                          setSettings((current) => (current ? { ...current, outputRootDir: event.target.value } : current))
+                        }
+                      />
+                    </label>
 
-                      <div className="model-selection-grid">
-                        <label className="field">
-                          <span>Modelo</span>
+                    <div className="settings-storage-note">
+                      <strong>Nota:</strong> Si cambias la ruta raíz, CaptionFlow creará automáticamente las subcarpetas necesarias en
+                      el nuevo destino al procesar un video. Los resultados anteriores permanecerán en su ubicación original.
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <label className="field">
+                      <span>Proveedor de IA</span>
+                      <select
+                        value={settings.activeProvider}
+                        onChange={(event) => {
+                          const activeProvider = event.target.value as ProviderId;
+                          setSettings((current) => (current ? { ...current, activeProvider } : current));
+                        }}
+                      >
+                        {providers.map((provider) => (
+                          <option key={provider.id} value={provider.id}>
+                            {provider.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+
+                    <div className="model-selection-grid">
+                      <label className="field">
+                        <span>Modelo</span>
+                        {isLoadingModels ? (
+                          <div className="settings-model-loading">Cargando modelos...</div>
+                        ) : (
                           <ModelCombobox
                             models={filteredModels}
                             value={settings.selectedModels[settings.activeProvider] || ""}
@@ -451,126 +418,143 @@ export function SettingsModal({ onClose, onPromptsChanged, onSettingsChanged }: 
                               )
                             }
                           />
-                        </label>
+                        )}
+                      </label>
 
-                        <label className="minimum-context-filter-field">
-                          <span className="minimum-context-filter-label">Filtrar modelos con contexto mínimo superior a</span>
-                          <ContextPresetCombobox
-                            value={settings.minimumModelContextTokens ?? 4000}
-                            options={contextOptions}
-                            onChange={(value) =>
-                              setSettings((current) =>
-                                current ? { ...current, minimumModelContextTokens: value } : current
-                              )
-                            }
-                          />
-                        </label>
-                      </div>
+                      <label className="minimum-context-filter-field">
+                        <span className="minimum-context-filter-label">Filtrar modelos con contexto mínimo superior a</span>
+                        <ContextPresetCombobox
+                          value={settings.minimumModelContextTokens ?? 4000}
+                          options={contextOptions}
+                          onChange={(value) =>
+                            setSettings((current) => (current ? { ...current, minimumModelContextTokens: value } : current))
+                          }
+                        />
+                      </label>
+                    </div>
 
-                      <div className={activeProvider?.configured ? "key-status ready" : "key-status missing"}>
-                        <KeyRound size={18} />
-                        <span>{activeProvider?.configured ? "API key detectada en backend" : "API key no configurada en .env"}</span>
-                      </div>
+                    <div className={activeProvider?.configured ? "key-status ready" : "key-status missing"}>
+                      <KeyRound size={18} />
+                      <span>{activeProvider?.configured ? "API key detectada en backend" : "API key no configurada en .env"}</span>
+                    </div>
 
-                      <div className="model-context-toggle-row">
-                        <label className="model-context-toggle">
-                          <input
-                            type="checkbox"
-                            checked={Boolean(settings.adaptiveChunkingEnabled)}
-                            onChange={(event) =>
-                              setSettings((current) => (current ? { ...current, adaptiveChunkingEnabled: event.target.checked } : current))
-                            }
-                          />
-                          <span>Activar chunking adaptativo</span>
-                        </label>
-                        <button className="model-context-info" type="button" aria-label="Información sobre chunking adaptativo" onClick={() => setIsChunkingInfoOpen(true)}>
-                          <Info size={15} />
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ) : null}
-
-              {error ? (
-                <div className="error-message compact" role="alert" style={{ marginTop: "16px" }}>
-                  <AlertCircle size={18} />
-                  <span>{error}</span>
-                </div>
-              ) : null}
-
-              <footer className="modal-footer" style={{ marginTop: "24px" }}>
-                {saved ? (
-                  <span className="saved-indicator">
-                    <Check size={17} />
-                    Guardado
-                  </span>
-                ) : null}
-                {restarted ? (
-                  <span className="saved-indicator">
-                    <Check size={17} />
-                    Reiniciado
-                  </span>
-                ) : null}
-                <button className="secondary-button" type="button" onClick={onClose}>
-                  Cerrar
-                </button>
-                <button className="primary-button subtle-primary-button compact-button" type="button" onClick={handleSave} disabled={!settings}>
-                  Guardar
-                </button>
-              </footer>
-            </div>
-          )}
-        </div>
-      </section>
-      {isChunkingInfoOpen ? (
-        <div className="modal-backdrop nested-backdrop" role="dialog" aria-modal="true" aria-label="Información sobre chunking adaptativo" onClick={handleChunkingInfoBackdropClick}>
-          <section className="confirm-modal chunking-info-modal">
-            <h2>Modelo y transcripciones largas</h2>
-            <p>
-              El chunking divide una transcripción larga en partes para que el modelo pueda procesarla sin superar su ventana de contexto.
-              CaptionFlow resume cada parte y después genera el documento final con ese material intermedio.
-            </p>
-            <div className="chunking-info-grid">
-              <div>
-                <strong>Activar chunking adaptativo</strong>
-                <span>Si está activo, el tamaño de cada parte se calcula automáticamente según el contexto real del modelo seleccionado.</span>
+                    <div className="model-context-toggle-row">
+                      <label className="model-context-toggle">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(settings.adaptiveChunkingEnabled)}
+                          onChange={(event) =>
+                            setSettings((current) =>
+                              current ? { ...current, adaptiveChunkingEnabled: event.target.checked } : current
+                            )
+                          }
+                        />
+                        <span>Activar chunking adaptativo</span>
+                      </label>
+                      <button
+                        className="model-context-info"
+                        type="button"
+                        aria-label="Información sobre chunking adaptativo"
+                        onClick={() => setIsChunkingInfoOpen(true)}
+                      >
+                        <Info size={15} />
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
+            ) : null}
+
+            {error ? (
+              <div className="error-message compact settings-error" role="alert">
+                <AlertCircle size={18} />
+                <span>{error}</span>
+              </div>
+            ) : null}
+
+            <footer className="modal-footer settings-modal-footer">
+              {saved ? (
+                <span className="saved-indicator">
+                  <Check size={17} />
+                  Guardado
+                </span>
+              ) : null}
+              {restarted ? (
+                <span className="saved-indicator">
+                  <Check size={17} />
+                  Reiniciado
+                </span>
+              ) : null}
+              <Button type="button" onClick={onClose}>
+                Cerrar
+              </Button>
+              <Button variant="subtle" compact type="button" onClick={handleSave} disabled={!settings}>
+                Guardar
+              </Button>
+            </footer>
+          </div>
+        )}
+      </div>
+
+      {isChunkingInfoOpen ? (
+        <ConfirmModal
+          nested
+          className="chunking-info-modal"
+          title="Modelo y transcripciones largas"
+          onClose={() => setIsChunkingInfoOpen(false)}
+          actions={
+            <Button variant="subtle" compact type="button" onClick={() => setIsChunkingInfoOpen(false)}>
+              Entendido
+            </Button>
+          }
+        >
+          <p>
+            El chunking divide una transcripción larga en partes para que el modelo pueda procesarla sin superar su ventana de
+            contexto. CaptionFlow resume cada parte y después genera el documento final con ese material intermedio.
+          </p>
+          <div className="chunking-info-grid">
+            <div>
+              <strong>Activar chunking adaptativo</strong>
+              <span>Si está activo, el tamaño de cada parte se calcula automáticamente según el contexto real del modelo seleccionado.</span>
             </div>
-            <p>
-              El chunking adaptativo reserva margen para instrucciones y respuesta, y usa el resto del contexto seguro del modelo para decidir cada corte.
-            </p>
-            <div className="confirm-actions">
-              <button className="primary-button subtle-primary-button compact-button" type="button" onClick={() => setIsChunkingInfoOpen(false)}>
-                Entendido
-              </button>
-            </div>
-          </section>
-        </div>
+          </div>
+          <p>
+            El chunking adaptativo reserva margen para instrucciones y respuesta, y usa el resto del contexto seguro del modelo para
+            decidir cada corte.
+          </p>
+        </ConfirmModal>
       ) : null}
+
       {isAnalyticsConfirmOpen ? (
-        <div className="modal-backdrop nested-backdrop" role="dialog" aria-modal="true" aria-label="Habilitar analitica de datos" onClick={handleAnalyticsConfirmBackdropClick}>
-          <section className="confirm-modal analytics-confirm-modal">
-            <h2>
+        <ConfirmModal
+          nested
+          className="analytics-confirm-modal"
+          title={
+            <>
               <span className="process-confirm-icon" aria-hidden="true">
                 <BarChart3 size={18} />
               </span>
-              Habilitar analitica
-            </h2>
-            <p>
-              CaptionFlow usara los metadatos locales de resultados, documentos y diagramas para construir dashboards. No se enviaran datos a servicios externos.
-            </p>
-            <div className="confirm-actions">
-              <button className="secondary-button" type="button" onClick={() => setIsAnalyticsConfirmOpen(false)}>
+              Habilitar analítica
+            </>
+          }
+          onClose={() => setIsAnalyticsConfirmOpen(false)}
+          actions={
+            <>
+              <Button type="button" onClick={() => setIsAnalyticsConfirmOpen(false)}>
                 Cancelar
-              </button>
-              <button className="primary-button subtle-primary-button compact-button" type="button" onClick={() => void confirmAnalyticsEnabled()}>
+              </Button>
+              <Button variant="subtle" compact type="button" onClick={() => void confirmAnalyticsEnabled()}>
                 Habilitar
-              </button>
-            </div>
-          </section>
-        </div>
+              </Button>
+            </>
+          }
+        >
+          <p>
+            CaptionFlow usará los metadatos locales de resultados, documentos y diagramas para construir dashboards. No se enviarán
+            datos a servicios externos.
+          </p>
+        </ConfirmModal>
       ) : null}
-    </div>
+    </ModalShell>
   );
 }
